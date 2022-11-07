@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames.Classes.TicTacToe
 {
-    internal class GB_TicTacToe
+    internal class G_TicTacToe
     {
     }
 }
-  

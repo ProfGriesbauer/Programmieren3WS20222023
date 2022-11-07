@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames.Classes.Gruppe_E
 {
-    internal class Class1
+    internal class Painter
     {
     }
 }

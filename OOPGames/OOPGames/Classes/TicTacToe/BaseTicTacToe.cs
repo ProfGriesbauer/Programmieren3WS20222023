@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace OOPGames
 {
-    public abstract class BaseTicTacToePaint :       
+    public abstract class BaseTicTacToePaint : IPaintTicTacToe    
     {
         public abstract string Name { get; }
 

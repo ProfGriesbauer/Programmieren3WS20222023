@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\Gruppe C\" />
+    <Folder Include="Classes\Gruppe K\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

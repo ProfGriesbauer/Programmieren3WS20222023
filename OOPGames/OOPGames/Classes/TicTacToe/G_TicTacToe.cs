@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Abfrage in HumanPlayer _size == 0 => 3 um Kompartibilität zu gewährleisten
+//ClickEvent abhängig von Anzahl der Feldergröße
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
+using OOPGames;
 
 namespace OOPGames
 {
@@ -26,19 +31,12 @@ namespace OOPGames
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
+            //Feldgröße Gruppe G: 400x400px
+            // Schleife zur skalierung der Linien
             Line l1 = new Line() { X1 = 120, Y1 = 0, X2 = 120, Y2 = 428, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
-            //Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-           // canvas.Children.Add(l2);
-            //Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
-            //canvas.Children.Add(l3);
-            //Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
-            //canvas.Children.Add(l4);
-            //Line l5 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
-            //canvas.Children.Add(l5);
-            //Line l6 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
-           // canvas.Children.Add(l6);
-
+            
+            // Variable Schleifenlänge je nach Größe des Feldes
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -63,6 +61,7 @@ namespace OOPGames
     {
         static int _size = 3;
 
+        public int Size { get { return _size; } }
 
         int[,] _Field = new int[_size, _size];
 
@@ -90,3 +89,80 @@ namespace OOPGames
         }
     }
 }
+
+
+public class G_TicTacToeRules : BaseTicTacToeRules
+{
+    G_TicTacToeField _Field = new G_TicTacToeField();
+
+    public override ITicTacToeField TicTacToeField { get { return _Field; } }
+
+    public override bool MovesPossible
+    {
+        get
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (_Field[i, j] == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+    }
+
+    public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+
+    public override int CheckIfPLayerWon()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+            {
+                return _Field[i, 0];
+            }
+            else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+            {
+                return _Field[0, i];
+            }
+        }
+
+        if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
+        {
+            return _Field[0, 0];
+        }
+        else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
+        {
+            return _Field[0, 2];
+        }
+
+        return -1;
+    }
+
+    public override void ClearField()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                _Field[i, j] = 0;
+            }
+        }
+    }
+
+    public override void DoTicTacToeMove(ITicTacToeMove move)
+    {
+        if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+        {
+            _Field[move.Row, move.Column] = move.PlayerNumber;
+        }
+    }
+}
+
+
+

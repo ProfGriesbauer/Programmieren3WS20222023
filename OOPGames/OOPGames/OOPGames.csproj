@@ -64,6 +64,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
+    <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
+    <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />

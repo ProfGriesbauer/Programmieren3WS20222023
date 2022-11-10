@@ -71,6 +71,7 @@
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
+    <Compile Include="Classes\TicTacToe\H_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\Gruppe C\C_TicTacToe.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />

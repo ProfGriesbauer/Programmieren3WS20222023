@@ -70,12 +70,11 @@
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\GruppeI\I_Player.cs" />
     <Compile Include="Classes\GruppeI\I_Rules.cs" />
-    <Compile Include="Classes\GruppeJ\J_Painter.cs" />
+    <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
-    <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />
@@ -116,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\Gruppe D\" />
+    <Folder Include="Classes\Gruppe H\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

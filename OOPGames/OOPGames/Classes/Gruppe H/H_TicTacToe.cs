@@ -78,5 +78,10 @@ namespace OOPGames
         }
     }
 
-    
+
+    //Hier kommen unsere Fancy Regeln hin :D
+    /*public class H_TicTacToeRules : ITicTacToeRules
+    {
+
+    }*/
 }

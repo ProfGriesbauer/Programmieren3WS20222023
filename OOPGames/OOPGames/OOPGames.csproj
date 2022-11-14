@@ -66,6 +66,8 @@
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
+    <Compile Include="Classes\Gruppe D\PlayerD.cs" />
+    <Compile Include="Classes\Gruppe D\RulesD.cs" />
     <Compile Include="Classes\Gruppe E\E_Painter.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_MS.cs" />
@@ -116,7 +118,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\Gruppe D\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

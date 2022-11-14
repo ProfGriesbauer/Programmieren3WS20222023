@@ -8,5 +8,14 @@ namespace OOPGames
 {
     internal class PlayerD
     {
+        public class TicTacToeHumanPlayer
+        {
+
+        }
+
+        public class TicTacToeComputerPlayer
+        {
+
+        }
     }
 }

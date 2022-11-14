@@ -10,8 +10,12 @@ using System.Windows.Shapes;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    class K_Painter_MS : IPaintTicTacToe
+    class K_Painter_MS : IPaintTicTacToe, IPaintGame2
     {
+        float rot = 0f;
+        float rotSpeed = 10f;
+        int xOff = 50;
+        int yOff = 50;
         public string Name { get { return "K Painter MS"; } }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
@@ -33,23 +37,31 @@ namespace OOPGames.Classes.Gruppe_K
             Brush XStroke = new SolidColorBrush(XColor);
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
+            Line[] larr = new Line[8];
+            larr[0] = new Line() { X1 = 120+xOff, Y1 = 20+yOff, X2 = 120+xOff, Y2 = 320+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[0]);
+            larr[1] = new Line() { X1 = 220+xOff, Y1 = 20+yOff, X2 = 220+xOff, Y2 = 320+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[1]);
+            larr[2] = new Line() { X1 = 20+xOff, Y1 = 120+yOff, X2 = 320+xOff, Y2 = 120+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[2]);
+            larr[3] = new Line() { X1 = 20+xOff, Y1 = 220+yOff, X2 = 320+xOff, Y2 = 220+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[3]);
+            larr[4] = new Line() { X1 = 20+xOff, Y1 = 320+yOff, X2 = 320+xOff, Y2 = 320+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[4]);
+            larr[5] = new Line() { X1 = 20+xOff, Y1 = 20+yOff, X2 = 320+xOff, Y2 = 20+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[5]);
+            larr[6] = new Line() { X1 = 20+xOff, Y1 = 320+yOff, X2 = 20+xOff, Y2 = 20+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[6]);
+            larr[7] = new Line() { X1 = 320+xOff, Y1 = 320+yOff, X2 = 320+xOff, Y2 = 20+yOff, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(larr[7]);
+            RotateTransform rotateTransformObj =new RotateTransform(rot);
+            rotateTransformObj.CenterX = 170+xOff;
+            rotateTransformObj.CenterY = 170+yOff;
 
-            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l2);
-            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l3);
-            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l4);
-            Line l5 = new Line() { X1 = 20, Y1 = 320, X2 = 320, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l5);
-            Line l6 = new Line() { X1 = 20, Y1 = 20, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l6);
-            Line l7 = new Line() { X1 = 20, Y1 = 320, X2 = 20, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l7);
-            Line l8 = new Line() { X1 = 320, Y1 = 320, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l8);
+                for (int i = 0; i < larr.Length; i++)
+            {
+                larr[i].RenderTransform= rotateTransformObj;
+            }
 
             for (int i = 0; i < 3; i++)
             {
@@ -57,18 +69,30 @@ namespace OOPGames.Classes.Gruppe_K
                 {
                     if (currentField[i, j] == 1)
                     {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X1 = new Line() { X1 = 20 + (j * 100)+xOff, Y1 = 20 + (i * 100)+yOff, X2 = 120 + (j * 100)+xOff, Y2 = 120 + (i * 100)+yOff, Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X2 = new Line() { X1 = 20 + (j * 100)+xOff, Y1 = 120 + (i * 100)+yOff, X2 = 120 + (j * 100)+xOff, Y2 = 20 + (i * 100)+yOff, Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X2);
+                        X1.RenderTransform = rotateTransformObj;
+                        X2.RenderTransform = rotateTransformObj;
                     }
                     else if (currentField[i, j] == 2)
                     {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(OE);
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100)+xOff, 20 + (i * 100)+yOff, 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
+                        Canvas wrap = new Canvas();
+                        wrap.Children.Add(OE);
+                        canvas.Children.Add(wrap);
+                        wrap.RenderTransform = rotateTransformObj;
                     }
                 }
             }
+        }
+
+        public void TickPaintGameField(Canvas canvas, IGameField currentField)
+        {
+            rot += rotSpeed*40f/1000f;
+            rot = rot > 360 ? 0 : rot;
+            PaintGameField(canvas, currentField);
         }
     }
 }

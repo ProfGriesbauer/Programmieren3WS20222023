@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,9 +6,9 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class TicTacToePaint : BaseTicTacToePaint
+    public class GJ_TicTacToePaint : BaseTicTacToePaint
     {
-        public override string Name { get { return "GriesbauerTicTacToePaint"; } }
+        public override string Name { get { return "J_TicTacToePainter"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
@@ -63,18 +59,16 @@ namespace OOPGames
             }
         }
     }
-    
-    
 
-    public class TicTacToeRules : BaseTicTacToeRules
+    public class GJ_TicTacToeRules : BaseTicTacToeRules
     {
-        TicTacToeField _Field = new TicTacToeField();
+        GJ_TicTacToeField _Field = new GJ_TicTacToeField();
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
-
-        public override bool MovesPossible 
-        { 
-            get 
+        public int moveCounter { get; set; }
+        public override bool MovesPossible
+        {
+            get
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -87,11 +81,11 @@ namespace OOPGames
                     }
                 }
 
-                return false; 
-            } 
+                return false;
+            }
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+        public override string Name { get { return "J_Rules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -132,16 +126,32 @@ namespace OOPGames
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
+            Random rand = new Random();
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
+                if (CheckIfPLayerWon() != -1)
+                {
+                    moveCounter = 0;
+                }
+                if (moveCounter >= 6)
+                {
+                    int x, y;
+                    do
+                    {
+                        x = rand.Next(3);
+                        y = rand.Next(3);
+                    } while (_Field[x, y] == 0 || (x == move.Row && y == move.Column));
+                    _Field[x, y] = 0;
+                }
+                moveCounter++;
             }
         }
     }
 
-    public class TicTacToeField : BaseTicTacToeField
+    public class GJ_TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {
@@ -167,13 +177,13 @@ namespace OOPGames
         }
     }
 
-    public class TicTacToeMove : ITicTacToeMove
+    public class GJ_TicTacToeMove : ITicTacToeMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public TicTacToeMove (int row, int column, int playerNumber)
+        public GJ_TicTacToeMove(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -187,11 +197,11 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
-    public class TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+    public class GJ_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerHumanTicTacToePlayer"; } }
+        public override string Name { get { return "J_Human_Player"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
@@ -230,11 +240,11 @@ namespace OOPGames
         }
     }
 
-    public class TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    public class GJ_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerComputerTicTacToePlayer"; } }
+        public override string Name { get { return "J_Computer_Player"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 

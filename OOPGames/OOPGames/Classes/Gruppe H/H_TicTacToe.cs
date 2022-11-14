@@ -10,21 +10,25 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    /*public class H_TicTacToeRules : BaseTicTacToeRules
+    // 1. KLassen anlegen 
+    // Feld malen 
+    // BaseTicTacToe anlegen
+    //public interface IPaintTicTacToe:
+    public class H_TicTacToePaint: IPaintTicTacToe
     {
+        public string Name { get { return "Gruppe_H TicTacToePaint"; } }
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is ITicTacToeField)
+            {
+                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
+            }
+        }
 
-    }*/
-
-
-    public class H_TicTacToePaint : BaseTicTacToePaint
-    {
-        //voererst nur von Griesbauer TicTacToe kopiert, eigene Implementierung/Anpassung fehlt noch
-        public override string Name { get { return "H_TicTacToePaint"; } }
-
-        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
+        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(67, 171, 171);
+            Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
@@ -70,4 +74,6 @@ namespace OOPGames
             }
         }
     }
+
+    
 }

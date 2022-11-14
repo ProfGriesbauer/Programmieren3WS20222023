@@ -11,7 +11,7 @@ namespace OOPGames.Classes.Gruppe_C
     {
     }
 }
-public class  TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+public class  C_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
 {
     int _Playernumber = 0;
     public override string Name { get { return "C_HumanTicTacToePlayer"; } }

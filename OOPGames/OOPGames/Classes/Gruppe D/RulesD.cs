@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public class RulesD
+    internal class RulesD
     {
-
     }
 }

@@ -70,7 +70,6 @@
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\GruppeI\I_Player.cs" />
     <Compile Include="Classes\GruppeI\I_Rules.cs" />
-    <Compile Include="Classes\GruppeJ\J_Painter.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />

@@ -63,10 +63,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Gruppe C\C_Painter.cs" />
+    <Compile Include="Classes\Gruppe E\E_Painter.cs" />
+    <Compile Include="Classes\Gruppe K\K_Painter_MS.cs" />
+    <Compile Include="Classes\GruppeJ\J_Painter.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
+    <Compile Include="Interfaces\Gruppe C\C_TicTacToe.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />
     <Compile Include="Interfaces\IPaintGame.cs" />
@@ -104,5 +109,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

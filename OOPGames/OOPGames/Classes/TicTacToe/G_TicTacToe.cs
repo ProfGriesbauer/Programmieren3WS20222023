@@ -1,28 +1,118 @@
-﻿//Abfrage in HumanPlayer _size == 0 => 3 um Kompartibilität zu gewährleisten
-//ClickEvent abhängig von Anzahl der Feldergröße
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows;
-using OOPGames;
 
 namespace OOPGames
 {
-    public class G_TicTacToePaint : BaseTicTacToePaint
+    public interface ICasket
     {
-        public override string Name { get { return "G_TicTacToePaint"; } }
+        int x { get; set; }
+        int y { get; set; }
+        int size { get; set; }
+        int player { get; set; } // evtl IGamePlayer anstelle von int
+        void paintFrame(Canvas canvas);
+        void paintFill();
+        Casket isMySpace(int x, int y);
+    }
 
+    // neues Interface: Erbt von ITicTacToeFeld, fügt aber noch die momentane Größe des Spielfelds hinzu
+    public interface ITicTacToeField_G : ITicTacToeField
+    {
+        void increaseField();
+    }
+
+    public class Casket : ICasket
+    {
+        int _x;
+        public int x
+        {
+            get { return _x; }
+
+            set { _x = value; }
+        }
+
+        int _y;
+        public int y
+        {
+            get { return _y; }
+
+            set { _y = value; }
+        }
+
+        int _size;
+        public int size
+        {
+            get { return _size; }
+
+            set { _size = value; }
+        }
+
+        int _player;
+        public int player
+        {
+            get { return _player; }
+
+            set { _player = value; }
+        }
+        void paintFrame(Canvas canvas)
+        {
+
+        }
+        void paintFill()
+        {
+
+        }
+        Casket isMySpace(int x, int y)
+        {
+            //foreach (Cascet ret in _Field) ;
+            for (int i = 0; i < _List.Count; i++)
+            {
+                for (int j = 0; j < _List[i].Count; j++)
+                {
+                    if (x > _List[i][j].xPos && x < _List[i][j].xPos + _List[i][j].size)
+                    {
+                        if (y > _List[i][j].yPos && y < _List[i][j].yPos + _List[i][j].size)
+                        {
+                            return this;
+                        }
+                    }
+                }
+            }
+        }
+            
+
+            return null;
+            Console.WriteLine("Nicht in Liste gefunden");
+        }
+
+    public class TicTacToePaint_G : BaseTicTacToePaint
+    {
+
+        public override string Name { get { return "GruppeGTicTacToePaint"; } }
+
+
+        // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
+            if (currentField is ITicTacToeField_G)
+            {
+                PaintTicTacToeField_G(canvas, (ITicTacToeField_G)currentField);
+            }
+        }
+
+        public void PaintTicTacToeField_G(Canvas canvas, ITicTacToeField_G currentField)
+        {
+            ITicTacToeField_G field_G = currentField;
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(0, 0, 0);
+            Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(255, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
@@ -31,12 +121,22 @@ namespace OOPGames
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
-            //Feldgröße Gruppe G: 400x400px
-            // Schleife zur skalierung der Linien
-            Line l1 = new Line() { X1 = 120, Y1 = 0, X2 = 120, Y2 = 428, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l1);
-            
-            // Variable Schleifenlänge je nach Größe des Feldes
+            Line[] horizontals = new Line[currentField.CurrentSize - 1];
+            Line[] verticals = new Line[currentField.CurrentSize - 1];
+
+            for (int i = 0; i < currentField.CurrentSize - 1; i++)
+            {
+                int X = (400 / currentField.CurrentSize) * (i + 1);
+                horizontals[i] = new Line() { X1 = X, Y1 = 0, X2 = X, Y2 = 420, Stroke = lineStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(horizontals[i]);
+
+                int Y = (400 / currentField.CurrentSize) * (i + 1);
+                verticals[i] = new Line() { X1 = 0, Y1 = Y, X2 = 400, Y2 = Y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(verticals[i]);
+            }
+
+
+
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -57,13 +157,91 @@ namespace OOPGames
             }
         }
     }
-    public class G_TicTacToeField : BaseTicTacToeField
+    public class TicTacToeRules_G : BaseTicTacToeRules
     {
-        static int _size = 3;
+        TicTacToeField_G _Field = new TicTacToeField_G();
 
-        public int Size { get { return _size; } }
 
-        int[,] _Field = new int[_size, _size];
+        public override ITicTacToeField TicTacToeField { get { return _Field; } }
+
+        public override bool MovesPossible
+        {
+            get
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (_Field[i, j] == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        public override string Name { get { return "GruppeGTicTacToeRules"; } }
+
+        public override int CheckIfPLayerWon()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                {
+                    return _Field[i, 0];
+                }
+                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                {
+                    return _Field[0, i];
+                }
+            }
+
+            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
+            {
+                return _Field[0, 0];
+            }
+            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
+            {
+                return _Field[0, 2];
+            }
+
+            return -1;
+        }
+
+        public override void ClearField()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _Field[i, j] = 0;
+                }
+            }
+        }
+
+        public override void DoTicTacToeMove(ITicTacToeMove move)
+        {
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
+                _Field.increaseField();  // nur zu Test-Zwecken
+            }
+        }
+    }
+
+    public class TicTacToeField_G : ITicTacToeField_G
+    {
+
+        List<Casket> _Field = new List<Casket>();
+
+
+        public void increaseField()
+        {
+           
+        }
 
         public override int this[int r, int c]
         {
@@ -87,82 +265,19 @@ namespace OOPGames
                 }
             }
         }
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            return painter is IPaintTicTacToe;
+        }
     }
+
+
+
+
 }
 
 
-public class G_TicTacToeRules : BaseTicTacToeRules
-{
-    G_TicTacToeField _Field = new G_TicTacToeField();
-
-    public override ITicTacToeField TicTacToeField { get { return _Field; } }
-
-    public override bool MovesPossible
-    {
-        get
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (_Field[i, j] == 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
     }
 
-    public override string Name { get { return "GriesbauerTicTacToeRules"; } }
-
-    public override int CheckIfPLayerWon()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
-            {
-                return _Field[i, 0];
-            }
-            else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-            {
-                return _Field[0, i];
-            }
-        }
-
-        if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-        {
-            return _Field[0, 0];
-        }
-        else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-        {
-            return _Field[0, 2];
-        }
-
-        return -1;
-    }
-
-    public override void ClearField()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                _Field[i, j] = 0;
-            }
-        }
-    }
-
-    public override void DoTicTacToeMove(ITicTacToeMove move)
-    {
-        if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
-        {
-            _Field[move.Row, move.Column] = move.PlayerNumber;
-        }
-    }
-}
-
-
-
+    

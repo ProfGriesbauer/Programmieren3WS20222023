@@ -32,6 +32,7 @@ namespace OOPGames
         void TickPaintGameField(Canvas canvas, IGameField currentField);
     }
 
+
     //Type of available move inputs
     public enum MoveType { click, key};
 

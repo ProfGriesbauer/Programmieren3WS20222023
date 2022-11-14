@@ -67,6 +67,7 @@
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe E\E_Painter.cs" />
+    <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_MS.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\GruppeI\I_Player.cs" />
@@ -116,7 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\Gruppe D\" />
-    <Folder Include="Classes\Gruppe H\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

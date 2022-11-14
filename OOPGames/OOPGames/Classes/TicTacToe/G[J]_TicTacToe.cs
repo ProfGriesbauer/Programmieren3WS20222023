@@ -8,7 +8,7 @@ namespace OOPGames
 {
     public class GJ_TicTacToePaint : BaseTicTacToePaint
     {
-        public override string Name { get { return "G[J]TicTacToePainter"; } }
+        public override string Name { get { return "J_TicTacToePainter"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
@@ -85,7 +85,7 @@ namespace OOPGames
             }
         }
 
-        public override string Name { get { return "GJ Rules"; } }
+        public override string Name { get { return "J_Rules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -201,7 +201,7 @@ namespace OOPGames
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerHumanTicTacToePlayer"; } }
+        public override string Name { get { return "J_Human_Player"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
@@ -244,7 +244,7 @@ namespace OOPGames
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerComputerTicTacToePlayer"; } }
+        public override string Name { get { return "J_Computer_Player"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 

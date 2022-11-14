@@ -63,8 +63,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Gruppe B\B_Painter.cs" />
+    <Compile Include="Classes\Gruppe C\C_Painter.cs" />
+    <Compile Include="Classes\Gruppe D\IPainterD.cs" />
+    <Compile Include="Classes\Gruppe E\E_Painter.cs" />
+    <Compile Include="Classes\Gruppe K\K_Painter_MS.cs" />
+    <Compile Include="Classes\GruppeJ\J_Painter.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
+<<<<<<< HEAD
     <Compile Include="Classes\TicTacToe\G[J]_TicTacToe.cs" />
+=======
+    <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
+    <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
+    <Compile Include="Classes\TicTacToe\H_TicTacToe.cs" />
+>>>>>>> 9b08bf975b0f5c874bfc05ca042c7785c91bc0bc
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />
@@ -102,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

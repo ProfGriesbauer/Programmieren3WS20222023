@@ -1,6 +1,7 @@
 ﻿using OOPGames.Classes.Gruppe_B;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
+using OOPGames.Classes.GruppeI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());

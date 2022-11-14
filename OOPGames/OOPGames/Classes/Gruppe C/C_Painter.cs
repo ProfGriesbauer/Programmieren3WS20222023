@@ -12,6 +12,7 @@ namespace OOPGames.Classes.Gruppe_C
     public class C_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
     {
         int _Playernumber = 0;
+        int Points = 0;
         public override string Name { get { return "C_HumanTicTacToePlayer"; } }
         public override int PlayerNumber { get { return _Playernumber; } }
         public override IGamePlayer Clone()

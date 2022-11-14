@@ -85,23 +85,7 @@ namespace OOPGames
         {
             throw new NotImplementedException();
         }
-        /*Casket isMySpace(int x, int y)
-{
-   //foreach (Cascet ret in _Field) ;
-   for (int i = 0; i < _List.Count; i++)
-   {
-       for (int j = 0; j < _List[i].Count; j++)
-       {
-           if (x > _List[i][j].xPos && x < _List[i][j].xPos + _List[i][j].size)
-           {
-               if (y > _List[i][j].yPos && y < _List[i][j].yPos + _List[i][j].size)
-               {
-                   return this;
-               }
-           }
-       }
-   }
-}*/
+        
     }
 
     public class TicTacToePaint_G : BaseTicTacToePaint
@@ -132,19 +116,7 @@ namespace OOPGames
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
-            //Line[] horizontals = new Line[currentField.CurrentSize - 1];
-            //Line[] verticals = new Line[currentField.CurrentSize - 1];
-
-            /*for (int i = 0; i < currentField.CurrentSize - 1; i++)
-            {
-                int X = (400 / currentField.CurrentSize) * (i + 1);
-                horizontals[i] = new Line() { X1 = X, Y1 = 0, X2 = X, Y2 = 420, Stroke = lineStroke, StrokeThickness = 3.0 };
-                canvas.Children.Add(horizontals[i]);
-
-                int Y = (400 / currentField.CurrentSize) * (i + 1);
-                verticals[i] = new Line() { X1 = 0, Y1 = Y, X2 = 400, Y2 = Y, Stroke = lineStroke, StrokeThickness = 3.0 };
-                canvas.Children.Add(verticals[i]);
-            }*/
+        
 
 
 
@@ -259,21 +231,24 @@ namespace OOPGames
         {
             get
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                foreach(Casket i in _Field)
                 {
-                    return 0;// _Field[r, c];
+                    if(i.x == r && i.y == c)
+                    {
+                        return i.player;
+                    }
                 }
-                else
-                {
-                    return -1;
-                }
+                return -1;
             }
 
             set
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                foreach (Casket i in _Field)
                 {
-                    //_Field[r, c] = value;
+                    if (i.x == r && i.y == c)
+                    {
+                        i.player = value;
+                    }
                 }
             }
         }

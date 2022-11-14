@@ -65,7 +65,7 @@
     </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
-    <Compile Include="Classes\Gruppe D\IPainterD.cs" />
+    <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe E\E_Painter.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_MS.cs" />
     <Compile Include="Classes\GruppeJ\J_Painter.cs" />

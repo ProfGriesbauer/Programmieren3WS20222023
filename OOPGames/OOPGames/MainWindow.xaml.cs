@@ -1,5 +1,5 @@
 ﻿using OOPGames.Classes.Gruppe_B;
-
+using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_K;
 using System;
 using System.Collections.Generic;
@@ -40,12 +40,14 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             //OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             //OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF());
+            ;
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;

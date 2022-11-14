@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes.GruppeJ
+namespace OOPGames.Classes.Gruppe_C
 {
-    internal class J_Painter
+    internal class C_Painter
     {
     }
 }

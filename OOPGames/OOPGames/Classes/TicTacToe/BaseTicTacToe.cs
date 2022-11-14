@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-
+//test123
 namespace OOPGames
 {
-    public abstract class BaseTicTacToePaint : IPaintTicTacToe
+    public abstract class BaseTicTacToePaint : IPaintTicTacToe    
     {
         public abstract string Name { get; }
 

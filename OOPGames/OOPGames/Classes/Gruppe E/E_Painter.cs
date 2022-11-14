@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes.TicTacToe
+namespace OOPGames.Classes.Gruppe_E
 {
-    internal class GB_TicTacToe
+    internal class Painter
     {
     }
 }
-  

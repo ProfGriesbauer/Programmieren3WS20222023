@@ -23,7 +23,7 @@ namespace OOPGames
         Casket isMySpace(int x, int y);
     }
 
-    // neues Interface: Erbt von ITicTacToeFeld, fügt aber noch die momentane Größe des Spielfelds hinzu
+    // neues Interface: Erbt von ITicTacToeFeld, fügt aber noch die momentane Größe des Spielfelds hinzu...
     public interface ITicTacToeField_G : ITicTacToeField
     {
         void increaseField();

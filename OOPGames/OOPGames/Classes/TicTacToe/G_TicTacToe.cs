@@ -87,7 +87,7 @@ namespace OOPGames
             if (_player == 1)
             {
                 Line l1 = new Line() { X1 = (_x - 1) * _size, Y1 = (_y - 1) * _size, X2 = _x * _size, Y2 = _y * _size, Stroke = XStroke, StrokeThickness = 3.0 };
-                Line l2 = new Line() { X1 = (_x - 1) * _size, Y1 = _y * _size, X2 = (_x - 1) * _size, Y2 = _y * _size, Stroke = XStroke, StrokeThickness = 3.0 };
+                Line l2 = new Line() { X1 = (_x - 1) * _size, Y1 = _y * _size, X2 = _x * _size, Y2 = (_y-1) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
                 canvas.Children.Add(l1);
                 canvas.Children.Add(l2);
             }
@@ -129,6 +129,7 @@ namespace OOPGames
             foreach (Casket C in currentField.Field)
             {
                 C.paintFrame(canvas);
+                C.paintFill(canvas);
             }
         }
     }

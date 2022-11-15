@@ -34,6 +34,17 @@ namespace OOPGames.Classes.GruppeI
                 canvas.Children.Add(lx);
             }
 
+            //kleine Felder zeichnen
+            //waagrechte Linien
+            for (int i = 1; i <= 28; i += 3)
+            {
+                paintLine(1, i, 28, i, 3);
+            }
+            //senkrechte Linien
+            for (int i = 1; i <= 28; i += 3)
+            {
+                paintLine(i, 1, i, 28, 3);
+            }
 
             //Zeichne großes TTT-Feld
             paintLine(1,1,1,28,6);

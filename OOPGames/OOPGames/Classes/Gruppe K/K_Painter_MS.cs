@@ -10,13 +10,36 @@ using System.Windows.Shapes;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    class K_Painter_MS : IPaintTicTacToe, IPaintGame2
+    public interface IRotatingField
+    {
+        IClickSelection GetPosition(IClickSelection selection);
+        void ISetRotationSpeed(float speed);
+        void ISetSpeed(float xSpeed, float ySpeed);
+
+
+    }
+    class K_Painter_MS : IPaintTicTacToe, IPaintGame2, IRotatingField
     {
         float rot = 0f;
         float rotSpeed = 10f;
         int xOff = 50;
         int yOff = 50;
         public string Name { get { return "K Painter MS"; } }
+
+        public IClickSelection GetPosition(IClickSelection selection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ISetRotationSpeed(float speed)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ISetSpeed(float xSpeed, float ySpeed)
+        {
+            throw new NotImplementedException();
+        }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {

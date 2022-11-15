@@ -8,36 +8,22 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace OOPGames
+namespace OOPGames.Classes.Gruppe_K
 {
-    // 1. KLassen anlegen 
-    // Feld malen 
-    // BaseTicTacToe anlegen
-    //public interface IPaintTicTacToe:
-
-    //TicTacToe Painter selbst implementiert
-    public class H_TicTacToePaint: IPaintTicTacToe                                      //HTicTacToe leitet von der Interface Klasse IPaintTicTacToe ab
+    public class K_Painter_LB : BaseTicTacToePaint
     {
-        public string Name { get { return "Gruppe_H TicTacToePaint"; } }                //die öffentliche Variable Name beinhaltet den Name des Painters. Bei einer get-Anfrage wird der Name zurückgegeben.
-        public void PaintGameField(Canvas canvas, IGameField currentField)              //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
-        {
-            if (currentField is ITicTacToeField)
-            {
-                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
-            }
-        }
+        public override string Name { get { return "K Painter LB"; } }
 
-        //Field zeichnen wurde von Griesbauer kopiert (farben "angepasst" :P)
-        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)    //zeichnet dann tatsächlich das Spielfeld.
+        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(9, 0, 196);                               //Hintergrundfarbe
+            Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 255, 255);                         //Linienfarbe Spielfeld
+            Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 0, 0);                                  //Farbe X Spieler
+            Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(255, 0, 0);                                //Farbe O Spieler
+            Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
@@ -77,11 +63,6 @@ namespace OOPGames
             }
         }
     }
-
-
-    //Hier kommen unsere Fancy Regeln hin :D
-    /*public class H_TicTacToeRules : ITicTacToeRules
-    {
-
-    }*/
 }
+
+

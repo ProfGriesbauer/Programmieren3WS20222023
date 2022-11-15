@@ -14,13 +14,40 @@ namespace OOPGames
 
         public IGameField CurrentField { get { return _KrassesFeld; } }
 
-        public bool MovesPossible => throw new NotImplementedException();
+        public bool MovesPossible
+        {
+            get
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (_KrassesFeld[i, j] == 0)
+                        {
+                            return true;
+                        } else { return false; }
+                        
+                            
+                        
+                    }
+                }
+            }
+        }
+                    
+                
+            
 
         public ITicTacToeField TicTacToeField => throw new NotImplementedException();
 
         public int CheckIfPLayerWon()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i <= 3; i++)
+            {
+                if (_KrassesFeld[i, 0] == 1 && _KrassesFeld[i, 1] == 1 && _KrassesFeld[i, 2] == 1) { return 1; }
+                if (_KrassesFeld[0, i] == 1 && _KrassesFeld[1, i] == 1 && _KrassesFeld[2, i] == 1) { return 1; }
+                
+            }
+            
         }
 
         public void ClearField()

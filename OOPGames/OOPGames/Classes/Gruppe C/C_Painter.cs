@@ -28,17 +28,17 @@ namespace OOPGames.Classes.Gruppe_C
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
-            Line l1 = new Line() { X1 = 20, Y1 = 20, X2 = 20, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l1 = new Line() { X1 = 20, Y1 = 20, X2 = 20, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l2 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l2);
-            Line l3 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l3 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l3);
-            Line l4 = new Line() { X1 = 320, Y1 = 20, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l4 = new Line() { X1 = 320, Y1 = 20, X2 = 320, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l4);
-            Line l5 = new Line() { X1 = 420, Y1 = 20, X2 = 420, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l5 = new Line() { X1 = 420, Y1 = 20, X2 = 420, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l5);
-            Line l6 = new Line() { X1 = 520, Y1 = 20, X2 = 520, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l6 = new Line() { X1 = 520, Y1 = 20, X2 = 520, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l6);
             Line l7 = new Line() { X1 = 20, Y1 = 20, X2 = 520, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l7);
@@ -96,8 +96,8 @@ namespace OOPGames.Classes.Gruppe_C
                 {
                     for (int j = 0; j < 5; j++)
                     {
-                        if (sel.XClickPos > 20 + (j * 100) && sel.XClickPos < 120 + (j * 100) &&
-                               sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
+                        if (sel.XClickPos > 20 + (j * 100) && sel.XClickPos < 520 + (j * 100) &&
+                               sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 520 + (i * 100) &&
                                field[i, j] <= 0)
                         {
                             return new TicTacToeMove(i, j, _Playernumber);
@@ -143,7 +143,28 @@ namespace OOPGames.Classes.Gruppe_C
 
         public override int CheckIfPLayerWon()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < 5; i++)
+            {
+                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                {
+                    return _Field[i, 0];
+                }
+                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                {
+                    return _Field[0, i];
+                }
+            }
+
+            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
+            {
+                return _Field[0, 0];
+            }
+            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
+            {
+                return _Field[0, 2];
+            }
+
+            return -1;
         }
 
         public override void ClearField()
@@ -159,9 +180,13 @@ namespace OOPGames.Classes.Gruppe_C
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
-            throw new NotImplementedException();
+            if (move.Row >= 0 && move.Row < 5 && move.Column >= 0 && move.Column < 5)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
+            }
         }
     }
+
 
     public class GC_TicTacToeField : BaseTicTacToeField
     {

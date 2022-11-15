@@ -45,9 +45,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_JG());
 
-            OOPGamesManager.Singleton.RegisterPainter(new K_Painter_LB());
-            //OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
-
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_LB());
 

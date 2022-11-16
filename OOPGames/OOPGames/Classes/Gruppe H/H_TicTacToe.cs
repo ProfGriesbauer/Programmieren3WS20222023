@@ -93,9 +93,15 @@ namespace OOPGames
      * Spielfeld AUfbau: oben links ist 0,0; unten rechts 2,2; unten links ist 2,0; oben rechts ist 0,2; der rest sollte sich erklären wenn man es aufzeichnet.
      */
 
-    
+
     //Moritz Vorschlag:
-    //Gleichstand wird noch nicht erkannt.
+    /*Probleme:
+     * Gleichstand wird noch nicht erkannt.
+     * Spezialregel wird erst beim 2.Spiel angewendet, vermutlich weil da zum ersten mal 'specialRuleMoveDone = false' gemacht wird --> Problem hat sich gerade von selbst behoben??
+     * auf ein belegtes feld kann nicht geklickt werden, auch wenn die Spezialregel auf ein freies setzen würde. 
+     * --> Im Player wird überprüft ob das Feld frei ist, es muss ein Player erzeugt werden, der diesbezüglich angepasst ist.
+     * --> Aktuell kann ein bestehendes Feld mit der spezialregel überschrieben werden.
+    */
     public class H_TicTacToeRules : ITicTacToeRules
     {
         //ein neues Spielfeld wird erstellt, bzw. eine Instanz der Spielfeldklasse erzeugt. Das neue Spielfeld nennt sich "_Spielfeld".
@@ -150,7 +156,7 @@ namespace OOPGames
         
 
         //erstellt die öffentliche Variable Name, diese wird (mit etwas Glück) vom Programmfenster ausgelesen und angezeigt
-        public string Name { get { return "H_TicTacToe_Rules"; } }
+        public string Name { get { return "H_TicTacToe_Rules_M"; } }
 
 
         //Übergibt das aktuelle Spielfeld (Klasse TicTacToe Field) an IGameField.
@@ -198,16 +204,29 @@ namespace OOPGames
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)   //erste Zeile von Griesbauer
             {
                 Random rnd = new Random();                                              //Random Objekt namens rnd wird erstellt, die Funktion gibts vom System :D
-                _Spielfeld[rnd.Next(0, 3), rnd.Next(0, 3)] = move.PlayerNumber;         //mit dem .Next ding lässt sich festlegen in welchem Bereich die Zahlen sin bewegen sollen (hier von =0 bis <3). --> die zufallszahlen werden als Koordinaten an das Spielfeld übergeben.
+                int rowRnd = rnd.Next(0, 3);                                            //mit dem .Next ding lässt sich festlegen in welchem Bereich die Zahlen sin bewegen sollen (hier von =0 bis <3). --> die zufallszahlen werden als Koordinaten an das Spielfeld übergeben.
+                int columnRnd = rnd.Next(0, 3);
+                _Spielfeld[rowRnd, columnRnd] = move.PlayerNumber;
+
+                rowAbweichung = rowRnd - move.Row;                                      //soll die Abweichung berechnen und an die Abweichungs Variablen übergeben.
+                columnAbweichung = columnRnd - move.Column;
             }
         }
 
         //ab dem zweiten Spielzug, es sollte die Regel vom ersten erfasst und übernommen werden.
         public void newRuleMove(ITicTacToeMove move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)//noch standard Griesbauer Move, Spezialregel muss noch implementiert werden.
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)   //erste Zeile von Griesbauer
             {
-                _Spielfeld[move.Row, move.Column] = move.PlayerNumber;
+                int rowNew = move.Row + rowAbweichung;                                  //soll abweichung addieren
+                int columnNew = move.Column + columnAbweichung;
+                
+                if(rowNew < 0) { rowNew = rowNew + 3; }                                 //stellt fest, ob das neue Feld außerhalb vom Spielfeld ist und passt an, damit das Kreuz auf der anderen Seite entsteht.
+                if(rowNew > 2) { rowNew = rowNew - 3; }
+                if(columnNew < 0) { columnNew = columnNew + 3; }
+                if(columnNew > 2) { columnNew = columnNew - 3; }
+
+                _Spielfeld[rowNew, columnNew] = move.PlayerNumber;                      //übergibt die an die Regeln angepassten Koordinaten an das Spielfeld, zusammen mit der Spieler Nummer.
             }
         }
 

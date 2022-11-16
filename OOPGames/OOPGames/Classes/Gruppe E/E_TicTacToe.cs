@@ -24,15 +24,19 @@ namespace OOPGames
 
         public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
+            //Farben für Hintergrund Spielfeld und Formen
+
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(0, 0, 0);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(255, 255, 255);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 255, 0);
+            Color XColor = Color.FromRgb(0, 191, 255);
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
+            Color OColor = Color.FromRgb(255, 127, 0);
             Brush OStroke = new SolidColorBrush(OColor);
+
+            //Zeichnen des Spielfelds
 
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
@@ -57,24 +61,68 @@ namespace OOPGames
                 {
                     if (currentField[i, j] == 1)
                     {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+
+                        //Form 1: Stern
+                        Line X1 = new Line() { X1 = 40 + (j * 100), Y1 = 40 + (i * 100), X2 = 100 + (j * 100), Y2 = 100 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X2 = new Line() { X1 = 40 + (j * 100), Y1 = 100 + (i * 100), X2 = 100 + (j * 100), Y2 = 40 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X2);
-                        Line X3 = new Line() { X1 = 20 + (j * 100), Y1 = 70 + (i * 100), X2 = 120 + (j * 100), Y2 = 70 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X3 = new Line() { X1 = 30 + (j * 100), Y1 = 70 + (i * 100), X2 = 110 + (j * 100), Y2 = 70 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X3);
-                        Line X4 = new Line() { X1 = 70 + (j * 100), Y1 = 120 + (i * 100), X2 = 70 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X4 = new Line() { X1 = 70 + (j * 100), Y1 = 110 + (i * 100), X2 = 70 + (j * 100), Y2 = 30 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X4);
                     }
                     else if (currentField[i, j] == 2)
                     {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(OE);
+
+                        //Form 2: Quadrat/Raute
+                        Line X1 = new Line() { X1 = 70 + (j * 100), Y1 = 30 + (i * 100), X2 = 110 + (j * 100), Y2 = 70 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = 110 + (j * 100), Y1 = 70 + (i * 100), X2 = 70 + (j * 100), Y2 =110 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X2);
+                        Line X3 = new Line() { X1 = 70 + (j * 100), Y1 = 110 + (i * 100), X2 = 30 + (j * 100), Y2 = 70 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X3);
+                        Line X4 = new Line() { X1 = 30 + (j * 100), Y1 = 70 + (i * 100), X2 = 70 + (j * 100), Y2 = 30 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X4);
                     }
                 }
             }
         }
     }
+
+    public class E_TicTacToeField : ITicTacToeField
+    {
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+
+        public int this[int r, int c]
+        {
+            get
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                {
+                    return _Field[r, c];
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
+            set
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                {
+                    _Field[r, c] = value;
+                }
+            }
+        }
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            return painter is IPaintTicTacToe;
+        }
+    }
+
     public class E_TicTacToeMove : ITicTacToeMove
     {
         int _Row = 0;
@@ -94,22 +142,28 @@ namespace OOPGames
 
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
-    public class E_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+
+    public class E_TicTacToeHumanPlayer : IHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "E_HumanTicTacToePlayer"; } }
+        public string Name { get { return "E_HumanTicTacToePlayer"; } }
 
-        public override int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return _PlayerNumber; } }
 
-        public override IGamePlayer Clone()
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is ITicTacToeRules;
+        }
+
+        public IGamePlayer Clone()
         {
             E_TicTacToeHumanPlayer ttthp = new E_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
 
-        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
+        public ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
             if (selection is IClickSelection)
             {
@@ -122,7 +176,7 @@ namespace OOPGames
                             sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
                             field[i, j] <= 0)
                         {
-                            return new TicTacToeMove(i, j, _PlayerNumber);
+                            return new E_TicTacToeMove(i, j, _PlayerNumber);
                         }
                     }
                 }
@@ -131,18 +185,31 @@ namespace OOPGames
             return null;
         }
 
-        public override void SetPlayerNumber(int playerNumber)
+        public IPlayMove GetMove(IMoveSelection selection, IGameField field)
+        {
+            if (field is ITicTacToeField)
+            {
+                return GetMove(selection, (ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
         }
     }
-    public class E_TicTacToeRules : BaseTicTacToeRules
+
+    public class E_TicTacToeRules : ITicTacToeRules
     {
-        TicTacToeField _Field = new TicTacToeField();
+        E_TicTacToeField _Field = new E_TicTacToeField();
 
-        public override ITicTacToeField TicTacToeField { get { return _Field; } }
+        public ITicTacToeField E_TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible
+        public bool MovesPossible
         {
             get
             {
@@ -161,9 +228,13 @@ namespace OOPGames
             }
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+        public string Name { get { return "E_TicTacToeRules"; } }
 
-        public override int CheckIfPLayerWon()
+        public IGameField CurrentField { get { return E_TicTacToeField; } }
+
+        public ITicTacToeField TicTacToeField { get { return _Field; } }
+
+        public int CheckIfPLayerWon()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -189,7 +260,7 @@ namespace OOPGames
             return -1;
         }
 
-        public override void ClearField()
+        public void ClearField()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -200,7 +271,15 @@ namespace OOPGames
             }
         }
 
-        public override void DoTicTacToeMove(ITicTacToeMove move)
+        public void DoMove(IPlayMove move)
+        {
+            if (move is ITicTacToeMove)
+            {
+                DoTicTacToeMove((ITicTacToeMove)move);
+            }
+        }
+
+        public void DoTicTacToeMove(ITicTacToeMove move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {

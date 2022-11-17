@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
@@ -14,10 +15,19 @@ namespace OOPGames.Classes.Gruppe_K
 {
     public abstract class RotatingField
     {
+
         protected float _rot = 0f;
         protected float _rotSpeed = 20f;
-        protected float _xSpeed = 80f, _ySpeed = 80f;
+        
+        protected float _xSpeed = 80f, _ySpeed = 100f;
         protected float _xPos = 0, _yPos = 0;
+        
+        protected float _scale = 1f;
+        protected float _scaleMin=0.5f;
+        protected float _scaleMax = 1.5f;
+        protected float _scaleSpeed = 0.2f;
+
+
         protected int _xCenter = 0, _yCenter = 0;
         protected Canvas _canvas;
 
@@ -166,6 +176,98 @@ namespace OOPGames.Classes.Gruppe_K
             }
         }
 
+        // Getter/Setter Call:
+        // RotatingField.Scale;
+        // Result:
+        // Access to Scale of current Painter
+        public static float Scale
+        {
+            get
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    return (int)_objects[activeRotatingFieldIndex]._scale;
+                }
+                return 0;
+            }
+            set
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    _objects[activeRotatingFieldIndex]._scale = value;
+                }
+            }
+        }
+
+        // Getter/Setter Call:
+        // RotatingField.ScaleMin;
+        // Result:
+        // Access to Scale Minimum of current Painter
+        public static float ScaleMin
+        {
+            get
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    return (int)_objects[activeRotatingFieldIndex]._scaleMin;
+                }
+                return 0;
+            }
+            set
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    _objects[activeRotatingFieldIndex]._scaleMin = value;
+                }
+            }
+        }
+
+        // Getter/Setter Call:
+        // RotatingField.ScaleMax;
+        // Result:
+        // Access to Scale Maximum of current Painter
+        public static float ScaleMax
+        {
+            get
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    return (int)_objects[activeRotatingFieldIndex]._scaleMax;
+                }
+                return 0;
+            }
+            set
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    _objects[activeRotatingFieldIndex]._scaleMax = value;
+                }
+            }
+        }
+
+        // Getter/Setter Call:
+        // RotatingField.ScaleSpeed;
+        // Result:
+        // Access to Scale Speed of current Painter
+        public static float ScaleSpeed
+        {
+            get
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    return (int)_objects[activeRotatingFieldIndex]._scaleSpeed;
+                }
+                return 0;
+            }
+            set
+            {
+                if (activeRotatingFieldIndex >= 0 && activeRotatingFieldIndex < _objects.Count)
+                {
+                    _objects[activeRotatingFieldIndex]._scaleSpeed = value;
+                }
+            }
+        }
+
         // Call:
         //  RotatingField.GetPosition(selection);
         // Return:
@@ -180,7 +282,8 @@ namespace OOPGames.Classes.Gruppe_K
 
                 int tmpX = (int)(Math.Cos(angleInRadians) * (selection.XClickPos - tmpXCanvas) - Math.Sin(angleInRadians) * (selection.YClickPos - tmpYCanvas) + tmpXCanvas) - (int)_objects[activeRotatingFieldIndex]._xPos;
                 int tmpY = (int)(Math.Sin(angleInRadians) * (selection.XClickPos - tmpXCanvas) + Math.Cos(angleInRadians) * (selection.YClickPos - tmpYCanvas) + tmpYCanvas) - (int)_objects[activeRotatingFieldIndex]._yPos;
-
+                tmpX =(int)(tmpX/ _objects[activeRotatingFieldIndex]._scale);
+                tmpY = (int)(tmpY / _objects[activeRotatingFieldIndex]._scale);
                 return new ClickSelection(tmpX, tmpY);
             }
             return selection;
@@ -205,7 +308,7 @@ namespace OOPGames.Classes.Gruppe_K
                             Thread.Sleep(10);
                             obj.watchdogTimeout++;
                         }
-                        
+
                         _objects.Remove(obj);
                         activeRotatingFieldIndex = -1;
                         Console.WriteLine("Rotating Field: Removed Object");
@@ -225,7 +328,23 @@ namespace OOPGames.Classes.Gruppe_K
     class K_Painter_Rotating : RotatingField, IPaintTicTacToe, IPaintGame2
     {
 
+        float dT=0f;
+        DateTime lastTime = DateTime.Now;
+
         RotateTransform rotateTransformObj = new RotateTransform();
+
+        Color bgColor;
+        Color lineColor;
+        Brush lineStroke;
+        Color XColor;
+        Brush XStroke;
+        Color OColor;
+        Brush OStroke;
+        Line[] larrField;
+        Line[] larrX;
+        Canvas[] larrWrap;
+        Ellipse[] larrEllipse;
+
         public string Name { get { return "K Painter Rotating"; } }
 
 
@@ -242,65 +361,69 @@ namespace OOPGames.Classes.Gruppe_K
 
         public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
-            _xCenter = 170;
-            _yCenter = 170;
-         
+           
+
+            initVariables(canvas);
 
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
+            Text(650, 10, "FPS: "+(int)(1/dT),20, lineColor, canvas);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(0, 0, 0);
-            Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 255, 0);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
-            Line[] larr = new Line[8];
-            larr[0] = new Line() { X1 = 120+_xPos, Y1 = 20+_yPos, X2 = 120+_xPos, Y2 = 320+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[0]);
-            larr[1] = new Line() { X1 = 220+_xPos, Y1 = 20+_yPos, X2 = 220+_xPos, Y2 = 320+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[1]);
-            larr[2] = new Line() { X1 = 20+_xPos, Y1 = 120+_yPos, X2 = 320+_xPos, Y2 = 120+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[2]);
-            larr[3] = new Line() { X1 = 20+_xPos, Y1 = 220+_yPos, X2 = 320+_xPos, Y2 = 220+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[3]);
-            larr[4] = new Line() { X1 = 20+_xPos, Y1 = 320+_yPos, X2 = 320+_xPos, Y2 = 320+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[4]);
-            larr[5] = new Line() { X1 = 20+_xPos, Y1 = 20+_yPos, X2 = 320+_xPos, Y2 = 20+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[5]);
-            larr[6] = new Line() { X1 = 20+_xPos, Y1 = 320+_yPos, X2 = 20+_xPos, Y2 = 20+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[6]);
-            larr[7] = new Line() { X1 = 320+_xPos, Y1 = 320+_yPos, X2 = 320+_xPos, Y2 = 20+_yPos, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(larr[7]);
+    
             rotateTransformObj.Angle = _rot;
-            rotateTransformObj.CenterX =_xCenter+ _xPos;
-            rotateTransformObj.CenterY =_yCenter+ _yPos;
+            rotateTransformObj.CenterX = _xCenter + _xPos;
+            rotateTransformObj.CenterY = _yCenter + _yPos;
 
-                for (int i = 0; i < larr.Length; i++)
+            setLinePosition();
+            for (int i = 0; i < larrField.Length; i++)
             {
-                larr[i].RenderTransform= rotateTransformObj;
+                canvas.Children.Add(larrField[i]);
+                larrField[i].RenderTransform = rotateTransformObj;
             }
 
+
+            int iX = 0;
+            int iE = 0;
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
                     if (currentField[i, j] == 1)
                     {
-                        Line X1 = new Line() { X1 = 20 + (j * 100)+_xPos, Y1 = 20 + (i * 100)+_yPos, X2 = 120 + (j * 100)+_xPos, Y2 = 120 + (i * 100)+_yPos, Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100)+_xPos, Y1 = 120 + (i * 100)+_yPos, X2 = 120 + (j * 100)+_xPos, Y2 = 20 + (i * 100)+_yPos, Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X2);
-                        X1.RenderTransform = rotateTransformObj;
-                        X2.RenderTransform = rotateTransformObj;
+                        larrX[iX].X1 = (j * 100 * _scale) + _xPos;
+                        larrX[iX].Y1 = (i * 100 * _scale) + _yPos;
+                        larrX[iX].X2 = 100 * _scale + (j * 100 * _scale) + _xPos;
+                        larrX[iX].Y2 = 100 * _scale + (i * 100 * _scale) + _yPos;
+                        larrX[iX].Stroke = XStroke;
+                        larrX[iX].StrokeThickness = 3.0;
+                        canvas.Children.Add(larrX[iX]);
+                        larrX[iX].RenderTransform = rotateTransformObj;
+                        iX++;
+                        
+                        larrX[iX].X1 = (j * 100 * _scale) + _xPos;
+                        larrX[iX].Y1 = 100 * _scale + (i * 100 * _scale) + _yPos;
+                        larrX[iX].X2 = 100 * _scale + (j * 100 * _scale) + _xPos;
+                        larrX[iX].Y2 = (i * 100 * _scale) + _yPos;
+                        larrX[iX].Stroke = XStroke;
+                        larrX[iX].StrokeThickness = 3.0;
+                        canvas.Children.Add(larrX[iX]);
+                        larrX[iX].RenderTransform = rotateTransformObj;
+                        iX++;
                     }
                     else if (currentField[i, j] == 2)
                     {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100)+_xPos, 20 + (i * 100)+_yPos, 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                        Canvas wrap = new Canvas();
-                        wrap.Children.Add(OE);
-                        canvas.Children.Add(wrap);
-                        wrap.RenderTransform = rotateTransformObj;
+                        larrEllipse[iE].Margin = new Thickness((j * 100 * _scale) + _xPos,(i * 100 * _scale) + _yPos, 0, 0);
+                        larrEllipse[iE].Width = 100 * _scale;
+                        larrEllipse[iE].Height = 100 * _scale;
+                        larrEllipse[iE].Stroke = OStroke;
+                        larrEllipse[iE].StrokeThickness = 3.0;
+
+                        if (!larrWrap[iE].Children.Contains(larrEllipse[iE]))
+                        {
+                            larrWrap[iE].Children.Add(larrEllipse[iE]);
+                        }
+                        canvas.Children.Add(larrWrap[iE]);
+                        larrWrap[iE].RenderTransform = rotateTransformObj;
+                        iE++;
                     }
                 }
             }
@@ -308,25 +431,119 @@ namespace OOPGames.Classes.Gruppe_K
 
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
-            float dT = 40f / 1000f;
-            _rot += _rotSpeed*dT;
+            if (dT > 0)
+            {
+                dT = (float)(System.DateTime.Now.Subtract(lastTime).TotalMilliseconds / 1000f);
+            } else
+            {
+                dT = 40f / 1000f;
+            }
+            lastTime = System.DateTime.Now;
+
+            _rot += _rotSpeed * dT;
             _rot = _rotSpeed > 360 ? 0 : _rot;
-            
-            _xPos += (_xSpeed * dT);
-            if ((_xPos + _xCenter / 2) > 450 || (_xPos + _xCenter / 2)<50)
+
+            _xPos += _xSpeed * dT;
+
+            float width = (float)(Math.Abs(300*_scale * Math.Cos(_rot * (Math.PI / 180))) + Math.Abs(300*_scale * Math.Sin(_rot * (Math.PI / 180))));
+
+            if (((_xPos + width) > 780  && _xSpeed>0)|| ((_xPos) < 0 && _xSpeed<0))
             {
                 _xSpeed = -_xSpeed;
                 _rotSpeed *= -1;
             }
 
-            _yPos += (_ySpeed * dT);
-            if ((_yPos + _yCenter / 2) > 600 || (_yPos + _yCenter / 2) < 50)
+            _yPos += _ySpeed * dT;
+            if (((_yPos + width) > 850 && _ySpeed>0)|| ((_yPos) < 0 && _ySpeed<0))
             {
                 _ySpeed = -_ySpeed;
                 _rotSpeed *= -1;
             }
 
+            _scale += _scaleSpeed*dT;
+            if((_scale<_scaleMin && _scaleSpeed<0) || (_scale > _scaleMax && _scaleSpeed > 0))
+            {
+                _scaleSpeed = -_scaleSpeed;
+            }
+
             PaintGameField(canvas, currentField);
+        }
+
+
+        private void initVariables(Canvas canvas)
+        {
+            if (larrField==null)
+            {
+                bgColor = Color.FromRgb(255, 255, 255);
+                lineColor = Color.FromRgb(0, 0, 0);
+                lineStroke = new SolidColorBrush(lineColor);
+                XColor = Color.FromRgb(0, 255, 0);
+                XStroke = new SolidColorBrush(XColor);
+                OColor = Color.FromRgb(0, 0, 255);
+                OStroke = new SolidColorBrush(OColor);
+                
+                larrField = new Line[8];
+                for(int i = 0; i < 8; i++)
+                {
+                    larrField[i] = new Line();
+                }
+                
+              
+                larrX = new Line[10];
+                for(int i = 0; i < 10; i++) 
+                { 
+                    larrX[i] = new Line(); 
+                }
+
+                larrWrap=new Canvas[5];
+                for(int i = 0; i < 5; i++)
+                {
+                    larrWrap[i] = new Canvas();
+                }
+
+                larrEllipse=new Ellipse[5];
+                for(int i=0; i < 5; i++) 
+                { 
+                    larrEllipse[i] = new Ellipse();
+                }
+
+            }
+        }
+        private void setLinePosition()
+        {
+            _xCenter = (int)(150*_scale);
+            _yCenter = (int)(150*_scale);
+
+            for (int i = 0; i < 4; i++)
+            {
+                larrField[i].X1 = _xPos;
+                larrField[i].Y1 = _yPos+i*100*_scale;
+                larrField[i].X2 = 300*_scale + _xPos;
+                larrField[i].Y2 = _yPos+i*100*_scale;
+                larrField[i].Stroke = lineStroke;
+                larrField[i].StrokeThickness = 3.0;
+            }
+           
+            for (int i = 4; i < 8; i++)
+            {
+                larrField[i].X1 = _xPos + (i-4) * 100*_scale;
+                larrField[i].Y1 = _yPos;
+                larrField[i].X2 = _xPos + (i-4) * 100*_scale;
+                larrField[i].Y2 = 300*_scale + _yPos;
+                larrField[i].Stroke = lineStroke;
+                larrField[i].StrokeThickness = 3.0;
+            }
+          
+        }
+        private void Text(double x, double y, string text, int size, Color colorText, Canvas canvas)
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = text;
+            textBlock.Foreground = new SolidColorBrush(colorText);
+            textBlock.FontSize = size;
+            Canvas.SetLeft(textBlock, x);
+            Canvas.SetTop(textBlock, y);
+            canvas.Children.Add(textBlock);
         }
     }
 }

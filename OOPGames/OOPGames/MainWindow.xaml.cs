@@ -1,4 +1,5 @@
 ﻿using OOPGames.Classes.Gruppe_B;
+using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
 using OOPGames.Classes.GruppeI;
@@ -41,6 +42,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_MS());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            //OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());

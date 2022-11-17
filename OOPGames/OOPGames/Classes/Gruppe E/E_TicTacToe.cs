@@ -24,7 +24,7 @@ namespace OOPGames
 
         public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
-            //Farben für Hintergrund Spielfeld und Formen
+            //Farben für Hintergrund, Spielfeld, Formen
 
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(0, 0, 0);
@@ -207,8 +207,7 @@ namespace OOPGames
     {
         E_TicTacToeField _Field = new E_TicTacToeField();
 
-        public ITicTacToeField E_TicTacToeField { get { return _Field; } }
-
+        public ITicTacToeField TicTacToeField { get { return _Field; } }
         public bool MovesPossible
         {
             get
@@ -232,7 +231,7 @@ namespace OOPGames
 
         public IGameField CurrentField { get { return E_TicTacToeField; } }
 
-        public ITicTacToeField TicTacToeField { get { return _Field; } }
+        public ITicTacToeField E_TicTacToeField { get { return _Field; } }
 
         public int CheckIfPLayerWon()
         {

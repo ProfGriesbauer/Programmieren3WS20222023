@@ -8,23 +8,16 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace OOPGames
+namespace OOPGames.Classes.Gruppe_K
 {
-    /*public class H_TicTacToeRules : BaseTicTacToeRules
+    public class K_Painter_LB : BaseTicTacToePaint
     {
-
-    }*/
-
-
-    public class H_TicTacToePaint : BaseTicTacToePaint
-    {
-        //voererst nur von Griesbauer TicTacToe kopiert, eigene Implementierung/Anpassung fehlt noch
-        public override string Name { get { return "H_TicTacToePaint"; } }
+        public override string Name { get { return "K Painter LB"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(67, 171, 171);
+            Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
@@ -71,3 +64,5 @@ namespace OOPGames
         }
     }
 }
+
+

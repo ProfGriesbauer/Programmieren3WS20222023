@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Ink;
 using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 
 namespace OOPGames.Classes.Gruppe_K
 {
@@ -17,15 +15,15 @@ namespace OOPGames.Classes.Gruppe_K
     {
 
         protected float _rot = 0f;
-        protected float _rotSpeed = 20f;
+        protected float _rotSpeed = 40f;
         
-        protected float _xSpeed = 80f, _ySpeed = 100f;
+        protected float _xSpeed = 100f, _ySpeed = 150f;
         protected float _xPos = 0, _yPos = 0;
         
         protected float _scale = 1f;
-        protected float _scaleMin=0.5f;
-        protected float _scaleMax = 1.5f;
-        protected float _scaleSpeed = 0.2f;
+        protected float _scaleMin=0.3f;
+        protected float _scaleMax = 1.2f;
+        protected float _scaleSpeed = 0.25f;
 
 
         protected int _xCenter = 0, _yCenter = 0;
@@ -303,9 +301,9 @@ namespace OOPGames.Classes.Gruppe_K
                     Action<object> action = (object tsk) =>
                     {
                         Console.WriteLine("Rotating Field: Added Object");
-                        while (obj.watchdogTimeout<50)
+                        while (obj.watchdogTimeout<20)
                         {
-                            Thread.Sleep(10);
+                            Thread.Sleep(100);
                             obj.watchdogTimeout++;
                         }
 
@@ -330,6 +328,13 @@ namespace OOPGames.Classes.Gruppe_K
 
         float dT=0f;
         DateTime lastTime = DateTime.Now;
+        float colorStep = 0f;
+        float colorDir = 1;
+        
+        RenderTargetBitmap[] rtb;
+        int rtbCnt = 0;
+        const int rtbMaxSize = 150;
+        float rtbOpacity = 0.1f;
 
         RotateTransform rotateTransformObj = new RotateTransform();
 
@@ -344,6 +349,7 @@ namespace OOPGames.Classes.Gruppe_K
         Line[] larrX;
         Canvas[] larrWrap;
         Ellipse[] larrEllipse;
+
 
         public string Name { get { return "K Painter Rotating"; } }
 
@@ -366,9 +372,9 @@ namespace OOPGames.Classes.Gruppe_K
             initVariables(canvas);
 
             canvas.Children.Clear();
-            Text(650, 10, "FPS: "+(int)(1/dT),20, lineColor, canvas);
-            canvas.Background = new SolidColorBrush(bgColor);
-    
+
+            drawBackground(canvas);
+
             rotateTransformObj.Angle = _rot;
             rotateTransformObj.CenterX = _xCenter + _xPos;
             rotateTransformObj.CenterY = _yCenter + _yPos;
@@ -440,33 +446,13 @@ namespace OOPGames.Classes.Gruppe_K
             }
             lastTime = System.DateTime.Now;
 
-            _rot += _rotSpeed * dT;
-            _rot = _rotSpeed > 360 ? 0 : _rot;
 
-            _xPos += _xSpeed * dT;
-
-            float width = (float)(Math.Abs(300*_scale * Math.Cos(_rot * (Math.PI / 180))) + Math.Abs(300*_scale * Math.Sin(_rot * (Math.PI / 180))));
-
-            if (((_xPos + width) > 780  && _xSpeed>0)|| ((_xPos) < 0 && _xSpeed<0))
-            {
-                _xSpeed = -_xSpeed;
-                _rotSpeed *= -1;
-            }
-
-            _yPos += _ySpeed * dT;
-            if (((_yPos + width) > 850 && _ySpeed>0)|| ((_yPos) < 0 && _ySpeed<0))
-            {
-                _ySpeed = -_ySpeed;
-                _rotSpeed *= -1;
-            }
-
-            _scale += _scaleSpeed*dT;
-            if((_scale<_scaleMin && _scaleSpeed<0) || (_scale > _scaleMax && _scaleSpeed > 0))
-            {
-                _scaleSpeed = -_scaleSpeed;
-            }
-
+            updatePhysic(canvas);
+            updateColor();
             PaintGameField(canvas, currentField);
+
+            updateScreenshot(canvas);
+            Text(canvas.ActualWidth-100, 10, "FPS: " + (int)(1 / dT), 20, lineColor, canvas);
         }
 
 
@@ -474,12 +460,12 @@ namespace OOPGames.Classes.Gruppe_K
         {
             if (larrField==null)
             {
-                bgColor = Color.FromRgb(255, 255, 255);
-                lineColor = Color.FromRgb(0, 0, 0);
+                bgColor = Color.FromRgb(0, 0, 0);
+                lineColor = Color.FromRgb(255, 255, 255);
                 lineStroke = new SolidColorBrush(lineColor);
-                XColor = Color.FromRgb(0, 255, 0);
+                XColor = Color.FromRgb(255, 255, 255);
                 XStroke = new SolidColorBrush(XColor);
-                OColor = Color.FromRgb(0, 0, 255);
+                OColor = Color.FromRgb(255, 255, 255);
                 OStroke = new SolidColorBrush(OColor);
                 
                 larrField = new Line[8];
@@ -507,12 +493,43 @@ namespace OOPGames.Classes.Gruppe_K
                     larrEllipse[i] = new Ellipse();
                 }
 
+                rtb = new RenderTargetBitmap[rtbMaxSize];
+              
+
+            }
+        }
+
+        private void drawBackground(Canvas canvas)
+        {
+            Label labelC = new Label();
+            labelC.Width = canvas.ActualWidth;
+            labelC.Height = canvas.ActualHeight;
+            labelC.Background = new SolidColorBrush(bgColor);
+            canvas.Children.Add(labelC);
+            for (int i = rtbCnt; i < rtb.Length+rtbCnt; i++)
+            {
+                int tmpi = i % rtb.Length;
+                if (rtb[tmpi] != null)
+                {
+                    ImageBrush image = new ImageBrush(rtb[tmpi]);
+                    image.Opacity = rtbOpacity * (((i - rtbCnt) % rtb.Length) / (float)rtb.Length);
+
+                    Label label = new Label();
+                    label.Width = canvas.ActualWidth;
+                    label.Height = canvas.ActualHeight;
+                    label.Background = image;
+                    canvas.Children.Add(label);
+                }
             }
         }
         private void setLinePosition()
         {
             _xCenter = (int)(150*_scale);
             _yCenter = (int)(150*_scale);
+
+            lineStroke = new SolidColorBrush(lineColor);
+            XStroke = new SolidColorBrush(XColor);
+            OStroke = new SolidColorBrush(OColor);
 
             for (int i = 0; i < 4; i++)
             {
@@ -535,7 +552,74 @@ namespace OOPGames.Classes.Gruppe_K
             }
           
         }
-        private void Text(double x, double y, string text, int size, Color colorText, Canvas canvas)
+
+        private void updatePhysic(Canvas canvas)
+        {
+            _rot += _rotSpeed * dT;
+            _rot = _rotSpeed > 360 ? 0 : _rot;
+
+            _xPos += _xSpeed * dT;
+
+            float width = _xCenter * 2;//(float)(Math.Abs(300 * _scale * Math.Cos(_rot * (Math.PI / 180))) + Math.Abs(300 * _scale * Math.Sin(_rot * (Math.PI / 180))));
+
+            if (((_xPos + width) > canvas.ActualWidth && _xSpeed > 0) || ((_xPos) < 20 && _xSpeed < 0))
+            {
+                _xSpeed = -_xSpeed;
+                _rotSpeed *= -1;
+            }
+
+            _yPos += _ySpeed * dT;
+            if (((_yPos + width) > canvas.ActualHeight && _ySpeed > 0) || ((_yPos) < 20 && _ySpeed < 0))
+            {
+                _ySpeed = -_ySpeed;
+                _rotSpeed *= -1;
+            }
+
+            _scale += _scaleSpeed * dT;
+            if ((_scale < _scaleMin && _scaleSpeed < 0) || (_scale > _scaleMax && _scaleSpeed > 0))
+            {
+                _scaleSpeed = -_scaleSpeed;
+            }
+        }
+
+        private void updateColor()
+        {
+            colorStep += dT * 10 * colorDir;
+            if ((colorStep >= 20 && colorDir > 0) || (colorStep <= 0 && colorDir < 0))
+            {
+                colorDir = -colorDir;
+            }
+            colorStep = colorStep < 0 ? 0 : colorStep;
+
+            bgColor.R = (byte)(colorStep);
+            bgColor.G = (byte)(colorStep);
+            bgColor.B = (byte)(colorStep);
+
+            lineColor.R = (byte)(255 - bgColor.R);
+            lineColor.G = (byte)(255 - bgColor.G);
+            lineColor.B = (byte)(255 - bgColor.B);
+
+            XColor.R = (byte)(255 - bgColor.B);
+            XColor.G = (byte)(255 - bgColor.B);
+            XColor.B = (byte)(255 - bgColor.B);
+
+            OColor.R = (byte)(255 - bgColor.B);
+            OColor.G = (byte)(255 - bgColor.B);
+            OColor.B = (byte)(255 - bgColor.B);
+        }
+
+        void updateScreenshot(Canvas canvas)
+        {
+            if (rtbMaxSize > 0)
+            {
+                rtb[rtbCnt] = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96d, 96d, PixelFormats.Default);
+                rtb[rtbCnt].Render(canvas);
+                rtbCnt++;
+                rtbCnt %= rtb.Length;
+            }
+        }
+
+    private void Text(double x, double y, string text, int size, Color colorText, Canvas canvas)
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Text = text;
@@ -545,5 +629,7 @@ namespace OOPGames.Classes.Gruppe_K
             Canvas.SetTop(textBlock, y);
             canvas.Children.Add(textBlock);
         }
+
+
     }
 }

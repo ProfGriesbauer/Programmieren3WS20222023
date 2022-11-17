@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static OOPGames.PlayerD;
 
 namespace OOPGames
 {
@@ -39,7 +40,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_MS());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
-            //OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
@@ -50,7 +51,7 @@ namespace OOPGames
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
-
+            OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;

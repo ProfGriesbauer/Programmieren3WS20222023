@@ -32,24 +32,24 @@ namespace OOPGames.Classes.GruppeJ
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonBlack = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.buttonRed = new System.Windows.Forms.Button();
+            this.buttonBlue = new System.Windows.Forms.Button();
+            this.buttonYellow = new System.Windows.Forms.Button();
+            this.buttonLime = new System.Windows.Forms.Button();
+            this.buttonFuchsia = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonBlack
             // 
-            this.button1.BackColor = Color.Black; //Schwarz
-            this.button1.Location = new System.Drawing.Point(25, 75);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 50);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonBlack.BackColor = Color.Black; //Schwarz
+            this.buttonBlack.Location = new System.Drawing.Point(25, 75);
+            this.buttonBlack.Name = "buttonBlack";
+            this.buttonBlack.Size = new System.Drawing.Size(120, 50);
+            this.buttonBlack.TabIndex = 0;
+            this.buttonBlack.UseVisualStyleBackColor = false;
+            this.buttonBlack.Click += new System.EventHandler(this.buttonBlack_Click);
             // 
             // textBox1
             // 
@@ -64,68 +64,68 @@ namespace OOPGames.Classes.GruppeJ
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // button2
+            // buttonRed
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.button2.Location = new System.Drawing.Point(175, 75);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(120, 50);
-            this.button2.TabIndex = 2;
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonRed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonRed.Location = new System.Drawing.Point(175, 75);
+            this.buttonRed.Name = "buttonRed";
+            this.buttonRed.Size = new System.Drawing.Size(120, 50);
+            this.buttonRed.TabIndex = 2;
+            this.buttonRed.UseVisualStyleBackColor = false;
+            this.buttonRed.Click += new System.EventHandler(this.buttonRed_Click);
             // 
-            // button3
+            // buttonBlue
             // 
-            this.button3.BackColor = System.Drawing.Color.Blue;
-            this.button3.Location = new System.Drawing.Point(325, 75);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 50);
-            this.button3.TabIndex = 3;
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonBlue.BackColor = System.Drawing.Color.Blue;
+            this.buttonBlue.Location = new System.Drawing.Point(325, 75);
+            this.buttonBlue.Name = "buttonBlue";
+            this.buttonBlue.Size = new System.Drawing.Size(120, 50);
+            this.buttonBlue.TabIndex = 3;
+            this.buttonBlue.UseVisualStyleBackColor = false;
+            this.buttonBlue.Click += new System.EventHandler(this.buttonBlue_Click);
             // 
-            // button4
+            // buttonYellow
             // 
-            this.button4.BackColor = System.Drawing.Color.Yellow;
-            this.button4.Location = new System.Drawing.Point(25, 150);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 50);
-            this.button4.TabIndex = 4;
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.buttonYellow.BackColor = System.Drawing.Color.Yellow;
+            this.buttonYellow.Location = new System.Drawing.Point(25, 150);
+            this.buttonYellow.Name = "buttonYellow";
+            this.buttonYellow.Size = new System.Drawing.Size(120, 50);
+            this.buttonYellow.TabIndex = 4;
+            this.buttonYellow.UseVisualStyleBackColor = false;
+            this.buttonYellow.Click += new System.EventHandler(this.buttonYellow_Click);
             // 
-            // button5
+            // buttonLime
             // 
-            this.button5.BackColor = System.Drawing.Color.Lime;
-            this.button5.Location = new System.Drawing.Point(175, 150);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(120, 50);
-            this.button5.TabIndex = 5;
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.buttonLime.BackColor = System.Drawing.Color.Lime;
+            this.buttonLime.Location = new System.Drawing.Point(175, 150);
+            this.buttonLime.Name = "buttonLime";
+            this.buttonLime.Size = new System.Drawing.Size(120, 50);
+            this.buttonLime.TabIndex = 5;
+            this.buttonLime.UseVisualStyleBackColor = false;
+            this.buttonLime.Click += new System.EventHandler(this.buttonLime_Click);
             // 
-            // button6
+            // buttonFuchsia
             // 
-            this.button6.BackColor = System.Drawing.Color.Fuchsia;
-            this.button6.Location = new System.Drawing.Point(325, 150);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(120, 50);
-            this.button6.TabIndex = 6;
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.buttonFuchsia.BackColor = System.Drawing.Color.Fuchsia;
+            this.buttonFuchsia.Location = new System.Drawing.Point(325, 150);
+            this.buttonFuchsia.Name = "buttonFuchsia";
+            this.buttonFuchsia.Size = new System.Drawing.Size(120, 50);
+            this.buttonFuchsia.TabIndex = 6;
+            this.buttonFuchsia.UseVisualStyleBackColor = false;
+            this.buttonFuchsia.Click += new System.EventHandler(this.buttonFuchsia_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 253);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonFuchsia);
+            this.Controls.Add(this.buttonLime);
+            this.Controls.Add(this.buttonYellow);
+            this.Controls.Add(this.buttonBlue);
+            this.Controls.Add(this.buttonRed);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonBlack);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -140,12 +140,12 @@ namespace OOPGames.Classes.GruppeJ
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonBlack;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button buttonRed;
+        private System.Windows.Forms.Button buttonBlue;
+        private System.Windows.Forms.Button buttonYellow;
+        private System.Windows.Forms.Button buttonLime;
+        private System.Windows.Forms.Button buttonFuchsia;
     }
 }

@@ -13,8 +13,13 @@ namespace OOPGames.Classes.GruppeJ
     public partial class Form1 : Form
     {
         public  int i=0;
+        public Color p1Color;
+        public Color p2Color;
         public Form1()
         {
+            this.DialogResult = DialogResult.Cancel;
+            p1Color = Color.FromArgb(255, 255, 255);
+            p2Color = Color.FromArgb(255, 255, 255);
             InitializeComponent();
         }
 
@@ -27,41 +32,50 @@ namespace OOPGames.Classes.GruppeJ
         {
 
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonBlack_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "Player2,\r\nwähle deine Farbe!";
             i++;
-            if (i>1) { this.Hide(); i = 0; }
+            buttonSetsColor(Color.Black, i);
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonRed_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "Player2,\r\nwähle deine Farbe!";
             i++;
-            if (i > 1) { this.Hide(); i = 0; }
+            buttonSetsColor(Color.Red, i);
         }
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonBlue_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "Player2,\r\nwähle deine Farbe!";
             i++;
-            if (i > 1) { this.Hide(); i = 0; }
+            buttonSetsColor(Color.Blue, i);
         }
-        private void button4_Click(object sender, EventArgs e)
+        private void buttonYellow_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "Player2,\r\nwähle deine Farbe!";
             i++;
-            if (i > 1) { this.Hide(); i = 0; }
+            buttonSetsColor(Color.Yellow, i);
         }
-        private void button5_Click(object sender, EventArgs e)
+        private void buttonLime_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "Player2,\r\nwähle deine Farbe!";
             i++;
-            if (i > 1) { this.Hide(); i = 0; }
+            buttonSetsColor(Color.Lime, i);
         }
-        private void button6_Click(object sender, EventArgs e)
+        private void buttonFuchsia_Click(object sender, EventArgs e)
+        {
+            i++;
+            buttonSetsColor(Color.Fuchsia, i);
+        }
+        private void buttonSetsColor(Color c, int player)
         {
             textBox1.Text = "Player2,\r\nwähle deine Farbe!";
-            i++;
-            if (i > 1) { this.Hide(); i = 0; }
+            if (player == 1)
+            {
+                p1Color = c;
+            }
+            else
+            {
+                p2Color = c;
+                this.DialogResult = DialogResult.OK;
+                this.Hide();
+                i = 0;
+            }
         }
     }
 }

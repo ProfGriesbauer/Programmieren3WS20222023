@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
+using Color = System.Drawing.Color;
 //using static OOPGames.PlayerD;
 
 namespace OOPGames
@@ -32,6 +34,8 @@ namespace OOPGames
         IGameRules _CurrentRules = null;
         IGamePlayer _CurrentPlayer1 = null;
         IGamePlayer _CurrentPlayer2 = null;
+        System.Windows.Media.Color X_Color;
+        System.Windows.Media.Color O_Color;
 
         System.Windows.Threading.DispatcherTimer _PaintTimer = null;
 
@@ -49,14 +53,15 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             //OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 
             //Rules
-            OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             //OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
 
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
@@ -121,13 +126,19 @@ namespace OOPGames
                 ((IGameRules2)_CurrentRules).StartedGameCall();
             }
 
-            if (_CurrentPainter != null && 
+            if (_CurrentPainter != null &&
                 _CurrentRules != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
             {
                 _CurrentPlayer = _CurrentPlayer1;
                 Status.Text = "Game startet!";
                 Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 _CurrentRules.ClearField();
+                //Hinzufügen der Gewählten Farben
+                if( _CurrentPainter is GJ_TicTacToePaint) 
+                {
+                    ((GJ_TicTacToePaint)_CurrentPainter).X_Color = this.X_Color;
+                    ((GJ_TicTacToePaint)_CurrentPainter).O_Color = this.O_Color;
+                }
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
             }
@@ -226,8 +237,24 @@ namespace OOPGames
 
         private void GJ_ChooseColor(object sender, RoutedEventArgs e)
         {
-            var win2 = new Classes.GruppeJ.Form1();
-            win2.Show();
+            var myForm = new Classes.GruppeJ.Form1();
+            var result = myForm.ShowDialog();
+            //
+            //Color musste hier leider etwas umständlich Konvertiert werden
+            //
+            System.Windows.Media.Color p1 = System.Windows.Media.Color.FromRgb(255, 255, 255); //^= Weiß
+            System.Windows.Media.Color p2 = System.Windows.Media.Color.FromRgb(255, 255, 255); //^= Weiß
+            do
+            {
+                
+                System.Drawing.Color color = myForm.p1Color;
+                p1 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+                color = myForm.p2Color;
+                p2 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+                
+            } while (p1 == System.Windows.Media.Color.FromRgb(255, 255, 255) || p2 == System.Windows.Media.Color.FromRgb(255, 255, 255));
+            this.X_Color = p1;
+            this.O_Color = p2;
         }
     }
 }

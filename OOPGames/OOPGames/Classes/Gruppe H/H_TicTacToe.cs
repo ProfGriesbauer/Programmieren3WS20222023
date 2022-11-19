@@ -126,9 +126,9 @@ namespace OOPGames
         //Alle Spielfelder werden nacheinander aufgerufen und der Wert 0 als Spielernummer (PlayerNumber) eingetragen.
         public void ClearField()
         {
-            for(int row = 0; row <= 2; row++)
+            for (int row = 0; row <= 2; row++)
             {
-                for(int column = 0; column <= 2; column++)
+                for (int column = 0; column <= 2; column++)
                 {
                     _Spielfeld[row, column] = 0;
                     specialRuleMoveDone = false;                //zähler für erste Bewegung wird auf null gesetzt
@@ -153,7 +153,7 @@ namespace OOPGames
 
             return (-1);                                                                                                                           //Wenn bis hierher kein Return genutzt wurde, hat noch keiner gewonnen. Es wird -1 übergeben. (Siehe Interface, kein gewinner = -1)
         }
-        
+
 
         //erstellt die öffentliche Variable Name, diese wird (mit etwas Glück) vom Programmfenster ausgelesen und angezeigt
         public string Name { get { return "H_TicTacToe_Rules_M"; } }
@@ -189,7 +189,7 @@ namespace OOPGames
                 if (specialRuleMoveDone == false)
                 {
                     specialRuleMoveDone = true;                                                 //Erster Move wurde gemacht, Variable wird auf true gesetzt
-                    firstMove((ITicTacToeMove) move);                                           //ruft Objekt first Move auf, Klammer Inhalt ven Griesbauer, was tut er genau??? --> scheint die Werte das aktuellen moves (angekliktes Feld?) zu übergeben??
+                    firstMove((ITicTacToeMove)move);                                           //ruft Objekt first Move auf, Klammer Inhalt ven Griesbauer, was tut er genau??? --> scheint die Werte das aktuellen moves (angekliktes Feld?) zu übergeben??
                 }
                 else                                                                            //specialRuleMoveDone ist true, bedeutet das ist der zweite Move und die spezial regeln gelten.
                 {
@@ -220,11 +220,11 @@ namespace OOPGames
             {
                 int rowNew = move.Row + rowAbweichung;                                  //soll abweichung addieren
                 int columnNew = move.Column + columnAbweichung;
-                
-                if(rowNew < 0) { rowNew = rowNew + 3; }                                 //stellt fest, ob das neue Feld außerhalb vom Spielfeld ist und passt an, damit das Kreuz auf der anderen Seite entsteht.
-                if(rowNew > 2) { rowNew = rowNew - 3; }
-                if(columnNew < 0) { columnNew = columnNew + 3; }
-                if(columnNew > 2) { columnNew = columnNew - 3; }
+
+                if (rowNew < 0) { rowNew = rowNew + 3; }                                 //stellt fest, ob das neue Feld außerhalb vom Spielfeld ist und passt an, damit das Kreuz auf der anderen Seite entsteht.
+                if (rowNew > 2) { rowNew = rowNew - 3; }
+                if (columnNew < 0) { columnNew = columnNew + 3; }
+                if (columnNew > 2) { columnNew = columnNew - 3; }
 
                 _Spielfeld[rowNew, columnNew] = move.PlayerNumber;                      //übergibt die an die Regeln angepassten Koordinaten an das Spielfeld, zusammen mit der Spieler Nummer.
             }

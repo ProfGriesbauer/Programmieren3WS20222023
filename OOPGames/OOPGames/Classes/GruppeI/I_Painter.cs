@@ -16,7 +16,6 @@ namespace OOPGames.Classes.GruppeI
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
-            //Farben festlegen
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -57,30 +56,7 @@ namespace OOPGames.Classes.GruppeI
             paintLine(1,10,28,10,6);
             paintLine(1,19,28,19,6);
             paintLine(1,28,28,28,6);
-
-            //Kreuze und Kreise zeichnen                    //vllt noch andere Formen?
-
-            for (int i = 0; i < 27; i++)
-            {
-                for (int j = 0; j < 27; j++)
-                {
-                    if (currentField[i, j] == 1) //Kreuze zeichnen
-                    {
-                        Line X1 = new Line() { X1 = 20 + (3*j * skalar), Y1 = 20 + (3*i * skalar), X2 = 80 + (3*j * skalar), Y2 = 80 + (3*i * skalar), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (3*j * skalar), Y1 = 80 + (3*i * skalar), X2 = 80 + (3*j * skalar), Y2 = 20 + (3*i * skalar), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 2) //Ellipsen zeichnen 
-                    {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(25 + (3*j * skalar), 25 + (3*i * skalar), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(OE);
-                    }
-                }
-            }
         }
-
-
 
     }
 }

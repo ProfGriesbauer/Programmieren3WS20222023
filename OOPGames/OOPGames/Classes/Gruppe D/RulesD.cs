@@ -25,44 +25,58 @@ namespace OOPGames
                         if (_KrassesFeld[i, j] == 0)
                         {
                             return true;
-                        } else { return false; }
-                        
-                            
-                        
+                        }
+
+
+
                     }
                 }
+                return false;
             }
         }
-                    
-                
-            
+
+
+
 
         public ITicTacToeField TicTacToeField => throw new NotImplementedException();
 
         public int CheckIfPLayerWon()
         {
-            for (int i = 0; i <= 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (_KrassesFeld[i, 0] == 1 && _KrassesFeld[i, 1] == 1 && _KrassesFeld[i, 2] == 1) { return 1; }
                 if (_KrassesFeld[0, i] == 1 && _KrassesFeld[1, i] == 1 && _KrassesFeld[2, i] == 1) { return 1; }
-                
+                if (_KrassesFeld[i, 0] == 2 && _KrassesFeld[i, 1] == 2 && _KrassesFeld[i, 2] == 2) { return 2; }
+                if (_KrassesFeld[0, i] == 2 && _KrassesFeld[1, i] == 2 && _KrassesFeld[2, i] == 2) { return 2; }
+
+
             }
-            
+            if (_KrassesFeld[0, 0] == 1 && _KrassesFeld[1, 1] == 1 && _KrassesFeld[2, 2] == 1) { return 1; }
+            if (_KrassesFeld[2, 0] == 1 && _KrassesFeld[1, 1] == 1 && _KrassesFeld[0, 2] == 1) { return 1; }
+            if (_KrassesFeld[0, 0] == 2 && _KrassesFeld[1, 1] == 2 && _KrassesFeld[2, 2] == 2) { return 2; }
+            if (_KrassesFeld[2, 0] == 2 && _KrassesFeld[1, 1] == 2 && _KrassesFeld[0, 2] == 2) { return 2; }
+            return -1;
         }
 
         public void ClearField()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _KrassesFeld[i, j] = 0;
+                }
+            }
         }
 
         public void DoMove(IPlayMove move)
         {
-            throw new NotImplementedException();
+            int Row = move.PlayerNumber;
         }
 
         public void DoTicTacToeMove(ITicTacToeMove move)
         {
-            throw new NotImplementedException();
+            _KrassesFeld[move.Row, move.Column] = move.PlayerNumber;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace OOPGames
 
         public void DoMove(IPlayMove move)
         {
-            int Row = move.PlayerNumber;
+            
         }
 
         public void DoTicTacToeMove(ITicTacToeMove move)

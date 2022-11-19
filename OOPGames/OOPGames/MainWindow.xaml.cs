@@ -1,4 +1,5 @@
 ﻿using OOPGames.Classes.Gruppe_B;
+using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
 using OOPGames.Classes.GruppeI;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,6 +18,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
+using Color = System.Drawing.Color;
+//using static OOPGames.PlayerD;
 
 namespace OOPGames
 {
@@ -29,6 +34,8 @@ namespace OOPGames
         IGameRules _CurrentRules = null;
         IGamePlayer _CurrentPlayer1 = null;
         IGamePlayer _CurrentPlayer2 = null;
+        System.Windows.Media.Color X_Color;
+        System.Windows.Media.Color O_Color;
 
         System.Windows.Threading.DispatcherTimer _PaintTimer = null;
 
@@ -39,17 +46,34 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_MS());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
-            //OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
+<<<<<<< HEAD
            // OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
+=======
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
+            //OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
+
+>>>>>>> b07f5c33a28ae1577807d06756ba3e8ba6539efa
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
+            //OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
+
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
+            //OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
@@ -106,17 +130,24 @@ namespace OOPGames
                 ((IGameRules2)_CurrentRules).StartedGameCall();
             }
 
-            if (_CurrentPainter != null && 
+            if (_CurrentPainter != null &&
                 _CurrentRules != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
             {
                 _CurrentPlayer = _CurrentPlayer1;
                 Status.Text = "Game startet!";
                 Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 _CurrentRules.ClearField();
+                //Hinzufügen der Gewählten Farben
+                if( _CurrentPainter is GJ_TicTacToePaint) 
+                {
+                    ((GJ_TicTacToePaint)_CurrentPainter).X_Color = this.X_Color;
+                    ((GJ_TicTacToePaint)_CurrentPainter).O_Color = this.O_Color;
+                }
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
             }
         }
+
 
         private void DoComputerMoves()
         {
@@ -206,6 +237,28 @@ namespace OOPGames
                     DoComputerMoves();
                 }
             }
+        }
+
+        private void GJ_ChooseColor(object sender, RoutedEventArgs e)
+        {
+            var myForm = new Classes.GruppeJ.Form1();
+            var result = myForm.ShowDialog();
+            //
+            //Color musste hier leider etwas umständlich Konvertiert werden
+            //
+            System.Windows.Media.Color p1 = System.Windows.Media.Color.FromRgb(255, 255, 255); //^= Weiß
+            System.Windows.Media.Color p2 = System.Windows.Media.Color.FromRgb(255, 255, 255); //^= Weiß
+            do
+            {
+                
+                System.Drawing.Color color = myForm.p1Color;
+                p1 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+                color = myForm.p2Color;
+                p2 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+                
+            } while (p1 == System.Windows.Media.Color.FromRgb(255, 255, 255) || p2 == System.Windows.Media.Color.FromRgb(255, 255, 255));
+            this.X_Color = p1;
+            this.O_Color = p2;
         }
     }
 }

@@ -37,17 +37,18 @@ namespace OOPGames
             public ITicTacToeMove GetMove(ITicTacToeField field)        //Wird diese Methode beim Klicken aufgerufen? Ja
             {
 
-                //Spalten
-
-                int A = 0;
+                int A = 0;//verindern
+                int B = 0;//selber 3 voll machen
 
                 if (_PlayerNumber == 1)
                 {
                     A = 2;
+                    B = 1;
                 }
                 else
                 {
                     A = 1;
+                    B = 2;
                 }
 
                 //Zeile
@@ -57,18 +58,15 @@ namespace OOPGames
                     
                     if (field[r, c] == A && field[r, c+1] == A && field[r, c+2] == 0)
                     {
-                        return new TicTacToeMove(r, 2, _PlayerNumber);
-                            
+                        return new TicTacToeMove(r, 2, _PlayerNumber);    
                     }
                     if (field[r, c] == A && field[r, c + 2] == A && field[r, c + 1] == 0)
                     {
                         return new TicTacToeMove(r, 1, _PlayerNumber);
-                            
                     }
                     if (field[r, c] == 0 && field[r, c + 1] == A && field[r, c + 2] == A)
                     {
-                        return new TicTacToeMove(r, 0, _PlayerNumber);
-                            
+                        return new TicTacToeMove(r, 0, _PlayerNumber);     
                     }
                 }
 
@@ -80,17 +78,14 @@ namespace OOPGames
                     if (field[r, c] == A && field[r+1, c] == A && field[r+2, c] == 0)
                     {
                         return new TicTacToeMove(2, c, _PlayerNumber);
-
                     }
                     if (field[r, c] == A && field[r+2, c] == A && field[r+1, c] == 0)
                     {
                         return new TicTacToeMove(1, c, _PlayerNumber);
-
                     }
                     if (field[r, c] == 0 && field[r+1, c] == A && field[r+2, c] == A)
                     {
                         return new TicTacToeMove(0, c, _PlayerNumber);
-
                     }
                 }
 
@@ -101,17 +96,14 @@ namespace OOPGames
                     if (field[rc, rc] == A && field[rc+1, rc+1] == A && field[rc+2, rc+2] == 0)
                     {
                         return new TicTacToeMove(rc+2, rc+2, _PlayerNumber);
-
                     }
                     if (field[rc, rc] == A && field[rc+2, rc+2] == A && field[rc+1, rc+1] == 0)
                     {
                         return new TicTacToeMove(rc+1, rc+1, _PlayerNumber);
-
                     }
                     if (field[rc, rc] == 0 && field[rc+1, rc+1] == A && field[rc+2, rc+2] == A)
                     {
                         return new TicTacToeMove(rc, rc, _PlayerNumber);
-
                     }
                 }
 
@@ -122,34 +114,103 @@ namespace OOPGames
                         if (field[r, c] == A && field[r+1, c - 1] == A && field[r + 2, c - 2] == 0)
                         {
                             return new TicTacToeMove(2, 0, _PlayerNumber);
-
                         }
                         if (field[r, c] == A && field[r + 2, c - 2] == A && field[r + 1, c - 1] == 0)
                         {
                             return new TicTacToeMove(r + 1, c - 1, _PlayerNumber);
-
                         }
                         if (field[r, c] == 0 && field[r + 1, c - 1] == A && field[r + 2, c - 2] == A)
                         {
                             return new TicTacToeMove(r, c, _PlayerNumber);
-
                         }
                     }
                 }
-                
+
+                // selber reihe voll machen
+                for (int r=0; r<=2; r++)
+                {
+                    int c = 0;
+
+                    if (field[r, c] == B && field[r + 1, c] == B && field[r + 2, c] == 0)
+                    {
+                        return new TicTacToeMove(2, c, _PlayerNumber);
+                    }
+                    if (field[r, c] == B && field[r + 2, c] == B && field[r + 1, c] == 0)
+                    {
+                        return new TicTacToeMove(1, c, _PlayerNumber);
+                    }
+                    if (field[r, c] == 0 && field[r + 1, c] == B && field[r + 2, c] == B)
+                    {
+                        return new TicTacToeMove(0, c, _PlayerNumber);
+                    }
+                }
+
+                for (int c = 0; c <= 2; c++)
+                {
+                    int r = 0;
+
+                    if (field[r, c] == B && field[r + 1, c] == B && field[r + 2, c] == 0)
+                    {
+                        return new TicTacToeMove(2, c, _PlayerNumber);
+                    }
+                    if (field[r, c] == B && field[r + 2, c] == B && field[r + 1, c] == 0)
+                    {
+                        return new TicTacToeMove(1, c, _PlayerNumber);
+                    }
+                    if (field[r, c] == 0 && field[r + 1, c] == B && field[r + 2, c] == B)
+                    {
+                        return new TicTacToeMove(0, c, _PlayerNumber);
+                    }
+                }
+
+                for (int rc = 0; rc <= 2; rc++)
+                {
+                    if (field[rc, rc] == B && field[rc + 1, rc + 1] == B && field[rc + 2, rc + 2] == 0)
+                    {
+                        return new TicTacToeMove(rc + 2, rc + 2, _PlayerNumber);
+                    }
+                    if (field[rc, rc] == B && field[rc + 2, rc + 2] == B && field[rc + 1, rc + 1] == 0)
+                    {
+                        return new TicTacToeMove(rc + 1, rc + 1, _PlayerNumber);
+                    }
+                    if (field[rc, rc] == 0 && field[rc + 1, rc + 1] == B && field[rc + 2, rc + 2] == B)
+                    {
+                        return new TicTacToeMove(rc, rc, _PlayerNumber);
+                    }
+                }
+
+                for (int r = 0; r <= 2; r++)
+                {
+                    for (int c = 2; c >= 0; c--)
+                    {
+                        if (field[r, c] == B && field[r + 1, c - 1] == B && field[r + 2, c - 2] == 0)
+                        {
+                            return new TicTacToeMove(2, 0, _PlayerNumber);
+                        }
+                        if (field[r, c] == B && field[r + 2, c - 2] == B && field[r + 1, c - 1] == 0)
+                        {
+                            return new TicTacToeMove(r + 1, c - 1, _PlayerNumber);
+                        }
+                        if (field[r, c] == 0 && field[r + 1, c - 1] == B && field[r + 2, c - 2] == B)
+                        {
+                            return new TicTacToeMove(r, c, _PlayerNumber);
+                        }
+                    }
+                }
+
                 Random rand = new Random();
                 int f = rand.Next(0, 8);
-                for (int i = 0; i < 9; i++)                             //9 Felder durchitterieren
+                for (int i = 0; i < 9; i++)                             
                 {
-                    int c = f % 3;                                      //umrechnen der Zahlen 1:9 auf Spalten c
-                    int r = ((f - c) / 3) % 3;                             //Reihe voll dann nächste Reihe
+                    int c = f % 3;                                     
+                    int r = ((f - c) / 3) % 3;                            
                     if (field[r, c] <= 0)
                     {
-                        return new TicTacToeMove(r, c, _PlayerNumber);       //Wenn Feld noch frei ist
+                        return new TicTacToeMove(r, c, _PlayerNumber);      
                     }
                     else
                     {
-                        f++;                                                   //sonst f nur um 1 erhöhen und nochmal probieren
+                        f++;                                                   
                     }
                 }
 

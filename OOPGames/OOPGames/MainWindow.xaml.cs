@@ -20,7 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using Color = System.Drawing.Color;
-//using static OOPGames.PlayerD;
+using static OOPGames.PlayerD;
 
 namespace OOPGames
 {
@@ -67,7 +67,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
-            //OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
+            OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
 

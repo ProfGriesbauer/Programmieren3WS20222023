@@ -20,7 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using Color = System.Drawing.Color;
-//using static OOPGames.PlayerD;
+using static OOPGames.PlayerD;
 
 namespace OOPGames
 {
@@ -55,12 +55,16 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
            // OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 =======
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             //OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 =======
         
+=======
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
+>>>>>>> 19de95fc7f6b5bbbf4ec4099a75cf4731e121ee7
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
 >>>>>>> fd03840ce61cc2313ebd5698c0bc5886d70f0a45
 
@@ -76,7 +80,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
-            //OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
+            OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
 

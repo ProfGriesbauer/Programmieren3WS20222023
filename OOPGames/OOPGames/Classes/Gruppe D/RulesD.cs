@@ -38,7 +38,7 @@ namespace OOPGames
 
 
 
-        public ITicTacToeField TicTacToeField => throw new NotImplementedException();
+        public ITicTacToeField TicTacToeField { get { return _KrassesFeld;} }
 
         public int CheckIfPLayerWon()
         {
@@ -71,12 +71,19 @@ namespace OOPGames
 
         public void DoMove(IPlayMove move)
         {
-            
+            if (move is ITicTacToeMove)
+            {
+                DoTicTacToeMove((ITicTacToeMove) move);
+            }
+
         }
 
         public void DoTicTacToeMove(ITicTacToeMove move)
         {
-            _KrassesFeld[move.Row, move.Column] = move.PlayerNumber;
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            {
+                _KrassesFeld[move.Row, move.Column] = move.PlayerNumber;
+            }
         }
     }
 }

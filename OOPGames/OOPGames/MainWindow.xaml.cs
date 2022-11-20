@@ -44,7 +44,7 @@ namespace OOPGames
             //REGISTER YOUR CLASSES HERE
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new K_Painter_MS());
+            OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
@@ -54,10 +54,15 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
 <<<<<<< HEAD
+<<<<<<< HEAD
            // OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 =======
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             //OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
+=======
+        
+            OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
+>>>>>>> fd03840ce61cc2313ebd5698c0bc5886d70f0a45
 
 >>>>>>> b07f5c33a28ae1577807d06756ba3e8ba6539efa
             //Rules

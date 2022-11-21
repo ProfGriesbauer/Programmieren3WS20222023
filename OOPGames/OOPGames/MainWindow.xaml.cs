@@ -59,16 +59,16 @@ namespace OOPGames
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
-<<<<<<< HEAD
-            OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
-=======
+
+            //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
+
             OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             //OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
 
->>>>>>> aadb49a104e3f649d1cdc8f44032dcb3a70cb9df
+
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());

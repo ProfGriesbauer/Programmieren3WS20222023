@@ -84,7 +84,7 @@ namespace OOPGames
     }
     public class TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[9, 3, 3] ;
+        int[,] _Field = new int[3, 3, 4] ;
 
         public override int this[int r, int c]
         {

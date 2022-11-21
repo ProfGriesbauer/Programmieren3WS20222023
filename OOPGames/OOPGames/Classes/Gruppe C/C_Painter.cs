@@ -82,7 +82,7 @@ namespace OOPGames.Classes.Gruppe_C
         public override int PlayerNumber { get { return _Playernumber; } }
         public override IGamePlayer Clone()
         {
-            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            C_TicTacToeHumanPlayer ttthp = new C_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_Playernumber);
             return ttthp;
         }
@@ -142,7 +142,7 @@ namespace OOPGames.Classes.Gruppe_C
 
         public override int CheckIfPLayerWon()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public override void ClearField()

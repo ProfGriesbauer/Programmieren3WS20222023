@@ -9,21 +9,48 @@ using System.Windows.Shapes;
 
 namespace OOPGames.Classes.Gruppe_B
 {
-    public class B_Painter : BaseTicTacToePaint
+    public class B_Painter : IPaintTicTacToe
     {
-        public override string Name { get { return "GruppeBTicTacToePaint"; } }
+        private byte c1r;
+        private byte c1g;
+        private byte c1b;
+        private byte c2r;
+        private byte c2g;
+        private byte c2b;
 
-        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
+        public B_Painter()
         {
             Random rnd = new Random();
+            c1r = (byte)rnd.Next(60, 255);
+            c1g = (byte)rnd.Next(60, 255);
+            c1b = (byte)rnd.Next(60, 255);
+
+            c2r = (byte)rnd.Next(60, 255);
+            c2g = (byte)rnd.Next(60, 255);
+            c2b = (byte)rnd.Next(60, 255);
+        }
+
+        public string Name { get { return "GruppeBTicTacToePaint"; } }
+
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is ITicTacToeField)
+            {
+                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
+            }
+        }
+
+        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
+        {
+            
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(0,0,0);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(255,255,255);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color p1Color = Color.FromRgb((byte)rnd.Next(60,255), (byte)rnd.Next(60, 255), (byte)rnd.Next(60, 255));
+            Color p1Color = Color.FromRgb(c1r, c1g, c1b);
             Brush p1Stroke = new SolidColorBrush(p1Color);
-            Color p2Color = Color.FromRgb((byte)rnd.Next(60, 255), (byte)rnd.Next(60, 255), (byte)rnd.Next(60, 255));
+            Color p2Color = Color.FromRgb(c2r, c2g, c2b);
             Brush p2Stroke = new SolidColorBrush(p2Color);
 
 

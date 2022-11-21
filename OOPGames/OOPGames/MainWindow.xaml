@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:OOPGames"
         mc:Ignorable="d"
         Title="OOP Games" ResizeMode="CanResizeWithGrip" MinWidth="400" MinHeight="300" Closed="Window_Closed" KeyDown="Window_KeyDown">
-    
+
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Padding" Value="10,5,10,5"/>
         </Style>
     </Window.Resources>
-    
+
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -43,6 +43,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="Painter:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,5,5"/>
             <ListBox x:Name="PaintList" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5">
@@ -84,6 +85,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Button x:Name="ChooseColor" Content="Choose Color" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GJ_ChooseColor" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="25,5,0,0"/>
         </Grid>
     </Grid>
 </Window>

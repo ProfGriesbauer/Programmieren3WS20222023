@@ -32,6 +32,8 @@ namespace OOPGames
         IGamePlayer _CurrentPlayer1 = null;
         IGamePlayer _CurrentPlayer2 = null;
 
+
+
         System.Windows.Threading.DispatcherTimer _PaintTimer = null;
 
         public MainWindow()
@@ -54,6 +56,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             //OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
 
             //Players
@@ -71,6 +74,20 @@ namespace OOPGames
             _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
             _PaintTimer.Tick += _PaintTimer_Tick;
             _PaintTimer.Start();
+
+
+            foreach (IGameRules element in OOPGamesManager.Singleton.Rules)
+            {
+                if (element is IGameRulesB)
+                {
+                    IGameRulesB elementRulesB = (IGameRulesB)element;
+                    PlayerChanged += elementRulesB.OnPlayerChange;
+                    elementRulesB.TimeEvent += OnTimeEnded;
+
+                }
+                
+            }
+                
         }
 
         private void _PaintTimer_Tick(object sender, EventArgs e)
@@ -177,6 +194,7 @@ namespace OOPGames
                         _CurrentRules.DoMove(pm);
                         _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                         _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
 
@@ -210,12 +228,35 @@ namespace OOPGames
                     {
                         _CurrentRules.DoMove(pm);
                         _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
 
                     DoComputerMoves();
                 }
             }
+        }
+
+
+
+        //Automatisches wechseln nach einer gewissen Zeit 
+        public event EventHandler<RulesEventArgs> PlayerChanged;
+
+        protected virtual void OnPlayerChanged(IGameRules currentRules)
+        {
+            if(PlayerChanged != null)
+                PlayerChanged(this, new RulesEventArgs() { gameRules = currentRules});
+        }
+
+        public void OnTimeEnded(object source, EventArgs e)
+        { 
+            if (_CurrentRules is IGameRulesB) 
+            {
+                _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                OnPlayerChanged(_CurrentRules); 
+            }
+            
+            
         }
     }
 }

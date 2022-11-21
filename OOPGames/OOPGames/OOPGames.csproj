@@ -81,6 +81,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
+    <Compile Include="Classes\Gruppe B\B_Rules.cs" />
+    <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
+    <Compile Include="Interfaces\Gruppe B\IGameRulesB.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />
     <Compile Include="Interfaces\IPaintGame.cs" />

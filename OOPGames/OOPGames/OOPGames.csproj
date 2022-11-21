@@ -87,6 +87,7 @@
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
+    <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\GruppeI\I_Player.cs" />

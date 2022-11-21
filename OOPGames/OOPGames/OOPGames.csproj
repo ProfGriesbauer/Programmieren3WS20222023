@@ -102,7 +102,9 @@
     <Compile Include="Classes\GruppeJ\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Gruppe_F\ITimeStamp.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
+    <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />

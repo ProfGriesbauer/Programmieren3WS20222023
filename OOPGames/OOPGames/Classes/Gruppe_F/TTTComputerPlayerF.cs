@@ -32,6 +32,12 @@ namespace OOPGames.Classes.Gruppe_F
             int r = 1;
 
 
+            // Mitte setzen, falls frei
+
+            if (field[1, 1] == 0)
+            {
+                return new TicTacToeMove(1, 1, _PlayerNumber);
+            }
 
             // Zeilen, dann Spalten
 

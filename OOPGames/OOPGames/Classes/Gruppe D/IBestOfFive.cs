@@ -3,15 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OOPGames.Classes.Gruppe_D;
 
-namespace OOPGames
+namespace OOPGames.Classes.Gruppe_D
 {
-    public class RulesD : ITicTacToeRules
-
+    public interface ITicTacToeBOFRules : ITicTacToeRules
     {
-        TicTacToeField _KrassesFeld = new TicTacToeField();
-        public string Name { get { return "DieKrassenRegeln"; } }
+        int ICountWin();
+
+    }
+    public class BOFField : ITicTacToeField
+    {
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+
+        int _P1 = 0;
+        int _P2 = 0;
+
+        public int this[int r, int c]
+        {
+            get
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                {
+                    return _Field[r, c];
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
+            set
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                {
+                    _Field[r, c] = value;
+                }
+            }
+        }
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            return painter is IPaintTicTacToe;
+        }
+
+        public int player1wins
+        {
+            get { return _P1; }
+            set { _P1++; }
+        }
+        public int player2wins
+        {
+            get { return _P2; }
+            set { _P2++; }
+        }
+    }
+    public class BestOfFiveRulesD : ITicTacToeBOFRules
+    {
+
+        BOFField _KrassesFeld = new BOFField();
+        public string Name { get { return "DieKrassenRegelnBOF"; } }
 
         public IGameField CurrentField { get { return _KrassesFeld; } }
 
@@ -45,7 +95,11 @@ namespace OOPGames
         {
             for (int i = 0; i < 3; i++)
             {
-                if (_KrassesFeld[i, 0] == 1 && _KrassesFeld[i, 1] == 1 && _KrassesFeld[i, 2] == 1) { return 1; }
+                if (_KrassesFeld[i, 0] == 1 && _KrassesFeld[i, 1] == 1 && _KrassesFeld[i, 2] == 1)
+                {
+
+                    return 1;
+                }
                 if (_KrassesFeld[0, i] == 1 && _KrassesFeld[1, i] == 1 && _KrassesFeld[2, i] == 1) { return 1; }
                 if (_KrassesFeld[i, 0] == 2 && _KrassesFeld[i, 1] == 2 && _KrassesFeld[i, 2] == 2) { return 2; }
                 if (_KrassesFeld[0, i] == 2 && _KrassesFeld[1, i] == 2 && _KrassesFeld[2, i] == 2) { return 2; }
@@ -86,8 +140,10 @@ namespace OOPGames
                 _KrassesFeld[move.Row, move.Column] = move.PlayerNumber;
             }
         }
+
+        public int ICountWin()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
-
-
-    

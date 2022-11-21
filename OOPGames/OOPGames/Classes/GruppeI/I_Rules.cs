@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
-
-namespace OOPGames
+/*namespace OOPGames
 {
     public class G_I_TiTacToeRules : BaseTicTacToeRules
     {
+        int[][] _MasterField = 
         TicTacToeField _Field = new TicTacToeField();
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
@@ -82,7 +73,7 @@ namespace OOPGames
             }
         }
     }
-    public class TicTacToeField : BaseTicTacToeField
+    /* public class TicTacToeField : BaseTicTacToeField
     {
         int[,] _Field = new int[3, 3, 4] ;
 
@@ -109,4 +100,7 @@ namespace OOPGames
             }
         }
     }
-}
+
+
+    
+}*/

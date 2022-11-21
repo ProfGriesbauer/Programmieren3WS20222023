@@ -37,6 +37,8 @@ namespace OOPGames
         System.Windows.Media.Color X_Color;
         System.Windows.Media.Color O_Color;
 
+
+
         System.Windows.Threading.DispatcherTimer _PaintTimer = null;
 
         public MainWindow()
@@ -53,6 +55,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
+            OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
+
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
@@ -68,6 +72,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
+            OOPGamesManager.Singleton.RegisterRules(new B_Rules());
 
 
             //Players
@@ -78,6 +83,9 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
+
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
@@ -89,6 +97,20 @@ namespace OOPGames
             _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
             _PaintTimer.Tick += _PaintTimer_Tick;
             _PaintTimer.Start();
+
+
+            foreach (IGameRules element in OOPGamesManager.Singleton.Rules)
+            {
+                if (element is IGameRulesB)
+                {
+                    IGameRulesB elementRulesB = (IGameRulesB)element;
+                    PlayerChanged += elementRulesB.OnPlayerChange;
+                    elementRulesB.TimeEvent += OnTimeEnded;
+
+                }
+                
+            }
+                
         }
 
         private void _PaintTimer_Tick(object sender, EventArgs e)
@@ -142,10 +164,10 @@ namespace OOPGames
                 Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 _CurrentRules.ClearField();
                 //Hinzufügen der Gewählten Farben
-                if( _CurrentPainter is GJ_TicTacToePaint) 
+                if( _CurrentPainter is J_IPaintTicTacToe) 
                 {
-                    ((GJ_TicTacToePaint)_CurrentPainter).X_Color = this.X_Color;
-                    ((GJ_TicTacToePaint)_CurrentPainter).O_Color = this.O_Color;
+                    ((J_IPaintTicTacToe)_CurrentPainter).X_Color = this.X_Color;
+                    ((J_IPaintTicTacToe)_CurrentPainter).O_Color = this.O_Color;
                 }
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
@@ -202,6 +224,7 @@ namespace OOPGames
                         _CurrentRules.DoMove(pm);
                         _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                         _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
 
@@ -235,12 +258,35 @@ namespace OOPGames
                     {
                         _CurrentRules.DoMove(pm);
                         _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
 
                     DoComputerMoves();
                 }
             }
+        }
+
+
+
+        //Automatisches wechseln nach einer gewissen Zeit 
+        public event EventHandler<RulesEventArgs> PlayerChanged;
+
+        protected virtual void OnPlayerChanged(IGameRules currentRules)
+        {
+            if(PlayerChanged != null)
+                PlayerChanged(this, new RulesEventArgs() { gameRules = currentRules});
+        }
+
+        public void OnTimeEnded(object source, EventArgs e)
+        { 
+            if (_CurrentRules is IGameRulesB) 
+            {
+                _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                OnPlayerChanged(_CurrentRules); 
+            }
+            
+            
         }
 
         private void GJ_ChooseColor(object sender, RoutedEventArgs e)
@@ -254,13 +300,14 @@ namespace OOPGames
             System.Windows.Media.Color p2 = System.Windows.Media.Color.FromRgb(255, 255, 255); //^= Weiß
             do
             {
-                
+               //System.Application.DoEvents();
                 System.Drawing.Color color = myForm.p1Color;
                 p1 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
                 color = myForm.p2Color;
                 p2 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
                 
             } while (p1 == System.Windows.Media.Color.FromRgb(255, 255, 255) || p2 == System.Windows.Media.Color.FromRgb(255, 255, 255));
+            
             this.X_Color = p1;
             this.O_Color = p2;
         }

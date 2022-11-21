@@ -1,14 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 //test123
 namespace OOPGames
 {
     public abstract class BaseTicTacToePaint : IPaintTicTacToe    
     {
+        public abstract string Name { get; }
+
+        public abstract void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField);
+
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is ITicTacToeField)
+            {
+                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
+            }
+        }
+    }
+
+    public abstract class J_BaseTicTacToePaint : J_IPaintTicTacToe
+    {
+        public abstract System.Windows.Media.Color X_Color { get; set; }
+        public abstract System.Windows.Media.Color O_Color { get; set; }
         public abstract string Name { get; }
 
         public abstract void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField);

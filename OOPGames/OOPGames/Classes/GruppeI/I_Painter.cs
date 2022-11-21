@@ -75,14 +75,14 @@ namespace OOPGames.Classes.GruppeI
             {
                 for (int j = 0; j < 27; j++)
                 {
-                    if (currentField[i, j] == 1) //Kreuze zeichnen
+                    if (currentField[i, j] == 1) //kleine Kreuze zeichnen
                     {
                         Line X1 = new Line() { X1 = skalar + (3*j * skalar), Y1 = skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = 4*skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(X1);
                         Line X2 = new Line() { X1 = skalar + (3*j * skalar), Y1 = 4*skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(X2);
                     }
-                    else if (currentField[i, j] == 2) //Rechtecke zeichnen 
+                    else if (currentField[i, j] == 2) //kleine Rechtecke zeichnen 
                     {
                         Rectangle OE = new Rectangle() { Margin = new Thickness(25 + (3*j * skalar), 25 + (3*i * skalar), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(OE);

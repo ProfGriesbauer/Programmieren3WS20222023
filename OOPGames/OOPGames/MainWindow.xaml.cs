@@ -72,6 +72,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
+            OOPGamesManager.Singleton.RegisterRules(new B_Rules());
 
 
             //Players

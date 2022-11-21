@@ -134,10 +134,10 @@ namespace OOPGames
                 Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 _CurrentRules.ClearField();
                 //Hinzufügen der Gewählten Farben
-                if( _CurrentPainter is GJ_TicTacToePaint) 
+                if( _CurrentPainter is J_IPaintTicTacToe) 
                 {
-                    ((GJ_TicTacToePaint)_CurrentPainter).X_Color = this.X_Color;
-                    ((GJ_TicTacToePaint)_CurrentPainter).O_Color = this.O_Color;
+                    ((J_IPaintTicTacToe)_CurrentPainter).X_Color = this.X_Color;
+                    ((J_IPaintTicTacToe)_CurrentPainter).O_Color = this.O_Color;
                 }
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
@@ -246,13 +246,14 @@ namespace OOPGames
             System.Windows.Media.Color p2 = System.Windows.Media.Color.FromRgb(255, 255, 255); //^= Weiß
             do
             {
-                
+               //System.Application.DoEvents();
                 System.Drawing.Color color = myForm.p1Color;
                 p1 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
                 color = myForm.p2Color;
                 p2 = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
                 
             } while (p1 == System.Windows.Media.Color.FromRgb(255, 255, 255) || p2 == System.Windows.Media.Color.FromRgb(255, 255, 255));
+            
             this.X_Color = p1;
             this.O_Color = p2;
         }

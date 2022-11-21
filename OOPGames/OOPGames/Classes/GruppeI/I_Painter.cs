@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -17,7 +18,7 @@ namespace OOPGames.Classes.GruppeI
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
+            Color bgColor = Color.FromRgb(135, 206, 250);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
@@ -25,8 +26,12 @@ namespace OOPGames.Classes.GruppeI
             Brush XStroke = new SolidColorBrush(XColor);
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
+            Color UColor = Color.FromRgb(133, 133, 133);
+            Brush UStroke = new SolidColorBrush(UColor);
 
             //Liniendicken festlegen
+            int StrokeThickness_GrX = 12;
+            int StrokeThickness_GrO = 12;
             int StrokeThickness_GrFe = 6;
             int StrokeThickness_KlFe = 3;
             int StrokeThickness_P1 = 3;
@@ -72,16 +77,34 @@ namespace OOPGames.Classes.GruppeI
                 {
                     if (currentField[i, j] == 1) //Kreuze zeichnen
                     {
-                        Line X1 = new Line() { X1 = skalar + (3*j * skalar), Y1 = skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = 4*skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X1 = new Line() { X1 = skalar + (3*j * skalar), Y1 = skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = 4*skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = skalar + (3*j * skalar), Y1 = 4*skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X2 = new Line() { X1 = skalar + (3*j * skalar), Y1 = 4*skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(X2);
                     }
-                    else if (currentField[i, j] == 2) //Ellipsen zeichnen 
+                    else if (currentField[i, j] == 2) //Rechtecke zeichnen 
                     {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(25 + (3*j * skalar), 25 + (3*i * skalar), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = 3.0 };
+                        Rectangle OE = new Rectangle() { Margin = new Thickness(25 + (3*j * skalar), 25 + (3*i * skalar), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(OE);
                     }
+                    else if (currentField[i, j] == 3) //groﬂe Kreuze zeichnen
+                    {
+                        Line X1 = new Line() { X1 = skalar + (9 * j * skalar), Y1 = skalar + (9 * i * skalar), X2 = 10 * skalar + (9 * j * skalar), Y2 = 10 * skalar + (9 * i * skalar), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = skalar + (9 * j * skalar), Y1 = 10 * skalar + (9 * i * skalar), X2 = 10 * skalar + (9 * j * skalar), Y2 = skalar + (9 * i * skalar), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                        canvas.Children.Add(X2);
+                    }
+                    else if (currentField[i, j] == 4) //groﬂe Rechtecke zeichnen 
+                    {
+                        Rectangle OE = new Rectangle() { Margin = new Thickness(20 + (9 * j * skalar), 20 + (9 * i * skalar), 0, 0), Width = 180, Height = 180, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
+                        canvas.Children.Add(OE);
+                    }
+                    else if (currentField[i, j] == 5) //Unentschieden zeichnen 
+                    {
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (9 * j * skalar), 20 + (9 * i * skalar), 0, 0), Width = 180, Height = 180, Stroke = UStroke, StrokeThickness = StrokeThickness_GrO };
+                        canvas.Children.Add(OE);
+                    }
+
                 }
             }
         }

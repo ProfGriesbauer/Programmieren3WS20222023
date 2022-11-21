@@ -92,6 +92,8 @@
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
+    <Compile Include="Classes\GruppeI\TicTacToeField.cs" />
+    <Compile Include="Classes\GruppeI\Field_interface.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\GruppeI\I_Player.cs" />
     <Compile Include="Classes\GruppeI\I_Rules.cs" />
@@ -101,7 +103,9 @@
     <Compile Include="Classes\GruppeJ\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Gruppe_F\ITimeStamp.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
+    <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />

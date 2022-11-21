@@ -16,7 +16,6 @@ namespace OOPGames.Classes.GruppeI
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
-            //Farben festlegen
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -86,8 +85,6 @@ namespace OOPGames.Classes.GruppeI
                 }
             }
         }
-
-
 
     }
 }

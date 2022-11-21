@@ -139,7 +139,7 @@ namespace OOPGames
 
     public class TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[9, 3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {

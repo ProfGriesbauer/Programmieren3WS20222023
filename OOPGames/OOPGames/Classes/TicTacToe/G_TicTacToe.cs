@@ -149,7 +149,7 @@ namespace OOPGames
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        if (_Field[i, j] == 0)
+                        if (_Field[i, j] == 0)  //Liste implementieren
                         {
                             return true;
                         }
@@ -164,28 +164,35 @@ namespace OOPGames
 
         public override int CheckIfPLayerWon()
         {
-            /*  for (int i = 0; i < 3; i++)
-              {
-                  if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
-                  {
-                      return _Field[i, 0];
-                  }
-                  else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                  {
-                      return _Field[0, i];
-                  }
-              }
+            return -1; //übergangsweise bis checkifplayerwon fertig ist
+            /*int countplayer1 = 0;
+            int countplayer2 = 0;
 
-              if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-              {
-                  return _Field[0, 0];
-              }
-              else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-              {
-                  return _Field[0, 2];
-              }
-            */
-            return -1;
+          if(threeinarow())
+            {
+                _Field.increaseField();
+                if(_Field.player==1)
+                {
+                    countplayer1++;
+                }
+                else
+                {
+                    countplayer2++;
+                }
+            }
+
+          if (MovesPossible==false)
+            {
+                if(countplayer1>countplayer2)
+                {
+                    return countplayer1;
+                }
+                else
+                {
+                    return countplayer2;
+                }
+            }*/
+
         }
 
         public override void ClearField()
@@ -194,9 +201,20 @@ namespace OOPGames
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    //  _Field[i, j] = 0;
+                    _Field[i, j] = 0;
                 }
             }
+        }
+
+
+        public bool threeinarow() //überprüft, ob sich drei in einer Reihe befinden
+        {
+            foreach (Casket C in _Field.Field)
+            {
+
+            }
+            return false;
+
         }
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
@@ -208,6 +226,7 @@ namespace OOPGames
             }
         }
     }
+
 
     public class TicTacToeField_G : ITicTacToeField_G
     {

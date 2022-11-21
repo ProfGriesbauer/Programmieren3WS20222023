@@ -8,14 +8,69 @@ using System.Windows;
 
 namespace OOPGames
 {
-    public class PlayerD
-    {
-        public class TicTacToeHumanPlayerD
-        {
+    public class PlayerD { 
 
+        public class TicTacToeHumanPlayerD : IHumanTicTacToePlayer
+        {
+            int _PlayerNumber = 0;
+            public string Name { get { return "DerKrasseHumanTicTacToePlayer"; } }
+
+            public int PlayerNumber { get { return _PlayerNumber; } }
+
+            public bool CanBeRuledBy(IGameRules rules)
+            {
+                return rules is ITicTacToeRules;
+            }
+
+            public IGamePlayer Clone()
+            {
+                TicTacToeHumanPlayerD ttthp = new TicTacToeHumanPlayerD();
+                ttthp.SetPlayerNumber(_PlayerNumber);
+                return ttthp;
+            }
+
+            public ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
+            {
+                if (selection is IClickSelection)
+                {
+                   IClickSelection click = (IClickSelection) selection;
+             
+                    for (int r=0; r<3; r++)
+                    {
+                        for (int c=0; c<3; c++)
+                        {
+                            if (click.XClickPos > 50 + (r*100) && click.XClickPos < 150 + (r*100) &&
+                                click.YClickPos > 50 + (c*100) && click.YClickPos < 150 + (c*100) &&
+                                field[c, r] <= 0)
+                            {
+                                return new TicTacToeMove(c, r, _PlayerNumber);
+                            }
+                        }
+                    }
+                }
+                return null;
+
+            }
+
+            public IPlayMove GetMove(IMoveSelection selection, IGameField field)
+            {
+                if (field is ITicTacToeField)
+                {
+                    return GetMove(selection, (ITicTacToeField)field);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public void SetPlayerNumber(int playerNumber)
+            {
+                _PlayerNumber = playerNumber;
+            }
         }
 
-        public class TicTacToeComputerPlayerD : IComputerTicTacToePlayer
+    public class TicTacToeComputerPlayerD : IComputerTicTacToePlayer
         {
             int _PlayerNumber = 0;
             public string Name { get { return "DerKrasseComputerTicTacToePlayer"; } }

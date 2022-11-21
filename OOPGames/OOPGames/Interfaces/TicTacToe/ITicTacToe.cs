@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace OOPGames
 {
@@ -61,5 +62,12 @@ namespace OOPGames
     {
         //Returns a valid move and the given state of the tic tac toe field.
         ITicTacToeMove GetMove(ITicTacToeField field);
+    }
+
+    //Gruppe J Interface
+    public interface J_IPaintTicTacToe : IPaintTicTacToe
+    {
+        Color X_Color { get; set; }
+        Color O_Color { get; set; }
     }
 }

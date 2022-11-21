@@ -83,6 +83,7 @@
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe B\B_Rules.cs" />
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
+    <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />

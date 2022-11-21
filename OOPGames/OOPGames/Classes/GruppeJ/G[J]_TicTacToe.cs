@@ -6,9 +6,11 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class GJ_TicTacToePaint : BaseTicTacToePaint
+    public class GJ_TicTacToePaint : J_BaseTicTacToePaint
     {
         public override string Name { get { return "J_TicTacToePainter"; } }
+        public override System.Windows.Media.Color X_Color { get; set; }
+        public override System.Windows.Media.Color O_Color { get; set; }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
@@ -17,10 +19,8 @@ namespace OOPGames
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 255, 0);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
+            Brush XStroke = new SolidColorBrush(X_Color);
+            Brush OStroke = new SolidColorBrush(O_Color);
 
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);

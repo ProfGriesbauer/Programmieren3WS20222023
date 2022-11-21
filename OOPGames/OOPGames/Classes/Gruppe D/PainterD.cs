@@ -9,7 +9,7 @@ using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace OOPGames.Classes.Gruppe_D
+namespace OOPGames
 {
     public class PainterD : IPaintTicTacToe
     {

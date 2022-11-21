@@ -82,9 +82,9 @@ namespace OOPGames
             }
         }
     }
-    public class TicTacToeField : BaseTicTacToeField
+    public class I_TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3, 4] ;
+        int[,,] _Field = new int[3, 3, 4] ;
 
         public override int this[int r, int c]
         {
@@ -92,7 +92,7 @@ namespace OOPGames
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
-                    return _Field[r, c];
+                    return _Field[0, r, c];
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace OOPGames
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
-                    _Field[r, c] = value;
+                    _Field[0,r, c] = value;
                 }
             }
         }

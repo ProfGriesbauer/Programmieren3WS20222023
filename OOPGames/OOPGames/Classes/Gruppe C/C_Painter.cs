@@ -158,7 +158,14 @@ namespace OOPGames.Classes.Gruppe_C
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
-            throw new NotImplementedException();
+            if (move.Row >= 0 && move.Row < 5 && move.Column >= 0 && move.Column < 5)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
+            }
+            Console.WriteLine("-------------------------------------");
+            for (int i = 0; i < 5; i++) {
+                Console.WriteLine(_Field[i, 0]+" "+ _Field[i,1]+" " + _Field[i,2] + " " + _Field[i, 3] + " " + _Field[i, 4]);
+            }
         }
     }
 

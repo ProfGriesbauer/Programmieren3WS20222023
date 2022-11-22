@@ -68,6 +68,8 @@ namespace OOPGames
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_easy());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_middle());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());

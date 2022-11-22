@@ -189,14 +189,11 @@ namespace OOPGames
         {
             get
             {
-                for (int i = 0; i < 3; i++)
+                foreach (Casket C in _Field.Field)
                 {
-                    for (int j = 0; j < 3; j++)
+                    if(C.player==0)
                     {
-                        if (_Field[i, j] == 0)  //Liste implementieren
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
@@ -245,12 +242,9 @@ namespace OOPGames
 
         public override void ClearField()
         {
-            for (int i = 0; i < 3; i++)
+            foreach(Casket C in _Field.Field)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    _Field[i, j] = 0;
-                }
+                C.player=0;
             }
         }
 

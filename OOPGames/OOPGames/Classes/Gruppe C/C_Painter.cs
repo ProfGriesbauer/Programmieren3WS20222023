@@ -162,10 +162,12 @@ namespace OOPGames.Classes.Gruppe_C
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
+            /*
             Console.WriteLine("-------------------------------------");
             for (int i = 0; i < 5; i++) {
                 Console.WriteLine(_Field[i, 0]+" "+ _Field[i,1]+" " + _Field[i,2] + " " + _Field[i, 3] + " " + _Field[i, 4]);
             }
+            */
         }
     }
 

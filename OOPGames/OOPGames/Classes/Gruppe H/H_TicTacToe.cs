@@ -30,18 +30,48 @@ namespace OOPGames
         }
 
         //Field zeichnen wurde von Griesbauer kopiert (farben "angepasst" :P)
-        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)    //zeichnet dann tatsächlich das Spielfeld.
+        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)        //zeichnet dann tatsächlich das Spielfeld.
         {
-            canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(9, 0, 196);                               //Hintergrundfarbe
+            //Zufällig auswählen von einem von vier Farbschemen. Jesdes Mitglied der Gruppe legt ein eigenes Farbschema fest
+            Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
+            Color bgColor = Color.FromRgb(0, 0, 0);                                         //Variable Hintergrundfarbe
+            Color lineColor = Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
+            Color XColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe X Spieler
+            Color OColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe O Spieler
+            switch (zufall.Next(1, 5))                                                      //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            {
+                case 1: //Farbschema Annalena                                               //Farbschema Annalena
+                    bgColor = Color.FromRgb(0, 0, 0);                                       //Hintergrundfarbe
+                    lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
+                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                    break;
+                case 2: //Farbschema Jan                                                    //Farbschema Jan
+                    bgColor = Color.FromRgb(0, 255, 0);                                     //Hintergrundfarbe
+                    lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
+                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                    break;
+                case 3: //Farbschema Samuel                                                 //Farbschema Samuel
+                    bgColor = Color.FromRgb(0  , 0, 0);                                     //Hintergrundfarbe
+                    lineColor = Color.FromRgb(255, 0, 0);                                   //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
+                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                    break;
+                case 4: //Farbschema Moritz                                                 //FArbschema Moritz
+                    bgColor = Color.FromRgb(9, 0, 196);                                     //Hintergrundfarbe
+                    lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
+                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                    break;
+
+            }
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 255, 255);                         //Linienfarbe Spielfeld
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 0, 0);                                  //Farbe X Spieler
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(255, 0, 0);                                //Farbe O Spieler
             Brush OStroke = new SolidColorBrush(OColor);
 
+            //Zeichnen der Linien 
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
             Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
@@ -59,6 +89,7 @@ namespace OOPGames
             Line l8 = new Line() { X1 = 320, Y1 = 320, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l8);
 
+            //Zeichnen der Kreuze und Kreise der Spieler
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -156,7 +187,7 @@ namespace OOPGames
 
 
         //erstellt die öffentliche Variable Name, diese wird (mit etwas Glück) vom Programmfenster ausgelesen und angezeigt
-        public string Name { get { return "H_TicTacToe_Rules_M"; } }
+        public string Name { get { return "H_TicTacToe_Rules"; } }
 
 
         //Übergibt das aktuelle Spielfeld (Klasse TicTacToe Field) an IGameField.

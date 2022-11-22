@@ -163,6 +163,11 @@ namespace OOPGames.Classes.Gruppe_C
                         if (_Field[i, j] == 1) { points1++; }
                         if (_Field[i, j] == 2) { points2++; }
                     }
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i-1, j + 1] && _Field[i, j] == _Field[i+1, j - 1])
+                    {
+                        if (_Field[i, j] == 1) { points1++; }
+                        if (_Field[i, j] == 2) { points2++; }
+                    }
                 }
 
             }
@@ -174,18 +179,18 @@ namespace OOPGames.Classes.Gruppe_C
                 }
                 if (_Field[k, 4] > 0 && _Field[k, 4] == _Field[k - 1, 4] && _Field[k, 4] == _Field[k + 1, 4])
                 {
-                    if (_Field[k, 0] == 1) { points1++; }
-                    if (_Field[k, 0] == 2) { points2++; }
+                    if (_Field[k, 4] == 1) { points1++; }
+                    if (_Field[k, 4] == 2) { points2++; }
                 }
                 if (_Field[0, k] > 0 && _Field[0, k] == _Field[0, k - 1] && _Field[0, k] == _Field[0, k + 1])
                 {
-                    if (_Field[k, 0] == 1) { points1++; }
-                    if (_Field[k, 0] == 2) { points2++; }
+                    if (_Field[0, k] == 1) { points1++; }
+                    if (_Field[0, k] == 2) { points2++; }
                 }
                 if (_Field[4, k] > 0 && _Field[4, k] == _Field[4, k - 1] && _Field[4, k] == _Field[4, k + 1])
                 {
-                    if (_Field[k, 0] == 1) { points1++; }
-                    if (_Field[k, 0] == 2) { points2++; }
+                    if (_Field[4, k] == 1) { points1++; }
+                    if (_Field[4, k] == 2) { points2++; }
                 }
             }
             Console.WriteLine("-----------------------------------");

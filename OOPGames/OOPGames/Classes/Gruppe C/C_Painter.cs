@@ -117,6 +117,12 @@ namespace OOPGames.Classes.Gruppe_C
     {
         GC_TicTacToeField _Field = new GC_TicTacToeField();
 
+        int PointsPlayer1 = 0;
+        int PointsPlayer2 = 0;
+
+        public C_ICountInterface Count { set { int PointsPlayer1 = 0; int PointsPlayer2 = 0;} }
+        
+
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
         public override bool MovesPossible
@@ -193,6 +199,8 @@ namespace OOPGames.Classes.Gruppe_C
                     if (_Field[4, k] == 2) { points2++; }
                 }
             }
+            PointsPlayer1 = points1;
+            PointsPlayer2 = points2;
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Player 1 has " + points1 + " Points");
             Console.WriteLine("Player 2 has " + points2 + " Points");

@@ -141,8 +141,27 @@ namespace OOPGames.Classes.Gruppe_C
         public override string Name { get { return "GruppeCTicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()
-        {
-            return 0;
+        { 
+            for(int i = 0; i<5;i++)
+            {
+                if (_Field[i, 0] > 0 && _Field[i,0] == _Field[i,1] && _Field[i, 0] == _Field[i, 2] && _Field[i, 0] == _Field[i, 3] && _Field[i, 0] == _Field[i, 4])
+                {
+                    return _Field[i,0];
+                }
+                if (_Field[0,i] > 0 && _Field[0,i] == _Field[1,i] && _Field[0,i] == _Field[2,i] && _Field[0,i] == _Field[3,i] && _Field[0,i] == _Field[4,i])
+                {
+                    return _Field[i, 0];
+                }
+            }
+            if (_Field[0,0]>0 && _Field[0, 0] == _Field[1,1] && _Field[0, 0] == _Field[2,2] && _Field[0, 0] == _Field[3,3] && _Field[0, 0] == _Field[4,4])
+            { 
+                return _Field[0, 0];
+            }
+            if (_Field[0,4]>0 && _Field[0, 4] == _Field[1, 3] && _Field[0, 4] == _Field[2, 2] && _Field[0, 4] == _Field[3, 1] && _Field[0, 4] == _Field[4, 0])
+            {
+                return _Field[0, 4];
+            }
+            return -1;
         }
 
         public override void ClearField()
@@ -165,7 +184,6 @@ namespace OOPGames.Classes.Gruppe_C
     public class GC_TicTacToeField : BaseTicTacToeField
     {
         int[,] _Field = new int[5, 5] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
-
         public override int this[int r, int c]
         {
             get
@@ -186,6 +204,28 @@ namespace OOPGames.Classes.Gruppe_C
                     _Field[r, c] = value;
                 }
             }
+        }
+        public int CountPoints()
+        {
+            int points = 0;
+            for (int i = 1; i < 4; i++)
+            {
+                for (int j = 1; j < 4; j++)
+                {
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j] && _Field[i, j] == _Field[i + 1, j]) { points++; }
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j - 1] && _Field[i, j] == _Field[i + 1, j + 1]) { points++; }
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i, j - 1] && _Field[i, j] == _Field[i, j + 1]) { points++; }
+                }
+
+            }
+            for (int k = 1; k < 4; k++)
+            {
+                if (_Field[k, 0] > 0 && _Field[k, 0] == _Field[k - 1, 0] && _Field[k, 0] == _Field[k + 1, 0]) { points++; }
+                if (_Field[k, 4] > 0 && _Field[k, 4] == _Field[k - 1, 4] && _Field[k, 4] == _Field[k + 1, 4]) { points++; }
+                if (_Field[0, k] > 0 && _Field[0, k] == _Field[0, k - 1] && _Field[0, k] == _Field[0, k + 1]) { points++; }
+                if (_Field[4, k] > 0 && _Field[4, k] == _Field[4, k - 1] && _Field[4, k] == _Field[4, k + 1]) { points++; }
+            }
+            return points;
         }
     }
 }

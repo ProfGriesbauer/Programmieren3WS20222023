@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using System.Drawing;
 using Color = System.Drawing.Color;
 using static OOPGames.PlayerD;
+using OOPGames.Classes.Gruppe_D;
 
 namespace OOPGames
 {
@@ -68,6 +69,7 @@ namespace OOPGames
 
             OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
+            OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
@@ -78,12 +80,16 @@ namespace OOPGames
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_easy());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_middle());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
 
 
             InitializeComponent();

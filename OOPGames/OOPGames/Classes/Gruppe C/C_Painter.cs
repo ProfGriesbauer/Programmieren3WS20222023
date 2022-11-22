@@ -140,31 +140,61 @@ namespace OOPGames.Classes.Gruppe_C
 
         public override string Name { get { return "GruppeCTicTacToeRules"; } }
 
-        public int CountPoints()
+        public void CountPoints()
         {
-            int points = 0;
+            int points1 = 0;
+            int points2 = 0;
             for (int i = 1; i < 4; i++)
             {
                 for (int j = 1; j < 4; j++)
                 {
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j] && _Field[i, j] == _Field[i + 1, j]) { points++; }
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j - 1] && _Field[i, j] == _Field[i + 1, j + 1]) { points++; }
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i, j - 1] && _Field[i, j] == _Field[i, j + 1]) { points++; }
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j] && _Field[i, j] == _Field[i + 1, j])
+                    {
+                        if (_Field[i,j] == 1) { points1++; }
+                        if (_Field[i,j] == 2) { points2++; }
+                    }
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j - 1] && _Field[i, j] == _Field[i + 1, j + 1])
+                    {
+                        if (_Field[i, j] == 1) { points1++; }
+                        if (_Field[i, j] == 2) { points2++; }
+                    }
+                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i, j - 1] && _Field[i, j] == _Field[i, j + 1])
+                    {
+                        if (_Field[i, j] == 1) { points1++; }
+                        if (_Field[i, j] == 2) { points2++; }
+                    }
                 }
 
             }
             for (int k = 1; k < 4; k++)
             {
-                if (_Field[k, 0] > 0 && _Field[k, 0] == _Field[k - 1, 0] && _Field[k, 0] == _Field[k + 1, 0]) { points++; }
-                if (_Field[k, 4] > 0 && _Field[k, 4] == _Field[k - 1, 4] && _Field[k, 4] == _Field[k + 1, 4]) { points++; }
-                if (_Field[0, k] > 0 && _Field[0, k] == _Field[0, k - 1] && _Field[0, k] == _Field[0, k + 1]) { points++; }
-                if (_Field[4, k] > 0 && _Field[4, k] == _Field[4, k - 1] && _Field[4, k] == _Field[4, k + 1]) { points++; }
+                if (_Field[k, 0] > 0 && _Field[k, 0] == _Field[k - 1, 0] && _Field[k, 0] == _Field[k + 1, 0]) {
+                    if (_Field[k, 0] == 1) { points1++; }
+                    if (_Field[k, 0] == 2) { points2++; }
+                }
+                if (_Field[k, 4] > 0 && _Field[k, 4] == _Field[k - 1, 4] && _Field[k, 4] == _Field[k + 1, 4])
+                {
+                    if (_Field[k, 0] == 1) { points1++; }
+                    if (_Field[k, 0] == 2) { points2++; }
+                }
+                if (_Field[0, k] > 0 && _Field[0, k] == _Field[0, k - 1] && _Field[0, k] == _Field[0, k + 1])
+                {
+                    if (_Field[k, 0] == 1) { points1++; }
+                    if (_Field[k, 0] == 2) { points2++; }
+                }
+                if (_Field[4, k] > 0 && _Field[4, k] == _Field[4, k - 1] && _Field[4, k] == _Field[4, k + 1])
+                {
+                    if (_Field[k, 0] == 1) { points1++; }
+                    if (_Field[k, 0] == 2) { points2++; }
+                }
             }
-            return points;
+            Console.WriteLine("Player 1 has " + points1 + " Poits"}
+            Console.WriteLine("Player 2 has " + points2 + " Poits")
         }
 
         public override int CheckIfPLayerWon()
-        { 
+        {
+        GC_TicTacToeRules.CountPoints();
             for(int i = 0; i<5;i++)
             {
                 if (_Field[i, 0] > 0 && _Field[i,0] == _Field[i,1] && _Field[i, 0] == _Field[i, 2] && _Field[i, 0] == _Field[i, 3] && _Field[i, 0] == _Field[i, 4])

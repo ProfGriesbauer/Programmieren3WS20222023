@@ -188,13 +188,14 @@ namespace OOPGames.Classes.Gruppe_C
                     if (_Field[k, 0] == 2) { points2++; }
                 }
             }
-            Console.WriteLine("Player 1 has " + points1 + " Poits");
-            Console.WriteLine("Player 2 has " + points2 + " Poits");
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Player 1 has " + points1 + " Points");
+            Console.WriteLine("Player 2 has " + points2 + " Points");
         }
 
         public override int CheckIfPLayerWon()
         {
-        //GC_TicTacToeRules.CountPoints();
+        CountPoints();
             for(int i = 0; i<5;i++)
             {
                 if (_Field[i, 0] > 0 && _Field[i,0] == _Field[i,1] && _Field[i, 0] == _Field[i, 2] && _Field[i, 0] == _Field[i, 3] && _Field[i, 0] == _Field[i, 4])

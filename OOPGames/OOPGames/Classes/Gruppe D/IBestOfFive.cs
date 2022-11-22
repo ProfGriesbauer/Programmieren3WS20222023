@@ -80,9 +80,6 @@ namespace OOPGames.Classes.Gruppe_D
                         {
                             return true;
                         }
-
-
-
                     }
                 }
                 return false;
@@ -96,11 +93,7 @@ namespace OOPGames.Classes.Gruppe_D
         {
             for (int i = 0; i < 3; i++)
             {
-                if (_KrassesFeldBOF[i, 0] == 1 && _KrassesFeldBOF[i, 1] == 1 && _KrassesFeldBOF[i, 2] == 1)
-                {
-
-                    return 1;
-                }
+                if (_KrassesFeldBOF[i, 0] == 1 && _KrassesFeldBOF[i, 1] == 1 && _KrassesFeldBOF[i, 2] == 1) { return 1; }
                 if (_KrassesFeldBOF[0, i] == 1 && _KrassesFeldBOF[1, i] == 1 && _KrassesFeldBOF[2, i] == 1) { return 1; }
                 if (_KrassesFeldBOF[i, 0] == 2 && _KrassesFeldBOF[i, 1] == 2 && _KrassesFeldBOF[i, 2] == 2) { return 2; }
                 if (_KrassesFeldBOF[0, i] == 2 && _KrassesFeldBOF[1, i] == 2 && _KrassesFeldBOF[2, i] == 2) { return 2; }

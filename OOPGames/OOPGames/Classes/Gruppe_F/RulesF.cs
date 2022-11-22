@@ -1,16 +1,18 @@
-/*namespace OOPGames
-{
-    public class G_I_TiTacToeRules : BaseTicTacToeRules
-    {
-        int[][] _MasterField = 
-        TicTacToeField _Field = new TicTacToeField();
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace OOPGames.Classes.Gruppe_F
+{
+    public class TTTRulesF : BaseTicTacToeRules, ITimeStamp
+    {
+        TicTacToeField _Field = new TicTacToeField();
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible
-        {
-            get
-            {
+        public override bool MovesPossible {
+            get {
                 for (int i = 0; i < 3; i++)
                 {
                     for (int j = 0; j < 3; j++)
@@ -26,7 +28,18 @@
             }
         }
 
-        public override string Name { get { return "G_I_TiTacToeRules"; } }
+        public override string Name { get { return "GruppeFTTTRules"; } }
+
+        public DateTime? LastUpdated { 
+            get
+            {
+                return new DateTime();
+            }
+
+             set
+            {
+
+            } }
 
         public override int CheckIfPLayerWon()
         {
@@ -73,38 +86,4 @@
             }
         }
     }
-<<<<<<< HEAD
-    /* public class TicTacToeField : BaseTicTacToeField
-=======
-    public class I_TicTacToeField : BaseTicTacToeField
->>>>>>> c9211ae54f2ecf61e05fec65e933108739443783
-    {
-        int[,,] _Field = new int[3, 3, 4] ;
-
-        public override int this[int r, int c]
-        {
-            get
-            {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
-                {
-                    return _Field[0, r, c];
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-
-            set
-            {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
-                {
-                    _Field[0,r, c] = value;
-                }
-            }
-        }
-    }
-
-
-    
-}*/
+}

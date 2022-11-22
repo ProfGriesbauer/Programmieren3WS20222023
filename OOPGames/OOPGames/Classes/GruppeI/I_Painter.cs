@@ -25,6 +25,13 @@ namespace OOPGames.Classes.GruppeI
             Brush XStroke = new SolidColorBrush(XColor);
             Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
+
+            //Liniendicken festlegen
+            int StrokeThickness_GrFe = 6;
+            int StrokeThickness_KlFe = 3;
+            int StrokeThickness_P1 = 3;
+            int StrokeThickness_P2=3;
+            //Einführen eines skalaren Faktors, um die Entwicklung zu vereinfachen (hiermit kann die Größe des Feldes inklusive aller Eingaben skaliert werden, somit können wir die Größe des Feldes für perfekte Anf)
             int skalar=20;
 
 
@@ -47,15 +54,36 @@ namespace OOPGames.Classes.GruppeI
             }
 
             //Zeichne großes TTT-Feld
-            paintLine(1,1,1,28,6);
-            paintLine(10,1,10,28,6);
-            paintLine(19,1,19,28,6);
-            paintLine(28,1,28,28,6);
+            paintLine(1,1,1,28,StrokeThickness_GrFe);
+            paintLine(10,1,10,28,StrokeThickness_GrFe);
+            paintLine(19,1,19,28,StrokeThickness_GrFe);
+            paintLine(28,1,28,28,StrokeThickness_GrFe);
 
-            paintLine(1,1,28,1,6);
-            paintLine(1,10,28,10,6);
-            paintLine(1,19,28,19,6);
-            paintLine(1,28,28,28,6);
+            paintLine(1,1,28,1, StrokeThickness_GrFe);
+            paintLine(1,10,28,10, StrokeThickness_GrFe);
+            paintLine(1,19,28,19, StrokeThickness_GrFe);
+            paintLine(1,28,28,28, StrokeThickness_GrFe);
+
+            //Kreuze und Kreise zeichnen                    //vllt noch andere Formen?
+
+            for (int i = 0; i < 27; i++)
+            {
+                for (int j = 0; j < 27; j++)
+                {
+                    if (currentField[i, j] == 1) //Kreuze zeichnen
+                    {
+                        Line X1 = new Line() { X1 = skalar + (3*j * skalar), Y1 = skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = 4*skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = skalar + (3*j * skalar), Y1 = 4*skalar + (3*i * skalar), X2 = 4*skalar + (3*j * skalar), Y2 = skalar + (3*i * skalar), Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X2);
+                    }
+                    else if (currentField[i, j] == 2) //Ellipsen zeichnen 
+                    {
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(25 + (3*j * skalar), 25 + (3*i * skalar), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(OE);
+                    }
+                }
+            }
         }
 
     }

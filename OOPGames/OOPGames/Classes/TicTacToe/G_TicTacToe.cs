@@ -17,75 +17,112 @@ namespace OOPGames
         int x { get; set; }
         int y { get; set; }
         int size { get; set; }
+        bool flag { get; set; }
         int player { get; set; } // evtl IGamePlayer anstelle von int
         void paintFrame(Canvas canvas);
-        void paintFill();
+        void paintFill(Canvas canvas);
         Casket isMySpace(int x, int y);
     }
 
     // neues Interface: Erbt von ITicTacToeFeld, fügt aber noch die momentane Größe des Spielfelds hinzu...
     public interface ITicTacToeField_G : ITicTacToeField
     {
+        int Fieldsize { get; set; }
+        List<Casket> Field { get; }
         void increaseField();
+        
     }
 
-    public class Casket : ICasket
+    public class Casket : ICasket 
     {
         int _x;
+        int _y;
+        int _size;
+        bool _flag;
+        int _player;
         public int x
         {
             get { return _x; }
 
             set { _x = value; }
         }
-
-        int _y;
         public int y
         {
             get { return _y; }
 
             set { _y = value; }
         }
-
-        int _size;
         public int size
         {
             get { return _size; }
 
             set { _size = value; }
         }
-
-        int _player;
+        public bool flag 
+        {
+            get { return _flag; }
+            set { flag = value; }
+        }
         public int player
         {
             get { return _player; }
 
             set { _player = value; }
         }
-        void paintFrame(Canvas canvas)
+        public void paintFrame(Canvas canvas)
         {
+            Color lineColor = Color.FromRgb(255, 0, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
 
+            //Obere Linie
+            Line Up = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(Up);
+
+            //Untere Linie
+            Line Down = new Line() { X1 = (_x) * _size, Y1 = (_y + 1 ) * _size, X2 = (_x + 1 ) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(Down);
+            
+            //Linke Linie
+            Line Left = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(Left);
+
+            //Rechte Linie
+            Line Right = new Line() { X1 = (_x + 1) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(Right);
         }
-        void paintFill()
+        public void paintFill(Canvas canvas)
         {
+            Color XColor = Color.FromRgb(0, 255, 0);
+            Brush XStroke = new SolidColorBrush(XColor);
+            Color OColor = Color.FromRgb(0, 0, 255);
+            Brush OStroke = new SolidColorBrush(OColor);
 
-        }
-
-        void ICasket.paintFrame(Canvas canvas)
-        {
-            throw new NotImplementedException();
-        }
-
-        void ICasket.paintFill()
-        {
-            throw new NotImplementedException();
+            if (_player == 1)
+            {
+                Line l1 = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y + 1) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
+                Line l2 = new Line() { X1 = (_x) * _size, Y1 = (_y + 1) * _size, X2 = (_x) * _size, Y2 = (_y + 1) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(l1);
+                canvas.Children.Add(l2);
+            }
+            else if (_player == 2)
+            {
+                Ellipse OE = new Ellipse() { Margin = new Thickness((_x) * _size, (_y) * _size, 0, 0), Width = _size, Height = _size, Stroke = OStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(OE);
+            }
         }
 
         public Casket isMySpace(int x, int y)
         {
-            throw new NotImplementedException();
+            if ((_x*_size) <= x && (_x * _size) + _size >= x)
+            {
+                if ((_y * _size) <= y && (_y * _size) + _size >= y)
+                {
+                    return this;
+                }
+            }
+            return null;
         }
-        
+
     }
 
     public class TicTacToePaint_G : BaseTicTacToePaint
@@ -109,35 +146,12 @@ namespace OOPGames
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 0, 0);
-            Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 255, 0);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
-
-        
-
-
-
-            for (int i = 0; i < 3; i++)
+            foreach (Casket C in currentField.Field)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (currentField[i, j] == 1)
-                    {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 2)
-                    {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(OE);
-                    }
-                }
+                C.paintFrame(canvas);
             }
+
+
         }
     }
     public class TicTacToeRules_G : BaseTicTacToeRules
@@ -155,7 +169,7 @@ namespace OOPGames
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        if (_Field[i, j] == 0)
+                        if (_Field[i, j] == 0)  //Liste implementieren
                         {
                             return true;
                         }
@@ -170,27 +184,38 @@ namespace OOPGames
 
         public override int CheckIfPLayerWon()
         {
-          /*  for (int i = 0; i < 3; i++)
-            {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
-                {
-                    return _Field[i, 0];
-                }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                {
-                    return _Field[0, i];
-                }
-            }
+            int countplayer1 = 0;
+            int countplayer2 = 0;
+            int NAME = threeinarow();
 
-            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-            {
-                return _Field[0, 0];
-            }
-            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-            {
-                return _Field[0, 2];
-            }
-          */
+            // Switch Case evtl
+            // default return -1
+            // break nicht vergessen
+
+            if(NAME>0)
+              {
+                  _Field.increaseField();
+                  if(NAME==1)
+                  {
+                      countplayer1++;
+                  }
+                  else
+                  {
+                      countplayer2++;
+                  }
+              }
+
+            if (MovesPossible==false)
+              {
+                  if(countplayer1>countplayer2)
+                  {
+                      return countplayer1;
+                  }
+                  else
+                  {
+                      return countplayer2;
+                  }
+              }
             return -1;
         }
 
@@ -200,40 +225,133 @@ namespace OOPGames
             {
                 for (int j = 0; j < 3; j++)
                 {
-                  //  _Field[i, j] = 0;
+                    _Field[i, j] = 0;
                 }
             }
+        }
+
+
+        public int threeinarow() //überprüft, ob sich drei in einer Reihe befinden
+        {
+            foreach (Casket C in _Field.Field)
+            {
+
+            }
+            return 0;
+
         }
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {
-              //  _Field[move.Row, move.Column] = move.PlayerNumber;
+                //  _Field[move.Row, move.Column] = move.PlayerNumber;
                 _Field.increaseField();  // nur zu Test-Zwecken
             }
         }
     }
 
+
     public class TicTacToeField_G : ITicTacToeField_G
     {
-
+        int _Fieldsize = 400;
         List<Casket> _Field = new List<Casket>();
 
-        int ITicTacToeField.this[int r, int c] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Fieldsize
+        {
+            get { return _Fieldsize; }
+            set { _Fieldsize = value; }
+        }
+
+        public List<Casket> Field
+        {
+            get { return _Field; }
+        }
+        
+
+        // Initialisieren 3x3 Feld
+        public TicTacToeField_G()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Casket C = new Casket();
+                    C.x = i;
+                    C.y = j;
+                    C.size = _Fieldsize / 3;
+                    _Field.Add(C);
+                }
+            }
+        }
+
+
+        int ITicTacToeField.this[int r, int c]
+        {
+            get
+            {
+                foreach (Casket C in _Field)
+                {
+                    if (C.x == c && C.y == r)
+                    {
+                        return C.player;
+                    }
+                }
+                return -1;
+            }
+
+            set
+            {
+                foreach (Casket C in _Field)
+                {
+                    if (C.x == c && C.y == r)
+                    {
+                        C.player = value;
+                    }
+                }
+            }
+
+        }
 
         public void increaseField()
         {
-           
+            //berechnet die Länge der Liste in x - Richtung
+            int lastSize = (int)Math.Sqrt(_Field.Count);
+
+            //Zeile hinzufügen
+            for (int i = 0; i < lastSize; i++)
+            {
+                Casket C = new Casket();
+                C.x = i;
+                C.y = lastSize + 1;
+                C.size = _Fieldsize / lastSize;
+                _Field.Add(C);
+            }
+
+            // Spalte hinzufügen
+            for (int i = 0; i < (lastSize + 1); i++)
+            {
+                Casket C = new Casket();
+                C.x = lastSize + 1;
+                C.y = i;
+                C.size = _Fieldsize / lastSize;
+                _Field.Add(C);
+            }
+
+            // Größe Kästchen neu skalieren
+            foreach (Casket C in _Field)
+            {
+                C.size = _Fieldsize / (int)Math.Sqrt(_Field.Count);
+            }
         }
 
         public int this[int r, int c]
         {
             get
             {
-                foreach(Casket i in _Field)
+                foreach (Casket i in _Field)
                 {
-                    if(i.x == r && i.y == c)
+                    if (i.x == r && i.y == c)
                     {
                         return i.player;
                     }
@@ -265,6 +383,5 @@ namespace OOPGames
 }
 
 
-    
 
-    
+

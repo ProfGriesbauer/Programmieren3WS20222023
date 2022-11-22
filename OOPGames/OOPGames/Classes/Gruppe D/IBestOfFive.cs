@@ -8,7 +8,8 @@ namespace OOPGames.Classes.Gruppe_D
 {
     public interface ITicTacToeBOFRules : ITicTacToeRules
     {
-        int ICountWin();
+        int ICountWin(int winner);
+        void ClearOnlyField();
     }
 
 
@@ -45,6 +46,12 @@ namespace OOPGames.Classes.Gruppe_D
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is IPaintTicTacToe;
+        }
+
+        public void clearScore()
+        {
+            _P1 = 0;
+            _P2 = 0;
         }
 
         public int player1wins
@@ -93,21 +100,34 @@ namespace OOPGames.Classes.Gruppe_D
         {
             for (int i = 0; i < 3; i++)
             {
-                if (_KrassesFeldBOF[i, 0] == 1 && _KrassesFeldBOF[i, 1] == 1 && _KrassesFeldBOF[i, 2] == 1) { return 1; }
-                if (_KrassesFeldBOF[0, i] == 1 && _KrassesFeldBOF[1, i] == 1 && _KrassesFeldBOF[2, i] == 1) { return 1; }
-                if (_KrassesFeldBOF[i, 0] == 2 && _KrassesFeldBOF[i, 1] == 2 && _KrassesFeldBOF[i, 2] == 2) { return 2; }
-                if (_KrassesFeldBOF[0, i] == 2 && _KrassesFeldBOF[1, i] == 2 && _KrassesFeldBOF[2, i] == 2) { return 2; }
+                if (_KrassesFeldBOF[i, 0] == 1 && _KrassesFeldBOF[i, 1] == 1 && _KrassesFeldBOF[i, 2] == 1) { return ICountWin(1); }
+                if (_KrassesFeldBOF[0, i] == 1 && _KrassesFeldBOF[1, i] == 1 && _KrassesFeldBOF[2, i] == 1) { return ICountWin(1); }
+                if (_KrassesFeldBOF[i, 0] == 2 && _KrassesFeldBOF[i, 1] == 2 && _KrassesFeldBOF[i, 2] == 2) { return ICountWin(2); }
+                if (_KrassesFeldBOF[0, i] == 2 && _KrassesFeldBOF[1, i] == 2 && _KrassesFeldBOF[2, i] == 2) { return ICountWin(2); }
 
 
             }
-            if (_KrassesFeldBOF[0, 0] == 1 && _KrassesFeldBOF[1, 1] == 1 && _KrassesFeldBOF[2, 2] == 1) { return 1; }
-            if (_KrassesFeldBOF[2, 0] == 1 && _KrassesFeldBOF[1, 1] == 1 && _KrassesFeldBOF[0, 2] == 1) { return 1; }
-            if (_KrassesFeldBOF[0, 0] == 2 && _KrassesFeldBOF[1, 1] == 2 && _KrassesFeldBOF[2, 2] == 2) { return 2; }
-            if (_KrassesFeldBOF[2, 0] == 2 && _KrassesFeldBOF[1, 1] == 2 && _KrassesFeldBOF[0, 2] == 2) { return 2; }
+            if (_KrassesFeldBOF[0, 0] == 1 && _KrassesFeldBOF[1, 1] == 1 && _KrassesFeldBOF[2, 2] == 1) { return ICountWin(1); }
+            if (_KrassesFeldBOF[2, 0] == 1 && _KrassesFeldBOF[1, 1] == 1 && _KrassesFeldBOF[0, 2] == 1) { return ICountWin(1); }
+            if (_KrassesFeldBOF[0, 0] == 2 && _KrassesFeldBOF[1, 1] == 2 && _KrassesFeldBOF[2, 2] == 2) { return ICountWin(2); }
+            if (_KrassesFeldBOF[2, 0] == 2 && _KrassesFeldBOF[1, 1] == 2 && _KrassesFeldBOF[0, 2] == 2) { return ICountWin(2); }
+            if (!MovesPossible) { return ICountWin(-1); }
             return -1;
         }
 
-        public void ClearField()
+        public void ClearField() //for MainWindow do not change Name
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _KrassesFeldBOF[i, j] = 0;
+                }
+            }
+            _KrassesFeldBOF.clearScore();
+        }
+
+        public void ClearOnlyField()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -135,9 +155,29 @@ namespace OOPGames.Classes.Gruppe_D
             }
         }
 
-        public int ICountWin()
+        public int ICountWin(int winner)
         {
-            throw new NotImplementedException();
+            if (_KrassesFeldBOF.player1wins < 3 && _KrassesFeldBOF.player2wins < 3 || winner == -1)
+            {
+
+                if (winner == 1)
+                {
+                    _KrassesFeldBOF.player1wins = 0;
+                }
+                if (winner == 2)
+                {
+                    _KrassesFeldBOF.player2wins = 0;
+                }
+
+                ClearOnlyField();
+
+                return 0;
+            }
+            else
+            {
+                if (_KrassesFeldBOF.player1wins == 3) { return 1; }
+                else { return 2; }
+            }
         }
     }
 }

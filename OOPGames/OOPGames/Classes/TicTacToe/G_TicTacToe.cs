@@ -20,7 +20,7 @@ namespace OOPGames
         bool flag { get; set; }
         int player { get; set; } // evtl IGamePlayer anstelle von int
         void paintFrame(Canvas canvas);
-        void paintFill(Canvas canvas);
+        void paintFill(Canvas canvas, Color? X_Color, Color? O_Color);
         Casket isMySpace(int x, int y);
     }
 
@@ -90,11 +90,11 @@ namespace OOPGames
             Line Right = new Line() { X1 = (_x + 1) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(Right);
         }
-        public void paintFill(Canvas canvas)
+        public void paintFill(Canvas canvas, Color? X_Color, Color? O_Color)
         {
-            Color XColor = Color.FromRgb(0, 255, 0);
+            Color XColor = X_Color ?? Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
+            Color OColor = O_Color ?? Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
             if (_player == 1)
@@ -125,10 +125,34 @@ namespace OOPGames
 
     }
 
-    public class TicTacToePaint_G : BaseTicTacToePaint
+    public class TicTacToePaint_G : J_BaseTicTacToePaint
     {
-
         public override string Name { get { return "GruppeGTicTacToePaint"; } }
+
+        public override Color X_Color
+        {
+            get
+            {
+                return X_Color;
+            }
+
+            set
+            {
+                X_Color = value;
+            }
+        }
+        public override Color O_Color
+        {
+            get
+            {
+                return O_Color;
+            }
+
+            set
+            {
+                O_Color = value;
+            }
+        }
 
 
         // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
@@ -165,14 +189,11 @@ namespace OOPGames
         {
             get
             {
-                for (int i = 0; i < 3; i++)
+                foreach (Casket C in _Field.Field)
                 {
-                    for (int j = 0; j < 3; j++)
+                    if(C.player==0)
                     {
-                        if (_Field[i, j] == 0)  //Liste implementieren
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
@@ -221,12 +242,9 @@ namespace OOPGames
 
         public override void ClearField()
         {
-            for (int i = 0; i < 3; i++)
+            foreach(Casket C in _Field.Field)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    _Field[i, j] = 0;
-                }
+                C.player=0;
             }
         }
 

@@ -36,9 +36,6 @@ namespace OOPGames
             }
         }
 
-
-
-
         public ITicTacToeField TicTacToeField { get { return _KrassesFeld; } }
 
         public int CheckIfPLayerWon()
@@ -52,6 +49,7 @@ namespace OOPGames
 
 
             }
+
             if (_KrassesFeld[0, 0] == 1 && _KrassesFeld[1, 1] == 1 && _KrassesFeld[2, 2] == 1) { return 1; }
             if (_KrassesFeld[2, 0] == 1 && _KrassesFeld[1, 1] == 1 && _KrassesFeld[0, 2] == 1) { return 1; }
             if (_KrassesFeld[0, 0] == 2 && _KrassesFeld[1, 1] == 2 && _KrassesFeld[2, 2] == 2) { return 2; }

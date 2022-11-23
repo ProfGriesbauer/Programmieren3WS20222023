@@ -89,6 +89,9 @@
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeverseanken\InterfacesSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeverseanken\PainterSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeverseanken\RulerSV.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />

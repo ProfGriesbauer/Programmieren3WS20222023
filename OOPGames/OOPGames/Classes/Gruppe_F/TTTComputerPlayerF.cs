@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes.Gruppe_F
+namespace OOPGames
 {
     public class TTTAIGruppeF : BaseComputerTicTacToePlayer
     {
@@ -169,6 +169,4 @@ namespace OOPGames.Classes.Gruppe_F
             _PlayerNumber = playerNumber;
         }
     }
-
-    //------------------------------------------------------------------------------
 }

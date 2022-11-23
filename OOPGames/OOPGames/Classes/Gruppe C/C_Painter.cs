@@ -217,7 +217,7 @@ namespace OOPGames.Classes.Gruppe_C
                 }
                 if (_Field[0,i] > 0 && _Field[0,i] == _Field[1,i] && _Field[0,i] == _Field[2,i] && _Field[0,i] == _Field[3,i] && _Field[0,i] == _Field[4,i])
                 {
-                    return _Field[i, 0];
+                    return _Field[0, i];
                 }
             }
             if (_Field[0,0]>0 && _Field[0, 0] == _Field[1,1] && _Field[0, 0] == _Field[2,2] && _Field[0, 0] == _Field[3,3] && _Field[0, 0] == _Field[4,4])

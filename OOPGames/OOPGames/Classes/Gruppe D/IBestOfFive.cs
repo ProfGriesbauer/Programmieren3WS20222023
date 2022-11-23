@@ -158,7 +158,7 @@ namespace OOPGames.Classes.Gruppe_D
 
         public int ICountWin(int winner)
         {
-            if (_KrassesFeldBOF.player1wins < 3 && _KrassesFeldBOF.player2wins < 3 || winner == -1)
+            if (_KrassesFeldBOF.player1wins < 2 && _KrassesFeldBOF.player2wins < 2 || winner == -1)
             {
 
                 if (winner == 1)
@@ -171,7 +171,7 @@ namespace OOPGames.Classes.Gruppe_D
                 }
 
                 ClearOnlyField();
-
+                
                 return 0;
             }
             else 

@@ -70,4 +70,11 @@ namespace OOPGames
         Color X_Color { get; set; }
         Color O_Color { get; set; }
     }
+
+    //Gruppe C Counter Interface
+    public interface C_ICountInterface
+    {
+        int PointsPlayer1 { get; set; }
+        int PointsPlayer2 { get; set; }
+    }
 }

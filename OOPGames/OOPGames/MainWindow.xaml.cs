@@ -57,10 +57,11 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
-
+            
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
+            OOPGamesManager.Singleton.RegisterPainter(new B_Pong_Painter());
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
@@ -290,7 +291,8 @@ namespace OOPGames
             if (_CurrentRules is IGameRulesB) 
             {
                 _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
-                OnPlayerChanged(_CurrentRules); 
+                OnPlayerChanged(_CurrentRules);
+                //DoComputerMoves();
             }
             
             

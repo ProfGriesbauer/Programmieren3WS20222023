@@ -91,9 +91,6 @@
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
-    <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
-    <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
-    <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
@@ -161,6 +158,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Classes\Gruppe D\Schiffeversenken\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <ItemGroup>

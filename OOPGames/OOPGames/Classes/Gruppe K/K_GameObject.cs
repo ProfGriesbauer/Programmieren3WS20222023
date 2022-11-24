@@ -24,7 +24,7 @@ namespace OOPGames.Classes.Gruppe_K
         int[] _field=new int[400*800];
     }
 
-    abstract class K_DrawObject
+    abstract class K_DrawObject: K_GameObject
     {
         int _xPos;
         int _yPos;

@@ -15,7 +15,7 @@ namespace OOPGames.Classes.Gruppe_K
         K_GameObjectManager _gameManager;
 
 
-        public string Name { get { return "K Rules tpd"; } }
+        public string Name { get { return "K Rules tbd"; } }
 
         public bool MovesPossible { get { return true; } }
 

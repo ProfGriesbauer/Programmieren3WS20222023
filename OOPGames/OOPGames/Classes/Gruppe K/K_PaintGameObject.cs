@@ -16,7 +16,7 @@ namespace OOPGames.Classes.Gruppe_K
 {
     internal class K_PaintGameObject : IK_PaintGameObject
     {
-        public string Name { get { return "K Painter tpd"; } }
+        public string Name { get { return "K Painter tbd"; } }
 
 
 

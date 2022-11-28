@@ -17,9 +17,10 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         //p_shoot can return 0 for nothing; 1 for shot but nothing; 2 hit ship ; 
 
     }
-    public interface IRulerSV : IGameRules2
+    public interface IRulerSV : IGameRules
     {
         void DoShipMove(IShipMove move);
+        void ChangePhase();
     }
 
     public interface IShipMove : IRowMove, IColumnMove

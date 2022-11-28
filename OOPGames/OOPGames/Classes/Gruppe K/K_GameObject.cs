@@ -45,6 +45,7 @@ namespace OOPGames.Classes.Gruppe_K
         const int _height = 400;
         byte[] _field = new byte[_width * _height];
         BitmapPalette _palette = BitmapPalettes.Halftone256Transparent;
+        int _drawIndex = 0;
 
         public byte[] getField()
         {
@@ -75,12 +76,17 @@ namespace OOPGames.Classes.Gruppe_K
             set { _palette = value; }
 
         }
+        public int drawIndex
+        {
+            get { return _drawIndex; }
+            set { _drawIndex = value; }
+        }
     }
     abstract class K_DrawObject: K_GameObject
     {
         int _xPos=0;
         int _yPos=0;
-        int _drawIndex;
+        int _drawIndex=10;
         float _rotation=0f;
         int _xCenter = 0;
         int _yCenter = 0;

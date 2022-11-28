@@ -63,6 +63,7 @@ namespace OOPGames.Classes.Gruppe_K
             Image img = new Image();
             img.Source = bitmap;
             canvas.Children.Add(img);
+            Canvas.SetZIndex(img, obj.drawIndex);
         }
 
         private void PaintK_Player(Canvas canvas, K_Player obj)

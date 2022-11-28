@@ -25,6 +25,7 @@ namespace OOPGames.Classes.Gruppe_C
 
         public void PaintTicTacToeField(Canvas canvas, C_ITicTacToeField currentField)
         {
+
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -60,6 +61,7 @@ namespace OOPGames.Classes.Gruppe_C
             Line l12 = new Line() { X1 = 20, Y1 = 520, X2 = 520, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 }; //waagrecht
             canvas.Children.Add(l12);
 
+
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 5; j++)
@@ -78,6 +80,12 @@ namespace OOPGames.Classes.Gruppe_C
                     }
                 }
             }
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = "Player 1: " + currentField.PointsPlayer1 + System.Environment.NewLine + "Player 2: " + currentField.PointsPlayer2;
+            textBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            Canvas.SetLeft(textBlock, 20);
+            Canvas.SetTop(textBlock, 540);
+            canvas.Children.Add(textBlock);
         }
     }
 
@@ -349,6 +357,9 @@ namespace OOPGames.Classes.Gruppe_C
         public class GC_TicTacToeField : C_ITicTacToeField
         {
             int[,] _Field = new int[5, 5] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
+            int _PointsPlayer1;
+            int _PointsPlayer2;
+
             public int this[int r, int c]
             {
                 get
@@ -371,8 +382,8 @@ namespace OOPGames.Classes.Gruppe_C
                 }
             }
 
-            public int PointsPlayer1 { get { return PointsPlayer1; } set { } }
-            public int PointsPlayer2 { get { return PointsPlayer2; } set { } }
+            public int PointsPlayer1 { get { return _PointsPlayer1; } set { _PointsPlayer1 = value; } }
+            public int PointsPlayer2 { get { return _PointsPlayer2; } set { _PointsPlayer2 = value; } }
 
             public bool CanBePaintedBy(IPaintGame painter)
             {

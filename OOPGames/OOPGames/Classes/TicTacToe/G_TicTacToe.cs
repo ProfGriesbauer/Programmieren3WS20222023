@@ -203,28 +203,25 @@ namespace OOPGames
 
         public override string Name { get { return "GruppeGTicTacToeRules"; } }
 
-        public override int CheckIfPLayerWon()
+        public override int CheckIfPLayerWon() //wird ein default wert benötigt?
         {
             int countplayer1 = 0;
             int countplayer2 = 0;
-            int NAME = threeinarow();
+            int whohasthree = threeinarow();
 
-            // Switch Case evtl
-            // default return -1
-            // break nicht vergessen
 
-            if(NAME>0)
-              {
-                  _Field.increaseField();
-                  if(NAME==1)
-                  {
-                      countplayer1++;
-                  }
-                  else
-                  {
-                      countplayer2++;
-                  }
-              }
+            if (whohasthree > 0)
+            {
+                _Field.increaseField();
+                if (whohasthree == 1)
+                {
+                    countplayer1++;
+                }
+                else
+                {
+                    countplayer2++;
+                }
+            }
 
             if (MovesPossible==false)
               {
@@ -251,10 +248,137 @@ namespace OOPGames
 
         public int threeinarow() //überprüft, ob sich drei in einer Reihe befinden
         {
-            foreach (Casket C in _Field.Field)
+            foreach (Casket C in _Field.Field) //für jedes kästchen um die mitte herum wird der spielerwert gesucht, dieser wird dann verglichen
             {
 
+
+                if (C.player > 0 && !C.flag)
+                {
+
+                    int links = 0; //enthält Spieler des Kästchens
+                    int linksi = 0; //enthält Position des Objekts, welches den obigen Spielerwert enthält, in Liste
+                    int mitte = C.player;
+                    int rechts = 0;
+                    int rechtsi = 0;
+                    int olinks = 0;
+                    int olinksi = 0;
+                    int omitte = 0;
+                    int omittei = 0;
+                    int orechts = 0;
+                    int orechtsi = 0;
+                    int ulinks = 0;
+                    int ulinksi = 0;
+                    int umitte = 0;
+                    int umittei = 0;
+                    int urechts = 0;
+                    int urechtsi = 0;
+
+                    int xpos = C.x;
+                    int ypos = C.y;
+                    int searchx; //enthält gesuchte xpos des kästchens um das aktuelle kästchen herum
+                    int searchy; //enthält gesuchte ypos des kästchens um das aktuelle kästchen herum
+
+                    for (int i = 0; i < _Field.Field.Count; i++)
+                    {
+                        searchx = xpos - 1;
+                        searchy = ypos - 1;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            ulinks = _Field.Field[i].player;
+                            ulinksi = i;
+                        };
+
+                        searchx = xpos - 1;
+                        searchy = ypos;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            links = _Field.Field[i].player;
+                            linksi = i;
+                        };
+
+                        searchx = xpos - 1;
+                        searchy = ypos + 1;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            olinks = _Field.Field[i].player;
+                            olinksi = i;
+                        };
+
+                        searchx = xpos;
+                        searchy = ypos + 1;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            omitte = _Field.Field[i].player;
+                            omittei = i;
+                        };
+
+                        searchx = xpos + 1;
+                        searchy = ypos + 1;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            orechts = _Field.Field[i].player;
+                            orechtsi = i;
+                        };
+
+                        searchx = xpos + 1;
+                        searchy = ypos;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            rechts = _Field.Field[i].player;
+                            rechtsi = i;
+                        };
+
+                        searchx = xpos + 1;
+                        searchy = ypos - 1;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            urechts = _Field.Field[i].player;
+                            urechtsi = i;
+                        };
+
+                        searchx = xpos;
+                        searchy = ypos - 1;
+                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        {
+                            umitte = _Field.Field[i].player;
+                            umittei = i;
+                        };
+
+                    }
+
+
+                    if (mitte == links && mitte == rechts)
+                    {
+                        C.flag = true;
+                        _Field.Field[linksi].flag = true;
+                        _Field.Field[rechtsi].flag = true;
+                        return mitte;
+                    }
+                    if (mitte == olinks && mitte == urechts)
+                    {
+                        C.flag = true;
+                        _Field.Field[olinksi].flag = true;
+                        _Field.Field[urechtsi].flag = true;
+                        return mitte;
+                    }
+                    if (mitte == omitte && mitte == umitte)
+                    {
+                        C.flag = true;
+                        _Field.Field[omittei].flag = true;
+                        _Field.Field[umittei].flag = true;
+                        return mitte;
+                    }
+                    if (mitte == ulinks && mitte == orechts)
+                    {
+                        C.flag = true;
+                        _Field.Field[ulinksi].flag = true;
+                        _Field.Field[orechtsi].flag = true;
+                        return mitte;
+                    }
+                }
+
             }
+
             return 0;
 
         }

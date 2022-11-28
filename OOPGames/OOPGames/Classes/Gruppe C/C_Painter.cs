@@ -129,7 +129,7 @@ namespace OOPGames.Classes.Gruppe_C
         {
             Random rand = new Random();
             int f = rand.Next(0, 25);
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 int c = f % 5;
                 int r = ((f - c) / 5) % 5;
@@ -139,7 +139,7 @@ namespace OOPGames.Classes.Gruppe_C
                 }
                 else
                 {
-                    f++;
+                    f = rand.Next(0, 25);
                 }
             }
             return null;

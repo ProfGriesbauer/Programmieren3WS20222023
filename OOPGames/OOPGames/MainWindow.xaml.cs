@@ -23,6 +23,7 @@ using System.Drawing;
 using Color = System.Drawing.Color;
 using static OOPGames.PlayerD;
 using OOPGames.Classes.Gruppe_D;
+using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
 
 namespace OOPGames
 {

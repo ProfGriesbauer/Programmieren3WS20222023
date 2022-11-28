@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
+using System.Security.Cryptography.X509Certificates;
 
 namespace OOPGames.Classes.Gruppe_C
 {
@@ -112,6 +113,42 @@ namespace OOPGames.Classes.Gruppe_C
         }
 
 
+    }
+    public class C_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+        public override string Name { get { return "C_TicTacToeComputerPlayer"; } }
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+        public override IGamePlayer Clone()
+        {
+            C_TicTacToeComputerPlayer ttthp = new C_TicTacToeComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            Random rand = new Random();
+            int f = rand.Next(0, 25);
+            for (int i = 0; i < 25; i++)
+            {
+                int c = f % 5;
+                int r = ((f - c) / 5) % 5;
+                if (field[r, c] <= 0)
+                {
+                    return new TicTacToeMove(r, c, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
+            }
+            return null;
+        }
+        public override void SetPlayerNumber(int playerNumber)
+        { 
+            _PlayerNumber = playerNumber; 
+        }
+        
     }
     public class GC_TicTacToeRules : BaseTicTacToeRules
     {

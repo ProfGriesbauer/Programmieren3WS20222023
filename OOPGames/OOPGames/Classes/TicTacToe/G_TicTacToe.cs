@@ -583,7 +583,7 @@ namespace OOPGames
 
         public override IGamePlayer Clone()
         {
-            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            HumanTicTacToePlayer_G ttthp = new HumanTicTacToePlayer_G();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }

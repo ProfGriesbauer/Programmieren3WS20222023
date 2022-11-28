@@ -24,7 +24,8 @@ namespace OOPGames.Classes.GruppeI
             this.sy = sy;
         }
 
-        public int this[int r, int c] {
+        public int this[int r, int c]
+        {
             get
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
@@ -40,7 +41,7 @@ namespace OOPGames.Classes.GruppeI
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
-                    this.[r, c] = value;
+                    this[r, c] = value;
                 }
             }
         }
@@ -51,7 +52,7 @@ namespace OOPGames.Classes.GruppeI
         }
     }
 
-    public class IBigTicTacToeField: ITicTacToeField
+    public class IBigTicTacToeField : ITicTacToeField
     {
         IList<I_ISubField> SubFields { get; }
 
@@ -59,7 +60,7 @@ namespace OOPGames.Classes.GruppeI
         {
             get
             {
-                
+
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
                     return SubFields[0][r, c];
@@ -75,20 +76,20 @@ namespace OOPGames.Classes.GruppeI
                 {
                     SubFields[0][r, c] = value;
                 }
-            }        
+            }
         }
 
         public IBigTicTacToeField()
         {
-            SubFields.Add(new ISubField(0,20,20,180,180));
-            SubFields.Add(new ISubField(1,200,20,180,180));
-            SubFields.Add(new ISubField(2,380,20,180,180));
-            SubFields.Add(new ISubField(3,20,200,180,180));
-            SubFields.Add(new ISubField(4,200,200,180,180));
-            SubFields.Add(new ISubField(5,380,200,180,180));
-            SubFields.Add(new ISubField(6,20,380,180,180));
-            SubFields.Add(new ISubField(7,200,380,180,180));
-            SubFields.Add(new ISubField(8,380,380,180,180));
+            SubFields.Add(new ISubField(0, 20, 20, 180, 180));
+            SubFields.Add(new ISubField(1, 200, 20, 180, 180));
+            SubFields.Add(new ISubField(2, 380, 20, 180, 180));
+            SubFields.Add(new ISubField(3, 20, 200, 180, 180));
+            SubFields.Add(new ISubField(4, 200, 200, 180, 180));
+            SubFields.Add(new ISubField(5, 380, 200, 180, 180));
+            SubFields.Add(new ISubField(6, 20, 380, 180, 180));
+            SubFields.Add(new ISubField(7, 200, 380, 180, 180));
+            SubFields.Add(new ISubField(8, 380, 380, 180, 180));
         }
 
         public bool CanBePaintedBy(IPaintGame painter)

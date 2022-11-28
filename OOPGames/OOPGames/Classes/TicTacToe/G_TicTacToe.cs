@@ -32,12 +32,6 @@ namespace OOPGames
         void increaseField();
         
     }
-    
-
-    public interface ITicTacToeRules_G : ITicTacToeRules
-    {
-
-    }
 
     public class Casket : ICasket 
     {
@@ -67,7 +61,7 @@ namespace OOPGames
         public bool flag 
         {
             get { return _flag; }
-            set { flag = value; }
+            set { _flag = value; }
         }
         public int player
         {
@@ -121,7 +115,7 @@ namespace OOPGames
             if (_player == 1)
             {
                 Line l1 = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y + 1) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
-                Line l2 = new Line() { X1 = (_x) * _size, Y1 = (_y + 1) * _size, X2 = (_x) * _size, Y2 = (_y + 1) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
+                Line l2 = new Line() { X1 = (_x) * _size, Y1 = (_y + 1) * _size, X2 = (_x + 1) * _size, Y2 = (_y) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
                 canvas.Children.Add(l1);
                 canvas.Children.Add(l2);
             }
@@ -134,13 +128,14 @@ namespace OOPGames
 
         public Casket isMySpace(int x, int y)
         {
-            if ((_x*_size) <= x && (_x * _size) + _size >= x)
+            if ((_x * _size) >= x && (_x + 1) * _size <= x)
             {
-                if ((_y * _size) <= y && (_y * _size) + _size >= y)
+                if ((_y * _size) >= y && (_y + 1) * _size <= y)
                 {
                     return this;
                 }
             }
+            Console.WriteLine("Click ist nicht im feld Fehlercode: x58746");
             return null;
         }
 
@@ -441,11 +436,14 @@ namespace OOPGames
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            foreach(Casket cas in _Field.Field)
             {
-                //  _Field[move.Row, move.Column] = move.PlayerNumber;
-                _Field.increaseField();  // nur zu Test-Zwecken
+                if(cas.x == move.Column && cas.y == move.Row)
+                {
+                    cas.player = move.PlayerNumber;
+                }
             }
+                //  _Field[move.Row, move.Column] = move.PlayerNumber;
         }
     }
 
@@ -603,13 +601,18 @@ namespace OOPGames
         public ITicTacToeMove GetMove_G(IMoveSelection selection, ITicTacToeField_G field_G)
         {
             List<Casket> field = field_G.Field;
+
             if (selection is IClickSelection)
             {
                 IClickSelection sel = (IClickSelection)selection;
+
                 foreach(Casket cas in field)
                 {
                     if(cas.isMySpace(sel.XClickPos, sel.YClickPos) != null)
                     {
+                        Console.WriteLine(sel.YClickPos + ";" + sel.YClickPos);
+                        Console.WriteLine(cas.x + ";" + cas.y + ";" + cas.size);
+
                         return new TicTacToeMove(cas.x, cas.y, _PlayerNumber);
                     }
 

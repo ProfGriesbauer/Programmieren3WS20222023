@@ -287,7 +287,7 @@ namespace OOPGames
     {
         int _PlayerNumber = 0;
 
-        public string Name { get { return " H_TicTacToePlayer"; } }
+        public string Name { get { return " H_TicTacToeHumanPlayer"; } }
 
         public int PlayerNumber { get { return _PlayerNumber; } }
 
@@ -351,12 +351,86 @@ namespace OOPGames
 
 
     }
-    
+
 
     //Computer Player
+    public class H_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
 
-    
-    
-    
-    
+        public override string Name { get { return "H_TicTacToeComputerPlayer"; } }
+
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+        public override IGamePlayer Clone()
+        {
+            H_TicTacToeComputerPlayer ttthp = new H_TicTacToeComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            int r = 0; //row
+            int c = 0; //column
+            //Nummeriert die Felder von 1 bis 9
+            for (int i = 1; i <= 9; i++)
+            {
+                for (r = 0; r <= 2; r++)
+                {
+                    for (c = 0; c <= 2; c++)
+                    {
+                        int fieldi = field[r, c];
+                    }
+                }
+            }
+
+            //Setzt Kreis immer links oben und danach immer eins nach rechts
+            for (r = 0; r <= 2; r++)
+            {
+                for (c = 0; c <= 2; c++)
+                {
+
+                    if (field[r, c] <= 0)
+                    {
+                        return new TicTacToeMove(r, c, _PlayerNumber);
+                    }
+                }
+            }
+
+            // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?
+
+
+
+            //Computerspieler vom Griesbauer
+            /*Random rand = new Random();
+            int f = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
+            {
+                int c = f % 3;
+                int r = ((f - c) / 3) % 3;
+                if (field[r, c] <= 0)
+                {
+                    return new TicTacToeMove(r, c, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
+            }
+            */
+
+            return null;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+
     }
+
+
+
+
+}

@@ -95,13 +95,17 @@
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
-    <Compile Include="Classes\Gruppe E\E_vierGewinnt.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\K_RulesGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
+    <Compile Include="Classes\GruppeI\TTTField.cs" />
+    <Compile Include="Classes\GruppeI\TTT_Fields.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeJ\Dino_Game.cs" />
@@ -117,7 +121,7 @@
     <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Gruppe_F\ITimeStamp.cs" />
+    <Compile Include="Classes\Gruppe_F\InterfacesGruppeF.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />
@@ -178,7 +182,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\Gruppe D\Schiffeversenken\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <ItemGroup>

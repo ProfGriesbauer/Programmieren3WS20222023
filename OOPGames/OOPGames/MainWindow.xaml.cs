@@ -95,6 +95,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF());
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
             OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
 
 
             InitializeComponent();

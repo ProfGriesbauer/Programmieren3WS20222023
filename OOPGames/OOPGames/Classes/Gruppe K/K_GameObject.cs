@@ -39,20 +39,26 @@ namespace OOPGames.Classes.Gruppe_K
         K_GameObject _ActivePlayer;
     }
 
-    class K_GameField:K_GameObject
+    class K_GameField : K_GameObject
     {
         const int _width = 800;
         const int _height = 400;
-        int[] _field=new int[_width*_height];
-        public int getField(int x, int y)
+        byte[] _field = new byte[_width * _height];
+        BitmapPalette _palette = BitmapPalettes.Halftone256Transparent;
+
+        public byte[] getField()
         {
-            return _field[x+y*_width];
+            return _field;
         }
-        public void setField(int x, int y, int value)
+        public byte getField(int x, int y)
         {
-            if(x<_width && y < _height)
+            return _field[x + y * _width];
+        }
+        public void setField(int x, int y, byte value)
+        {
+            if (x < _width && y < _height)
             {
-                _field[x+y*_width]=value;
+                _field[x + y * _width] = value;
             }
         }
         public int Width
@@ -63,14 +69,21 @@ namespace OOPGames.Classes.Gruppe_K
         {
             get { return _height; }
         }
-    }
+        public BitmapPalette Palette
+        {
+            get { return _palette; }
+            set { _palette = value; }
 
+        }
+    }
     abstract class K_DrawObject: K_GameObject
     {
         int _xPos=0;
         int _yPos=0;
         int _drawIndex;
         float _rotation=0f;
+        int _xCenter = 0;
+        int _yCenter = 0;
         float _scale=1f;
         BitmapImage _image;
 
@@ -94,6 +107,17 @@ namespace OOPGames.Classes.Gruppe_K
             get { return _rotation; }
             set { _rotation = value; }
         }
+        public int xCenter
+        {
+            get { return _xCenter; }
+            set { _xCenter = value; }
+        }
+        public int yCenter
+        {
+            get{ return _yCenter; }
+            set { _yCenter = value; }
+        }
+
         public BitmapImage Image
         {
             get { return _image; }

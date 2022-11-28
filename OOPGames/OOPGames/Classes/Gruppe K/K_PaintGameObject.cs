@@ -1,7 +1,10 @@
 ﻿using OOPGames.Interfaces.Gruppe_K;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
+using Color = System.Windows.Media.Color;
+using Image = System.Windows.Controls.Image;
 
 namespace OOPGames.Classes.Gruppe_K
 {
@@ -53,34 +58,11 @@ namespace OOPGames.Classes.Gruppe_K
 
         private void PaintK_GameField(Canvas canvas, K_GameField obj)
         {
-            DrawingVisual dv = new DrawingVisual();
-            using (DrawingContext dc = dv.RenderOpen())
-            {
-                Random rand = new Random();
-
-                for (int x = 0; x < obj.Width; x++)
-                {
-                    for (int y = 0; y < obj.Height; y++)
-                {
-                        if (obj.getField(x,y) > 0)
-                        { 
-                                dc.DrawRectangle(Brushes.Beige, null, new Rect(x, y, 1, 1)); 
-                        }
-                        else
-                        {
-                            dc.DrawRectangle(Brushes.Aqua, null, new Rect(x,y, 1, 1));
-                        }
-                    }
-                }
-
-                dc.Close();
-            }
-            RenderTargetBitmap rtb = new RenderTargetBitmap(800, 400, 96, 96, PixelFormats.Pbgra32);
-            rtb.Render(dv);
+            WriteableBitmap bitmap = new WriteableBitmap(obj.Width, obj.Height, 96, 96, PixelFormats.Indexed8, obj.Palette);
+            bitmap.WritePixels(new Int32Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight), obj.getField(), bitmap.PixelWidth,0);
             Image img = new Image();
-            img.Source = rtb;
+            img.Source = bitmap;
             canvas.Children.Add(img);
-
         }
 
         private void PaintK_Player(Canvas canvas, K_Player obj)
@@ -129,8 +111,8 @@ namespace OOPGames.Classes.Gruppe_K
             container.Background = img;
             RotateTransform rot=new RotateTransform();
             rot.Angle = obj.Rotation;
-            rot.CenterX = container.Width / 2;
-            rot.CenterY = container.Height / 2;
+            rot.CenterX = obj.xCenter;
+            rot.CenterY = obj.yCenter;
             container.RenderTransform = rot;
 
             canvas.Children.Add(container);

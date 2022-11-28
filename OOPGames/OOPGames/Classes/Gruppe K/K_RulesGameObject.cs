@@ -47,8 +47,15 @@ namespace OOPGames.Classes.Gruppe_K
 
             // testField K_GameField object
             K_GameField testField = new K_GameField();
-            // Fill testField with test values;
 
+            // Create Palette
+            List<Color> colorList = new List<Color>();
+            colorList.Add(Colors.Transparent);
+            colorList.Add(Colors.Aqua);
+            colorList.Add(Colors.Beige);
+            testField.Palette = new BitmapPalette(colorList);
+
+            // Fill testField with test values;
             double f6 = -2e-16;
             double f5 = 1e-12;
             double f4 = -5e-9;
@@ -57,6 +64,7 @@ namespace OOPGames.Classes.Gruppe_K
             double f1 = 3e-1;
             double f0 = 200;
 
+
             for (int x = 0; x < testField.Width; x++)
             {
                 int yLimit = (int)(f6 * Math.Pow(x, 6) + f5 * Math.Pow(x, 5) + f4 * Math.Pow(x, 4) + f3 * Math.Pow(x, 3) + f2 * Math.Pow(x, 2) + f1 * x + f0);
@@ -64,11 +72,11 @@ namespace OOPGames.Classes.Gruppe_K
                 {
                     if (yLimit <= y)
                     {
-                        testField.setField(x, y, 1);
+                        testField.setField(x, y, 2);
                     }
                     else
                     {
-                        testField.setField(x, y, 0);
+                        testField.setField(x, y, 1);
                     }
                 }
             }
@@ -78,11 +86,13 @@ namespace OOPGames.Classes.Gruppe_K
             testPlayer.Image = new BitmapImage(new Uri(@"Assets\K\Panzer.png", UriKind.Relative));
             int x1 = 300;
             testPlayer.Scale = 2;
+            testPlayer.xCenter = (int)(testPlayer.Scale * testPlayer.Image.PixelWidth) / 2;
+            testPlayer.yCenter = (int)(testPlayer.Scale*testPlayer.Image.PixelHeight);
             testPlayer.Rotation = 0f;
             testPlayer.xPos = x1;
             testPlayer.yPos = (int)(f6 * Math.Pow(x1, 6) + f5 * Math.Pow(x1, 5) + f4 * Math.Pow(x1, 4) + f3 * Math.Pow(x1, 3) + f2 * Math.Pow(x1, 2) + f1 * x1 + f0);
             testPlayer.yPos -= (int)(10 * testPlayer.Scale);
-
+            
 
             // testProjectile K_Projectile object
             // TODO Write Test Parameters

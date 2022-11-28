@@ -283,6 +283,13 @@ namespace OOPGames
 
 
     }
+
+
+
+
+
+
+
     public class H_TicTacToeHumanPlayer: IHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -294,14 +301,14 @@ namespace OOPGames
        
         public ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field) 
         {
-            int d = 150;
-            int X0 = 100;
+            int d = 150;                                                                            //Distanz zwischen den Linien
+            int X0 = 100;                                                                           //x0;y0 Linke obere Ecke des Feldes
             int Y0 = 150;
 
             if (selection is IClickSelection)
             {
-                IClickSelection sel = (IClickSelection)selection;
-                for (int i = 0; i < 3; i++)
+                IClickSelection sel = (IClickSelection)selection;                                   //Abfrage aller Felder, ob der Klick innerhalb der Koordinaten des Jeweiligen Feldes stattfand
+                for (int i = 0; i < 3; i++)                                                         //und ob das jeweilige Feld leer ist. Wenn Ja wird das jeweilige Feld auf die aktuelle Spielernummer gesetzt.
                 {
                     for (int j = 0; j < 3; j++)
                     {
@@ -399,6 +406,7 @@ namespace OOPGames
             }
 
             // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?
+            //--> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
 
 
 

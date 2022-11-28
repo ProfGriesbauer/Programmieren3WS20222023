@@ -90,9 +90,12 @@ namespace OOPGames
     }
 
     //Gruppe C TicTacToe Painter
-    public interface C_IPaintTicTacToe : IPaintGame
+    public interface C_IPaintTicTacToe : IPaintGame2
     {
+        
         void PaintTicTacToeField(Canvas canvas, C_ITicTacToeField currentField);
+        
+        void TickPaintGameField(Canvas canvas, C_ITicTacToeField currentField);
     }
     //Gruppe C TicTacToe Humanplayer
     public interface C_IHumanTicTacToePlayer : IHumanGamePlayer

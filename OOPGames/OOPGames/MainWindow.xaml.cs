@@ -3,6 +3,7 @@ using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
 using OOPGames.Classes.GruppeI;
+using OOPGames.Classes.GruppeJ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,9 @@ namespace OOPGames
 
         public MainWindow()
         {
+            /////////////////////////
+            //   RunDinoGame();
+            ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
@@ -57,7 +61,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
-            
+
+
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
@@ -120,6 +125,18 @@ namespace OOPGames
             }
                 
         }
+        /// <summary>
+        /// //////////////////////////////////////
+        /// </summary>
+        
+        public void RunDinoGame()
+        {
+            OOPGames.Classes.GruppeJ.Dino_Game.StartDinoGame();
+
+        }
+        /// <summary>
+        /// ///////////////////////////////
+        /// </summary>
 
         private void _PaintTimer_Tick(object sender, EventArgs e)
         {
@@ -320,5 +337,6 @@ namespace OOPGames
             this.X_Color = p1;
             this.O_Color = p2;
         }
+       
     }
 }

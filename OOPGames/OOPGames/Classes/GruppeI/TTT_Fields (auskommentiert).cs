@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OOPGames.Classes.GruppeI
 {
-    public class I_TicTacToeField : I_ITicTacToeField
+    /*public class I_TicTacToeField : I_ITicTacToeField
     {
 
         int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
@@ -68,4 +68,4 @@ namespace OOPGames.Classes.GruppeI
         }
     }
 }
-
+*/

@@ -1,5 +1,5 @@
 ﻿using OOPGames.Classes.Gruppe_B;
-using OOPGames.Classes.Gruppe_F;
+//using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
 using OOPGames.Classes.GruppeI;
@@ -24,6 +24,8 @@ using Color = System.Drawing.Color;
 using static OOPGames.PlayerD;
 using OOPGames.Classes.Gruppe_D;
 using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
+using OOPGames.Interfaces.Gruppe_E;
+using OOPGames.Classes.Gruppe_E;
 
 namespace OOPGames
 {
@@ -58,11 +60,12 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
-            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new E_vierGewinnt_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
-            OOPGamesManager.Singleton.RegisterPainter(new PainterI());
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            //OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 
 
@@ -84,13 +87,15 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+
 
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanTicTacToePlayer_G());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_easy());
-            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_middle());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_hard());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());
@@ -250,6 +255,7 @@ namespace OOPGames
                     _CurrentPlayer is IHumanGamePlayer)
                 {
                     IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                    
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);

@@ -63,6 +63,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     public class RulerSV : IRulerSV
     {
         FieldSV _Shipfield = new FieldSV();
+        int GamePhase = 1;
+        int ShipCounter = 0;
         public string Name { get { return "SchiffeverseankenRuler"; } }
 
         public IGameField CurrentField { get { return _Shipfield; } }
@@ -86,9 +88,61 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
+        public void ChangePhase()
+        {
+            GamePhase++;
+        }
+     
+
+       
+
+        public int CheckHit(int r, int c, int Playernumber)             //Schussfunktion
+        {
+            if (Playernumber == 2)
+            {
+                if (_Shipfield[r, c, 1] == 1)
+                {
+                    return 2;
+                }
+            }
+            if (Playernumber == 1) { 
+                    if (_Shipfield[r, c, 2] == 1)
+                    {
+                    return 2; 
+                    }    
+            }
+            return 1;
+        }
+
         public int CheckIfPLayerWon()
         {
+            int _hitsP1 = ShipCounter; // Anzahl der Schifffelder gesamt --> kann angepasst werden in SetShip-Funktion
+            int _hitsP2 = ShipCounter;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (_Shipfield[i, j, 3] == 2)
+                    {
+                        _hitsP1--;
+                    }
+                    if (_Shipfield[i, j, 4] == 2)
+                    {
+                        _hitsP2--;
+                    }
+
+                }
+            }
+            if (_hitsP1 == 0)
+            {
+                return 1;
+            }
+            if (_hitsP2 == 0)
+            {
+                return 2;
+            }
             return -1;
+
         }
 
         public void ClearField()
@@ -109,27 +163,59 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             if (move is IShipMove)
             {
-                DoShipMove((IShipMove) move);
+                DoShipMove((IShipMove)move);
 
             }
         }
 
         public void DoShipMove(IShipMove move)
         {
-            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8)
+            if (GamePhase == 1 || GamePhase == 2)
             {
-                _Shipfield[move.Row, move.Column, 1] = move.PlayerNumber;
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
+                {
+                    _Shipfield[move.Row, move.Column, 1] = SetShip(move.Row, move.Column, move.PlayerNumber);
+                }
+
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
+                {
+                    _Shipfield[move.Row, move.Column, 2] = SetShip(move.Row, move.Column, move.PlayerNumber);
+                }
+            }
+            if (GamePhase == 3)
+            {
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
+                {
+                    _Shipfield[move.Row, move.Column, 3] = CheckHit(move.Row, move.Column, move.PlayerNumber);
+                }
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
+                {
+                    _Shipfield[move.Row, move.Column, 4] = CheckHit(move.Row, move.Column, move.PlayerNumber);
+                }
             }
         }
 
-        public void StartedGameCall()
+        public int SetShip(int r, int c, int PLayernumber)
         {
-            throw new NotImplementedException();
-        }
-
-        public void TickGameCall()
-        {
-            throw new NotImplementedException();
+            if (PLayernumber == 1 && _Shipfield[r, c, 1] ==0)
+            {
+                ShipCounter++;
+                if (ShipCounter ==15)
+                {
+                    ChangePhase();
+                }
+                return 1;
+            }
+            if (PLayernumber == 2 && _Shipfield[r, c, 2] == 0)
+            {
+                ShipCounter++;
+                if (ShipCounter == 15)
+                {
+                    ChangePhase();
+                }
+                return 1;
+            }
+            return 1;
         }
     }
 }

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 {
     public interface IPaintSV : IPaintGame
     {
-
+        void PaintShipField(Canvas canvas, IGameField currentField, int GamePhase); 
     }
     public interface IFieldSV : IGameField
     {
@@ -17,9 +18,12 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         //p_shoot can return 0 for nothing; 1 for shot but nothing; 2 hit ship ; 
 
     }
-    public interface IRulerSV : IGameRules2
+    public interface IRulerSV : IGameRules
     {
         void DoShipMove(IShipMove move);
+        void ChangePhase();
+        int CheckHit(int r, int c, int Playernumber);
+        int SetShip(int r, int c, int PLayernumber);
     }
 
     public interface IShipMove : IRowMove, IColumnMove

@@ -1,5 +1,5 @@
 ﻿using OOPGames.Classes.Gruppe_B;
-using OOPGames.Classes.Gruppe_F;
+//using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
 using OOPGames.Classes.GruppeI;
@@ -84,6 +84,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+
 
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
@@ -250,6 +252,7 @@ namespace OOPGames
                     _CurrentPlayer is IHumanGamePlayer)
                 {
                     IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                    
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);

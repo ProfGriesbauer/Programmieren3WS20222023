@@ -63,6 +63,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     public class RulerSV : IRulerSV
     {
         FieldSV _Shipfield = new FieldSV();
+        int GamePhase = 1;
         public string Name { get { return "SchiffeverseankenRuler"; } }
 
         public IGameField CurrentField { get { return _Shipfield; } }
@@ -86,9 +87,40 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
+        public void ChangePhase()
+        {
+            GamePhase++;
+        }
+
         public int CheckIfPLayerWon()
         {
+            int _hitsP1 = 10; // Anzahl der Schifffelder gesamt --> kann angepasst werden
+            int _hitsP2 = 10;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (_Shipfield[i, j, 3] == 2)
+                    {
+                        _hitsP1--;
+                    }
+                    if (_Shipfield[i, j, 4] == 2)
+                    {
+                        _hitsP2--;
+                    }
+
+                }
+            }
+            if (_hitsP1 == 0)
+            {
+                return 1;
+            }
+            if (_hitsP2 == 0)
+            {
+                return 2;
+            }
             return -1;
+
         }
 
         public void ClearField()
@@ -109,27 +141,37 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             if (move is IShipMove)
             {
-                DoShipMove((IShipMove) move);
+                DoShipMove((IShipMove)move);
 
             }
         }
 
         public void DoShipMove(IShipMove move)
         {
-            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8)
+            if (GamePhase == 1 || GamePhase == 2)
             {
-                _Shipfield[move.Row, move.Column, 1] = move.PlayerNumber;
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
+                {
+                    _Shipfield[move.Row, move.Column, 1] = move.PlayerNumber;
+                }
+
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
+                {
+                    _Shipfield[move.Row, move.Column, 2] = move.PlayerNumber;
+                }
+            }
+            if (GamePhase == 3)
+            {
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
+                {
+                    _Shipfield[move.Row, move.Column, 3] = move.PlayerNumber;
+                }
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
+                {
+                    _Shipfield[move.Row, move.Column, 4] = move.PlayerNumber;
+                }
             }
         }
 
-        public void StartedGameCall()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TickGameCall()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

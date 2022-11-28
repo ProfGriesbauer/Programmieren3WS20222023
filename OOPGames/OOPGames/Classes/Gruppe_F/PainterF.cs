@@ -16,6 +16,7 @@ namespace OOPGames
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
+           
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(0, 0, 0);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -35,6 +36,14 @@ namespace OOPGames
             Line l4 = new Line() { X1 = 10, Y1 = 220, X2 = 330, Y2 = 220, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l4);
 
+            if (currentField is IFTicTacToeField)
+            {
+                if (((IFTicTacToeField)currentField).CurrentWinner == 1)
+                {
+                    Line l0 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = lineStroke, StrokeThickness = 80.0 };
+                    canvas.Children.Add(l0);
+                }
+            }
 
             for (int i = 0; i < 3; i++)
             {

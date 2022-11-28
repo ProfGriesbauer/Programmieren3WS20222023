@@ -83,6 +83,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
+    <Compile Include="Classes\Gruppe B\B_Pong\B_Ball_Pong.cs" />
+    <Compile Include="Classes\Gruppe B\B_Pong\B_Paddle_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Painter_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Rules_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Rules.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\Gruppe B\IGameRulesB.cs" />
+    <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPaintPongGameB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />

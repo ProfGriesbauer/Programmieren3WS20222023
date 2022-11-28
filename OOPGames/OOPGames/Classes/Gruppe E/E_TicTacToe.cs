@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
+﻿    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
 
-namespace OOPGames
-{
+    namespace OOPGames
+    {
     public class E_Painter : IPaintTicTacToe
     {
         public string Name { get { return "E_Painter"; } }
@@ -203,6 +205,219 @@ namespace OOPGames
         }
     }
 
+    public class E_TicTacToeComputerPlayer_easy : IComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public string Name { get { return "E_ComputerTicTacToePlayer_easy"; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is ITicTacToeRules;
+        }
+
+        public IGamePlayer Clone()
+        {
+            E_TicTacToeComputerPlayer_easy ttthp = new E_TicTacToeComputerPlayer_easy();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            Random rand = new Random();
+            int f = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
+            {
+                int c = f % 3;
+                int r = ((f - c) / 3) % 3;
+                if (field[r, c] <= 0)
+                {
+                    return new E_TicTacToeMove(r, c, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
+            }
+
+            return null;
+        }
+
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is ITicTacToeField)
+            {
+                return GetMove((ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
+
+    public class E_TicTacToeComputerPlayer_middle : IComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public string Name { get { return "E_ComputerTicTacToePlayer_middle"; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is ITicTacToeRules;
+        }
+
+        public IGamePlayer Clone()
+        {
+            E_TicTacToeComputerPlayer_middle ttthp = new E_TicTacToeComputerPlayer_middle();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+
+            int _Ecounterzero = 0;
+            int _Espotsum = 0;
+            int _Etempspotsum = 0;
+            int _Erow = 1;
+            int _Ecoloumn = 1;
+            int c = 1;
+            int r = 1;
+
+            for (r = 0; r < 3; r++)
+            {
+                for (c = 0; c < 3; c++)
+                {
+                    _Etempspotsum = field[r, c];
+                    _Espotsum += _Etempspotsum;
+                    if (_Etempspotsum == 0)
+                    {
+                        _Erow = r;
+                        _Ecoloumn = c;
+                        _Ecounterzero++;
+                    }
+                }
+                if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
+                {
+                    return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                }
+                _Ecounterzero = 0;
+                _Etempspotsum = 0;
+            }
+
+
+            for (c = 0; c < 3; c++)
+            {
+                for (r = 0; r < 3; r++)
+                {
+                    _Etempspotsum = field[r, c];
+                    _Espotsum += _Etempspotsum;
+                    if (_Etempspotsum == 0)
+                    {
+                        _Erow = r;
+                        _Ecoloumn = c;
+                        _Ecounterzero++;
+                    }
+                }
+                if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
+                {
+                    return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                }
+                _Ecounterzero = 0;
+                _Etempspotsum = 0;
+            }
+
+            int c1 = 0;
+            for (r = 0; r < 3; r++)
+            {
+                _Etempspotsum = field[r, c];
+                _Espotsum += _Etempspotsum;
+                if (_Etempspotsum == 0)
+                {
+                    _Erow = r;
+                    _Ecoloumn = c;
+                    _Ecounterzero++;
+                }
+                c1++;
+            }
+
+            if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
+            {
+                return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+            }
+            _Ecounterzero = 0;
+            _Etempspotsum = 0;
+
+
+            int c2 = 0;
+            for (r = 0; r < 3; r++)
+            {
+                _Etempspotsum = field[r, c];
+                _Espotsum += _Etempspotsum;
+                if (_Etempspotsum == 0)
+                {
+                    _Erow = r;
+                    _Ecoloumn = c;
+                    _Ecounterzero++;
+                }
+                c2++;
+            }
+
+            if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
+            {
+                return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+            }
+            _Ecounterzero = 0;
+            _Etempspotsum = 0;
+
+
+            Random rand = new Random();
+            int f = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
+            {
+                int _cRandom = f % 3;
+                int _rRandom = ((f - _cRandom) / 3) % 3;
+                if (field[_rRandom, _cRandom] <= 0)
+                {
+                    return new E_TicTacToeMove(_rRandom, _cRandom, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
+            }
+
+            return null;
+        }
+
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is ITicTacToeField)
+            {
+                return GetMove((ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
     public class E_TicTacToeRules : ITicTacToeRules
     {
         E_TicTacToeField _Field = new E_TicTacToeField();
@@ -232,6 +447,7 @@ namespace OOPGames
         public IGameField CurrentField { get { return E_TicTacToeField; } }
 
         public ITicTacToeField E_TicTacToeField { get { return _Field; } }
+        
 
         public int CheckIfPLayerWon()
         {
@@ -286,4 +502,4 @@ namespace OOPGames
             }
         }
     }
-}
+    }

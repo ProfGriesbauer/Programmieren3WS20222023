@@ -104,11 +104,7 @@
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
-    <Compile Include="Classes\GruppeI\SubField.cs" />
-    <Compile Include="Classes\GruppeI\I_ITicTacToeField.cs" />
-    <Compile Include="Classes\GruppeI\TTT_Fields.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
-    <Compile Include="Classes\GruppeI\I_Player.cs" />
     <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeJ\Dino_Game.cs" />
     <Compile Include="Classes\GruppeJ\Form1.cs">

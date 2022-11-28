@@ -18,7 +18,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         { 
             get  
             {
-                if (r < 8 && c < 8 && r >= 0 && c>=0 && w>0 &&  w<5)
+                if (r < 8 && c < 8 && r >= 0 && c>=0 && w>0 && w<5)
                 {
                     if(w==1)
                     {
@@ -36,7 +36,6 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         return _P2shoot[r, c];
                     }
-                   
                 }
                 return -1;
             } 
@@ -44,7 +43,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             {
                 if (r < 8 && c < 8 && r >= 0 && c >= 0 && w > 0 && w < 5)
                 {
-                    if(w==1) { _P1Ships[r, c] = value; }
+                    if (w == 1) { _P1Ships[r, c] = value; }
                     if (w == 2) { _P2Ships[r, c] = value; }
                     if (w == 3) { _P1shoot[r, c] = value; }
                     if (w == 4) { _P1shoot[r, c] = value; }
@@ -56,8 +55,6 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             return painter is IPaintSV;
         }
-
-
     }
 
     public class RulerSV : IRulerSV

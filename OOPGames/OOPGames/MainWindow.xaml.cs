@@ -46,7 +46,7 @@ namespace OOPGames
         public MainWindow()
         {
             /////////////////////////
-            //   RunDinoGame();
+            //RunDinoGame();
             ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters

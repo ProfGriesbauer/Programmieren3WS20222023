@@ -117,7 +117,7 @@
     <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Gruppe_F\ITimeStamp.cs" />
+    <Compile Include="Classes\Gruppe_F\InterfacesGruppeF.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />

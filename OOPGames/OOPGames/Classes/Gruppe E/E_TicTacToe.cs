@@ -9,9 +9,14 @@
     using System.Windows.Media;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace OOPGames
+<<<<<<< HEAD
 {
+=======
+    {
+>>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
     public class E_Painter : IPaintTicTacToe
     {
         public string Name { get { return "E_Painter"; } }
@@ -349,11 +354,19 @@ namespace OOPGames
         }
     }
 
+<<<<<<< HEAD
     public class E_TicTacToeComputerPlayer_medium : IComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
         public string Name { get { return "E_ComputerTicTacToePlayer_medium"; } }
+=======
+    public class E_TicTacToeComputerPlayer_hard : IComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public string Name { get { return "E_ComputerTicTacToePlayer_hard"; } }
+>>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
 
         public int PlayerNumber { get { return _PlayerNumber; } }
 
@@ -364,7 +377,11 @@ namespace OOPGames
 
         public IGamePlayer Clone()
         {
+<<<<<<< HEAD
             E_TicTacToeComputerPlayer_medium ttthp = new E_TicTacToeComputerPlayer_medium();
+=======
+            E_TicTacToeComputerPlayer_hard ttthp = new E_TicTacToeComputerPlayer_hard();
+>>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -401,7 +418,21 @@ namespace OOPGames
             int _Ecoloumn = 1;
             int c = 1;
             int r = 1;
+            bool notloose = false;
+            int notlooserow = 0;
+            int notloosecoloumn = 0;
 
+            //Anfangszug
+            if (field[0,2]==0 )
+            {
+                return new TicTacToeMove(0, 2, _PlayerNumber);
+            }
+            else if (field[1, 1] == 0)
+            {
+               return new TicTacToeMove(1, 1, _PlayerNumber);
+            }
+
+            //zeilen
             for (r = 0; r < 3; r++)
             {
                 for (c = 0; c < 3; c++)
@@ -417,13 +448,22 @@ namespace OOPGames
                 }
                 if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
                 {
-                    return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                    if (_Espotsum/2==_PlayerNumber )
+                    {
+                        return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                    }
+                    else
+                    {
+                        notloose = true;
+                        notlooserow = _Erow;
+                        notloosecoloumn = _Ecoloumn;
+                    }
                 }
                 _Ecounterzero = 0;
                 _Etempspotsum = 0;
             }
 
-
+            //Spalten
             for (c = 0; c < 3; c++)
             {
                 for (r = 0; r < 3; r++)
@@ -439,21 +479,30 @@ namespace OOPGames
                 }
                 if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
                 {
-                    return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                    if (_Espotsum / 2 == _PlayerNumber)
+                    {
+                        return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                    }
+                    else
+                    {
+                        notloose = true;
+                        notlooserow = _Erow;
+                        notloosecoloumn = _Ecoloumn;
+                    }
                 }
                 _Ecounterzero = 0;
                 _Etempspotsum = 0;
             }
-
+            //rechts oben nach links unten
             int c1 = 0;
             for (r = 0; r < 3; r++)
             {
-                _Etempspotsum = field[r, c];
+                _Etempspotsum = field[r, c1];
                 _Espotsum += _Etempspotsum;
                 if (_Etempspotsum == 0)
                 {
                     _Erow = r;
-                    _Ecoloumn = c;
+                    _Ecoloumn = c1;
                     _Ecounterzero++;
                 }
                 c1++;
@@ -461,21 +510,30 @@ namespace OOPGames
 
             if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
             {
-                return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                if (_Espotsum / 2 == _PlayerNumber)
+                {
+                    return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                }
+                else
+                {
+                    notloose = true;
+                    notlooserow = _Erow;
+                    notloosecoloumn = _Ecoloumn;
+                }
             }
             _Ecounterzero = 0;
             _Etempspotsum = 0;
 
-
+            //rechts nach links unten
             int c2 = 0;
             for (r = 0; r < 3; r++)
             {
-                _Etempspotsum = field[r, c];
+                _Etempspotsum = field[r, c2];
                 _Espotsum += _Etempspotsum;
                 if (_Etempspotsum == 0)
                 {
                     _Erow = r;
-                    _Ecoloumn = c;
+                    _Ecoloumn = c2;
                     _Ecounterzero++;
                 }
                 c2++;
@@ -483,12 +541,31 @@ namespace OOPGames
 
             if (_Ecounterzero == 1 && _Espotsum % 2 == 0)
             {
-                return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                if (_Espotsum / 2 == _PlayerNumber)
+                {
+                    return new E_TicTacToeMove(_Erow, _Ecoloumn, _PlayerNumber);
+                }
+                else
+                {
+                    notloose = true;
+                    notlooserow = _Erow;
+                    notloosecoloumn = _Ecoloumn;
+                }
             }
             _Ecounterzero = 0;
             _Etempspotsum = 0;
 
+<<<<<<< HEAD
             
+=======
+            if (notloose==true)
+            {
+                return new TicTacToeMove(notlooserow, notloosecoloumn, _PlayerNumber);
+            }
+
+            //Random
+
+>>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
             Random rand = new Random();
             int f = rand.Next(0, 8);
             for (int i = 0; i < 9; i++)

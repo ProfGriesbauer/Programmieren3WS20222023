@@ -40,6 +40,12 @@ namespace OOPGames.Classes.GruppeI
                     }
                 }
             }
+            return null;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
         }
     }
 }

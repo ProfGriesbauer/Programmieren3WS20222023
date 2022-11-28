@@ -3,6 +3,7 @@ using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
 using OOPGames.Classes.GruppeI;
+using OOPGames.Classes.GruppeJ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ using System.Windows.Shapes;
 using System.Drawing;
 using Color = System.Drawing.Color;
 using static OOPGames.PlayerD;
+using OOPGames.Classes.Gruppe_D;
 
 namespace OOPGames
 {
@@ -43,10 +45,15 @@ namespace OOPGames
 
         public MainWindow()
         {
+            /////////////////////////
+            //RunDinoGame();
+            ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
+            OOPGamesManager.Singleton.RegisterPainter(new K_PaintGameObject());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
@@ -58,8 +65,9 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 
 
+
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
+            OOPGamesManager.Singleton.RegisterPainter(new B_Pong_Painter());
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
@@ -67,16 +75,18 @@ namespace OOPGames
             //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
 
             OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
+            OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
-
+            OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
 
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new HumanTicTacToePlayer_G());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_easy());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_medium());
@@ -86,8 +96,13 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer()); 
+            OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF());
+            OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
 
 
             InitializeComponent();
@@ -115,6 +130,18 @@ namespace OOPGames
             }
                 
         }
+        /// <summary>
+        /// //////////////////////////////////////
+        /// </summary>
+        
+        public void RunDinoGame()
+        {
+            OOPGames.Classes.GruppeJ.Dino_Game.StartDinoGame();
+
+        }
+        /// <summary>
+        /// ///////////////////////////////
+        /// </summary>
 
         private void _PaintTimer_Tick(object sender, EventArgs e)
         {
@@ -286,7 +313,8 @@ namespace OOPGames
             if (_CurrentRules is IGameRulesB) 
             {
                 _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
-                OnPlayerChanged(_CurrentRules); 
+                OnPlayerChanged(_CurrentRules);
+                //DoComputerMoves();
             }
             
             
@@ -314,5 +342,6 @@ namespace OOPGames
             this.X_Color = p1;
             this.O_Color = p2;
         }
+       
     }
 }

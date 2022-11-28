@@ -12,11 +12,7 @@
 using Microsoft.Win32;
 
 namespace OOPGames
-<<<<<<< HEAD
-{
-=======
-    {
->>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
+{ 
     public class E_Painter : IPaintTicTacToe
     {
         public string Name { get { return "E_Painter"; } }
@@ -354,19 +350,12 @@ namespace OOPGames
         }
     }
 
-<<<<<<< HEAD
-    public class E_TicTacToeComputerPlayer_medium : IComputerTicTacToePlayer
-    {
-        int _PlayerNumber = 0;
-
-        public string Name { get { return "E_ComputerTicTacToePlayer_medium"; } }
-=======
     public class E_TicTacToeComputerPlayer_hard : IComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
         public string Name { get { return "E_ComputerTicTacToePlayer_hard"; } }
->>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
+
 
         public int PlayerNumber { get { return _PlayerNumber; } }
 
@@ -377,40 +366,17 @@ namespace OOPGames
 
         public IGamePlayer Clone()
         {
-<<<<<<< HEAD
-            E_TicTacToeComputerPlayer_medium ttthp = new E_TicTacToeComputerPlayer_medium();
-=======
+
             E_TicTacToeComputerPlayer_hard ttthp = new E_TicTacToeComputerPlayer_hard();
->>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
+
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
 
         public ITicTacToeMove GetMove(ITicTacToeField field)
         {
-                for (int r = 0; r < 3; r++)
-                {
-                    for (int c = 0; c < 3; c++)
-                    {
-                        if (field[r, c] == field[r, c] || field[r, c] == field[r, c] || field[r, c] == field[r, c])
-                        {
-                            return new TicTacToeMove(r, c, _PlayerNumber);
-                        }
-                    }
-                }
-            
-            /*
-            // Diagonalen checken
-            if (_Field[0, 0] == _Field[1, 1] || _Field[1, 1] == _Field[2, 2] || _Field[0, 0] == _Field[2, 2])
-            {
-                return new TicTacToeMove(0, 0, _PlayerNumber);
-            }
-            else if (_Field[0, 2] == _Field[1, 1] || _Field[1, 1] == _Field[2, 0] || _Field[0, 0] == _Field[2, 0])
-            {
-                return new TicTacToeMove(0, 2, _PlayerNumber);
-            }
 
-            /*
+            
             int _Ecounterzero = 0;
             int _Espotsum = 0;
             int _Etempspotsum = 0;
@@ -555,17 +521,7 @@ namespace OOPGames
             _Ecounterzero = 0;
             _Etempspotsum = 0;
 
-<<<<<<< HEAD
-            
-=======
-            if (notloose==true)
-            {
-                return new TicTacToeMove(notlooserow, notloosecoloumn, _PlayerNumber);
-            }
 
-            //Random
-
->>>>>>> 08d86b5ff25fcb023c8e8ebc113cecc073d795e1
             Random rand = new Random();
             int f = rand.Next(0, 8);
             for (int i = 0; i < 9; i++)
@@ -582,7 +538,7 @@ namespace OOPGames
                 }
 
             }
-            */
+           
 
             return null;
         }

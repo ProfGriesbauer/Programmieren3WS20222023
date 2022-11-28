@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OOPGames
 {
-    public class TTTAIGruppeF : BaseComputerTicTacToePlayer
+    public class TTTAIGruppeF_v1_2 : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "AIGruppeF"; } }
+        public override string Name { get { return "AIGruppeF_v1_2"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            TTTAIGruppeF ttthp = new TTTAIGruppeF();
+            TTTAIGruppeF_v1_2 ttthp = new TTTAIGruppeF_v1_2();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -30,7 +31,9 @@ namespace OOPGames
             int tempcoloumn = 1;
             int c = 1;
             int r = 1;
-
+            bool notloosefound = false;
+            int notlooseRow = 0;
+            int notlooseColoumn = 0;
 
             // Mitte setzen, falls frei
 
@@ -57,7 +60,16 @@ namespace OOPGames
                 }
                 if (AIzerocount == 1 && AIspotsum % 2 == 0)
                 {
-                    return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                    if (AIspotsum/2 == _PlayerNumber)
+                    {
+                        return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                    }
+                    else
+                    {
+                        notloosefound = true;
+                        notlooseRow = temprow;
+                        notlooseColoumn = tempcoloumn;
+                    }
                 }
                 AIzerocount = 0;
 
@@ -83,7 +95,16 @@ namespace OOPGames
                 }
                 if (AIzerocount == 1 && AIspotsum % 2 == 0)
                 {
-                    return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                    if (AIspotsum / 2 == _PlayerNumber)
+                    {
+                        return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                    }
+                    else
+                    {
+                        notloosefound = true;
+                        notlooseRow = temprow;
+                        notlooseColoumn = tempcoloumn;
+                    }
                 }
                 AIzerocount = 0;
 
@@ -110,7 +131,16 @@ namespace OOPGames
             }
             if (AIzerocount == 1 && AIspotsum % 2 == 0)
             {
-                return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                if (AIspotsum / 2 == _PlayerNumber)
+                {
+                    return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                }
+                else
+                {
+                    notloosefound = true;
+                    notlooseRow = temprow;
+                    notlooseColoumn = tempcoloumn;
+                }
             }
             AIzerocount = 0;
 
@@ -136,11 +166,28 @@ namespace OOPGames
             }
             if (AIzerocount == 1 && AIspotsum % 2 == 0)
             {
-                return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                if (AIspotsum / 2 == _PlayerNumber)
+                {
+                    return new TicTacToeMove(temprow, tempcoloumn, _PlayerNumber);
+                }
+                else
+                {
+                    notloosefound = true;
+                    notlooseRow = temprow;
+                    notlooseColoumn = tempcoloumn;
+                }
             }
             AIzerocount = 0;
 
             AIspotsum = 0;
+
+
+            // notloose ausführen
+
+            if (notloosefound == true)
+            {
+                return new TicTacToeMove(notlooseRow, notlooseColoumn, _PlayerNumber);
+            }
 
 
             // Keinen kritischen Zug gefunden -> Zufall

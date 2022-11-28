@@ -101,6 +101,7 @@
     <Compile Include="Classes\Gruppe E\E_Painter.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
+    <Compile Include="Classes\Gruppe K\K_Computerplayer.cs" />
     <Compile Include="Classes\Gruppe K\K_RulesGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />

@@ -22,6 +22,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     {
         void DoShipMove(IShipMove move);
         void ChangePhase();
+        int CheckHit(int r, int c, int Playernumber);
+        int SetShip(int r, int c, int PLayernumber);
     }
 
     public interface IShipMove : IRowMove, IColumnMove

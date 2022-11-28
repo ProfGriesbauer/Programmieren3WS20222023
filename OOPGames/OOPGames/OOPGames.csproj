@@ -119,7 +119,6 @@
     <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Gruppe_F\InterfacesGruppeF.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />
@@ -133,6 +132,7 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPaintPongGameB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
+    <Compile Include="Interfaces\Gruppe E\I_E_VierGewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />

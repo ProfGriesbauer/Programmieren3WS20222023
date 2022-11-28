@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 {
     public interface IPaintSV : IPaintGame
     {
-
+        void PaintShipField(Canvas canvas, IGameField currentField, int GamePhase); 
     }
     public interface IFieldSV : IGameField
     {

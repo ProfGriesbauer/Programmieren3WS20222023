@@ -67,5 +67,5 @@ namespace OOPGames.Classes.GruppeI
             return painter is I_ITicTacToeField;
         }
     }
-    */
 }
+*/

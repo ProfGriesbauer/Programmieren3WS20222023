@@ -8,16 +8,24 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
-using System.Security.Cryptography.X509Certificates;
 
 namespace OOPGames.Classes.Gruppe_C
 {
-    public class C_Painter : BaseTicTacToePaint
+    public class C_Painter : C_IPaintTicTacToe
     {
-        public override string Name { get { return "C Painter"; } }
-
-        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
+        public void PaintGameField(Canvas canvas, IGameField currentField)
         {
+            if (currentField is C_ITicTacToeField)
+            {
+                PaintTicTacToeField(canvas, (C_ITicTacToeField)currentField);
+            }
+        }
+        public string Name { get { return "C Painter"; } }
+
+
+        public void PaintTicTacToeField(Canvas canvas, C_ITicTacToeField currentField)
+        {
+
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -53,6 +61,7 @@ namespace OOPGames.Classes.Gruppe_C
             Line l12 = new Line() { X1 = 20, Y1 = 520, X2 = 520, Y2 = 520, Stroke = lineStroke, StrokeThickness = 3.0 }; //waagrecht
             canvas.Children.Add(l12);
 
+
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 5; j++)
@@ -71,23 +80,29 @@ namespace OOPGames.Classes.Gruppe_C
                     }
                 }
             }
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = "Player 1: " + currentField.PointsPlayer1 + System.Environment.NewLine + "Player 2: " + currentField.PointsPlayer2;
+            textBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            Canvas.SetLeft(textBlock, 20);
+            Canvas.SetTop(textBlock, 540);
+            canvas.Children.Add(textBlock);
         }
     }
 
 
 
-    public class C_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+    public class C_TicTacToeHumanPlayer : C_IHumanTicTacToePlayer
     {
         int _Playernumber = 0;
-        public override string Name { get { return "C_HumanTicTacToePlayer"; } }
-        public override int PlayerNumber { get { return _Playernumber; } }
-        public override IGamePlayer Clone()
+        public string Name { get { return "C_HumanTicTacToePlayer"; } }
+        public int PlayerNumber { get { return _Playernumber; } }
+        public IGamePlayer Clone()
         {
             C_TicTacToeHumanPlayer ttthp = new C_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_Playernumber);
             return ttthp;
         }
-        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
+        public ITicTacToeMove GetMove(IMoveSelection selection, C_ITicTacToeField field)
         {
             if (selection is IClickSelection)
             {
@@ -107,217 +122,274 @@ namespace OOPGames.Classes.Gruppe_C
             }
             return null;
         }
-        public override void SetPlayerNumber(int playerNumber)
+        public void SetPlayerNumber(int playerNumber)
         {
             _Playernumber = playerNumber;
         }
 
-
-    }
-    public class C_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
-    {
-        int _PlayerNumber = 0;
-        public override string Name { get { return "C_TicTacToeComputerPlayer"; } }
-        public override int PlayerNumber { get { return _PlayerNumber; } }
-        public override IGamePlayer Clone()
+        public bool CanBeRuledBy(IGameRules rules)
         {
-            C_TicTacToeComputerPlayer ttthp = new C_TicTacToeComputerPlayer();
-            ttthp.SetPlayerNumber(_PlayerNumber);
-            return ttthp;
+            return rules is C_ITicTacToeRules;
         }
-        public override ITicTacToeMove GetMove(ITicTacToeField field)
+
+        public IPlayMove GetMove(IMoveSelection selection, IGameField field)
         {
-            Random rand = new Random();
-            int f = rand.Next(0, 25);
-            for (int i = 0; i < 1000; i++)
+            if (field is C_ITicTacToeField)
             {
-                int c = f % 5;
-                int r = ((f - c) / 5) % 5;
-                if (field[r, c] <= 0)
+                return GetMove(selection, (C_ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+        public class C_TicTacToeComputerPlayer : C_IComputerTicTacToePlayer
+        {
+            int _PlayerNumber = 0;
+            public  string Name { get { return "C_TicTacToeComputerPlayer"; } }
+            public  int PlayerNumber { get { return _PlayerNumber; } }
+
+            public bool CanBeRuledBy(IGameRules rules)
+            {
+                throw new NotImplementedException();
+            }
+
+            public  IGamePlayer Clone()
+            {
+                C_TicTacToeComputerPlayer ttthp = new C_TicTacToeComputerPlayer();
+                ttthp.SetPlayerNumber(_PlayerNumber);
+                return ttthp;
+            }
+            public  ITicTacToeMove GetMove(C_ITicTacToeField field)
+            {
+                Random rand = new Random();
+                int f = rand.Next(0, 25);
+                for (int i = 0; i < 1000; i++)
                 {
-                    return new TicTacToeMove(r, c, _PlayerNumber);
+                    int c = f % 5;
+                    int r = ((f - c) / 5) % 5;
+                    if (field[r, c] <= 0)
+                    {
+                        return new TicTacToeMove(r, c, _PlayerNumber);
+                    }
+                    else
+                    {
+                        f = rand.Next(0, 25);
+                    }
+                }
+                return null;
+            }
+
+            public IPlayMove GetMove(IGameField field)
+            {
+                if (field is C_ITicTacToeField)
+                {
+                    return GetMove((C_ITicTacToeField)field);
                 }
                 else
                 {
-                    f = rand.Next(0, 25);
+                    return null;
                 }
             }
-            return null;
+
+            public  void SetPlayerNumber(int playerNumber)
+            {
+                _PlayerNumber = playerNumber;
+            }
+
         }
-        public override void SetPlayerNumber(int playerNumber)
-        { 
-            _PlayerNumber = playerNumber; 
-        }
-        
-    }
-    public class GC_TicTacToeRules : BaseTicTacToeRules
-    {
-        GC_TicTacToeField _Field = new GC_TicTacToeField();
 
-        int PointsPlayer1 = 0;
-        int PointsPlayer2 = 0;
 
-        public C_ICountInterface Count { set { int PointsPlayer1 = 0; int PointsPlayer2 = 0;} }
-        
-
-        public override ITicTacToeField TicTacToeField { get { return _Field; } }
-
-        public override bool MovesPossible
+        public class GC_TicTacToeRules : C_ITicTacToeRules
         {
-            get
+            GC_TicTacToeField _Field = new GC_TicTacToeField();
+
+
+
+            public C_ITicTacToeField FieldandPoints { get { return _Field; } }
+
+            public bool MovesPossible
+            {
+                get
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        for (int j = 0; j < 5; j++)
+                        {
+                            if (_Field[i, j] == 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+
+                    return false;
+                }
+            }
+
+            public string Name { get { return "GruppeCTicTacToeRules"; } }
+
+            public IGameField CurrentField { get { return FieldandPoints; } }
+
+            public void CountPoints()
+            {
+                int points1 = 0;
+                int points2 = 0;
+                for (int i = 1; i < 4; i++)
+                {
+                    for (int j = 1; j < 4; j++)
+                    {
+                        if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j] && _Field[i, j] == _Field[i + 1, j])
+                        {
+                            if (_Field[i, j] == 1) { points1++; }
+                            if (_Field[i, j] == 2) { points2++; }
+                        }
+                        if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j - 1] && _Field[i, j] == _Field[i + 1, j + 1])
+                        {
+                            if (_Field[i, j] == 1) { points1++; }
+                            if (_Field[i, j] == 2) { points2++; }
+                        }
+                        if (_Field[i, j] > 0 && _Field[i, j] == _Field[i, j - 1] && _Field[i, j] == _Field[i, j + 1])
+                        {
+                            if (_Field[i, j] == 1) { points1++; }
+                            if (_Field[i, j] == 2) { points2++; }
+                        }
+                        if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j + 1] && _Field[i, j] == _Field[i + 1, j - 1])
+                        {
+                            if (_Field[i, j] == 1) { points1++; }
+                            if (_Field[i, j] == 2) { points2++; }
+                        }
+                    }
+
+                }
+                for (int k = 1; k < 4; k++)
+                {
+                    if (_Field[k, 0] > 0 && _Field[k, 0] == _Field[k - 1, 0] && _Field[k, 0] == _Field[k + 1, 0])
+                    {
+                        if (_Field[k, 0] == 1) { points1++; }
+                        if (_Field[k, 0] == 2) { points2++; }
+                    }
+                    if (_Field[k, 4] > 0 && _Field[k, 4] == _Field[k - 1, 4] && _Field[k, 4] == _Field[k + 1, 4])
+                    {
+                        if (_Field[k, 4] == 1) { points1++; }
+                        if (_Field[k, 4] == 2) { points2++; }
+                    }
+                    if (_Field[0, k] > 0 && _Field[0, k] == _Field[0, k - 1] && _Field[0, k] == _Field[0, k + 1])
+                    {
+                        if (_Field[0, k] == 1) { points1++; }
+                        if (_Field[0, k] == 2) { points2++; }
+                    }
+                    if (_Field[4, k] > 0 && _Field[4, k] == _Field[4, k - 1] && _Field[4, k] == _Field[4, k + 1])
+                    {
+                        if (_Field[4, k] == 1) { points1++; }
+                        if (_Field[4, k] == 2) { points2++; }
+                    }
+                }
+                _Field.PointsPlayer1 = points1;
+                _Field.PointsPlayer2 = points2;
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Player 1 has " + points1 + " Points");
+                Console.WriteLine("Player 2 has " + points2 + " Points");
+            }
+
+            public int CheckIfPLayerWon()
+            {
+                CountPoints();
+                for (int i = 0; i < 5; i++)
+                {
+                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 0] == _Field[i, 2] && _Field[i, 0] == _Field[i, 3] && _Field[i, 0] == _Field[i, 4])
+                    {
+                        return _Field[i, 0];
+                    }
+                    if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[0, i] == _Field[2, i] && _Field[0, i] == _Field[3, i] && _Field[0, i] == _Field[4, i])
+                    {
+                        return _Field[0, i];
+                    }
+                }
+                if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[0, 0] == _Field[2, 2] && _Field[0, 0] == _Field[3, 3] && _Field[0, 0] == _Field[4, 4])
+                {
+                    return _Field[0, 0];
+                }
+                if (_Field[0, 4] > 0 && _Field[0, 4] == _Field[1, 3] && _Field[0, 4] == _Field[2, 2] && _Field[0, 4] == _Field[3, 1] && _Field[0, 4] == _Field[4, 0])
+                {
+                    return _Field[0, 4];
+                }
+                return -1;
+            }
+
+            public void ClearField()
             {
                 for (int i = 0; i < 5; i++)
                 {
                     for (int j = 0; j < 5; j++)
                     {
-                        if (_Field[i, j] == 0)
-                        {
-                            return true;
-                        }
+                        _Field[i, j] = 0;
                     }
                 }
+            }
 
-                return false;
+            public void DoTicTacToeMove(ITicTacToeMove move)
+            {
+                if (move.Row >= 0 && move.Row < 5 && move.Column >= 0 && move.Column < 5)
+                {
+                    _Field[move.Row, move.Column] = move.PlayerNumber;
+                }
+
+                Console.WriteLine("-------------------------------------");
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine(_Field[i, 0] + " " + _Field[i, 1] + " " + _Field[i, 2] + " " + _Field[i, 3] + " " + _Field[i, 4]);
+                }
+
+            }
+
+            public void DoMove(IPlayMove move)
+            {
+                if (move is ITicTacToeMove)
+                {
+                    DoTicTacToeMove((ITicTacToeMove)move);
+                }
             }
         }
 
-        public override string Name { get { return "GruppeCTicTacToeRules"; } }
-
-        public void CountPoints()
+        public class GC_TicTacToeField : C_ITicTacToeField
         {
-            int points1 = 0;
-            int points2 = 0;
-            for (int i = 1; i < 4; i++)
+            int[,] _Field = new int[5, 5] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
+            int _PointsPlayer1;
+            int _PointsPlayer2;
+
+            public int this[int r, int c]
             {
-                for (int j = 1; j < 4; j++)
+                get
                 {
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j] && _Field[i, j] == _Field[i + 1, j])
+                    if (r >= 0 && r < 5 && c >= 0 && c < 5)
                     {
-                        if (_Field[i,j] == 1) { points1++; }
-                        if (_Field[i,j] == 2) { points2++; }
+                        return _Field[r, c];
                     }
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i - 1, j - 1] && _Field[i, j] == _Field[i + 1, j + 1])
+                    else
                     {
-                        if (_Field[i, j] == 1) { points1++; }
-                        if (_Field[i, j] == 2) { points2++; }
+                        return -1;
                     }
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i, j - 1] && _Field[i, j] == _Field[i, j + 1])
+                }
+                set
+                {
+                    if (r >= 0 && r < 5 && c >= 0 && c < 5)
                     {
-                        if (_Field[i, j] == 1) { points1++; }
-                        if (_Field[i, j] == 2) { points2++; }
-                    }
-                    if (_Field[i, j] > 0 && _Field[i, j] == _Field[i-1, j + 1] && _Field[i, j] == _Field[i+1, j - 1])
-                    {
-                        if (_Field[i, j] == 1) { points1++; }
-                        if (_Field[i, j] == 2) { points2++; }
+                        _Field[r, c] = value;
                     }
                 }
+            }
+
+            public int PointsPlayer1 { get { return _PointsPlayer1; } set { _PointsPlayer1 = value; } }
+            public int PointsPlayer2 { get { return _PointsPlayer2; } set { _PointsPlayer2 = value; } }
+
+            public bool CanBePaintedBy(IPaintGame painter)
+            {
+                return painter is C_IPaintTicTacToe;
 
             }
-            for (int k = 1; k < 4; k++)
-            {
-                if (_Field[k, 0] > 0 && _Field[k, 0] == _Field[k - 1, 0] && _Field[k, 0] == _Field[k + 1, 0]) {
-                    if (_Field[k, 0] == 1) { points1++; }
-                    if (_Field[k, 0] == 2) { points2++; }
-                }
-                if (_Field[k, 4] > 0 && _Field[k, 4] == _Field[k - 1, 4] && _Field[k, 4] == _Field[k + 1, 4])
-                {
-                    if (_Field[k, 4] == 1) { points1++; }
-                    if (_Field[k, 4] == 2) { points2++; }
-                }
-                if (_Field[0, k] > 0 && _Field[0, k] == _Field[0, k - 1] && _Field[0, k] == _Field[0, k + 1])
-                {
-                    if (_Field[0, k] == 1) { points1++; }
-                    if (_Field[0, k] == 2) { points2++; }
-                }
-                if (_Field[4, k] > 0 && _Field[4, k] == _Field[4, k - 1] && _Field[4, k] == _Field[4, k + 1])
-                {
-                    if (_Field[4, k] == 1) { points1++; }
-                    if (_Field[4, k] == 2) { points2++; }
-                }
-            }
-            PointsPlayer1 = points1;
-            PointsPlayer2 = points2;
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Player 1 has " + points1 + " Points");
-            Console.WriteLine("Player 2 has " + points2 + " Points");
         }
-
-        public override int CheckIfPLayerWon()
-        {
-        CountPoints();
-            for(int i = 0; i<5;i++)
-            {
-                if (_Field[i, 0] > 0 && _Field[i,0] == _Field[i,1] && _Field[i, 0] == _Field[i, 2] && _Field[i, 0] == _Field[i, 3] && _Field[i, 0] == _Field[i, 4])
-                {
-                    return _Field[i,0];
-                }
-                if (_Field[0,i] > 0 && _Field[0,i] == _Field[1,i] && _Field[0,i] == _Field[2,i] && _Field[0,i] == _Field[3,i] && _Field[0,i] == _Field[4,i])
-                {
-                    return _Field[0, i];
-                }
-            }
-            if (_Field[0,0]>0 && _Field[0, 0] == _Field[1,1] && _Field[0, 0] == _Field[2,2] && _Field[0, 0] == _Field[3,3] && _Field[0, 0] == _Field[4,4])
-            { 
-                return _Field[0, 0];
-            }
-            if (_Field[0,4]>0 && _Field[0, 4] == _Field[1, 3] && _Field[0, 4] == _Field[2, 2] && _Field[0, 4] == _Field[3, 1] && _Field[0, 4] == _Field[4, 0])
-            {
-                return _Field[0, 4];
-            }
-            return -1;
-        }
-
-        public override void ClearField()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    _Field[i, j] = 0;
-                }
-            }
-        }
-
-        public override void DoTicTacToeMove(ITicTacToeMove move)
-        {
-            if (move.Row >= 0 && move.Row < 5 && move.Column >= 0 && move.Column < 5)
-            {
-                _Field[move.Row, move.Column] = move.PlayerNumber;
-            }
-            /*
-            Console.WriteLine("-------------------------------------");
-            for (int i = 0; i < 5; i++) {
-                Console.WriteLine(_Field[i, 0]+" "+ _Field[i,1]+" " + _Field[i,2] + " " + _Field[i, 3] + " " + _Field[i, 4]);
-            }
-            */
-        }
-    }
-
-    public class GC_TicTacToeField : BaseTicTacToeField
-    {
-        int[,] _Field = new int[5, 5] { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
-        public override int this[int r, int c]
-        {
-            get
-            {
-                if (r >= 0 && r < 5 && c >= 0 && c < 5)
-                {
-                    return _Field[r, c];
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            set
-            {
-                if (r >= 0 && r < 5 && c >= 0 && c < 5)
-                {
-                    _Field[r, c] = value;
-                }
-            }
-        }
-       
     }
 }

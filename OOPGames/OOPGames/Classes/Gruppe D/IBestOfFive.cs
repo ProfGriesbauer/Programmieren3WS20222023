@@ -178,7 +178,7 @@ namespace OOPGames.Classes.Gruppe_D
             }
             else
             {
-                if (_KrassesFeldBOF.player1wins == 3) { return 1; }
+                if (_KrassesFeldBOF.player1wins == 2) { return 1; }
                 else { return 2; }
             }
         }

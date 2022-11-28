@@ -1,10 +1,12 @@
-﻿using System;
+﻿using OOPGames;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
 
 namespace OOPGames
 {
@@ -96,5 +98,10 @@ namespace OOPGames
     public interface C_IHumanTicTacToePlayer : IHumanGamePlayer
     {
         ITicTacToeMove GetMove(IMoveSelection selection, C_ITicTacToeField field);
+    }
+    //Gruppe C TicTacToe ComputerPlayer
+    public interface C_IComputerTicTacToePlayer : IComputerGamePlayer
+    {
+        ITicTacToeMove GetMove(C_ITicTacToeField field);
     }
 }

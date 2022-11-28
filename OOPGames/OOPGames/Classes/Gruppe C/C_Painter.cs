@@ -137,7 +137,61 @@ namespace OOPGames.Classes.Gruppe_C
 
 
         }
+        public class C_TicTacToeComputerPlayer : C_IComputerTicTacToePlayer
+        {
+            int _PlayerNumber = 0;
+            public  string Name { get { return "C_TicTacToeComputerPlayer"; } }
+            public  int PlayerNumber { get { return _PlayerNumber; } }
 
+            public bool CanBeRuledBy(IGameRules rules)
+            {
+                throw new NotImplementedException();
+            }
+
+            public  IGamePlayer Clone()
+            {
+                C_TicTacToeComputerPlayer ttthp = new C_TicTacToeComputerPlayer();
+                ttthp.SetPlayerNumber(_PlayerNumber);
+                return ttthp;
+            }
+            public  ITicTacToeMove GetMove(C_ITicTacToeField field)
+            {
+                Random rand = new Random();
+                int f = rand.Next(0, 25);
+                for (int i = 0; i < 1000; i++)
+                {
+                    int c = f % 5;
+                    int r = ((f - c) / 5) % 5;
+                    if (field[r, c] <= 0)
+                    {
+                        return new TicTacToeMove(r, c, _PlayerNumber);
+                    }
+                    else
+                    {
+                        f = rand.Next(0, 25);
+                    }
+                }
+                return null;
+            }
+
+            public IPlayMove GetMove(IGameField field)
+            {
+                if (field is C_ITicTacToeField)
+                {
+                    return GetMove((C_ITicTacToeField)field);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public  void SetPlayerNumber(int playerNumber)
+            {
+                _PlayerNumber = playerNumber;
+            }
+
+        }
 
 
         public class GC_TicTacToeRules : C_ITicTacToeRules

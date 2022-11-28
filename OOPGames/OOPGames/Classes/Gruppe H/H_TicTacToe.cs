@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,9 @@ namespace OOPGames
     // Feld malen 
     // BaseTicTacToe anlegen
     //public interface IPaintTicTacToe:
+
+
+
 
     //TicTacToe Painter selbst implementiert
     public class H_TicTacToePaint : IPaintTicTacToe                                      //HTicTacToe leitet von der Interface Klasse IPaintTicTacToe ab
@@ -38,7 +42,8 @@ namespace OOPGames
             Color lineColor = Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
             Color XColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe X Spieler
             Color OColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe O Spieler
-            switch (zufall.Next(1, 5))                                                      //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            //switch (zufall.Next(1, 5))                                                      //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            switch(3)
             {
                 case 1: //Farbschema Annalena                                               //Farbschema Annalena
                     bgColor = Color.FromRgb(0, 0, 0);                                       //Hintergrundfarbe
@@ -53,12 +58,12 @@ namespace OOPGames
                     OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
                     break;
                 case 3: //Farbschema Samuel                                                 //Farbschema Samuel
-                    bgColor = Color.FromRgb(0  , 0, 0);                                     //Hintergrundfarbe
-                    lineColor = Color.FromRgb(255, 0, 0);                                   //Linienfarbe Spielfeld
-                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
-                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                    bgColor = Color.FromRgb(125  , 30, 0100);                               //Hintergrundfarbe
+                    lineColor = Color.FromRgb(255, 100, 50);                                //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(100 , 255, 15);                                  //Farbe X Spieler
+                    OColor = Color.FromRgb(255, 3, 150);                                    //Farbe O Spieler
                     break;
-                case 4: //Farbschema Moritz                                                 //FArbschema Moritz
+                case 4: //Farbschema Moritz                                                 //Farbschema Moritz
                     bgColor = Color.FromRgb(9, 0, 196);                                     //Hintergrundfarbe
                     lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
                     XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
@@ -72,21 +77,36 @@ namespace OOPGames
             Brush OStroke = new SolidColorBrush(OColor);
 
             //Zeichnen der Linien 
-            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            // Noch keine Anpassung auf Spielfeld
+            // Spielfeldwerte (d = Abstand zwischen zwei Linien, X0 und Y0 ist der Eckpunkt oben links)
+            int d = 150;
+            int X0 = 100;
+            int Y0 = 150;
+            //int X0 = (int) (HorizontalAlignment.Right - HorizontalAlignment.Left) /2;
+            //int Y0 = (int)(VerticalAlignment.Bottom - VerticalAlignment.Top) / 2;
+            //Vertikal
+            Line l1 = new Line() { X1 = X0+d, Y1 = Y0, X2 = X0+d, Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l2 = new Line() { X1 = X0 + (2 * d), Y1 = Y0, X2 = X0 + (2 * d), Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l2);
-            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
+            //Horizontal
+            Line l3 = new Line() { X1 = X0, Y1 = Y0 + d, X2 = X0 + (3*d), Y2 = Y0 + d, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l3);
-            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l4 = new Line() { X1 = X0, Y1 = Y0 + (2*d), X2 =X0 + (3*d), Y2 = Y0 + (2*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l4);
-            Line l5 = new Line() { X1 = 20, Y1 = 320, X2 = 320, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l5);
-            Line l6 = new Line() { X1 = 20, Y1 = 20, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+
+            //Rahmen
+            //oben
+            Line l6 = new Line() { X1 = X0, Y1 = Y0, X2 = X0 + (3*d), Y2 = Y0, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l6);
-            Line l7 = new Line() { X1 = 20, Y1 = 320, X2 = 20, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            //unten
+            Line l5 = new Line() { X1 = X0, Y1 = Y0 + (3*d), X2 = X0 + (3*d), Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l5);
+            //links
+            Line l7 = new Line() { X1 = X0, Y1 = Y0, X2 = X0, Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l7);
-            Line l8 = new Line() { X1 = 320, Y1 = 320, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 3.0 };
+            //rechts
+            Line l8 = new Line() { X1 = X0 + (3*d), Y1 = Y0, X2 = X0 + (3*d), Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l8);
 
             //Zeichnen der Kreuze und Kreise der Spieler
@@ -96,14 +116,14 @@ namespace OOPGames
                 {
                     if (currentField[i, j] == 1)
                     {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X1 = new Line() { X1 = X0 + (j * d), Y1 = Y0 + (i * d), X2 = X0 + d + (j * d), Y2 = Y0 + d + (i * d), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X2 = new Line() { X1 = X0 + (j * d), Y1 = Y0+ d + (i * d), X2 = X0 + d  + (j * d), Y2 = Y0 + (i * d), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X2);
                     }
                     else if (currentField[i, j] == 2)
                     {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(X0 + (j * d), Y0 + (i * d), 0, 0), Width = d, Height = d, Stroke = OStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(OE);
                     }
                 }
@@ -262,5 +282,155 @@ namespace OOPGames
         }
 
 
-    }//*/
+    }
+    public class H_TicTacToeHumanPlayer: IHumanTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public string Name { get { return " H_TicTacToeHumanPlayer"; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+       
+        public ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field) 
+        {
+            int d = 150;
+            int X0 = 100;
+            int Y0 = 150;
+
+            if (selection is IClickSelection)
+            {
+                IClickSelection sel = (IClickSelection)selection;
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (sel.XClickPos > X0 + (j * d) && sel.XClickPos < X0 + d + (j * d) &&
+                            sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d) &&
+                            field[i, j] <= 0)
+                        {
+                            return new TicTacToeMove(i, j, _PlayerNumber);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public IGamePlayer Clone()
+        {
+            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+
+        public IPlayMove GetMove(IMoveSelection selection, IGameField field)
+        {
+            if (field is ITicTacToeField)
+            {
+                return GetMove(selection, (ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is ITicTacToeRules;
+        }
+
+
+    }
+
+
+    //Computer Player
+    public class H_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public override string Name { get { return "H_TicTacToeComputerPlayer"; } }
+
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+        public override IGamePlayer Clone()
+        {
+            H_TicTacToeComputerPlayer ttthp = new H_TicTacToeComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            int r = 0; //row
+            int c = 0; //column
+            //Nummeriert die Felder von 1 bis 9
+            for (int i = 1; i <= 9; i++)
+            {
+                for (r = 0; r <= 2; r++)
+                {
+                    for (c = 0; c <= 2; c++)
+                    {
+                        int fieldi = field[r, c];
+                    }
+                }
+            }
+
+            //Setzt Kreis immer links oben und danach immer eins nach rechts
+            for (r = 0; r <= 2; r++)
+            {
+                for (c = 0; c <= 2; c++)
+                {
+
+                    if (field[r, c] <= 0)
+                    {
+                        return new TicTacToeMove(r, c, _PlayerNumber);
+                    }
+                }
+            }
+
+            // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?
+
+
+
+            //Computerspieler vom Griesbauer
+            /*Random rand = new Random();
+            int f = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
+            {
+                int c = f % 3;
+                int r = ((f - c) / 3) % 3;
+                if (field[r, c] <= 0)
+                {
+                    return new TicTacToeMove(r, c, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
+            }
+            */
+
+            return null;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+
+    }
+
+
+
+
 }

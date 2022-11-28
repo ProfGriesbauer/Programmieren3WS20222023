@@ -32,6 +32,12 @@ namespace OOPGames
         void increaseField();
         
     }
+    
+
+    public interface ITicTacToeRules_G : ITicTacToeRules
+    {
+
+    }
 
     public class Casket : ICasket 
     {
@@ -395,6 +401,55 @@ namespace OOPGames
         }
     }
 
+    public class HumanTicTacToePlayer_G : BaseHumanTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public override string Name { get { return "GruppeGHumanTicTacToePlayer"; } }
+
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+        public override IGamePlayer Clone()
+        {
+            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
+        {
+            if (field is ITicTacToeField_G)
+            {
+                return GetMove_G(selection, (ITicTacToeField_G)field);
+            }
+            Console.WriteLine("Kein passendes Gruppe G Feld");
+            return null;
+        }
+
+        public ITicTacToeMove GetMove_G(IMoveSelection selection, ITicTacToeField_G field_G)
+        {
+            List<Casket> field = field_G.Field;
+            if (selection is IClickSelection)
+            {
+                IClickSelection sel = (IClickSelection)selection;
+                foreach(Casket cas in field)
+                {
+                    if(cas.isMySpace(sel.XClickPos, sel.YClickPos) != null)
+                    {
+                        return new TicTacToeMove(cas.x, cas.y, _PlayerNumber);
+                    }
+
+                }
+            }
+
+            return null;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
 
 
 

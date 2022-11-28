@@ -46,15 +46,18 @@ namespace OOPGames.Classes.Gruppe_K
             _gameManager.Objects = new List<K_GameObject>();
 
             // testField K_GameField object
-            K_GameField testField = new K_GameField();
+            K_GameField testField1 = new K_GameField();
 
             // Create Palette
             List<Color> colorList = new List<Color>();
             colorList.Add(Colors.Transparent);
             colorList.Add(Colors.Aqua);
             colorList.Add(Colors.Beige);
-            testField.Palette = new BitmapPalette(colorList);
+            colorList.Add(Colors.Gray);
+            testField1.Palette = new BitmapPalette(colorList);
 
+            // Set drawIndex
+            testField1.drawIndex = 1;
             // Fill testField with test values;
             double f6 = -2e-16;
             double f5 = 1e-12;
@@ -65,19 +68,51 @@ namespace OOPGames.Classes.Gruppe_K
             double f0 = 200;
 
 
-            for (int x = 0; x < testField.Width; x++)
+            for (int x = 0; x < testField1.Width; x++)
             {
                 int yLimit = (int)(f6 * Math.Pow(x, 6) + f5 * Math.Pow(x, 5) + f4 * Math.Pow(x, 4) + f3 * Math.Pow(x, 3) + f2 * Math.Pow(x, 2) + f1 * x + f0);
-                for (int y = 0; y < testField.Height; y++)
+                for (int y = 0; y < testField1.Height; y++)
                 {
                     if (yLimit <= y)
                     {
-                        testField.setField(x, y, 2);
+                        testField1.setField(x, y, 2);
                     }
                     else
                     {
-                        testField.setField(x, y, 1);
+                        testField1.setField(x, y, 0);
                     }
+                }
+            }
+
+            // testField K_GameField object
+            K_GameField testField2 = new K_GameField();
+
+         
+            testField2.Palette = new BitmapPalette(colorList);
+
+            // Set drawIndex
+            testField2.drawIndex = 0;
+
+
+            Random random = new Random();
+            int resPos = random.Next(200)+100;
+
+            for (int x = 0; x < testField2.Width; x++)
+            {
+                for (int y = 0; y < testField2.Height; y++)
+                {
+                   if (x % resPos < (y-100))
+                    {
+                        testField2.setField(x, y, 3);
+                    }
+                   else
+                    {
+                        testField2.setField(x, y, 1);
+                    }
+                }
+                if (x % 300 >= 299)
+                {
+                    resPos = random.Next(200) + 100;
                 }
             }
 
@@ -105,7 +140,8 @@ namespace OOPGames.Classes.Gruppe_K
 
 
             // Add test data
-            _gameManager.Objects.Add(testField);
+            _gameManager.Objects.Add(testField1);
+            _gameManager.Objects.Add(testField2);
             _gameManager.Objects.Add(testPlayer);
             _gameManager.Objects.Add(testProjectile);
             _gameManager.Objects.Add(testTarget);

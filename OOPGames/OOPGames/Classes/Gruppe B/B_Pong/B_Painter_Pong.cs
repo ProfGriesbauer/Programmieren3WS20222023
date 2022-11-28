@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class B_Pong_Painter : IPaintGame2, IPaintTicTacToe
+    public class B_Pong_Painter : IPaintPongGameB, IPaintTicTacToe
     {
         int paddle1X = 100;
         int paddle2X = 100;

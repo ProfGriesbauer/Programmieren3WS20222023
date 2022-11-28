@@ -12,7 +12,7 @@ namespace OOPGames
 
         void DoPongMove(IPongMoveB move);
     }
-    public interface IPongMoveB
+    public interface IPongMoveB : IPlayMove
     {
 
     }

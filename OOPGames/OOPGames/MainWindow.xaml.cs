@@ -24,6 +24,8 @@ using Color = System.Drawing.Color;
 using static OOPGames.PlayerD;
 using OOPGames.Classes.Gruppe_D;
 using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
+using OOPGames.Interfaces.Gruppe_E;
+using OOPGames.Classes.Gruppe_E;
 
 namespace OOPGames
 {
@@ -58,11 +60,12 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
-            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new E_vierGewinnt_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
-            OOPGamesManager.Singleton.RegisterPainter(new PainterI());
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            //OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPGames.Classes.Gruppe_C;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -38,11 +39,13 @@ namespace OOPGames
         {
             //Zufällig auswählen von einem von vier Farbschemen. Jesdes Mitglied der Gruppe legt ein eigenes Farbschema fest
             Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
-            Color bgColor = Color.FromRgb(0, 0, 0);                                         //Variable Hintergrundfarbe
+            Color bgColor = Color.FromRgb(255, 255, 255);                                   //Variable Hintergrundfarbe
             Color lineColor = Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
-            Color XColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe X Spieler
-            Color OColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe O Spieler
-            //switch (zufall.Next(1, 5))                                                      //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            Color XColor = Color.FromRgb(0, 255, 0);                                        //Variable Farbe X Spieler
+            Color OColor = Color.FromRgb(0, 0, 255);                                        //Variable Farbe O Spieler
+            //switch (zufall.Next(1, 5))                                                    //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            //PROBLEM: Feld wird bei jedem Klick neu gezeichnet und dadurch auch jedes mal ein neues Farbschema ausgewählt!!!!
+            //evtl. oben unter public class ein Bool erstellen, das nur einmal nutzung sicherstellt?
             switch(3)
             {
                 case 1: //Farbschema Annalena                                               //Farbschema Annalena
@@ -327,7 +330,7 @@ namespace OOPGames
 
         public IGamePlayer Clone()
         {
-            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            H_TicTacToeHumanPlayer ttthp = new H_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }

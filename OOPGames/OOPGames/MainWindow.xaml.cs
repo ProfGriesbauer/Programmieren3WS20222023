@@ -26,6 +26,7 @@ using OOPGames.Classes.Gruppe_D;
 using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
 //using OOPGames.Interfaces.Gruppe_E;
 using OOPGames.Classes.Gruppe_E;
+using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
 
 namespace OOPGames
 {
@@ -68,6 +69,8 @@ namespace OOPGames
             //OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
 
+            //OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
+
 
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
@@ -88,6 +91,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+
+            //OOPGamesManager.Singleton.RegisterRules(new RulerSV());
 
 
             //Players
@@ -254,6 +259,20 @@ namespace OOPGames
                 if (_CurrentRules.MovesPossible &&
                     _CurrentPlayer is IHumanGamePlayer)
                 {
+                    /*if (_CurrentPlayer is ISVPlayer) // added by Gruppe D BITTE NICHT LÖSCHEN WIRD NOCH BENÖTIGT LG Tim
+                    {
+                        int click = 0;
+
+                        if (e.ChangedButton == MouseButton.Left)
+                        {
+                            click = 1;
+                        } 
+                        if (e.ChangedButton == MouseButton.Right)
+                        {
+                            click = 2;
+                        }
+                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                    }*/
                     IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     
                     if (pm != null)

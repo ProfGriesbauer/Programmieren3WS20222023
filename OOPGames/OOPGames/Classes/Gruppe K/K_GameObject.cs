@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -86,12 +87,21 @@ namespace OOPGames.Classes.Gruppe_K
     {
         int _xPos=0;
         int _yPos=0;
+        float _xSpeed = 0;
+        float _ySpeed = 0;
         int _drawIndex=10;
         float _rotation=0f;
         int _xCenter = 0;
         int _yCenter = 0;
         float _scale=1f;
-        BitmapImage _image;
+        List<BitmapImage> _image = new List<BitmapImage>();
+
+       
+
+        public void loadImage(String uri)
+        {
+            _image.Add(new BitmapImage(new Uri(@uri, UriKind.Relative)));
+        }
 
         public int xPos
         {
@@ -102,6 +112,16 @@ namespace OOPGames.Classes.Gruppe_K
         {
             get { return _yPos; }
             set { _yPos = value; }
+        }
+        public float xSpeed
+        {
+            get { return _xSpeed; }
+            set { _xSpeed = value; }
+        }
+        public float ySpeed
+        {
+            get { return _ySpeed; }
+            set { _ySpeed = value; }
         }
         public int drawIndex
         {
@@ -124,9 +144,18 @@ namespace OOPGames.Classes.Gruppe_K
             set { _yCenter = value; }
         }
 
-        public BitmapImage Image
+        public List<BitmapImage> Image
         {
-            get { return _image; }
+            get 
+            {
+                if (_image.Count == 0)
+                {
+                    List<BitmapImage> list = new List<BitmapImage>();
+                    list.Add(new BitmapImage(new Uri(@"Assets/K/notFound.png", UriKind.Relative)));
+                    return list;
+                }
+                return _image; 
+            }
             set
             {
                 _image = value;

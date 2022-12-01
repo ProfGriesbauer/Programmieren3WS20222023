@@ -76,11 +76,13 @@ namespace OOPGames.Classes.Gruppe_K
         private void PaintK_Projectile(Canvas canvas, K_Projectile obj)
         {
             // TODO Implement PaintK_Projectile
+            drawImage(canvas, obj);
         }
 
         private void PaintK_Target(Canvas canvas, K_Target obj)
         {
             // TODO Implement PaintK_Target
+            drawImage(canvas, obj);
         }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
@@ -100,27 +102,44 @@ namespace OOPGames.Classes.Gruppe_K
         }
 
 
-
         private void drawImage(Canvas canvas, K_DrawObject obj)
         {
-            ImageBrush img=new ImageBrush();
-            img.ImageSource = obj.Image;
-            Label container = new Label();
-            RenderOptions.SetBitmapScalingMode(container, BitmapScalingMode.NearestNeighbor);
-            container.Width = obj.Image.PixelWidth * obj.Scale;
-            container.Height = obj.Image.PixelHeight * obj.Scale;
-            container.Background = img;
-            RotateTransform rot=new RotateTransform();
-            rot.Angle = obj.Rotation;
-            rot.CenterX = obj.xCenter;
-            rot.CenterY = obj.yCenter;
-            container.RenderTransform = rot;
+            drawImage(canvas, obj, 0);
+        }
+        private void drawImage(Canvas canvas, K_DrawObject obj, int imageIndex)
+        {
+            drawImage(canvas, obj, imageIndex, obj.xPos, obj.yPos, obj.xCenter, obj.yCenter, obj.Rotation, obj.Scale, obj.drawIndex);
+        }
+        private void drawImageAll(Canvas canvas, K_DrawObject obj)
+        {
+            for(int i=0; i < obj.Image.Count; i++)
+            {
+                drawImage(canvas, obj, i);
+            }
+        }
 
-            canvas.Children.Add(container);
+        private void drawImage(Canvas canvas, K_DrawObject obj, int imageIndex, int xPos, int yPos, int xCenter, int yCenter, float rotation, float scale, int drawIndex)
+        {
+            if (imageIndex>=0 && obj.Image.Count>imageIndex) {
+                ImageBrush img = new ImageBrush();
+                img.ImageSource = obj.Image[imageIndex];
+                Label container = new Label();
+                RenderOptions.SetBitmapScalingMode(container, BitmapScalingMode.NearestNeighbor);
+                container.Width = obj.Image[imageIndex].PixelWidth * scale;
+                container.Height = obj.Image[imageIndex].PixelHeight * scale;
+                container.Background = img;
+                RotateTransform rot = new RotateTransform();
+                rot.Angle = rotation;
+                rot.CenterX = xCenter;
+                rot.CenterY = yCenter;
+                container.RenderTransform = rot;
 
-            Canvas.SetZIndex(container, obj.drawIndex);
-            Canvas.SetTop(container, obj.yPos);
-            Canvas.SetLeft(container, obj.xPos);
+                canvas.Children.Add(container);
+
+                Canvas.SetZIndex(container, drawIndex);
+                Canvas.SetTop(container, yPos);
+                Canvas.SetLeft(container, xPos);
+            }
         }
         private void drawText(double x, double y, string text, int size, Color colorText, Color colorBackground, Canvas canvas)
         {

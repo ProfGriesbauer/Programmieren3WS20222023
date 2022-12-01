@@ -134,7 +134,6 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPaintPongGameB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
-    <Compile Include="Interfaces\Gruppe E\I_E_VierGewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
@@ -182,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Gruppe C\" />
+    <Folder Include="Interfaces\Gruppe E\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -209,6 +209,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\K\Panzer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\K\notFound.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

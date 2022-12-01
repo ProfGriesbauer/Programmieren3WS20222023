@@ -118,11 +118,11 @@ namespace OOPGames.Classes.Gruppe_K
 
             // testPlayer K_Player object
             K_Player testPlayer = new K_Player();
-            testPlayer.Image = new BitmapImage(new Uri(@"Assets\K\Panzer.png", UriKind.Relative));
+            testPlayer.loadImage("Assets/K/Panzer.png");
             int x1 = 300;
             testPlayer.Scale = 2;
-            testPlayer.xCenter = (int)(testPlayer.Scale * testPlayer.Image.PixelWidth) / 2;
-            testPlayer.yCenter = (int)(testPlayer.Scale*testPlayer.Image.PixelHeight);
+            testPlayer.xCenter = (int)(testPlayer.Scale * testPlayer.Image[0].PixelWidth) / 2;
+            testPlayer.yCenter = (int)(testPlayer.Scale * testPlayer.Image[0].PixelHeight);
             testPlayer.Rotation = 0f;
             testPlayer.xPos = x1;
             testPlayer.yPos = (int)(f6 * Math.Pow(x1, 6) + f5 * Math.Pow(x1, 5) + f4 * Math.Pow(x1, 4) + f3 * Math.Pow(x1, 3) + f2 * Math.Pow(x1, 2) + f1 * x1 + f0);
@@ -132,7 +132,8 @@ namespace OOPGames.Classes.Gruppe_K
             // testProjectile K_Projectile object
             // TODO Write Test Parameters
             K_Projectile testProjectile = new K_Projectile();
-
+            testProjectile.xPos = 100;
+            testProjectile.yPos = 100;
             // testTarget K_Target object
             // TODO Write Test Parameters
             K_Target testTarget = new K_Target();

@@ -1,19 +1,14 @@
-﻿using System;
+﻿using OOPGames.Interfaces.Gruppe_K;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static OOPGames.Classes.Gruppe_K.K_DrawObject;
+
 
 namespace OOPGames.Classes.Gruppe_K
 {
     class K_GameObjectManager : IGameField
     {
-        List<K_GameObject> _objects;
+        List<K_GameObject> _objects = new List<K_GameObject>();
 
         public List<K_GameObject> Objects
         {
@@ -22,7 +17,7 @@ namespace OOPGames.Classes.Gruppe_K
         }
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            if (painter is K_PaintGameObject)
+            if (painter is IK_PaintGameObject)
             {
                 return true;
             }

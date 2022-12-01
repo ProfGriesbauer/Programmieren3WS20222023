@@ -43,7 +43,6 @@ namespace OOPGames.Classes.Gruppe_K
 
             // testData List
             _gameManager = new K_GameObjectManager();
-            _gameManager.Objects = new List<K_GameObject>();
 
             // testField K_GameField object
             K_GameField testField1 = new K_GameField();
@@ -85,8 +84,8 @@ namespace OOPGames.Classes.Gruppe_K
             }
 
             // Add Test Hole to Field
-            int holeX = 420;
-            int holeY = 200;
+            int holeX = 500;
+            int holeY = 220;
             int holeRX = 60;
             int holeRY = 30;
             for(int x = -holeRX; x < holeRX; x++)
@@ -142,23 +141,26 @@ namespace OOPGames.Classes.Gruppe_K
             K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
             K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
 
+            // Settings for testPlayer
             drawSettingTank.Scale = 2;
             drawSettingTank.xPos = 300;
             drawSettingTank.yPos = (int)(f6 * Math.Pow(drawSettingTank.xPos, 6) + f5 * Math.Pow(drawSettingTank.xPos, 5) + f4 * Math.Pow(drawSettingTank.xPos, 4) + f3 * Math.Pow(drawSettingTank.xPos, 3) + f2 * Math.Pow(drawSettingTank.xPos, 2) + f1 * drawSettingTank.xPos + f0);
             drawSettingTank.Rotation = 0;
             drawSettingTank.DrawIndex = 10;
-
-            
             testPlayer.PositionData =drawSettingTank;
 
+            // Add Tank image
             testPlayer.loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
 
+
+            // Configure and add Barrel image to Tank
             drawSettingTankR.Scale = drawSettingTank.Scale/2;
             drawSettingTankR.DrawIndex=drawSettingTank.DrawIndex-1;
             drawSettingTankR.yPos -= (int)(15*drawSettingTankR.Scale);
             drawSettingTankR.ID = "gun";
             testPlayer.loadImage("Assets/K/PanzerR.png",drawSettingTankR, K_DrawObject.Position.LeftCenter);
 
+            // ID to define Object affected by Angle property
             testPlayer.AngleID = drawSettingTankR.ID;
 
 
@@ -186,6 +188,7 @@ namespace OOPGames.Classes.Gruppe_K
         }
 
 
+        // Test for rotation of hole Objekt and internal Image
         float dirBarrel = -1;
         float dirTank = 0.2f;
         public void TickGameCall()
@@ -196,10 +199,12 @@ namespace OOPGames.Classes.Gruppe_K
             {
                 if (data is K_Player)
                 {
+                    // Rotate Barrel
                     //((K_Player)data).AngleID = "gun";
                     ((K_Player)data).Angle += dirBarrel;
                     dirBarrel *= ((((K_Player)data).Angle > 0 && dirBarrel > 0) || (((K_Player)data).Angle < -180 && dirBarrel < 0)) ? -1 : 1;
 
+                    // Rotate whole testPlayer1 Object
                     ((K_Player)data).Rotation +=dirTank;
                     dirTank *= ((((K_Player)data).Rotation > 20 && dirTank > 0) || (((K_Player)data).Rotation < -20 && dirTank < 0)) ? -1 : 1;
 

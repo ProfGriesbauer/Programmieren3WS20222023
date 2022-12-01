@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_K
 {
@@ -13,7 +14,6 @@ namespace OOPGames.Classes.Gruppe_K
     {
 
         K_GameObjectManager _gameManager;
-
 
         public string Name { get { return "K Rules tbd"; } }
 
@@ -84,6 +84,25 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
+            // Add Test Hole to Field
+            int holeX = 420;
+            int holeY = 200;
+            int holeRX = 60;
+            int holeRY = 30;
+            for(int x = -holeRX; x < holeRX; x++)
+            {
+                for(int y = -holeRY; y < holeRY; y++)
+                {
+                    float x2 = (holeRY/(float)holeRX) *x * x;
+                    float y2 = (holeRX / (float)holeRY) * y * y;
+                    if ((x2 + y2) <= holeRX*holeRY)
+                    {
+                        testField1.setField(x + holeX, y + holeY, 0);
+                    }
+                }
+            }
+
+
             // testField K_GameField object
             K_GameField testField2 = new K_GameField();
 
@@ -116,18 +135,34 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
+
+
             // testPlayer K_Player object
             K_Player testPlayer = new K_Player();
-            testPlayer.loadImage("Assets/K/Panzer.png");
-            int x1 = 300;
-            testPlayer.Scale = 2;
-            testPlayer.xCenter = (int)(testPlayer.Scale * testPlayer.Image[0].PixelWidth) / 2;
-            testPlayer.yCenter = (int)(testPlayer.Scale * testPlayer.Image[0].PixelHeight);
-            testPlayer.Rotation = 0f;
-            testPlayer.xPos = x1;
-            testPlayer.yPos = (int)(f6 * Math.Pow(x1, 6) + f5 * Math.Pow(x1, 5) + f4 * Math.Pow(x1, 4) + f3 * Math.Pow(x1, 3) + f2 * Math.Pow(x1, 2) + f1 * x1 + f0);
-            testPlayer.yPos -= (int)(10 * testPlayer.Scale);
+            K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
+            K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
+
+            drawSettingTank.Scale = 2;
+            drawSettingTank.xPos = 300;
+            drawSettingTank.yPos = (int)(f6 * Math.Pow(drawSettingTank.xPos, 6) + f5 * Math.Pow(drawSettingTank.xPos, 5) + f4 * Math.Pow(drawSettingTank.xPos, 4) + f3 * Math.Pow(drawSettingTank.xPos, 3) + f2 * Math.Pow(drawSettingTank.xPos, 2) + f1 * drawSettingTank.xPos + f0);
+            drawSettingTank.Rotation = 0;
+            drawSettingTank.DrawIndex = 10;
+
             
+            testPlayer.PositionData =drawSettingTank;
+
+            testPlayer.loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
+
+            drawSettingTankR.Scale = drawSettingTank.Scale/2;
+            drawSettingTankR.DrawIndex=drawSettingTank.DrawIndex-1;
+            drawSettingTankR.yPos -= (int)(15*drawSettingTankR.Scale);
+            drawSettingTankR.ID = "gun";
+            testPlayer.loadImage("Assets/K/PanzerR.png",drawSettingTankR, K_DrawObject.Position.LeftCenter);
+
+            testPlayer.AngleID = drawSettingTankR.ID;
+
+
+
 
             // testProjectile K_Projectile object
             // TODO Write Test Parameters
@@ -137,6 +172,8 @@ namespace OOPGames.Classes.Gruppe_K
             // testTarget K_Target object
             // TODO Write Test Parameters
             K_Target testTarget = new K_Target();
+            testTarget.xPos = 200;
+            testTarget.yPos = 300;
 
 
 
@@ -148,9 +185,26 @@ namespace OOPGames.Classes.Gruppe_K
             _gameManager.Objects.Add(testTarget);
         }
 
+
+        float dirBarrel = -1;
+        float dirTank = 0.2f;
         public void TickGameCall()
         {
+            ((K_GameField)_gameManager.Objects[0]).removeHoles();
 
+            foreach(K_GameObject data in _gameManager.Objects)
+            {
+                if (data is K_Player)
+                {
+                    //((K_Player)data).AngleID = "gun";
+                    ((K_Player)data).Angle += dirBarrel;
+                    dirBarrel *= ((((K_Player)data).Angle > 0 && dirBarrel > 0) || (((K_Player)data).Angle < -180 && dirBarrel < 0)) ? -1 : 1;
+
+                    ((K_Player)data).Rotation +=dirTank;
+                    dirTank *= ((((K_Player)data).Rotation > 20 && dirTank > 0) || (((K_Player)data).Rotation < -20 && dirTank < 0)) ? -1 : 1;
+
+                }
+            }
         }
 
 

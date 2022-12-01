@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 {
@@ -14,6 +16,11 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         int[,] _P1shoot = new int[8, 8] { { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 } };
         int[,] _P2shoot = new int[8, 8] { { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 } };
 
+        int _GamePhase = 1;
+
+ 
+        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 }); // schifflänge
+        Stack<int> _SchiffeP2 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 });
         public int this[int r, int c, int w] 
         { 
             get  
@@ -52,12 +59,44 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }  
         }
 
+        public int Phase
+        { 
+            get{ return _GamePhase; } 
+                
+            set { _GamePhase = value; }
+        }
+
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is IPaintSV;
         }
 
-
+        public int Ships(int w, int p)
+        {
+            if(w == 1)
+            {
+                if(p == 1)
+                {
+                    return _SchiffeP1.Pop();
+                }
+                else
+                {
+                    return _SchiffeP2.Pop();
+                }
+            }
+            if (w == 2)
+            {
+                if(p == 1)
+                {
+                    return _SchiffeP1.Peek();
+                }
+                else
+                {
+                    return _SchiffeP2.Peek();
+                }
+            }
+            return 0;
+        }
     }
 
     public class RulerSV : IRulerSV
@@ -91,11 +130,9 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         public void ChangePhase()
         {
             GamePhase++;
+            _Shipfield.Phase = GamePhase;
         }
      
-
-       
-
         public int CheckHit(int r, int c, int Playernumber)             //Schussfunktion
         {
             if (Playernumber == 2)
@@ -172,6 +209,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             if (GamePhase == 1 || GamePhase == 2)
             {
+                
                 if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
                 {
                     _Shipfield[move.Row, move.Column, 1] = SetShip(move.Row, move.Column, move.PlayerNumber);
@@ -197,10 +235,10 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         public int SetShip(int r, int c, int PLayernumber)
         {
-            if (PLayernumber == 1 && _Shipfield[r, c, 1] ==0)
+            if (PLayernumber == 1 && _Shipfield[r, c, 1] == 0)
             {
                 ShipCounter++;
-                if (ShipCounter ==15)
+                if (ShipCounter == 15)
                 {
                     ChangePhase();
                 }

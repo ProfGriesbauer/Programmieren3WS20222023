@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace OOPGames
 {
     
-    public class FTicTacToeField : IFTicTacToeField
+    public class FTicTacToeField : ITicTacToeField// IFTicTacToeField
     {
         int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
         int _CurrentWinner;
@@ -54,7 +54,7 @@ namespace OOPGames
             return painter is TTTPaint;
         }
     }
-    public class TTTRulesF : BaseTicTacToeRules, IGameRules2, IFieldSum
+    public class TTTRulesF : BaseTicTacToeRules, IGameRules2//, IFieldSum
     {
         int timerCounter;
         int FieldSumOld;

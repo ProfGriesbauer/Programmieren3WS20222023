@@ -131,6 +131,8 @@
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\Gruppe B\IGameRulesB.cs" />
+    <Compile Include="Interfaces\Gruppe B\PongInterfaces\IHumanPongPlayerB.cs" />
+    <Compile Include="Interfaces\Gruppe B\PongInterfaces\IComputerPongPlayerB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPaintPongGameB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />

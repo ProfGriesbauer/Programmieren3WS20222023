@@ -19,7 +19,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         int _GamePhase = 1;
 
  
-        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 }); // schifflänge
+        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 }); // schifflänge 
         Stack<int> _SchiffeP2 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 });
         public int this[int r, int c, int w] 
         { 

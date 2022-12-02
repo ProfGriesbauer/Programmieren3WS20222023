@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -21,9 +22,52 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
+        public void PaintShip(Canvas canvas, int Ship, int x, int y)
+        {
+            Color lineColor = Color.FromRgb(0, 0, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
+            int _x = x;
+            for (int i = 0; i < Ship; i += 1)
+            {
+                Line l1 = new Line() { X1 = _x,      Y1 = y,     X2 = _x + 50,    Y2 = y ,    Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l2 = new Line() { X1 = _x,      Y1 = y,     X2 = _x ,        Y2 = y+50,  Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l3 = new Line() { X1 = _x,      Y1 = y+50,  X2 = _x+50 ,     Y2 = y+ 50 , Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l4 = new Line() { X1 = _x+50,   Y1 = y,    X2 = _x + 50 ,    Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                if (i == 0)
+                {
+                    canvas.Children.Add(l4);
+                }
+                if (i == Ship-1)
+                {
+                    canvas.Children.Add(l2);
+                }
+                if (i != 0 && i!= Ship-1) 
+                {
+                    canvas.Children.Add(l1);
+                    canvas.Children.Add(l2);
+                    canvas.Children.Add(l3);
+                    canvas.Children.Add(l4);
+                }
+                
+                _x = _x + 50;
+            }
+
+            Line l5 = new Line() { X1 = x, Y1 = y +25, X2 = x + 50, Y2 = y,         Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l6 = new Line() { X1 = x, Y1 = y +25, X2 = x + 50, Y2 = y +50,    Stroke = lineStroke, StrokeThickness = 3.0 };
+
+            Line l7 = new Line() { X1 = x + (Ship*50), Y1 = y +25, X2 = x + (Ship * 50)-50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l8 = new Line() { X1 = x + (Ship * 50), Y1 = y +25, X2 = x + (Ship * 50) - 50, Y2 = y+50, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l5);
+            canvas.Children.Add(l6);
+            canvas.Children.Add(l7);
+            canvas.Children.Add(l8);
+        }
+
         public void PaintShipField(Canvas canvas, IFieldSV currentField)
         {
             int GamePhase = currentField.Phase;
+            int _Ship = currentField.Ships(1, 2);
+            int _CurrenPlayer = 0;
 
             if (GamePhase == 1 || GamePhase == 2)
             {
@@ -31,8 +75,9 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 if(GamePhase == 2)
                 {
                     _player = "P2";
+                    _CurrenPlayer = 2;
                 }
-                else { _player = "P1"; }
+                else { _player = "P1"; _CurrenPlayer = 1; }
 
                 canvas.Children.Clear();
                 Color bgColor = Color.FromRgb(255, 255, 255);
@@ -58,6 +103,17 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     Line l = new Line() { X1 = 20, Y1 = y, X2 = 420, Y2 = y , Stroke = lineStroke, StrokeThickness = 3.0 };
                     canvas.Children.Add(l);
                 }
+
+                TextBlock text = new TextBlock();
+                text.Text = "current Ship";
+                text.Foreground = new SolidColorBrush(lineColor);
+                text.FontSize = 30;
+                Canvas.SetLeft(text, 20);
+                Canvas.SetTop(text, 455);
+                canvas.Children.Add(text);
+
+                PaintShip(canvas, currentField.Ships(2, _CurrenPlayer) , 20, 505);
+                
             }
             
             if (GamePhase == 3) 

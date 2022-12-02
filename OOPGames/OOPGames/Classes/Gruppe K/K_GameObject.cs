@@ -6,9 +6,9 @@ using System.Windows.Media.Imaging;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    class K_GameObjectManager : IGameField
+    class K_GameObjectManager : IK_GameField
     {
-        List<K_GameObject> _objects = new List<K_GameObject>();
+            List<K_GameObject> _objects = new List<K_GameObject>();
 
         public List<K_GameObject> Objects
         {

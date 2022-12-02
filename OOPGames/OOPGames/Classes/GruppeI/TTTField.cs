@@ -28,7 +28,7 @@ namespace OOPGames.Classes.GruppeI
         {
             get
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                if (r >= 0 && r < 3 && c >= 0 && c < 3) //ist das überhaupt möglich-Abfrage
                 {
                     return this[r, c];
                 }

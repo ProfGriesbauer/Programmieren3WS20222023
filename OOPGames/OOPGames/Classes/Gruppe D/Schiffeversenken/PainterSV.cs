@@ -23,45 +23,86 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
-        public void PaintShip(Canvas canvas, int Ship, int x, int y)
+        public void PaintShip(Canvas canvas, int Ship, int x, int y, int HorVer)
         {
             Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
             int _x = x;
-            for (int i = 0; i < Ship; i += 1)
+            int _HorVer = 0;
+            if (_HorVer == 1)
             {
-                Line l1 = new Line() { X1 = _x,      Y1 = y,     X2 = _x + 50,    Y2 = y ,    Stroke = lineStroke, StrokeThickness = 3.0 };
-                Line l2 = new Line() { X1 = _x,      Y1 = y,     X2 = _x ,        Y2 = y+50,  Stroke = lineStroke, StrokeThickness = 3.0 };
-                Line l3 = new Line() { X1 = _x,      Y1 = y+50,  X2 = _x+50 ,     Y2 = y+ 50 , Stroke = lineStroke, StrokeThickness = 3.0 };
-                Line l4 = new Line() { X1 = _x+50,   Y1 = y,    X2 = _x + 50 ,    Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
-                if (i == 0)
+                for (int i = 0; i < Ship; i += 1)
                 {
-                    canvas.Children.Add(l4);
+                    Line l1 = new Line() { X1 = _x, Y1 = y, X2 = _x + 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l2 = new Line() { X1 = _x, Y1 = y, X2 = _x, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l3 = new Line() { X1 = _x, Y1 = y + 50, X2 = _x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l4 = new Line() { X1 = _x + 50, Y1 = y, X2 = _x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    if (i == 0)
+                    {
+                        canvas.Children.Add(l4);
+                    }
+                    if (i == Ship - 1)
+                    {
+                        canvas.Children.Add(l2);
+                    }
+                    if (i != 0 && i != Ship - 1)
+                    {
+                        canvas.Children.Add(l1);
+                        canvas.Children.Add(l2);
+                        canvas.Children.Add(l3);
+                        canvas.Children.Add(l4);
+                    }
+
+                    _x = _x + 50;
                 }
-                if (i == Ship-1)
+
+                Line l5 = new Line() { X1 = x, Y1 = y + 25, X2 = x + 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l6 = new Line() { X1 = x, Y1 = y + 25, X2 = x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+
+                Line l7 = new Line() { X1 = x + (Ship * 50), Y1 = y + 25, X2 = x + (Ship * 50) - 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l8 = new Line() { X1 = x + (Ship * 50), Y1 = y + 25, X2 = x + (Ship * 50) - 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(l5);
+                canvas.Children.Add(l6);
+                canvas.Children.Add(l7);
+                canvas.Children.Add(l8);
+            } else if (_HorVer ==2)
+            {
+                for (int i = 0; i < Ship; i += 1)
                 {
-                    canvas.Children.Add(l2);
+                    Line l1 = new Line() { X1 = _x, Y1 = y, X2 = _x + 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l2 = new Line() { X1 = _x, Y1 = y, X2 = _x, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l3 = new Line() { X1 = _x, Y1 = y + 50, X2 = _x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l4 = new Line() { X1 = _x + 50, Y1 = y, X2 = _x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    if (i == 0)
+                    {
+                        canvas.Children.Add(l4);
+                    }
+                    if (i == Ship - 1)
+                    {
+                        canvas.Children.Add(l2);
+                    }
+                    if (i != 0 && i != Ship - 1)
+                    {
+                        canvas.Children.Add(l1);
+                        canvas.Children.Add(l2);
+                        canvas.Children.Add(l3);
+                        canvas.Children.Add(l4);
+                    }
+
+                    _x = _x + 50;
                 }
-                if (i != 0 && i!= Ship-1) 
-                {
-                    canvas.Children.Add(l1);
-                    canvas.Children.Add(l2);
-                    canvas.Children.Add(l3);
-                    canvas.Children.Add(l4);
-                }
-                
-                _x = _x + 50;
+
+                Line l5 = new Line() { X1 = x, Y1 = y + 25, X2 = x + 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l6 = new Line() { X1 = x, Y1 = y + 25, X2 = x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+
+                Line l7 = new Line() { X1 = x + (Ship * 50), Y1 = y + 25, X2 = x + (Ship * 50) - 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l8 = new Line() { X1 = x + (Ship * 50), Y1 = y + 25, X2 = x + (Ship * 50) - 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(l5);
+                canvas.Children.Add(l6);
+                canvas.Children.Add(l7);
+                canvas.Children.Add(l8);
+
             }
-
-            Line l5 = new Line() { X1 = x, Y1 = y +25, X2 = x + 50, Y2 = y,         Stroke = lineStroke, StrokeThickness = 3.0 };
-            Line l6 = new Line() { X1 = x, Y1 = y +25, X2 = x + 50, Y2 = y +50,    Stroke = lineStroke, StrokeThickness = 3.0 };
-
-            Line l7 = new Line() { X1 = x + (Ship*50), Y1 = y +25, X2 = x + (Ship * 50)-50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
-            Line l8 = new Line() { X1 = x + (Ship * 50), Y1 = y +25, X2 = x + (Ship * 50) - 50, Y2 = y+50, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l5);
-            canvas.Children.Add(l6);
-            canvas.Children.Add(l7);
-            canvas.Children.Add(l8);
         }
 
         public void PaintShipField(Canvas canvas, IFieldSV currentField)
@@ -113,7 +154,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 Canvas.SetTop(text, 455);
                 canvas.Children.Add(text);
 
-                PaintShip(canvas, currentField.Ships(2, _CurrenPlayer) , 20, 505);
+                PaintShip(canvas, currentField.Ships(2, _CurrenPlayer) , 20, 505, 2
+                    );
                 
             }
 

@@ -128,9 +128,9 @@ namespace OOPGames
 
         public Casket isMySpace(int x, int y)
         {
-            if ((_x * _size) >= x && (_x + 1) * _size <= x)
+            if ((_x * _size) <= x && (_x + 1) * _size >= x)
             {
-                if ((_y * _size) >= y && (_y + 1) * _size <= y)
+                if ((_y * _size) <= y && (_y + 1) * _size >= y)
                 {
                     return this;
                 }
@@ -436,9 +436,10 @@ namespace OOPGames
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
+
             foreach(Casket cas in _Field.Field)
             {
-                if(cas.x == move.Column && cas.y == move.Row)
+                if(cas.x == move.Row && cas.y == move.Column)
                 {
                     cas.player = move.PlayerNumber;
                 }
@@ -600,13 +601,13 @@ namespace OOPGames
 
         public ITicTacToeMove GetMove_G(IMoveSelection selection, ITicTacToeField_G field_G)
         {
-            List<Casket> field = field_G.Field;
+            //List<Casket> field = field_G.Field;
 
             if (selection is IClickSelection)
             {
                 IClickSelection sel = (IClickSelection)selection;
 
-                foreach(Casket cas in field)
+                foreach(Casket cas in field_G.Field)
                 {
                     if(cas.isMySpace(sel.XClickPos, sel.YClickPos) != null)
                     {

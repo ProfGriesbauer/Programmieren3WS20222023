@@ -439,7 +439,7 @@ namespace OOPGames
 
             foreach(Casket cas in _Field.Field)
             {
-                if(cas.x == move.Column && cas.y == move.Row)
+                if(cas.x == move.Row && cas.y == move.Column)
                 {
                     cas.player = move.PlayerNumber;
                 }

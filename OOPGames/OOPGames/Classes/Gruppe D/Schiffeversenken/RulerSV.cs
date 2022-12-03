@@ -54,7 +54,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     if (w == 1) { _P1Ships[r, c] = value; }
                     if (w == 2) { _P2Ships[r, c] = value; }
                     if (w == 3) { _P1shoot[r, c] = value; }
-                    if (w == 4) { _P1shoot[r, c] = value; }
+                    if (w == 4) { _P2shoot[r, c] = value; }
                 }
             }  
         }

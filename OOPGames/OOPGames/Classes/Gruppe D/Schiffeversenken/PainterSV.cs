@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -115,14 +116,19 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 PaintShip(canvas, currentField.Ships(2, _CurrenPlayer) , 20, 505);
                 
             }
-            
-            if (GamePhase == 3) 
+
+            if (GamePhase == 3)
             {
                 canvas.Children.Clear();
                 Color bgColor = Color.FromRgb(255, 255, 255);
                 canvas.Background = new SolidColorBrush(bgColor);
                 Color lineColor = Color.FromRgb(0, 0, 0);
                 Brush lineStroke = new SolidColorBrush(lineColor);
+                Color redC = Color.FromRgb(255, 0, 0);
+                Brush red = new SolidColorBrush(redC);
+                Color blueC = Color.FromRgb(0, 0, 255);
+                Brush blue = new SolidColorBrush(blueC);    
+
 
                 TextBlock textP1 = new TextBlock();
                 textP1.Text = "P1 ";
@@ -162,8 +168,54 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     Line l = new Line() { X1 = 450, Y1 = y, X2 = 850, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
                     canvas.Children.Add(l);
                 }
+                /* for Painting Test
+                currentField[1, 1, 4] = 1;
+                currentField[5, 7, 4] = 2;
+
+                currentField[7, 3, 3] = 1;
+                currentField[3, 7, 3] = 2;
+                */
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (currentField[i, j, 3] == 1)
+                        {
+                            Line X1 = new Line() { X1 = 20 + (j * 50), Y1 = 50 + (i * 50), X2 = 70 + (j * 50), Y2 = 100 + (i * 50), Stroke = red, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X1);
+                            Line X2 = new Line() { X1 = 70 + (j * 50), Y1 = 50 + (i * 50), X2 = 20 + (j * 50), Y2 = 100 + (i * 50), Stroke = red, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X2);
+                        }
+                        if (currentField[i, j, 3] == 2)
+                        {
+                            Line X1 = new Line() { X1 = 20 + (j * 50), Y1 = 50 + (i * 50), X2 = 70 + (j * 50), Y2 = 100 + (i * 50), Stroke = blue, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X1);
+                            Line X2 = new Line() { X1 = 70 + (j * 50), Y1 = 50 + (i * 50), X2 = 20 + (j * 50), Y2 = 100 + (i * 50), Stroke = blue, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X2);
+                        }
+                    }
+                }
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (currentField[i, j, 4] == 1)
+                        {
+                            Line X1 = new Line() { X1 = 450 + (j * 50), Y1 = 50 + (i * 50), X2 = 500 + (j * 50), Y2 = 100 + (i * 50), Stroke = red, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X1);
+                            Line X2 = new Line() { X1 = 500 + (j * 50), Y1 = 50 + (i * 50), X2 = 450 + (j * 50), Y2 = 100 + (i * 50), Stroke = red, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X2);
+                        }
+                        if (currentField[i, j, 4] == 2)
+                        {
+                            Line X1 = new Line() { X1 = 450 + (j * 50), Y1 = 50 + (i * 50), X2 = 500 + (j * 50), Y2 = 100 + (i * 50), Stroke = blue, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X1);
+                            Line X2 = new Line() { X1 = 500 + (j * 50), Y1 = 50 + (i * 50), X2 = 450 + (j * 50), Y2 = 100 + (i * 50), Stroke = blue, StrokeThickness = 3.0 };
+                            canvas.Children.Add(X2);
+                        }
+                    }
+                }
             }
         }
     }
-
 }

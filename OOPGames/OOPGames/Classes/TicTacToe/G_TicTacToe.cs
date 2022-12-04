@@ -15,6 +15,7 @@ using static OOPGames.TicTacToeField_G;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using static OOPGames.MainWindow;
+using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
 
 namespace OOPGames
 {
@@ -145,31 +146,31 @@ namespace OOPGames
             if (_player == 1)
             {
                 Line l1 = new Line() {
-                    X1 = ((_x) * _size),
-                    Y1 = ((_y) * _size),
-                    X2 = ((_x + 1) * _size),
-                    Y2 = ((_y + 1) * _size),
+                    X1 = ((_x) * _size)+5,
+                    Y1 = ((_y) * _size)+5,
+                    X2 = ((_x + 1) * _size)-5,
+                    Y2 = ((_y + 1) * _size)-5,
                     Stroke = XStroke,
-                    StrokeThickness = 3.0 };
+                    StrokeThickness = 2.0 };
                 Line l2 = new Line() {
-                    X1 = ((_x) * _size)+4,
-                    Y1 = ((_y + 1) * _size)+4,
-                    X2 = ((_x + 1) * _size)-4,
-                    Y2 = ((_y) * _size)-4,
+                    X1 = ((_x) * _size)+5,
+                    Y1 = ((_y + 1) * _size)-5,
+                    X2 = ((_x + 1) * _size)-5,
+                    Y2 = ((_y) * _size)+5,
                     Stroke = XStroke,
-                    StrokeThickness = 3.0 };
+                    StrokeThickness = 2.0 };
                 canvas.Children.Add(l1);
                 canvas.Children.Add(l2);
             }
             else if (_player == 2)
             {
                 Ellipse OE = new Ellipse() {
-                    Margin = new Thickness((_x) * _size,
-                    (_y) * _size, 0, 0),
-                    Width = _size-4,
-                    Height = _size-4,
+                    Margin = new Thickness(((_x) * _size)+4,
+                    ((_y) * _size)+4, 0, 0),
+                    Width = _size-8,
+                    Height = _size-8,
                     Stroke = OStroke,
-                    StrokeThickness = 3.0 };
+                    StrokeThickness = 2.0 };
                 canvas.Children.Add(OE);
             }
         }
@@ -238,7 +239,7 @@ namespace OOPGames
             }
 
             ProgressBar Progress = new ProgressBar();
-            Progress.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 255));
+            Progress.Foreground = new SolidColorBrush(Color.FromRgb(250, 0, 125));
             //Progress.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
             Canvas.SetTop(Progress, 0);
             Canvas.SetLeft(Progress, 420);
@@ -268,11 +269,36 @@ namespace OOPGames
             Canvas.SetTop(TBscore1, 420);
             canvas.Children.Add(TBscore1);
 
+            ProgressBar Progress1 = new ProgressBar();
+            Progress1.Foreground = new SolidColorBrush(Color.FromRgb(0,255,0));
+            Canvas.SetTop(Progress1, 420);
+            Canvas.SetLeft(Progress1, 100);
+            Progress1.Width = 300;
+            Progress1.Height = 20;
+            Progress1.Minimum = 0;
+            Progress1.Maximum = 15;
+            Progress1.Value = Score1;
+            Progress1.Orientation = Orientation.Horizontal;
+            canvas.Children.Add(Progress1);
+
+
             TextBox TBscore2 = new TextBox();
             TBscore2.Text = "Player 2: " + Score2.ToString();
             Canvas.SetLeft(TBscore2, 10);
             Canvas.SetTop(TBscore2, 450);
             canvas.Children.Add(TBscore2);
+
+            ProgressBar Progress2 = new ProgressBar();
+            Progress2.Foreground = new SolidColorBrush(Color.FromRgb(0,0,255));
+            Canvas.SetTop(Progress2, 450);
+            Canvas.SetLeft(Progress2, 100);
+            Progress2.Width = 300;
+            Progress2.Height = 20;
+            Progress2.Minimum = 0;
+            Progress2.Maximum = 15;
+            Progress2.Value = Score2;
+            Progress2.Orientation = Orientation.Horizontal;
+            canvas.Children.Add(Progress2);
         }
 
     }

@@ -84,19 +84,43 @@ namespace OOPGames
             Brush lineStroke = new SolidColorBrush(lineColor);
 
             //Obere Linie
-            Line Up = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line Up = new Line() {
+                X1 = (_x) * _size,
+                Y1 = (_y) * _size,
+                X2 = (_x + 1) * _size,
+                Y2 = (_y) * _size,
+                Stroke = lineStroke,
+                StrokeThickness = 3.0 };
             canvas.Children.Add(Up);
 
             //Untere Linie
-            Line Down = new Line() { X1 = (_x) * _size, Y1 = (_y + 1 ) * _size, X2 = (_x + 1 ) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line Down = new Line() {
+                X1 = (_x) * _size,
+                Y1 = (_y + 1 ) * _size,
+                X2 = (_x + 1 ) * _size,
+                Y2 = (_y + 1) * _size,
+                Stroke = lineStroke,
+                StrokeThickness = 3.0 };
             canvas.Children.Add(Down);
             
             //Linke Linie
-            Line Left = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line Left = new Line() {
+                X1 = (_x) * _size,
+                Y1 = (_y) * _size,
+                X2 = (_x) * _size,
+                Y2 = (_y + 1) * _size,
+                Stroke = lineStroke,
+                StrokeThickness = 3.0 };
             canvas.Children.Add(Left);
 
             //Rechte Linie
-            Line Right = new Line() { X1 = (_x + 1) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y + 1) * _size, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line Right = new Line() {
+                X1 = (_x + 1) * _size,
+                Y1 = (_y) * _size,
+                X2 = (_x + 1) * _size,
+                Y2 = (_y + 1) * _size,
+                Stroke = lineStroke,
+                StrokeThickness = 3.0 };
             canvas.Children.Add(Right);
         }
         public void paintFill(Canvas canvas)
@@ -123,14 +147,32 @@ namespace OOPGames
 
             if (_player == 1)
             {
-                Line l1 = new Line() { X1 = (_x) * _size, Y1 = (_y) * _size, X2 = (_x + 1) * _size, Y2 = (_y + 1) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
-                Line l2 = new Line() { X1 = (_x) * _size, Y1 = (_y + 1) * _size, X2 = (_x + 1) * _size, Y2 = (_y) * _size, Stroke = XStroke, StrokeThickness = 3.0 };
+                Line l1 = new Line() {
+                    X1 = ((_x) * _size),
+                    Y1 = ((_y) * _size),
+                    X2 = ((_x + 1) * _size),
+                    Y2 = ((_y + 1) * _size),
+                    Stroke = XStroke,
+                    StrokeThickness = 3.0 };
+                Line l2 = new Line() {
+                    X1 = ((_x) * _size)+4,
+                    Y1 = ((_y + 1) * _size)+4,
+                    X2 = ((_x + 1) * _size)-4,
+                    Y2 = ((_y) * _size)-4,
+                    Stroke = XStroke,
+                    StrokeThickness = 3.0 };
                 canvas.Children.Add(l1);
                 canvas.Children.Add(l2);
             }
             else if (_player == 2)
             {
-                Ellipse OE = new Ellipse() { Margin = new Thickness((_x) * _size, (_y) * _size, 0, 0), Width = _size, Height = _size, Stroke = OStroke, StrokeThickness = 3.0 };
+                Ellipse OE = new Ellipse() {
+                    Margin = new Thickness((_x) * _size,
+                    (_y) * _size, 0, 0),
+                    Width = _size-4,
+                    Height = _size-4,
+                    Stroke = OStroke,
+                    StrokeThickness = 3.0 };
                 canvas.Children.Add(OE);
             }
         }

@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using static OOPGames.TicTacToePaint_G;
 using static OOPGames.TicTacToeField_G;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 namespace OOPGames
 {
@@ -321,9 +322,14 @@ namespace OOPGames
         public override int CheckIfPLayerWon() //wird ein default wert benötigt?
         {
             int whohasthree = threeinarow();
+
             if (whohasthree > 0) 
             {
-                _Field.increaseField();
+                if (Score1<=10 && Score2<=10)
+                {
+                    _Field.increaseField();
+                }
+                
                 if (whohasthree == 1)
                 {
                     Score1++;
@@ -336,13 +342,18 @@ namespace OOPGames
 
             if (MovesPossible==false)
               {
-                  if(Score1 > Score2)
+                if (Score1 == 0 && Score2 == 0)
+                {
+                    _Field.increaseField();
+                }
+
+                if (Score1 > Score2)
                   {
-                      return Score1;
+                      return 1;
                   }
                   else
                   {
-                      return Score2;
+                      return 2;
                   }
               }
             return -1;

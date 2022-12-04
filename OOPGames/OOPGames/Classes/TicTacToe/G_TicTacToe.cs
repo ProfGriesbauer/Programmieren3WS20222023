@@ -515,7 +515,7 @@ namespace OOPGames
 
             foreach(Casket cas in _Field.Field)
             {
-                if(cas.x == move.Row && cas.y == move.Column)
+                if(cas.x == move.Column && cas.y == move.Row)
                 {
                     cas.player = move.PlayerNumber;
                 }
@@ -690,7 +690,7 @@ namespace OOPGames
                         Console.WriteLine(sel.YClickPos + ";" + sel.YClickPos);
                         Console.WriteLine(cas.x + ";" + cas.y + ";" + cas.size);
 
-                        return new TicTacToeMove(cas.x, cas.y, _PlayerNumber);
+                        return new TicTacToeMove(cas.y, cas.x, _PlayerNumber);
                     }
 
                 }
@@ -705,9 +705,62 @@ namespace OOPGames
         }
     }
 
+    public class ComputerTicTacToePlayer_G : BaseComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public override string Name { get { return "GruppeGComputerTicTacToePlayer"; } }
+
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+        public override IGamePlayer Clone()
+        {
+            ComputerTicTacToePlayer_G ttthp = new ComputerTicTacToePlayer_G();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
 
 
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            if (field is ITicTacToeField_G)
+            {
+                return GetMove_G((ITicTacToeField_G)field);
+            }
+            Console.WriteLine("Kein passendes Gruppe G Feld");
+            return null;
+        }
+
+        public ITicTacToeMove GetMove_G(ITicTacToeField_G field)
+        {
+            Random rand = new Random();
+            int f = rand.Next(0,field.Field.Count-1);
+
+            while (true)
+            {
+                if (field.Field[f].player == 0)
+                {
+                    return new TicTacToeMove(field.Field[f].y, field.Field[f].x, _PlayerNumber);
+                }
+                else if (f < field.Field.Count - 1)
+                {
+                    f++;
+                }
+                else
+                {
+                    f = 0;
+                }
+            }
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
 }
+
+
 
 
 

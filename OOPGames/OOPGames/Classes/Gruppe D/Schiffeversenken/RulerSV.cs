@@ -222,17 +222,18 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 
                 if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber < 3)
                 {
-                    if (_Shipfield.HorVer == 1)
+                    
+                    if (_Shipfield.HorVer == 1 && (move.Column + _Shipfield.Ships(2, move.PlayerNumber) <=8))
                     {
                         for (int i = 0; i < _Shipfield.Ships(2, move.PlayerNumber); i++)
                         {
-                            _Shipfield[move.Row + i, move.Column, move.PlayerNumber] = SetShip(move.Row, move.Column, move.PlayerNumber);
+                            _Shipfield[move.Row, move.Column + i, move.PlayerNumber] = SetShip(move.Row, move.Column + i, move.PlayerNumber);
                         }
-                    } else if( _Shipfield.HorVer ==2)
+                    } else if( _Shipfield.HorVer ==2 && (move.Row + _Shipfield.Ships(2, move.PlayerNumber) <= 8))
                     {
                         for (int i = 0; i < _Shipfield.Ships(2, move.PlayerNumber); i++)
                         {
-                            _Shipfield[move.Row, move.Column + i, move.PlayerNumber] = SetShip(move.Row, move.Column, move.PlayerNumber);
+                            _Shipfield[move.Row + i, move.Column, move.PlayerNumber] = SetShip(move.Row + i, move.Column, move.PlayerNumber);
                         }
                     }
 

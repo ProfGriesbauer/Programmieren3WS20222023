@@ -343,14 +343,14 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                         {
                             PaintShip(canvas, currentField.Ships(2, _CurrentPlayer), 20, 505, 2, 1); //POS noch anpassen
                         }
-                        else if (currentField[i, j, 4] == 2)
+                        else if (currentField[i, j, 4] == 2) // 2-> getroffen->rot
                         {
                             Line X1 = new Line() { X1 = 450 + (j * 50), Y1 = 50 + (i * 50), X2 = 500 + (j * 50), Y2 = 100 + (i * 50), Stroke = red, StrokeThickness = 3.0 };
                             canvas.Children.Add(X1);
                             Line X2 = new Line() { X1 = 500 + (j * 50), Y1 = 50 + (i * 50), X2 = 450 + (j * 50), Y2 = 100 + (i * 50), Stroke = red, StrokeThickness = 3.0 };
                             canvas.Children.Add(X2);
                         }
-                        if (currentField[i, j, 4] == 1)
+                        if (currentField[i, j, 4] == 1) //1->daneben->blau
                         {
                             Line X1 = new Line() { X1 = 450 + (j * 50), Y1 = 50 + (i * 50), X2 = 500 + (j * 50), Y2 = 100 + (i * 50), Stroke = blue, StrokeThickness = 3.0 };
                             canvas.Children.Add(X1);

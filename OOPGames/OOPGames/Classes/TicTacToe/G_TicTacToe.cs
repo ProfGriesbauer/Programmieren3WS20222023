@@ -350,7 +350,7 @@ namespace OOPGames
                 }
             }
 
-            if(Score1 >= 3 || Score2 >= 3)
+            if(Score1 >= 3 || Score2 >= 3 || MovesPossible==false)
             {
                 if (Score1 == 3)
                 {
@@ -374,6 +374,7 @@ namespace OOPGames
             foreach(Casket C in _Field.Field)
             {
                 C.player=0;
+                C.flag = false;
                 C.size = _Field.Fieldsize / 3;
             }
 

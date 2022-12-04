@@ -15,6 +15,54 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     {
         public string Name { get { return "SiffeverseankenPainterD"; } }
 
+        void FindPlacedShips(Canvas canvas, int Player, IFieldSV currentField) //Phase 1 und 2
+        {
+            int _Ship = 0;
+            int _Rotation = 0;
+            for (int r = 0; r < 8; r++)
+            {
+                for (int c = 0; c < 8; c++)
+                {
+                    if (currentField[r, c, Player] == 1)
+                    {
+                        if (currentField[r-1, c, Player] == 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
+                        {
+                           break; //beendet function
+                        }
+                        if (currentField[r , c-1, Player] == 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
+                        {
+                            break;
+                        }
+                        if (currentField[r+1, c, Player] == 1) //liegt das Schiff horizental?
+                        { 
+                            for (int i=0; i<5; i++)
+                            {
+                                if (currentField[r + i, c, Player] == 1)
+                                {
+                                    _Ship++;
+                                    _Rotation = 2;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (currentField[r, c + i, Player] == 1)
+                                {
+                                    _Ship++;
+                                    _Rotation = 1;
+                                }
+                            }
+                        }
+                        int x =20 + (50 * r);
+                        int y = (50 * c);
+                        PaintShip(canvas, _Ship, x, y, _Rotation, 0);
+                    }
+                }
+            }
+
+        }
         public int LastHit(int i, int j, int Ship, IFieldSV currentField, int w, int p)
         {
             int _Ship = Ship;
@@ -54,16 +102,16 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
-        public void PaintShip(Canvas canvas, int Ship, int x, int y, int HorVer, int des)
+        public void PaintShip(Canvas canvas, int Ship, int x, int y, int _HorVer, int destroid)
         {
             Color lineColor = Color.FromRgb(0, 0, 0);
-            if (des == 1)
+            if (destroid == 1)
             {
                 lineColor = Color.FromRgb(255, 0, 0);
             }
             Brush lineStroke = new SolidColorBrush(lineColor);
             int _x = x;
-            int _HorVer = 0;
+
             if (_HorVer == 1)
             {
                 for (int i = 0; i < Ship; i += 1)
@@ -100,14 +148,15 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 canvas.Children.Add(l6);
                 canvas.Children.Add(l7);
                 canvas.Children.Add(l8);
-            } else if (_HorVer ==2)
+            } else if (_HorVer == 2)
             {
+                int _y = y;
                 for (int i = 0; i < Ship; i += 1)
                 {
-                    Line l1 = new Line() { X1 = _x, Y1 = y, X2 = _x + 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
-                    Line l2 = new Line() { X1 = _x, Y1 = y, X2 = _x, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
-                    Line l3 = new Line() { X1 = _x, Y1 = y + 50, X2 = _x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
-                    Line l4 = new Line() { X1 = _x + 50, Y1 = y, X2 = _x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l1 = new Line() { X1 = x, Y1 = _y, X2 = x, Y2 = _y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l2 = new Line() { X1 = x, Y1 = _y, X2 = x + 50, Y2 = _y , Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l3 = new Line() { X1 = x + 50, Y1 = _y, X2 = x + 50, Y2 = _y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                    Line l4 = new Line() { X1 = x , Y1 = _y + 50, X2 = x + 50, Y2 = _y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
                     if (i == 0)
                     {
                         canvas.Children.Add(l4);
@@ -124,14 +173,14 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                         canvas.Children.Add(l4);
                     }
 
-                    _x = _x + 50;
+                    _y = _y + 50;
                 }
 
-                Line l5 = new Line() { X1 = x, Y1 = y + 25, X2 = x + 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
-                Line l6 = new Line() { X1 = x, Y1 = y + 25, X2 = x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l5 = new Line() { X1 = x + 25, Y1 = y , X2 = x , Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l6 = new Line() { X1 = x + 25, Y1 = y, X2 = x + 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
 
-                Line l7 = new Line() { X1 = x + (Ship * 50), Y1 = y + 25, X2 = x + (Ship * 50) - 50, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
-                Line l8 = new Line() { X1 = x + (Ship * 50), Y1 = y + 25, X2 = x + (Ship * 50) - 50, Y2 = y + 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l7 = new Line() { X1 = x + 25, Y1 = y + (Ship * 50), X2 = x , Y2 = y + (Ship * 50) - 50, Stroke = lineStroke, StrokeThickness = 3.0 };
+                Line l8 = new Line() { X1 = x + 25  , Y1 = y + (Ship * 50), X2 = x + 50 , Y2 = y + (Ship * 50) - 50, Stroke = lineStroke, StrokeThickness = 3.0 };
                 canvas.Children.Add(l5);
                 canvas.Children.Add(l6);
                 canvas.Children.Add(l7);
@@ -144,7 +193,11 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             int GamePhase = currentField.Phase;
             int _Ship = currentField.Ships(2, 2);
-            int _CurrenPlayer = 0;
+
+            currentField.HorVer = 2; //tests
+
+            int _Rotation = currentField.HorVer;
+            int _CurrentPlayer = 0;
 
             if (GamePhase == 1 || GamePhase == 2)
             {
@@ -152,9 +205,9 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 if(GamePhase == 2)
                 {
                     _player = "P2";
-                    _CurrenPlayer = 2;
+                    _CurrentPlayer = 2;
                 }
-                else { _player = "P1"; _CurrenPlayer = 1; }
+                else { _player = "P1"; _CurrentPlayer = 1; }
 
                 canvas.Children.Clear();
                 Color bgColor = Color.FromRgb(255, 255, 255);
@@ -189,7 +242,15 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 Canvas.SetTop(text, 455);
                 canvas.Children.Add(text);
 
-                PaintShip(canvas, currentField.Ships(2, _CurrenPlayer) , 20, 505, 2, 0);
+                currentField[1, 1, 1] = 1; //testet die FindShip function
+                currentField[1, 2, 1] = 1;
+
+                currentField[5, 5, 1] = 1;
+                currentField[6, 5, 1] = 1;
+
+                PaintShip(canvas, currentField.Ships(2, _CurrentPlayer), 20, 505, _Rotation, 0);
+
+                FindPlacedShips(canvas, _CurrentPlayer, currentField);
                 
             }
 
@@ -256,7 +317,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     for (int j = 0; j < 8; j++)
                     {
                         if (currentField[i, j, 3]==2 && LastHit(i, j, currentField[i, j, 2], currentField, 3, 2) == 1) {
-                            PaintShip(canvas, currentField.Ships(2, _CurrenPlayer), 20, 505, 2, 1); //POS noch anpassen
+                            PaintShip(canvas, currentField.Ships(2, _CurrentPlayer), 20, 505, 2, 1); //POS noch anpassen
                         }
                         else if (currentField[i, j, 3] == 2) // 2-> getroffen->rot
                         {
@@ -280,7 +341,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         if (currentField[i, j, 4] == 2 && LastHit(i, j, currentField[i, j, 2], currentField, 4, 1) == 1)
                         {
-                            PaintShip(canvas, currentField.Ships(2, _CurrenPlayer), 20, 505, 2, 1); //POS noch anpassen
+                            PaintShip(canvas, currentField.Ships(2, _CurrentPlayer), 20, 505, 2, 1); //POS noch anpassen
                         }
                         else if (currentField[i, j, 4] == 2)
                         {

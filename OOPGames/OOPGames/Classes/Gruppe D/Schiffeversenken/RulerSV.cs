@@ -147,13 +147,13 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             if (Playernumber == 2)
             {
-                if (_Shipfield[r, c, 1] == 1)
+                if (_Shipfield[r, c, 1] > 1)
                 {
                     return 2;
                 }
             }
             if (Playernumber == 1) { 
-                    if (_Shipfield[r, c, 2] == 1)
+                    if (_Shipfield[r, c, 2] > 1)
                     {
                     return 2; 
                     }    
@@ -261,16 +261,16 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         {
             if (_Shipfield[r, c, Playernumber] == 0)
             {
-                ShipCounter = ShipCounter + _Shipfield.Ships(1, Playernumber);
+                ShipCounter = ShipCounter + _Shipfield.Ships(2, Playernumber);
                 if (ShipCounter == 60)
                 {
                     ChangePhase();
                 }
-                return 1;
+                return _Shipfield.Ships(1, Playernumber);
             }
             
             
-            return 1;
+            return _Shipfield.Ships(1, Playernumber);
         }
     }
 }

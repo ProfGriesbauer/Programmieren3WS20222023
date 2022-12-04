@@ -13,7 +13,7 @@ namespace OOPGames.Classes.Gruppe_K
     class K_RulesGameObject : IGameRules, IGameRules2
     {
 
-        K_GameObjectManager _gameManager;
+        K_GameObjectManager _gameManager=new K_GameObjectManager();
 
         public string Name { get { return "K Rules tbd"; } }
 

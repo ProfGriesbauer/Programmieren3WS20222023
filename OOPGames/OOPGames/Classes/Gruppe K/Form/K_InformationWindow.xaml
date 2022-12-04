@@ -1,0 +1,17 @@
+﻿<Window x:Class="OOPGames.Classes.Gruppe_K.Form.K_InformationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OOPGames.Classes.Gruppe_K.Form"
+        mc:Ignorable="d"
+        Title="K_SelectionWindow" Height="150" Width="350" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" RenderTransformOrigin="-0.643,-0.174" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+    </Grid>
+</Window>

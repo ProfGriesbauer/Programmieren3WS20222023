@@ -141,9 +141,19 @@ namespace OOPGames
 
     }
 
-    public class TicTacToePaint_G : BaseTicTacToePaint
+    
+
+    public class TicTacToePaint_G : BaseTicTacToePaint, IPaintGame2
     {
         public override string Name { get { return "GruppeGTicTacToePaint"; } }
+
+        public void TickPaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is ITicTacToeField_G)
+            {
+                PaintTicTacToeField_G(canvas, (ITicTacToeField_G)currentField);
+            }
+        }
 
         
 
@@ -171,6 +181,7 @@ namespace OOPGames
 
 
         }
+
     }
 
     /*
@@ -609,7 +620,7 @@ namespace OOPGames
 
                 foreach(Casket cas in field_G.Field)
                 {
-                    if(cas.isMySpace(sel.XClickPos, sel.YClickPos) != null)
+                    if(cas.isMySpace(sel.XClickPos, sel.YClickPos) != null && cas.player==0)
                     {
                         Console.WriteLine(sel.YClickPos + ";" + sel.YClickPos);
                         Console.WriteLine(cas.x + ";" + cas.y + ";" + cas.size);

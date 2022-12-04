@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using static OOPGames.TicTacToePaint_G;
 using static OOPGames.TicTacToeField_G;
 using System.Diagnostics;
+using static OOPGames.MainWindow;
 
 namespace OOPGames
 {
@@ -168,8 +169,8 @@ namespace OOPGames
         }
         public static int Score2
         {
-            get { return _Score1; }
-            set { _Score1 = value; }
+            get { return _Score2; }
+            set { _Score2 = value; }
         }
 
         // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
@@ -213,7 +214,7 @@ namespace OOPGames
 
 
             PaintScore(canvas);
-
+            
         }
 
         void PaintScore(Canvas canvas)
@@ -324,6 +325,7 @@ namespace OOPGames
             if (whohasthree > 0) 
             {
                 _Field.increaseField();
+
                 if (whohasthree == 1)
                 {
                     Score1++;
@@ -338,11 +340,11 @@ namespace OOPGames
               {
                   if(Score1 > Score2)
                   {
-                      return Score1;
+                      return 1;
                   }
                   else
                   {
-                      return Score2;
+                      return 2;
                   }
               }
             return -1;

@@ -363,9 +363,15 @@ namespace OOPGames
 
         public override void ClearField()
         {
+            while (_Field.Field.Count>9)
+            {
+                _Field.Field.RemoveAt(9);
+            }
+
             foreach(Casket C in _Field.Field)
             {
                 C.player=0;
+                C.size = _Field.Fieldsize / 3;
             }
 
             Score1 = 0;

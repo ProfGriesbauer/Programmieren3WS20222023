@@ -7,8 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using static OOPGames.TicTacToePaint_G;
+using static OOPGames.TicTacToeField_G;
+using System.Diagnostics;
 
 namespace OOPGames
 {
@@ -135,7 +139,7 @@ namespace OOPGames
                     return this;
                 }
             }
-            Console.WriteLine("Click ist nicht im feld Fehlercode: x58746");
+            Console.WriteLine("Click ist nicht im Feld Fehlercode: x58746");
             return null;
         }
 
@@ -145,8 +149,19 @@ namespace OOPGames
     {
         public override string Name { get { return "GruppeGTicTacToePaint"; } }
 
-        
+        static int _Score1;
+        static int _Score2;
 
+        public static int Score1
+        {
+            get { return _Score1; }
+            set { _Score1 = value; }
+        }
+        public static int Score2
+        {
+            get { return _Score1; }
+            set { _Score1 = value; }
+        }
 
         // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
@@ -169,8 +184,44 @@ namespace OOPGames
                 C.paintFill(canvas);
             }
 
+            ProgressBar Progress = new ProgressBar();
+            Progress.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 255));
+            //Progress.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            Canvas.SetTop(Progress, 0);
+            Canvas.SetLeft(Progress, 420);
+            Progress.Width = 20;
+            Progress.Height = 400;
+            Progress.Minimum = 0;
+            Progress.Maximum = field_G.Field.Count;
+            int value = 0;
+            foreach(Casket c in field_G.Field)
+            {
+                if (c.player != 0) { value++; }
+            }
+            Progress.Value = value;
+            Progress.Orientation = Orientation.Vertical;
+            canvas.Children.Add(Progress);
+
+
+            PaintScore(canvas);
 
         }
+
+        void PaintScore(Canvas canvas)
+        {
+            TextBox TBscore1 = new TextBox();
+            TBscore1.Text = "Player 1: " + Score1.ToString();
+            Canvas.SetLeft(TBscore1, 10);
+            Canvas.SetTop(TBscore1, 420);
+            canvas.Children.Add(TBscore1);
+
+            TextBox TBscore2 = new TextBox();
+            TBscore2.Text = "Player 2: " + Score2.ToString();
+            Canvas.SetLeft(TBscore2, 10);
+            Canvas.SetTop(TBscore2, 450);
+            canvas.Children.Add(TBscore2);
+        }
+
     }
 
     /*
@@ -233,6 +284,10 @@ namespace OOPGames
     {
         TicTacToeField_G _Field = new TicTacToeField_G();
 
+        public TicTacToeField_G Field()
+        {
+            return Field();
+        }
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
@@ -256,33 +311,29 @@ namespace OOPGames
 
         public override int CheckIfPLayerWon() //wird ein default wert benötigt?
         {
-            int countplayer1 = 0;
-            int countplayer2 = 0;
             int whohasthree = threeinarow();
-
-
-            if (whohasthree > 0)
+            if (whohasthree > 0) 
             {
                 _Field.increaseField();
                 if (whohasthree == 1)
                 {
-                    countplayer1++;
+                    Score1++;
                 }
                 else
                 {
-                    countplayer2++;
+                    Score2++;
                 }
             }
 
             if (MovesPossible==false)
               {
-                  if(countplayer1>countplayer2)
+                  if(Score1 > Score2)
                   {
-                      return countplayer1;
+                      return Score1;
                   }
                   else
                   {
-                      return countplayer2;
+                      return Score2;
                   }
               }
             return -1;
@@ -294,6 +345,9 @@ namespace OOPGames
             {
                 C.player=0;
             }
+
+            Score1 = 0;
+            Score2 = 0;
         }
 
 

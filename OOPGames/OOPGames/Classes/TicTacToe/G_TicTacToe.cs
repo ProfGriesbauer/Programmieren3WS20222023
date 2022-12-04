@@ -395,7 +395,7 @@ namespace OOPGames
             if (whohasthree > 0) 
             {
 
-                if (Score1<=10 && Score2<=10)
+                if (Score1<3 && Score2<3)
                 {
                     _Field.increaseField();
                 }
@@ -410,22 +410,25 @@ namespace OOPGames
                 }
             }
 
-            if (MovesPossible==false)
-              {
+            if (MovesPossible == false)
+            {
                 if (Score1 == 0 && Score2 == 0)
                 {
                     _Field.increaseField();
                 }
+            }
 
-                if (Score1 > Score2)
-                  {
-                      return 1;
-                  }
-                  else
-                  {
-                      return 2;
-                  }
-              }
+            if(Score1 >= 3 || Score2 >= 3 || MovesPossible==false)
+            {
+                if (Score1 == 3)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+            }
             return -1;
         }
 
@@ -439,6 +442,7 @@ namespace OOPGames
             foreach(Casket C in _Field.Field)
             {
                 C.player=0;
+                C.flag = false;
                 C.size = _Field.Fieldsize / 3;
             }
 

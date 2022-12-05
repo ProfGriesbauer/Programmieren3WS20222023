@@ -46,7 +46,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
         }
     }
     */
-    
+
     public class Segment
     {
         int Mine = 0;
@@ -81,30 +81,47 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
     }
 
     public class C_MPainter : C_IPaintMinesweeper
-
-        public void C_IPaintMinesweeper(Canvas canvas, C_MinesweeperField currentField)
     {
-        canvas.Children.Clear();
-        Color bgColor = Color.FromRgb(255, 255, 255);
-        canvas.Background = new SolidColorBrush(bgColor);
-        Color lineColor = Color.FromRgb(0, 0, 0);
-        Brush lineStroke = new SolidColorBrush(lineColor);
+        public string Name => throw new NotImplementedException();
 
-        int h = 30;
-
-        for (int i = 0; i < 16; i++)
+        public void C_IPaintMinesweeper(Canvas canvas, C_IMinesweeperField currentField)
         {
-            Line li = new Line() { X1 = 20, Y1 = 20 + i * h, X2 = 500, Y2 = 20 + i * h, Stroke = lineStroke, StrokeThickness = 1.0 };
-            Canvas.Children.Add(l i);
-            Line lb = new Line() { X1 = 20 + i * h, Y1 = 20, X2 = 20 + i * h, Y2 = 500, Stroke = lineStroke, StrokeThickness = 1.0 };
-            Canvas.Children.Add(l 16 + i);
+            canvas.Children.Clear();
+            Color bgColor = Color.FromRgb(255, 255, 255);
+            canvas.Background = new SolidColorBrush(bgColor);
+            Color lineColor = Color.FromRgb(0, 0, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
 
+            int h = 30;
+
+            for (int i = 0; i < 16; i++)
+            {
+                Line li = new Line() { X1 = 20, Y1 = 20 + i * h, X2 = 500, Y2 = 20 + i * h, Stroke = lineStroke, StrokeThickness = 1.0 };
+                canvas.Children.Add(li);
+                Line lb = new Line() { X1 = 20 + i * h, Y1 = 20, X2 = 20 + i * h, Y2 = 500, Stroke = lineStroke, StrokeThickness = 1.0 };
+                canvas.Children.Add(lb);
+
+            }
+        }
+
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PaintMinesweeperField(Canvas canvas, C_IMinesweeperField currentField)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TickPaintGameField(Canvas canvas, C_IMinesweeperField currentField)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TickPaintGameField(Canvas canvas, IGameField currentField)
+        {
+            throw new NotImplementedException();
         }
     }
-
 }
-<<<<<<< HEAD
-    
-=======
- 
->>>>>>> 3c7d154ae5c7da0c47acdf7d4d7d3a183ac57a4e

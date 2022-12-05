@@ -1,8 +1,8 @@
 using OOPGames;
 
-public class I_TicTacToeRules : IGameRules
+/*public class I_TicTacToeRules : IGameRules
 {
-    /*TicTacToeField _Field = new TicTacToeField();
+    TicTacToeField _Field = new TicTacToeField();
 
    public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
@@ -71,5 +71,5 @@ public class I_TicTacToeRules : IGameRules
             _Field[move.Row, move.Column] = move.PlayerNumber;
         }
     }
-   */
-}
+  
+} */

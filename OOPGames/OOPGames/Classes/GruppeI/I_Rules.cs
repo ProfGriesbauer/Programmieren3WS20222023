@@ -1,10 +1,10 @@
 using OOPGames;
 
-public class TicTacToeRules : BaseTicTacToeRules
+/*public class I_TicTacToeRules : IGameRules
 {
     TicTacToeField _Field = new TicTacToeField();
 
-    public override ITicTacToeField TicTacToeField { get { return _Field; } }
+   public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
     public override bool MovesPossible
     {
@@ -25,7 +25,7 @@ public class TicTacToeRules : BaseTicTacToeRules
         }
     }
 
-    public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+    public override string Name { get { return "I_Rules"; } }
 
     public override int CheckIfPLayerWon()
     {
@@ -71,4 +71,11 @@ public class TicTacToeRules : BaseTicTacToeRules
             _Field[move.Row, move.Column] = move.PlayerNumber;
         }
     }
+<<<<<<< HEAD
+  
+} */
+=======
+   
 }
+*/
+>>>>>>> 84f6fa507cb8ecabfa63524ee5709b0335b39ba9

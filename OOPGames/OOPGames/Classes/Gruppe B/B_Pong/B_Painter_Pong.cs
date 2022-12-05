@@ -8,20 +8,24 @@ using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using OOPGames.Classes.Gruppe_B.B_Pong;
 
 namespace OOPGames
 {
     public class B_Pong_Painter : IPaintPongGameB, IPaintTicTacToe
     {
-        int paddle1X = 100;
-        int paddle2X = 100;
-        double ballX = 200;
-        double ballY = 300;
         int ballR = 15;
         int paddleLength = 75;
         public string Name { get { return "GruppeBPongPainter"; } }
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {
+
+            B_GameField_Pong gameField = (B_GameField_Pong)currentField;
+            int paddle1X = gameField.paddle1.paddleX;
+            int paddle2X = gameField.paddle2.paddleX; ;
+            double ballX = gameField.ball.ballX;
+            double ballY = gameField.ball.ballY;
+
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(0, 0, 0);
             canvas.Background = new SolidColorBrush(bgColor);

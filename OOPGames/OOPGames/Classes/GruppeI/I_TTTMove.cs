@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace OOPGames.Classes.GruppeI
 {
-    public class TicTacToeMove_I : ITicTacToeMove
+
+    public interface ITTTMove: ITicTacToeMove
+    {
+        int Feld { get; }
+    }
+
+    public class TicTacToeMove_I : ITTTMove
     {
         int _Feld = 0;
         int _Row = 0;

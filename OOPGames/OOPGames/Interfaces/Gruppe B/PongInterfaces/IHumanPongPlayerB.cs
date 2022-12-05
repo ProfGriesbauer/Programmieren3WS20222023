@@ -8,6 +8,6 @@ namespace OOPGames
 {
     public interface IHumanPongPlayerB : IHumanGamePlayer
     {
-        IPongMoveB GetMove(IMoveSelection selection, IPongMoveB field);
+        IPongMoveB GetMove(IMoveSelection selection, IPongFieldB field);
     }
 }

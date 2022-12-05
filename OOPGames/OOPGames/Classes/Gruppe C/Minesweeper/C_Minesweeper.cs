@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace OOPGames.Classes.Gruppe_C.Minesweeper
 {
+    /*
     public class C_MinesweeperField : C_IMinesweeperField
     {
         Segment[,] _Field = new Segment[16, 16] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-        Segment _PointsPlayer1;
-        Segment _PointsPlayer2;
+ 
 
-        public int this[Segment r, Segment c]
+        public Segment this[int r, int c]
         {
             get
             {
@@ -22,7 +22,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
                 }
                 else
                 {
-                    return -1;
+                    return 0;
                 }
             }
             set
@@ -34,16 +34,16 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
             }
         }
 
-        public int PointsPlayer1 { get { return _PointsPlayer1; } set { _PointsPlayer1 = value; } }
-        public int PointsPlayer2 { get { return _PointsPlayer2; } set { _PointsPlayer2 = value; } }
+        
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is C_IPaintTicTacToe;
+            return painter is C_IPaintMinesweeper;
 
         }
     }
-
+    */
+    
     public class Segment
     {
         int Mine = 0;
@@ -58,6 +58,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
             else { return 0; }
 
         }
+        /*
         public int CountMines(int x, int y)
         {
             int count = 0;
@@ -65,7 +66,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
             {
                 for (int c = 0; c < 3; c++)
                 {
-                    if (currentField[x - 1 + r, y - 1 + c].Segment.CheckMine() == 1)
+                    if (_Field[x - 1 + r, y - 1 + c].Segment.CheckMine() == 1)
                     {
                         count++;
                     }
@@ -73,6 +74,8 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
             }
             return count;
         }
+        */
     }
 
 }
+    

@@ -255,7 +255,6 @@ namespace OOPGames
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
-            e.
             if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";

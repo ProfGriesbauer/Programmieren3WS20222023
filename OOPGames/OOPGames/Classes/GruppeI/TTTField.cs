@@ -53,7 +53,7 @@ namespace OOPGames.Classes.GruppeI
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is IPaintTicTacToe;
+            return painter is PainterI;
         }
     }
 
@@ -100,7 +100,7 @@ namespace OOPGames.Classes.GruppeI
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is IPaintTicTacToe;
+            return painter is PainterI;
         }
     }
 }

@@ -887,9 +887,9 @@ namespace OOPGames
             }
             foreach (Casket c in Clone)
             {
-                if (c.player == opponent)
+                if (c.player == 0)
                 {
-                    c.player = 2;
+                    c.player = opponent;
                     if (Rules.threeinarow(Clone) != 0)
                     {
                         return new TicTacToeMove(c.y, c.x, _PlayerNumber);
@@ -898,6 +898,23 @@ namespace OOPGames
                 }
             }
 
+            foreach(Casket c1 in field.Field)
+            {
+                if(c1.player==_PlayerNumber && c1.flag==false)
+                {
+                    foreach(Casket c2 in field.Field) // Suchen nach einem freien Feld neben c1
+                    {
+                        if(c2.player==0) // Feld muss unbesetzt sein
+                        {
+                            if((c2.x >= c1.x-1) && (c2.x <= c1.x+1) && (c2.y >= c1.y-1) && (c2.y <= c1.y+1)) // Feld darf max 1 Kästchen entfernt sein (auch diagonal)
+                            {
+                                return new TicTacToeMove(c2.y, c2.x, _PlayerNumber);
+                            }
+                        }
+                        
+                    }
+                }
+            }
 
 
 

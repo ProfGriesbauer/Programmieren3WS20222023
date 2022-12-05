@@ -1,10 +1,12 @@
-﻿using System;
+﻿using OOPGames;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
 
 namespace OOPGames
 {
@@ -71,10 +73,38 @@ namespace OOPGames
         Color O_Color { get; set; }
     }
 
-    //Gruppe C Counter Interface
-    public interface C_ICountInterface
+    //Gruppe C TicTacToe Rules
+    public interface C_ITicTacToeRules : IGameRules
     {
+        C_ITicTacToeField FieldandPoints { get; }
+
+        void DoTicTacToeMove(ITicTacToeMove move);
+    }
+
+    //Gruppe C TicTacToe Field
+    public interface C_ITicTacToeField : IGameField
+    {
+        int this[int r, int c] { get; set; }
         int PointsPlayer1 { get; set; }
         int PointsPlayer2 { get; set; }
+    }
+
+    //Gruppe C TicTacToe Painter
+    public interface C_IPaintTicTacToe : IPaintGame2
+    {
+        
+        void PaintTicTacToeField(Canvas canvas, C_ITicTacToeField currentField);
+        
+        void TickPaintGameField(Canvas canvas, C_ITicTacToeField currentField);
+    }
+    //Gruppe C TicTacToe Humanplayer
+    public interface C_IHumanTicTacToePlayer : IHumanGamePlayer
+    {
+        ITicTacToeMove GetMove(IMoveSelection selection, C_ITicTacToeField field);
+    }
+    //Gruppe C TicTacToe ComputerPlayer
+    public interface C_IComputerTicTacToePlayer : IComputerGamePlayer
+    {
+        ITicTacToeMove GetMove(C_ITicTacToeField field);
     }
 }

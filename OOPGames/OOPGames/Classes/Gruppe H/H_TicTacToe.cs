@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPGames.Classes.Gruppe_C;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -38,11 +39,13 @@ namespace OOPGames
         {
             //Zufällig auswählen von einem von vier Farbschemen. Jesdes Mitglied der Gruppe legt ein eigenes Farbschema fest
             Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
-            Color bgColor = Color.FromRgb(0, 0, 0);                                         //Variable Hintergrundfarbe
+            Color bgColor = Color.FromRgb(255, 255, 255);                                   //Variable Hintergrundfarbe
             Color lineColor = Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
-            Color XColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe X Spieler
-            Color OColor = Color.FromRgb(0, 0, 0);                                          //Variable Farbe O Spieler
-            //switch (zufall.Next(1, 5))                                                      //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            Color XColor = Color.FromRgb(0, 255, 0);                                        //Variable Farbe X Spieler
+            Color OColor = Color.FromRgb(0, 0, 255);                                        //Variable Farbe O Spieler
+            //switch (zufall.Next(1, 5))                                                    //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+            //PROBLEM: Feld wird bei jedem Klick neu gezeichnet und dadurch auch jedes mal ein neues Farbschema ausgewählt!!!!
+            //evtl. oben unter public class ein Bool erstellen, das nur einmal nutzung sicherstellt?
             switch(3)
             {
                 case 1: //Farbschema Annalena                                               //Farbschema Annalena
@@ -283,6 +286,13 @@ namespace OOPGames
 
 
     }
+
+
+
+
+
+
+
     public class H_TicTacToeHumanPlayer: IHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -294,14 +304,14 @@ namespace OOPGames
        
         public ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field) 
         {
-            int d = 150;
-            int X0 = 100;
+            int d = 150;                                                                            //Distanz zwischen den Linien
+            int X0 = 100;                                                                           //x0;y0 Linke obere Ecke des Feldes
             int Y0 = 150;
 
             if (selection is IClickSelection)
             {
-                IClickSelection sel = (IClickSelection)selection;
-                for (int i = 0; i < 3; i++)
+                IClickSelection sel = (IClickSelection)selection;                                   //Abfrage aller Felder, ob der Klick innerhalb der Koordinaten des Jeweiligen Feldes stattfand
+                for (int i = 0; i < 3; i++)                                                         //und ob das jeweilige Feld leer ist. Wenn Ja wird das jeweilige Feld auf die aktuelle Spielernummer gesetzt.
                 {
                     for (int j = 0; j < 3; j++)
                     {
@@ -320,7 +330,7 @@ namespace OOPGames
 
         public IGamePlayer Clone()
         {
-            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            H_TicTacToeHumanPlayer ttthp = new H_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -399,6 +409,7 @@ namespace OOPGames
             }
 
             // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?
+            //--> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
 
 
 

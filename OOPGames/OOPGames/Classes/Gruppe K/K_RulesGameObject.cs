@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_K
 {
     class K_RulesGameObject : IGameRules, IGameRules2
     {
 
-        K_GameObjectManager _gameManager;
-
+        K_GameObjectManager _gameManager=new K_GameObjectManager();
 
         public string Name { get { return "K Rules tbd"; } }
 
@@ -43,7 +43,6 @@ namespace OOPGames.Classes.Gruppe_K
 
             // testData List
             _gameManager = new K_GameObjectManager();
-            _gameManager.Objects = new List<K_GameObject>();
 
             // testField K_GameField object
             K_GameField testField1 = new K_GameField();
@@ -84,6 +83,25 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
+            // Add Test Hole to Field
+            int holeX = 500;
+            int holeY = 220;
+            int holeRX = 60;
+            int holeRY = 30;
+            for(int x = -holeRX; x < holeRX; x++)
+            {
+                for(int y = -holeRY; y < holeRY; y++)
+                {
+                    float x2 = (holeRY/(float)holeRX) *x * x;
+                    float y2 = (holeRX / (float)holeRY) * y * y;
+                    if ((x2 + y2) <= holeRX*holeRY)
+                    {
+                        testField1.setField(x + holeX, y + holeY, 0);
+                    }
+                }
+            }
+
+
             // testField K_GameField object
             K_GameField testField2 = new K_GameField();
 
@@ -116,26 +134,48 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
+
+
             // testPlayer K_Player object
             K_Player testPlayer = new K_Player();
-            testPlayer.Image = new BitmapImage(new Uri(@"Assets\K\Panzer.png", UriKind.Relative));
-            int x1 = 300;
-            testPlayer.Scale = 2;
-            testPlayer.xCenter = (int)(testPlayer.Scale * testPlayer.Image.PixelWidth) / 2;
-            testPlayer.yCenter = (int)(testPlayer.Scale*testPlayer.Image.PixelHeight);
-            testPlayer.Rotation = 0f;
-            testPlayer.xPos = x1;
-            testPlayer.yPos = (int)(f6 * Math.Pow(x1, 6) + f5 * Math.Pow(x1, 5) + f4 * Math.Pow(x1, 4) + f3 * Math.Pow(x1, 3) + f2 * Math.Pow(x1, 2) + f1 * x1 + f0);
-            testPlayer.yPos -= (int)(10 * testPlayer.Scale);
-            
+            K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
+            K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
+
+            // Settings for testPlayer
+            drawSettingTank.Scale = 2;
+            drawSettingTank.xPos = 300;
+            drawSettingTank.yPos = (int)(f6 * Math.Pow(drawSettingTank.xPos, 6) + f5 * Math.Pow(drawSettingTank.xPos, 5) + f4 * Math.Pow(drawSettingTank.xPos, 4) + f3 * Math.Pow(drawSettingTank.xPos, 3) + f2 * Math.Pow(drawSettingTank.xPos, 2) + f1 * drawSettingTank.xPos + f0);
+            drawSettingTank.Rotation = 0;
+            drawSettingTank.DrawIndex = 10;
+            testPlayer.PositionData =drawSettingTank;
+
+            // Add Tank image
+            testPlayer.loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
+
+
+            // Configure and add Barrel image to Tank
+            drawSettingTankR.Scale = drawSettingTank.Scale/2;
+            drawSettingTankR.DrawIndex=drawSettingTank.DrawIndex-1;
+            drawSettingTankR.yPos -= (int)(15*drawSettingTankR.Scale);
+            drawSettingTankR.ID = "gun";
+            testPlayer.loadImage("Assets/K/PanzerR.png",drawSettingTankR, K_DrawObject.Position.LeftCenter);
+
+            // ID to define Object affected by Angle property
+            testPlayer.AngleID = drawSettingTankR.ID;
+
+
+
 
             // testProjectile K_Projectile object
             // TODO Write Test Parameters
             K_Projectile testProjectile = new K_Projectile();
-
+            testProjectile.xPos = 100;
+            testProjectile.yPos = 100;
             // testTarget K_Target object
             // TODO Write Test Parameters
             K_Target testTarget = new K_Target();
+            testTarget.xPos = 200;
+            testTarget.yPos = 300;
 
 
 
@@ -147,9 +187,29 @@ namespace OOPGames.Classes.Gruppe_K
             _gameManager.Objects.Add(testTarget);
         }
 
+
+        // Test for rotation of hole Objekt and internal Image
+        float dirBarrel = -1;
+        float dirTank = 0.2f;
         public void TickGameCall()
         {
+            ((K_GameField)_gameManager.Objects[0]).removeHoles();
 
+            foreach(K_GameObject data in _gameManager.Objects)
+            {
+                if (data is K_Player)
+                {
+                    // Rotate Barrel
+                    //((K_Player)data).AngleID = "gun";
+                    ((K_Player)data).Angle += dirBarrel;
+                    dirBarrel *= ((((K_Player)data).Angle > 0 && dirBarrel > 0) || (((K_Player)data).Angle < -180 && dirBarrel < 0)) ? -1 : 1;
+
+                    // Rotate whole testPlayer1 Object
+                    ((K_Player)data).Rotation +=dirTank;
+                    dirTank *= ((((K_Player)data).Rotation > 20 && dirTank > 0) || (((K_Player)data).Rotation < -20 && dirTank < 0)) ? -1 : 1;
+
+                }
+            }
         }
 
 

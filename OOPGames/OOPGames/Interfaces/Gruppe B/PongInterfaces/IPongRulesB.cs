@@ -12,8 +12,9 @@ namespace OOPGames
 
         void DoPongMove(IPongMoveB move);
     }
-    public interface IPongMoveB
+    public interface IPongMoveB : IPlayMove
     {
-
+        // -1 for a move to the left | 1 for a move to the right
+        int moveDirection { get; }
     }
 }

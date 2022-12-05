@@ -87,9 +87,6 @@ namespace OOPGames.Classes.Gruppe_D
                         {
                             return true;
                         }
-
-
-
                     }
                 }
                 return false;
@@ -101,6 +98,7 @@ namespace OOPGames.Classes.Gruppe_D
 
         public int CheckIfPLayerWon()
         {
+
             for (int i = 0; i < 3; i++)
             {
                 if (_KrassesFeldBOF[i, 0] == 1 && _KrassesFeldBOF[i, 1] == 1 && _KrassesFeldBOF[i, 2] == 1) { return ICountWin(1); }
@@ -176,9 +174,9 @@ namespace OOPGames.Classes.Gruppe_D
                 
                 return 0;
             }
-            else
+            else 
             {
-                if (_KrassesFeldBOF.player1wins == 3) { return 1; }
+                if (_KrassesFeldBOF.player1wins == 2) { return 1; }
                 else { return 2; }
             }
         }

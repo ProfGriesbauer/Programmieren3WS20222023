@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes.GruppeI
+namespace OOPGames
 {
-    internal interface I_ITicTacToeField
+    public interface IComputerPongPlayerB : IComputerGamePlayer
     {
-        //public int this<int r, int c> { get; set;}
+        IPongMoveB GetMove(IPongFieldB field);
     }
 }

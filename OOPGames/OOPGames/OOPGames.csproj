@@ -74,6 +74,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Classes\Gruppe K\Form\K_InformationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Classes\Gruppe K\Form\K_SelectionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +109,12 @@
     <Compile Include="Classes\Gruppe E\E_Painter.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
+    <Compile Include="Classes\Gruppe K\Form\K_InformationWindow.xaml.cs">
+      <DependentUpon>K_InformationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Gruppe K\Form\K_SelectionWindow.xaml.cs">
+      <DependentUpon>K_SelectionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Gruppe K\K_Computerplayer.cs" />
     <Compile Include="Classes\Gruppe K\K_RulesGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
@@ -141,6 +155,7 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
+    <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />
     <Compile Include="Interfaces\IPaintGame.cs" />

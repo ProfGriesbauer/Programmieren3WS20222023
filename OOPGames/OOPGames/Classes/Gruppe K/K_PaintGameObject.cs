@@ -107,10 +107,10 @@ namespace OOPGames.Classes.Gruppe_K
 
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
-            if (currentField is K_GameObjectManager)
+            if (currentField is IK_GameField)
             {
                 PaintGameField(canvas, ((K_GameObjectManager)currentField).Objects);
-            }
+            } 
         }
 
 

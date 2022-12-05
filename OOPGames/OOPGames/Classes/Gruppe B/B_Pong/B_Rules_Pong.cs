@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OOPGames.Classes.Gruppe_B.B_Pong;
+using System.Timers;
 
 namespace OOPGames
 {
@@ -33,7 +35,19 @@ namespace OOPGames
 
         public void DoPongMove(IPongMoveB move)
         {
-            throw new NotImplementedException();
+            if (move.PlayerNumber == 1)
+            {
+                _PongField.paddle1.stepsize = move.moveDirection;
+                _PongField.paddle1.calculate();
+                
+            }
+
+            if (move.PlayerNumber == 2)
+            {
+                _PongField.paddle2.stepsize = move.moveDirection;
+                _PongField.paddle2.calculate();
+                
+            }
         }
 
         public void StartedGameCall()

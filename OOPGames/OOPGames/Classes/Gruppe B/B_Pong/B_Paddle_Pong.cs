@@ -50,7 +50,12 @@ namespace OOPGames
 
         public void calculate()
         {
-            paddleX = (int)Math.Round(paddleX + stepsize);
         }
     }
 }
+
+//int newPaddleX = (int)Math.Round(paddleX + stepsize);
+//if (newPaddleX > 50 && newPaddleX < 350)
+//{
+//    paddleX = newPaddleX;
+//}

@@ -13,15 +13,20 @@ namespace OOPGames.Classes.GruppeI
 
     public class ISubField : I_ISubField
     {
-        int nummer, x, y, sx, sy;
+        int[,] _SubField = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
-        public ISubField(int nummer, int x, int y, int sx, int sy)
+
+        int nummer, x, y, sx, sy;
+        bool active;                //wird Feld gerade gespielt oder nicht
+
+        public ISubField(int nummer, int x, int y, int sx, int sy, bool active)
         {
             this.nummer = nummer;
             this.x = x;
             this.y = y;
             this.sx = sx;
             this.sy = sy;
+            this.active = active;
         }
 
         public int this[int r, int c]
@@ -30,7 +35,7 @@ namespace OOPGames.Classes.GruppeI
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3) //ist das überhaupt möglich-Abfrage
                 {
-                    return this[r, c];
+                    return _SubField[r, c];
                 }
                 else
                 {
@@ -41,20 +46,21 @@ namespace OOPGames.Classes.GruppeI
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
-                    this[r, c] = value;
+                    _SubField[r, c] = value;
                 }
             }
         }
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is IPaintTicTacToe;
+            return painter is PainterI;
         }
     }
 
     public class IBigTicTacToeField : ITicTacToeField
     {
-        IList<I_ISubField> SubFields { get; }
+        IList<I_ISubField> _SubField = new List<I_ISubField>();
+        public IList<I_ISubField> SubFields { get { return _SubField; } }
 
         public int this[int r, int c]       //nur oberes linkes Feld für dieses Interface (ITicTacToeField) zurückgeben (hoffe dann besteht Kompatibilität)
         {
@@ -81,20 +87,20 @@ namespace OOPGames.Classes.GruppeI
 
         public IBigTicTacToeField()
         {
-            SubFields.Add(new ISubField(0, 20, 20, 180, 180));
-            SubFields.Add(new ISubField(1, 200, 20, 180, 180));
-            SubFields.Add(new ISubField(2, 380, 20, 180, 180));
-            SubFields.Add(new ISubField(3, 20, 200, 180, 180));
-            SubFields.Add(new ISubField(4, 200, 200, 180, 180));
-            SubFields.Add(new ISubField(5, 380, 200, 180, 180));
-            SubFields.Add(new ISubField(6, 20, 380, 180, 180));
-            SubFields.Add(new ISubField(7, 200, 380, 180, 180));
-            SubFields.Add(new ISubField(8, 380, 380, 180, 180));
+            SubFields.Add(new ISubField(0, 20, 20, 180, 180, false));
+            SubFields.Add(new ISubField(1, 200, 20, 180, 180, false));
+            SubFields.Add(new ISubField(2, 380, 20, 180, 180, false));
+            SubFields.Add(new ISubField(3, 20, 200, 180, 180, false));
+            SubFields.Add(new ISubField(4, 200, 200, 180, 180, false));
+            SubFields.Add(new ISubField(5, 380, 200, 180, 180, false));
+            SubFields.Add(new ISubField(6, 20, 380, 180, 180, false));
+            SubFields.Add(new ISubField(7, 200, 380, 180, 180, false));
+            SubFields.Add(new ISubField(8, 380, 380, 180, 180, false));
         }
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is IPaintTicTacToe;
+            return painter is PainterI;
         }
     }
 }

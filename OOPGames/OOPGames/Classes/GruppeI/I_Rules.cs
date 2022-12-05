@@ -1,76 +1,96 @@
-using OOPGames;
+﻿using OOPGames;
+using OOPGames.Classes.GruppeI;
+using System.ComponentModel;
+using System.Windows.Navigation;
 
-/*public class I_TicTacToeRules : IGameRules
+public class I_TicTacToeRules : IGameRules
 {
-    TicTacToeField _Field = new TicTacToeField();
+    public string Name { get { return "I_Rules"; } }
 
-   public override ITicTacToeField TicTacToeField { get { return _Field; } }
+    IBigTicTacToeField _BigField = new IBigTicTacToeField();
 
-    public override bool MovesPossible
+    public IGameField CurrentField { get { return _BigField; } }
+
+
+    public bool MovesPossible
     {
         get
         {
-            for (int i = 0; i < 3; i++)
+            for (int t = 0; t < 9; t++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int i = 0; i < 3; i++)
                 {
-                    if (_Field[i, j] == 0)
+                    for (int j = 0; j < 3; j++)
                     {
-                        return true;
+                        if (_BigField.SubFields[t][i, j] == 0)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
+
 
             return false;
         }
     }
 
-    public override string Name { get { return "I_Rules"; } }
-
-    public override int CheckIfPLayerWon()
+    public int CheckIfPLayerWon() //für großes Feld -> brauchen wir auch noch für kleine Felder, aber als eigene Funktion
     {
         for (int i = 0; i < 3; i++)
         {
-            if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+            if (_BigField[i, 0] > 0 && _BigField[i, 0] == _BigField[i, 1] && _BigField[i, 1] == _BigField[i, 2])
             {
-                return _Field[i, 0];
+                return _BigField[i, 0];
             }
-            else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+            else if (_BigField[0, i] > 0 && _BigField[0, i] == _BigField[1, i] && _BigField[1, i] == _BigField[2, i])
             {
-                return _Field[0, i];
+                return _BigField[0, i];
             }
         }
 
-        if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
+        if (_BigField[0, 0] > 0 && _BigField[0, 0] == _BigField[1, 1] && _BigField[1, 1] == _BigField[2, 2])
         {
-            return _Field[0, 0];
+            return _BigField[0, 0];
         }
-        else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
+        else if (_BigField[0, 2] > 0 && _BigField[0, 2] == _BigField[1, 1] && _BigField[1, 1] == _BigField[2, 0])
         {
-            return _Field[0, 2];
+            return _BigField[0, 2];
         }
 
         return -1;
     }
 
-    public override void ClearField()
+    public void ClearField() //leert ganzes Feld (BigField)
+
     {
-        for (int i = 0; i < 3; i++)
+        for (int t = 0; t < 9; t++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int i = 0; i < 3; i++)
             {
-                _Field[i, j] = 0;
+                for (int j = 0; j < 3; j++)
+                {
+                    _BigField.SubFields[t][i, j] = 0;
+                }
             }
         }
     }
 
-    public override void DoTicTacToeMove(ITicTacToeMove move)
+    public void DoTTTMove(ITTTMove move)
     {
-        if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+
+        if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3 && move.Feld <= 8)
         {
-            _Field[move.Row, move.Column] = move.PlayerNumber;
+            _BigField.SubFields[move.Feld][move.Row, move.Column] = move.PlayerNumber;
         }
     }
-   
+
+    public void DoMove(IPlayMove move)
+    {
+        if (move is ITTTMove)
+        {
+            DoTTTMove((ITTTMove)move);
+        }
+    }
 }
-*/
+

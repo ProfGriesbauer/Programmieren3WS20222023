@@ -12,7 +12,7 @@
 using Microsoft.Win32;
 
 namespace OOPGames
-    {
+{ 
     public class E_Painter : IPaintTicTacToe
     {
         public string Name { get { return "E_Painter"; } }
@@ -81,7 +81,7 @@ namespace OOPGames
                         //Form 2: Quadrat/Raute
                         Line X1 = new Line() { X1 = 70 + (j * 100), Y1 = 30 + (i * 100), X2 = 110 + (j * 100), Y2 = 70 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 110 + (j * 100), Y1 = 70 + (i * 100), X2 = 70 + (j * 100), Y2 =110 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
+                        Line X2 = new Line() { X1 = 110 + (j * 100), Y1 = 70 + (i * 100), X2 = 70 + (j * 100), Y2 = 110 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X2);
                         Line X3 = new Line() { X1 = 70 + (j * 100), Y1 = 110 + (i * 100), X2 = 30 + (j * 100), Y2 = 70 + (i * 100), Stroke = OStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X3);
@@ -89,6 +89,91 @@ namespace OOPGames
                         canvas.Children.Add(X4);
                     }
                 }
+            }
+        }
+    }
+
+    public class E_TicTacToeRules : ITicTacToeRules
+    {
+        E_TicTacToeField _Field = new E_TicTacToeField();
+
+        public ITicTacToeField TicTacToeField { get { return _Field; } }
+        public bool MovesPossible
+        {
+            get
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (_Field[i, j] == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        public string Name { get { return "E_TicTacToeRules"; } }
+
+        public IGameField CurrentField { get { return E_TicTacToeField; } }
+
+        public ITicTacToeField E_TicTacToeField { get { return _Field; } }
+
+
+        public int CheckIfPLayerWon()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                {
+                    return _Field[i, 0];
+                }
+                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                {
+                    return _Field[0, i];
+                }
+            }
+
+            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
+            {
+                return _Field[0, 0];
+            }
+            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
+            {
+                return _Field[0, 2];
+            }
+
+            return -1;
+        }
+
+        public void ClearField()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _Field[i, j] = 0;
+                }
+            }
+        }
+
+        public void DoMove(IPlayMove move)
+        {
+            if (move is ITicTacToeMove)
+            {
+                DoTicTacToeMove((ITicTacToeMove)move);
+            }
+        }
+
+        public void DoTicTacToeMove(ITicTacToeMove move)
+        {
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
             }
         }
     }
@@ -271,16 +356,19 @@ namespace OOPGames
 
         public string Name { get { return "E_ComputerTicTacToePlayer_hard"; } }
 
+
         public int PlayerNumber { get { return _PlayerNumber; } }
 
         public bool CanBeRuledBy(IGameRules rules)
         {
-            return rules is ITicTacToeRules;
+            return rules is E_TicTacToeRules;
         }
 
         public IGamePlayer Clone()
         {
+
             E_TicTacToeComputerPlayer_hard ttthp = new E_TicTacToeComputerPlayer_hard();
+
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -288,6 +376,7 @@ namespace OOPGames
         public ITicTacToeMove GetMove(ITicTacToeField field)
         {
 
+            
             int _Ecounterzero = 0;
             int _Espotsum = 0;
             int _Etempspotsum = 0;
@@ -432,12 +521,6 @@ namespace OOPGames
             _Ecounterzero = 0;
             _Etempspotsum = 0;
 
-            if (notloose==true)
-            {
-                return new TicTacToeMove(notlooserow, notloosecoloumn, _PlayerNumber);
-            }
-
-            //Random
 
             Random rand = new Random();
             int f = rand.Next(0, 8);
@@ -453,7 +536,9 @@ namespace OOPGames
                 {
                     f++;
                 }
+
             }
+           
 
             return null;
         }
@@ -469,94 +554,10 @@ namespace OOPGames
                 return null;
             }
         }
-
         public void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
         }
     }
-    public class E_TicTacToeRules : ITicTacToeRules
-    {
-        E_TicTacToeField _Field = new E_TicTacToeField();
 
-        public ITicTacToeField TicTacToeField { get { return _Field; } }
-        public bool MovesPossible
-        {
-            get
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        if (_Field[i, j] == 0)
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        public string Name { get { return "E_TicTacToeRules"; } }
-
-        public IGameField CurrentField { get { return E_TicTacToeField; } }
-
-        public ITicTacToeField E_TicTacToeField { get { return _Field; } }
-        
-
-        public int CheckIfPLayerWon()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
-                {
-                    return _Field[i, 0];
-                }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                {
-                    return _Field[0, i];
-                }
-            }
-
-            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-            {
-                return _Field[0, 0];
-            }
-            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-            {
-                return _Field[0, 2];
-            }
-
-            return -1;
-        }
-
-        public void ClearField()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    _Field[i, j] = 0;
-                }
-            }
-        }
-
-        public void DoMove(IPlayMove move)
-        {
-            if (move is ITicTacToeMove)
-            {
-                DoTicTacToeMove((ITicTacToeMove)move);
-            }
-        }
-
-        public void DoTicTacToeMove(ITicTacToeMove move)
-        {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
-            {
-                _Field[move.Row, move.Column] = move.PlayerNumber;
-            }
-        }
-    }
-    }
+}

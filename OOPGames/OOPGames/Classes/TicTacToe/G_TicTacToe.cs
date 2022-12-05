@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using static OOPGames.TicTacToePaint_G;
 using static OOPGames.TicTacToeField_G;
+using static OOPGames.TicTacToeRules_G;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using static OOPGames.MainWindow;
@@ -51,6 +52,17 @@ namespace OOPGames
 
     public class Casket : ICasket 
     {
+        public Casket(Casket c)
+        {
+            this.x = c.x;
+            this.y = c.y;
+            this.size = c.size;
+            this.flag = c.flag;
+            this.player = c.player;
+        }
+        public Casket()
+        { }
+
         int _x;
         int _y;
         int _size;
@@ -422,7 +434,19 @@ namespace OOPGames
     */
     public class TicTacToeRules_G : BaseTicTacToeRules
     {
+        public TicTacToeRules_G()
+        {
+            _Rules = this;
+        }
+            
+
+            
+
         TicTacToeField_G _Field = new TicTacToeField_G();
+        static TicTacToeRules_G _Rules;
+
+
+        public static TicTacToeRules_G Rules { get { return _Rules; } }
 
         public TicTacToeField_G Field()
         {
@@ -451,7 +475,8 @@ namespace OOPGames
 
         public override int CheckIfPLayerWon() //wird ein default wert benötigt?
         {
-            int whohasthree = threeinarow();
+            int whohasthree = threeinarow(_Field.Field);
+
 
             if (whohasthree > 0) 
             {
@@ -524,9 +549,9 @@ namespace OOPGames
         }
 
 
-        public int threeinarow() //überprüft, ob sich drei in einer Reihe befinden
+        public int threeinarow(List<Casket> Field) //überprüft, ob sich drei in einer Reihe befinden
         {
-            foreach (Casket C in _Field.Field) //für jedes kästchen um die mitte herum wird der spielerwert gesucht, dieser wird dann verglichen
+            foreach (Casket C in Field) //für jedes kästchen um die mitte herum wird der spielerwert gesucht, dieser wird dann verglichen
             {
 
 
@@ -556,69 +581,69 @@ namespace OOPGames
                     int searchx; //enthält gesuchte xpos des kästchens um das aktuelle kästchen herum
                     int searchy; //enthält gesuchte ypos des kästchens um das aktuelle kästchen herum
 
-                    for (int i = 0; i < _Field.Field.Count; i++)
+                    for (int i = 0; i < Field.Count; i++)
                     {
                         searchx = xpos - 1;
                         searchy = ypos - 1;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            ulinks = _Field.Field[i].player;
+                            ulinks = Field[i].player;
                             ulinksi = i;
                         };
 
                         searchx = xpos - 1;
                         searchy = ypos;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            links = _Field.Field[i].player;
+                            links = Field[i].player;
                             linksi = i;
                         };
 
                         searchx = xpos - 1;
                         searchy = ypos + 1;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            olinks = _Field.Field[i].player;
+                            olinks = Field[i].player;
                             olinksi = i;
                         };
 
                         searchx = xpos;
                         searchy = ypos + 1;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            omitte = _Field.Field[i].player;
+                            omitte = Field[i].player;
                             omittei = i;
                         };
 
                         searchx = xpos + 1;
                         searchy = ypos + 1;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            orechts = _Field.Field[i].player;
+                            orechts = Field[i].player;
                             orechtsi = i;
                         };
 
                         searchx = xpos + 1;
                         searchy = ypos;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            rechts = _Field.Field[i].player;
+                            rechts = Field[i].player;
                             rechtsi = i;
                         };
 
                         searchx = xpos + 1;
                         searchy = ypos - 1;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            urechts = _Field.Field[i].player;
+                            urechts = Field[i].player;
                             urechtsi = i;
                         };
 
                         searchx = xpos;
                         searchy = ypos - 1;
-                        if (searchx == _Field.Field[i].x && searchy == _Field.Field[i].y && !_Field.Field[i].flag)
+                        if (searchx == Field[i].x && searchy == Field[i].y && !Field[i].flag)
                         {
-                            umitte = _Field.Field[i].player;
+                            umitte = Field[i].player;
                             umittei = i;
                         };
 
@@ -628,29 +653,29 @@ namespace OOPGames
                     if (mitte == links && mitte == rechts)
                     {
                         C.flag = true;
-                        _Field.Field[linksi].flag = true;
-                        _Field.Field[rechtsi].flag = true;
+                        Field[linksi].flag = true;
+                        Field[rechtsi].flag = true;
                         return mitte;
                     }
                     if (mitte == olinks && mitte == urechts)
                     {
                         C.flag = true;
-                        _Field.Field[olinksi].flag = true;
-                        _Field.Field[urechtsi].flag = true;
+                        Field[olinksi].flag = true;
+                        Field[urechtsi].flag = true;
                         return mitte;
                     }
                     if (mitte == omitte && mitte == umitte)
                     {
                         C.flag = true;
-                        _Field.Field[omittei].flag = true;
-                        _Field.Field[umittei].flag = true;
+                        Field[omittei].flag = true;
+                        Field[umittei].flag = true;
                         return mitte;
                     }
                     if (mitte == ulinks && mitte == orechts)
                     {
                         C.flag = true;
-                        _Field.Field[ulinksi].flag = true;
-                        _Field.Field[orechtsi].flag = true;
+                        Field[ulinksi].flag = true;
+                        Field[orechtsi].flag = true;
                         return mitte;
                     }
                 }
@@ -876,6 +901,7 @@ namespace OOPGames
 
         public override ITicTacToeMove GetMove(ITicTacToeField field)
         {
+            
             if (field is ITicTacToeField_G)
             {
                 return GetMove_G((ITicTacToeField_G)field);
@@ -886,6 +912,57 @@ namespace OOPGames
 
         public ITicTacToeMove GetMove_G(ITicTacToeField_G field)
         {
+            int opponent;
+            if (_PlayerNumber == 1) opponent = 2;
+            else opponent = 1;
+            List<Casket> Clone = field.Field.ConvertAll(x => new Casket(x));
+
+            foreach (Casket c in Clone)
+            {
+                if(c.player==0)
+                {
+                    c.player = _PlayerNumber;
+                    if(Rules.threeinarow(Clone) !=0)
+                    {
+                        return new TicTacToeMove(c.y, c.x, _PlayerNumber);
+                    }
+                    c.player = 0;
+                }
+            }
+            foreach (Casket c in Clone)
+            {
+                if (c.player == 0)
+                {
+                    c.player = opponent;
+                    if (Rules.threeinarow(Clone) != 0)
+                    {
+                        return new TicTacToeMove(c.y, c.x, _PlayerNumber);
+                    }
+                    c.player = 0;
+                }
+            }
+
+            foreach(Casket c1 in field.Field)
+            {
+                if(c1.player==_PlayerNumber && c1.flag==false)
+                {
+                    foreach(Casket c2 in field.Field) // Suchen nach einem freien Feld neben c1
+                    {
+                        if(c2.player==0) // Feld muss unbesetzt sein
+                        {
+                            if((c2.x >= c1.x-1) && (c2.x <= c1.x+1) && (c2.y >= c1.y-1) && (c2.y <= c1.y+1)) // Feld darf max 1 Kästchen entfernt sein (auch diagonal)
+                            {
+                                return new TicTacToeMove(c2.y, c2.x, _PlayerNumber);
+                            }
+                        }
+                        
+                    }
+                }
+            }
+
+
+
+
             Random rand = new Random();
             int f = rand.Next(0,field.Field.Count-1);
 

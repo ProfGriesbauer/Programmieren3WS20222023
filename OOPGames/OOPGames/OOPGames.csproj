@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Ball_Pong.cs" />
+    <Compile Include="Classes\Gruppe B\B_Pong\B_HumanPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Paddle_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Painter_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Rules_Pong.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
+    <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
@@ -118,8 +120,8 @@
     <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
-    <Compile Include="Classes\Gruppe E\E_Painter.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
+    <Compile Include="Classes\Gruppe E\E_VierGewinnt.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe K\Form\K_InformationWindow.xaml.cs">
       <DependentUpon>K_InformationWindow.xaml</DependentUpon>
@@ -132,11 +134,11 @@
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
+    <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeI\I_TTTMove.cs" />
     <Compile Include="Classes\GruppeI\PlayerI.cs" />
     <Compile Include="Classes\GruppeI\TTTField.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
-    <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeJ\Dino_Game.cs" />
     <Compile Include="Classes\GruppeJ\Form1.cs">
       <SubType>Form</SubType>
@@ -165,6 +167,7 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPaintPongGameB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
+    <Compile Include="Interfaces\Gruppe E\I_E_4Gewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />
@@ -219,7 +222,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Gruppe C\" />
-    <Folder Include="Interfaces\Gruppe E\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

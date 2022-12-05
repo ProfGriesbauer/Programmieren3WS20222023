@@ -21,7 +21,7 @@ namespace OOPGames.Classes.Gruppe_B
             set;
         }
     }
-    public class B_ComputerPlayer : BaseComputerTicTacToePlayer
+    public class B_ComputerPlayer : IComputerTicTacToePlayer
     {
 
         int _PlayerNumber = 0;
@@ -31,11 +31,11 @@ namespace OOPGames.Classes.Gruppe_B
 
 
 
-        public override string Name { get { return "GruppeBComputerPlayer"; } }
+        public string Name { get { return "GruppeBComputerPlayer"; } }
 
-        public override int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return _PlayerNumber; } }
 
-        public override IGamePlayer Clone()
+        public IGamePlayer Clone()
         {
             B_ComputerPlayer other = new B_ComputerPlayer();
             other.SetPlayerNumber(_PlayerNumber);
@@ -175,10 +175,7 @@ namespace OOPGames.Classes.Gruppe_B
 
         }
 
-
-
-
-        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        public ITicTacToeMove GetMove(ITicTacToeField field)
         {
             // Array origBoard über aktuelles Spielfeld
             int count = 0;
@@ -245,7 +242,7 @@ namespace OOPGames.Classes.Gruppe_B
 
         }
 
-        public override void SetPlayerNumber(int playerNumber)
+        public void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
 
@@ -254,6 +251,23 @@ namespace OOPGames.Classes.Gruppe_B
                 otherPlayerNumber = 2;
             }
             else { otherPlayerNumber = 1; }
+        }
+
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is ITicTacToeField)
+            {
+                return GetMove((ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is ITicTacToeRules; ;
         }
     }
 }

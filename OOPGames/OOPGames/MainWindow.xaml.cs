@@ -91,7 +91,10 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+            OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
+
+            OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
 
 
             //Players
@@ -117,7 +120,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
 
-
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
@@ -252,6 +255,7 @@ namespace OOPGames
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
+            e.
             if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";

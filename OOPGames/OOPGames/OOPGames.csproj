@@ -122,6 +122,7 @@
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
+    <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeI\I_TTTMove.cs" />
     <Compile Include="Classes\GruppeI\PlayerI.cs" />
     <Compile Include="Classes\GruppeI\TTTField.cs" />
@@ -242,9 +243,6 @@
     <EmbeddedResource Include="Assets\K\PanzerR.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Classes\GruppeI\interface-1-126517.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

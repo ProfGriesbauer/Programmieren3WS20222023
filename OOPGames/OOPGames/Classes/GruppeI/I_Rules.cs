@@ -1,4 +1,4 @@
-using OOPGames;
+Ôªøusing OOPGames;
 using OOPGames.Classes.GruppeI;
 using System.ComponentModel;
 using System.Windows.Navigation;
@@ -35,7 +35,7 @@ public class I_TicTacToeRules : IGameRules
         }
     }
 
-    public int CheckIfPLayerWon() //f¸r groﬂes Feld -> brauchen wir auch noch f¸r kleine Felder, aber als eigene Funktion
+    public int CheckIfPLayerWon() //f√ºr gro√ües Feld -> brauchen wir auch noch f√ºr kleine Felder, aber als eigene Funktion
     {
         for (int i = 0; i < 3; i++)
         {
@@ -94,4 +94,3 @@ public class I_TicTacToeRules : IGameRules
     }
 }
 
-    

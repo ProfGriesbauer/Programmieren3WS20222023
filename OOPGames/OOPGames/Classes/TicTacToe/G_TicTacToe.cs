@@ -196,6 +196,7 @@ namespace OOPGames
     {
         static int _Score1;
         static int _Score2;
+        static int _CurrentPlayer;
         public override string Name { get { return "GruppeGTicTacToePaint"; } }
 
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
@@ -215,6 +216,12 @@ namespace OOPGames
         {
             get { return _Score2; }
             set { _Score2 = value; }
+        }
+
+        public static int CurrentPlayer
+        {
+            get { return _CurrentPlayer; }
+            set { _CurrentPlayer = value; }
         }
 
         // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
@@ -263,14 +270,25 @@ namespace OOPGames
 
         void PaintScore(Canvas canvas)
         {
+            SolidColorBrush ColorPlayer1 = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+
             TextBox TBscore1 = new TextBox();
             TBscore1.Text = "Player 1: " + Score1.ToString();
+            TBscore1.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
             Canvas.SetLeft(TBscore1, 10);
             Canvas.SetTop(TBscore1, 420);
+            if (_CurrentPlayer == 2)
+            {
+                TBscore1.Background = ColorPlayer1;
+            }
+            else
+            {
+                TBscore1.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            }
             canvas.Children.Add(TBscore1);
 
             ProgressBar Progress1 = new ProgressBar();
-            Progress1.Foreground = new SolidColorBrush(Color.FromRgb(0,255,0));
+            Progress1.Foreground = ColorPlayer1;
             Canvas.SetTop(Progress1, 420);
             Canvas.SetLeft(Progress1, 100);
             Progress1.Width = 300;
@@ -282,14 +300,25 @@ namespace OOPGames
             canvas.Children.Add(Progress1);
 
 
+            SolidColorBrush ColorPlayer2 = new SolidColorBrush(Color.FromRgb(0, 0, 255));
+
             TextBox TBscore2 = new TextBox();
             TBscore2.Text = "Player 2: " + Score2.ToString();
+            TBscore2.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
             Canvas.SetLeft(TBscore2, 10);
             Canvas.SetTop(TBscore2, 450);
+            if (_CurrentPlayer == 1)
+            {
+                TBscore2.Background = ColorPlayer2;
+            }
+            else
+            {
+                TBscore2.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            }
             canvas.Children.Add(TBscore2);
 
             ProgressBar Progress2 = new ProgressBar();
-            Progress2.Foreground = new SolidColorBrush(Color.FromRgb(0,0,255));
+            Progress2.Foreground = ColorPlayer2;
             Canvas.SetTop(Progress2, 450);
             Canvas.SetLeft(Progress2, 100);
             Progress2.Width = 300;
@@ -767,6 +796,8 @@ namespace OOPGames
                     {
                         Console.WriteLine(sel.YClickPos + ";" + sel.YClickPos);
                         Console.WriteLine(cas.x + ";" + cas.y + ";" + cas.size);
+
+                        CurrentPlayer = _PlayerNumber;
 
                         return new TicTacToeMove(cas.y, cas.x, _PlayerNumber);
                     }

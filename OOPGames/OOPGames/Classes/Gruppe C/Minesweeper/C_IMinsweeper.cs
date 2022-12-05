@@ -15,7 +15,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
 
     public interface C_IMinesweeperField : IGameField
     {
-        Segment this[Segment r,Segment c] { get; set; }
+        Segment this[int r,int c] { get; set; }
     }
     public interface C_IMinesweeperRules  : IGameRules
     {

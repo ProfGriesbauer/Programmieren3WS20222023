@@ -255,6 +255,7 @@ namespace OOPGames
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
+           
             
             if (winner > 0)
             {

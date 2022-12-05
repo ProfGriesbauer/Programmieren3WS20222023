@@ -37,15 +37,15 @@ namespace OOPGames
         {
             if (move.PlayerNumber == 1)
             {
-                _PongField.paddle1.stepsize = move.moveDirection;
-                _PongField.paddle1.calculate();
+                //_PongField.paddle1.stepsize = move.moveDirection;
+               // _PongField.paddle1.calculate();
                 
             }
 
             if (move.PlayerNumber == 2)
             {
-                _PongField.paddle2.stepsize = move.moveDirection;
-                _PongField.paddle2.calculate();
+               // _PongField.paddle2.stepsize = move.moveDirection;
+              //  _PongField.paddle2.calculate();
                 
             }
         }

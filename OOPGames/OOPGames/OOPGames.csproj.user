@@ -5,6 +5,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Project</StartAction>
-    <StartWorkingDirectory>C:\Samuel\HS Kempten WS 2022_23\Programmieren\Programmieren3WS20222023\OOPGames\OOPGames\</StartWorkingDirectory>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
   </PropertyGroup>
 </Project>

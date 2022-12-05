@@ -97,11 +97,11 @@ namespace OOPGames
         {
             for (int i = 0; i < 3; i++)
             {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                if (_Field[i, 0] >= 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
                 {
                     return _Field[i, 0];
                 }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                else if (_Field[0, i] >= 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
                 {
                     return _Field[0, i];
                 }
@@ -141,7 +141,7 @@ namespace OOPGames
 
     public class TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[3, 3] { { 0, 0, 0}, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {

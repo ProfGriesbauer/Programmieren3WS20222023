@@ -65,7 +65,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
-            //OOPGamesManager.Singleton.RegisterPainter(new E_vierGewinnt_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
@@ -78,6 +78,8 @@ namespace OOPGames
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
 
             //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
 
@@ -85,7 +87,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
-            OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
@@ -120,7 +121,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
 
-            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
+            //OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
@@ -255,6 +256,8 @@ namespace OOPGames
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
+           
+            
             if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";

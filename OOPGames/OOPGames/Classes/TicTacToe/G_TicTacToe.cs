@@ -887,9 +887,9 @@ namespace OOPGames
             }
             foreach (Casket c in Clone)
             {
-                if (c.player == opponent)
+                if (c.player == 0)
                 {
-                    c.player = 2;
+                    c.player = opponent;
                     if (Rules.threeinarow(Clone) != 0)
                     {
                         return new TicTacToeMove(c.y, c.x, _PlayerNumber);

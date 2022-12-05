@@ -12,7 +12,7 @@ namespace OOPGames
     {
         public IPongFieldB PongField => throw new NotImplementedException();
 
-        public string Name => throw new NotImplementedException();
+        public string Name { get { return "Ich vergesse Sachen"; } }
 
         public IGameField CurrentField => throw new NotImplementedException();
 
@@ -37,15 +37,15 @@ namespace OOPGames
         {
             if (move.PlayerNumber == 1)
             {
-                _PongField.paddle1.stepsize = move.moveDirection;
-                _PongField.paddle1.calculate();
+                //_PongField.paddle1.stepsize = move.moveDirection;
+               // _PongField.paddle1.calculate();
                 
             }
 
             if (move.PlayerNumber == 2)
             {
-                _PongField.paddle2.stepsize = move.moveDirection;
-                _PongField.paddle2.calculate();
+               // _PongField.paddle2.stepsize = move.moveDirection;
+              //  _PongField.paddle2.calculate();
                 
             }
         }

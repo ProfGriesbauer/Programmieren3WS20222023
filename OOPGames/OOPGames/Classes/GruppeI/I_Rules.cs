@@ -71,5 +71,11 @@ using OOPGames;
             _Field[move.Row, move.Column] = move.PlayerNumber;
         }
     }
+<<<<<<< HEAD
   
 } */
+=======
+   
+}
+*/
+>>>>>>> 84f6fa507cb8ecabfa63524ee5709b0335b39ba9

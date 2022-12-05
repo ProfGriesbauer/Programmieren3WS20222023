@@ -868,13 +868,16 @@ namespace OOPGames
 
         public ITicTacToeMove GetMove_G(ITicTacToeField_G field)
         {
+            int opponent;
+            if (_PlayerNumber == 1) opponent = 2;
+            else opponent = 1;
             List<Casket> Clone = field.Field.ConvertAll(x => new Casket(x));
 
             foreach (Casket c in Clone)
             {
                 if(c.player==0)
                 {
-                    c.player = 1;
+                    c.player = _PlayerNumber;
                     if(Rules.threeinarow(Clone) !=0)
                     {
                         return new TicTacToeMove(c.y, c.x, _PlayerNumber);
@@ -884,7 +887,7 @@ namespace OOPGames
             }
             foreach (Casket c in Clone)
             {
-                if (c.player == 0)
+                if (c.player == opponent)
                 {
                     c.player = 2;
                     if (Rules.threeinarow(Clone) != 0)

@@ -17,8 +17,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         void FindPlacedShips(Canvas canvas, int Player, IFieldSV currentField) //Phase 1 und 2
         {
-            int _Ship = 0;
-            int _Rotation = 0;
+            
             for (int r = 0; r < 8; r++)
             {
                 for (int c = 0; c < 8; c++)
@@ -27,12 +26,16 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         if (currentField[r-1, c, Player] == 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
                         {
-                           break; //beendet function
+                            //_stop = 1;
+                            continue;
                         }
                         if (currentField[r , c-1, Player] == 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
                         {
-                            break;
+                            //_stop = 1;
+                            continue;
                         }
+                        int _Ship = 0;
+                        int _Rotation = 0;
                         if (currentField[r+1, c, Player] == 1) //liegt das Schiff horizental?
                         { 
                             for (int i=0; i<5; i++)
@@ -42,9 +45,13 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                                     _Ship++;
                                     _Rotation = 2;
                                 }
+                                else
+                                {
+                                    i=5;
+                                }
                             }
                         }
-                        else
+                        else 
                         {
                             for (int i = 0; i < 5; i++)
                             {
@@ -53,10 +60,14 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                                     _Ship++;
                                     _Rotation = 1;
                                 }
+                                else
+                                {
+                                    i = 5;
+                                }
                             }
                         }
-                        int x =20 + (50 * r);
-                        int y = (50 * c);
+                        int y = (50 * r) + 50;
+                        int x = (50 * c) + 20 ;
                         PaintShip(canvas, _Ship, x, y, _Rotation, 0);
                     }
                 }
@@ -104,7 +115,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         public void PaintShip(Canvas canvas, int Ship, int x, int y, int _HorVer, int destroid)
         {
-            Color lineColor = Color.FromRgb(0, 0, 0);
+            Color lineColor = Color.FromRgb(0, 0, 255);
             if (destroid == 1)
             {
                 lineColor = Color.FromRgb(255, 0, 0);
@@ -242,11 +253,20 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 Canvas.SetTop(text, 455);
                 canvas.Children.Add(text);
 
-                currentField[1, 1, 1] = 1; //testet die FindShip function
-                currentField[1, 2, 1] = 1;
+                currentField[0, 1, 1] = 1; //testet die FindShip function
+                currentField[0, 2, 1] = 1;
+
+                currentField[0, 4, 1] = 1;
+                currentField[0, 5, 1] = 1;
+                currentField[0, 6, 1] = 1;
 
                 currentField[5, 5, 1] = 1;
                 currentField[6, 5, 1] = 1;
+
+                currentField[4, 7, 1] = 1;
+                currentField[5, 7, 1] = 1;
+                currentField[6, 7, 1] = 1;
+                currentField[7, 7, 1] = 1;
 
                 PaintShip(canvas, currentField.Ships(2, _CurrentPlayer), 20, 505, _Rotation, 0);
 

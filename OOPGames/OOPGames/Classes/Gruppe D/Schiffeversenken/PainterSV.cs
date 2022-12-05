@@ -22,25 +22,25 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             {
                 for (int c = 0; c < 8; c++)
                 {
-                    if (currentField[r, c, Player] == 1)
+                    if (currentField[r, c, Player] > 1)
                     {
-                        if (currentField[r-1, c, Player] == 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
+                        if (currentField[r-1, c, Player] > 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
                         {
                             //_stop = 1;
                             continue;
                         }
-                        if (currentField[r , c-1, Player] == 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
+                        if (currentField[r , c-1, Player] > 1) //wenn links ein Feld belegt ist wurde das Schiff schon gezeichnet
                         {
                             //_stop = 1;
                             continue;
                         }
                         int _Ship = 0;
                         int _Rotation = 0;
-                        if (currentField[r+1, c, Player] == 1) //liegt das Schiff horizental?
+                        if (currentField[r+1, c, Player] > 1) //liegt das Schiff horizental?
                         { 
                             for (int i=0; i<5; i++)
                             {
-                                if (currentField[r + i, c, Player] == 1)
+                                if (currentField[r + i, c, Player] > 1)
                                 {
                                     _Ship++;
                                     _Rotation = 2;
@@ -55,7 +55,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                if (currentField[r, c + i, Player] == 1)
+                                if (currentField[r, c + i, Player] > 1)
                                 {
                                     _Ship++;
                                     _Rotation = 1;
@@ -113,10 +113,10 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
-        public void PaintShip(Canvas canvas, int Ship, int x, int y, int _HorVer, int destroid)
+        public void PaintShip(Canvas canvas, int Ship, int x, int y, int _HorVer, int destroyed)
         {
             Color lineColor = Color.FromRgb(0, 0, 255);
-            if (destroid == 1)
+            if (destroyed == 1)
             {
                 lineColor = Color.FromRgb(255, 0, 0);
             }

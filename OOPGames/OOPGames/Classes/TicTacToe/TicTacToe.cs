@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace OOPGames
+namespace OOPGames 
 {
     public class TicTacToePaint : BaseTicTacToePaint
     {

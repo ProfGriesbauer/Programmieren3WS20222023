@@ -1,4 +1,4 @@
-﻿namespace OOPGames.Assets.G
+﻿namespace OOPGames.Assets.G 
 {
     partial class MaxSizeWindow
     {

@@ -323,7 +323,7 @@ namespace OOPGames
             Canvas.SetLeft(Progress2, 100);
             Progress2.Width = 300;
             Progress2.Height = 20;
-            Progress2.Minimum = 0;
+            Progress2.Minimum = 0; 
             Progress2.Maximum = 3;
             Progress2.Value = Score2;
             Progress2.Orientation = Orientation.Horizontal;

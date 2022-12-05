@@ -306,7 +306,7 @@ namespace OOPGames
             Progress1.Width = 300;
             Progress1.Height = 20;
             Progress1.Minimum = 0;
-            Progress1.Maximum = 15;
+            Progress1.Maximum = 3;
             Progress1.Value = Score1;
             Progress1.Orientation = Orientation.Horizontal;
             canvas.Children.Add(Progress1);
@@ -335,8 +335,8 @@ namespace OOPGames
             Canvas.SetLeft(Progress2, 100);
             Progress2.Width = 300;
             Progress2.Height = 20;
-            Progress2.Minimum = 0;
-            Progress2.Maximum = 15;
+            Progress2.Minimum = 0; 
+            Progress2.Maximum = 3;
             Progress2.Value = Score2;
             Progress2.Orientation = Orientation.Horizontal;
             canvas.Children.Add(Progress2);

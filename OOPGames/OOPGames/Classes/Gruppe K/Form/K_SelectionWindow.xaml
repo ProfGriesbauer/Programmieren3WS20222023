@@ -1,0 +1,27 @@
+﻿<Window x:Class="OOPGames.Classes.Gruppe_K.Form.K_SelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OOPGames.Classes.Gruppe_K.Form"
+        mc:Ignorable="d"
+        Title="K_SelectionWindow" Height="420" Width="350" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="K_title"  Grid.Row="0" Content="Selection List:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,5,5"/>
+        <ListBox x:Name="K_selectionList" Grid.Row="1" Margin="10,32,10,50" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <TextBlock Text="{Binding Name}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="K_selectButton" Content="Select" Click="GK_Selection" HorizontalAlignment="Stretch" Height="30" Margin="10,0,10,10" VerticalAlignment="Bottom" />
+
+    </Grid>
+</Window>

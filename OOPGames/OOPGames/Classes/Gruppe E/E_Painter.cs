@@ -19,10 +19,10 @@ namespace OOPGames.Classes.Gruppe_E
         }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
-        {PaintTicTacToeField(canvas, ())
+        {//PaintTicTacToeField(canvas, ())
             throw new NotImplementedException();
         }
 
-        public 
+       // public 
     }
 }

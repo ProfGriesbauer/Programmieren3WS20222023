@@ -4,11 +4,63 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes.Gruppe_F
+namespace OOPGames
 {
-    public class TTTRulesF : BaseTicTacToeRules, ITimeStamp
+    
+    public class FTicTacToeField : ITicTacToeField// IFTicTacToeField
     {
-        TicTacToeField _Field = new TicTacToeField();
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        int _CurrentWinner;
+
+        public int this[int r, int c]
+        {
+            get
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                {
+                    return _Field[r, c];
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
+            set
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                {
+                    _Field[r, c] = value;
+                }
+            }
+        }
+
+        public int CurrentWinner {
+            get
+            {
+                return _CurrentWinner;
+            }
+            set
+            {
+                _CurrentWinner = value;
+
+            }
+        }
+
+      
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            return painter is TTTPaint;
+        }
+    }
+    public class TTTRulesF : BaseTicTacToeRules, IGameRules2//, IFieldSum
+    {
+        int timerCounter;
+        int FieldSumOld;
+        int FieldSum;
+
+        FTicTacToeField _Field = new FTicTacToeField();
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
         public override bool MovesPossible {
@@ -30,16 +82,27 @@ namespace OOPGames.Classes.Gruppe_F
 
         public override string Name { get { return "GruppeFTTTRules"; } }
 
-        public DateTime? LastUpdated { 
-            get
+        public int? checkFieldSum { get
             {
-                return new DateTime();
+               
+                for (int r=0; r>=2; r++)
+                {
+                    for (int c=0; c>=2; c++)
+                    {
+                        FieldSum += _Field[r, c];
+                    }
+
+                }
+
+                if (FieldSum != FieldSumOld)
+                {
+                    timerCounter = 0;
+                    return 1;
+                }
+                FieldSumOld = FieldSum;
+                return 0;
             }
-
-             set
-            {
-
-            } }
+        }
 
         public override int CheckIfPLayerWon()
         {
@@ -63,8 +126,16 @@ namespace OOPGames.Classes.Gruppe_F
             {
                 return _Field[0, 2];
             }
-
+            
             return -1;
+           
+        }
+        public void CheckIfPlayerWonTime()
+        {
+            if (timerCounter > 2000 && checkFieldSum  == 0)
+            {
+                _Field.CurrentWinner = 1;
+            }
         }
 
         public override void ClearField()
@@ -84,6 +155,19 @@ namespace OOPGames.Classes.Gruppe_F
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
+        }
+
+        public void StartedGameCall()
+        {
+           
+        }
+
+        public void TickGameCall()
+        {
+            
+            timerCounter+=40;
+            CheckIfPlayerWonTime();
+          
         }
     }
 }

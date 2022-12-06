@@ -171,6 +171,7 @@
     <Compile Include="Interfaces\Gruppe E\I_E_4Gewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
     <Compile Include="Interfaces\Gruppe J\GJ_IDino.cs" />
+    <Compile Include="Interfaces\Gruppe K\IK_HumanPlayer.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />

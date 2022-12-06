@@ -125,6 +125,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer1());
+            OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer2());
 
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             InitializeComponent();
@@ -181,22 +183,27 @@ namespace OOPGames
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
+            List<IGamePlayer> activePlayers=new List<IGamePlayer>();
             _CurrentPlayer1 = null;
             if (Player1List.SelectedItem is IGamePlayer)
             {
                 _CurrentPlayer1 = ((IGamePlayer)Player1List.SelectedItem).Clone();
                 _CurrentPlayer1.SetPlayerNumber(1);
+                activePlayers.Add(_CurrentPlayer1);
             }
             _CurrentPlayer2 = null;
             if (Player2List.SelectedItem is IGamePlayer)
             {
                 _CurrentPlayer2 = ((IGamePlayer)Player2List.SelectedItem).Clone();
                 _CurrentPlayer2.SetPlayerNumber(2);
+                activePlayers.Add(_CurrentPlayer2);
             }
 
             _CurrentPlayer = null;
             _CurrentPainter = PaintList.SelectedItem as IPaintGame;
             _CurrentRules = RulesList.SelectedItem as IGameRules;
+
+            OOPGamesManager.Singleton.RegisterActivePlayers(activePlayers);
 
             if (_CurrentRules is IGameRules2)
             {
@@ -204,7 +211,7 @@ namespace OOPGames
             }
 
             if (_CurrentPainter != null &&
-                _CurrentRules != null && _CurrentPlayer1 != null && _CurrentPlayer2 != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
+                _CurrentRules != null && _CurrentPlayer1 != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
             {
                 _CurrentPlayer = _CurrentPlayer1;
                 Status.Text = "Game startet!";
@@ -240,7 +247,10 @@ namespace OOPGames
                     {
                         _CurrentRules.DoMove(pm);
                         _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
 
@@ -287,7 +297,10 @@ namespace OOPGames
                     {
                         _CurrentRules.DoMove(pm);
                         _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
                         OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
@@ -321,7 +334,10 @@ namespace OOPGames
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
                         OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
@@ -346,7 +362,10 @@ namespace OOPGames
         { 
             if (_CurrentRules is IGameRulesB) 
             {
-                _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                if (_CurrentPlayer2 != null)
+                {
+                    _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                }
                 OnPlayerChanged(_CurrentRules);
                 //DoComputerMoves();
             }
@@ -383,11 +402,12 @@ namespace OOPGames
         {
             List<IGameRules> usableRules = new List<IGameRules>();
             IPaintGame selectedPainter = PaintList.SelectedItem as IPaintGame;
-            try
-            {
+      
                 if (selectedPainter != null)
                 {
                     foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
+                    {
+                    try
                     {
                         IGameField field = data.CurrentField;
                         if (field != null && field.CanBePaintedBy(selectedPainter))
@@ -396,11 +416,12 @@ namespace OOPGames
                         }
 
                     }
+                    catch (Exception exp)
+                    {
+                        Console.WriteLine(exp.Message);
+                    }
                 }
-            } catch (Exception exp)
-            {
-                Console.WriteLine(exp.Message);
-            }
+            } 
 
             IGameRules selectedRule = GK_OpenSelectionWindow<IGameRules>(usableRules, "Painter Selection" , "Useable Rules");
             if (selectedRule != null)
@@ -408,33 +429,83 @@ namespace OOPGames
                 RulesList.SelectedItem = selectedRule;
             }
         }
+      
+        private void GK_ShowCompatiblePlayers(object sender, RoutedEventArgs e)
+        {
+            List<IGamePlayer> usablePlayers = new List<IGamePlayer>();
+            IGameRules selectedRule = RulesList.SelectedItem as IGameRules;
+
+           
+                if (selectedRule != null)
+                {
+                        foreach (IGamePlayer data in OOPGamesManager.Singleton.Players)
+                        {
+                            try
+                            {
+                        if (data.CanBeRuledBy(selectedRule))
+                        {
+
+                            usablePlayers.Add(data);
+                        }
+                             }
+                             catch (Exception exp)
+                            {
+                                Console.WriteLine(exp.Message);
+                               }
+
+                        }
+                    
+                }
+
+            IGamePlayer selectedPlayer = GK_OpenSelectionWindow<IGamePlayer>(usablePlayers, "Player 1 Selection", "Useable Player 1");
+            if (selectedPlayer != null)
+            {
+                Player1List.SelectedItem = selectedPlayer;
+            }
+            if (usablePlayers.Count != 0)
+            {
+                selectedPlayer = GK_OpenSelectionWindow<IGamePlayer>(usablePlayers, "Player 2 Selection", "Useable Player 2");
+                if (selectedPlayer != null)
+                {
+                    Player2List.SelectedItem = selectedPlayer;
+                }
+            }
+        }
         private void GK_ShowCompatiblePainters(object sender, RoutedEventArgs e)
         {
             List<IPaintGame> usablePainters = new List<IPaintGame>();
             IGameRules selectedRule = RulesList.SelectedItem as IGameRules;
 
-            try
-            {
+           
                 if (selectedRule != null)
+            {
+                try
                 {
                     IGameField field = selectedRule.CurrentField;
                     if (field != null)
                     {
                         foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
                         {
-                            if (field.CanBePaintedBy(data))
+                            try
                             {
-                                usablePainters.Add(data);
+                                if (field.CanBePaintedBy(data))
+                                {
+                                    usablePainters.Add(data);
+                                }
                             }
-
+                            catch (Exception exp)
+                            {
+                                Console.WriteLine(exp.Message);
+                            }
                         }
                     }
                 }
+                catch (Exception exp)
+                {
+                    Console.WriteLine(exp.Message);
+                }
             } 
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp.Message);
-            }
+           
 
             IPaintGame selectedPainter = GK_OpenSelectionWindow<IPaintGame>(usablePainters, "Painter Selection", "Useable Painters");
             if (selectedPainter != null)
@@ -459,7 +530,7 @@ namespace OOPGames
             bool result = (bool)selectionform.ShowDialog();
             while (result);
 
-            return selectionform.selectionPerformed ? (T)selectionform.K_selectionList.SelectedItem : default(T); ;
+            return selectionform.selectionPerformed ? (T)selectionform.K_selectionList.SelectedItem : default(T);
         }
 
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OOPGames"
         mc:Ignorable="d"
-        Title="OOP Games" ResizeMode="CanResizeWithGrip" MinWidth="400" MinHeight="300" Closed="Window_Closed" KeyDown="Window_KeyDown" d:DesignHeight="341.379" d:DesignWidth="866.995">
+        Title="OOP Games" ResizeMode="CanResizeWithGrip" MinWidth="400" MinHeight="300" Closed="Window_Closed" KeyDown="Window_KeyDown" d:DesignHeight="341.379" d:DesignWidth="1000.995">
 
     <Window.Resources>
         <Style TargetType="Button">
@@ -86,9 +86,12 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button x:Name="ShowCompatibleRules" Content="Compatible Rules" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatibleRules" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="145,5,0,0"/>
             <Button x:Name="ShowCompatiblePainters" Content="Compatible Painters" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatiblePainters" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="5,5,0,0"/>
-            <Button x:Name="ChooseColor" Content="Choose Color" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GJ_ChooseColor" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="270,5,0,0"/>
+            <Button x:Name="ShowCompatiblePlayers" Content="Compatible Players" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatiblePlayers" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="145,5,0,0"/>
+            <Button x:Name="ShowCompatibleRules" Content="Compatible Rules" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatibleRules" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="280,5,0,0"/>
+            
+            
+            <Button x:Name="ChooseColor" Content="Choose Color" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GJ_ChooseColor" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="405,5,0,0"/>
         </Grid>
     </Grid>
 </Window>

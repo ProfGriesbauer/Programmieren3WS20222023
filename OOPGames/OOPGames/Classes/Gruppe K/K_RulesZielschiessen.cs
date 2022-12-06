@@ -14,22 +14,18 @@ namespace OOPGames.Classes.Gruppe_K
 {
     internal class K_RulesZielschiessen : IGameRules2
     {
-        K_GameObjectManager _gameManager=new K_GameObjectManager();
-       
-        K_Player Panzerplayer = new K_Player();
+        OOPGamesManager _OOPmanager= OOPGamesManager.Singleton;
+        K_GameObjectManager _KgameManager=new K_GameObjectManager();
+
+        List<K_Player> Panzerplayer = new List<K_Player>();
         K_GameField randomeSpielfeld = new K_GameField();
-        
-        int _gameState = 0;
-        int _playerxpos = 50;
-        int _playerypos = 0;
-        float _playerrot = 0;
-        float _playerangle = 0;
+       
 
         public string Name { get { return "K Rules Zielschießen"; } }
 
         public bool MovesPossible { get { return true; } }
 
-        IGameField IGameRules.CurrentField { get { return _gameManager; } }
+        IGameField IGameRules.CurrentField { get { return _KgameManager; } }
 
         public int CheckIfPLayerWon()
         {
@@ -43,30 +39,71 @@ namespace OOPGames.Classes.Gruppe_K
 
         public void DoMove(IPlayMove move)
         {
-
+            
         }
         public void StartedGameCall()
         {
-            _gameManager = new K_GameObjectManager();
-            _gameState = 0;
+            _KgameManager = new K_GameObjectManager();
+            _KgameManager.Status = new K_Status();
+            
+
+            IGamePlayer player1= _OOPmanager.activePlayers.ElementAt(0); 
 
             //Panzerspieler erstellen
-            K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
-            K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
-            drawSettingTank.Scale = 2;
-            drawSettingTank.xPos = _playerxpos;
-            drawSettingTank.yPos = _playerypos;
-            drawSettingTank.Rotation = _playerrot;
-            drawSettingTank.DrawIndex = 10;
-            Panzerplayer.PositionData = drawSettingTank;
-            Panzerplayer.loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
-            drawSettingTankR.Scale = drawSettingTank.Scale / 2;
-            drawSettingTankR.DrawIndex = drawSettingTank.DrawIndex - 1;
-            drawSettingTankR.yPos -= (int)(15 * drawSettingTankR.Scale);
-            drawSettingTankR.ID = "gun";
-            Panzerplayer.loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
-            Panzerplayer.AngleID = drawSettingTankR.ID;
+            if (player1 is K_Player) {
 
+                Panzerplayer.Add((K_Player)player1);
+
+                K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
+                K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
+                drawSettingTank.Scale = 2;
+                drawSettingTank.xPos = 100;
+                drawSettingTank.yPos = 100;
+                drawSettingTank.Rotation = 0;
+                drawSettingTank.DrawIndex = 10;
+                Panzerplayer[0].PositionData = drawSettingTank;
+                Panzerplayer[0].loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
+                drawSettingTankR.Scale = drawSettingTank.Scale / 2;
+                drawSettingTankR.DrawIndex = drawSettingTank.DrawIndex - 1;
+                drawSettingTankR.yPos -= (int)(15 * drawSettingTankR.Scale);
+                drawSettingTankR.ID = "gun";
+                Panzerplayer[0].loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
+                Panzerplayer[0].AngleID = drawSettingTankR.ID;
+
+                Panzerplayer[0].Status=new K_Status();
+                Panzerplayer[0].Status.State = 0;
+            }
+            if (_OOPmanager.activePlayers.Count() > 1)
+            {
+                IGamePlayer player2 = _OOPmanager.activePlayers.ElementAt(1);
+
+                //Panzerspieler erstellen
+                if (player2 is K_Player)
+                {
+
+                    Panzerplayer.Add((K_Player)player2);
+
+                    K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
+                    K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
+                    drawSettingTank.Scale = 2;
+                    drawSettingTank.xPos = 700;
+                    drawSettingTank.yPos = 100;
+                    drawSettingTank.Rotation = 0;
+                    drawSettingTank.DrawIndex = 10;
+                    Panzerplayer[1].PositionData = drawSettingTank;
+                    Panzerplayer[1].loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
+                    drawSettingTankR.Scale = drawSettingTank.Scale / 2;
+                    drawSettingTankR.DrawIndex = drawSettingTank.DrawIndex - 1;
+                    drawSettingTankR.yPos -= (int)(15 * drawSettingTankR.Scale);
+                    drawSettingTankR.ID = "gun";
+                    Panzerplayer[1].loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
+                    Panzerplayer[1].AngleID = drawSettingTankR.ID;
+                    Panzerplayer[1].Angle = 180;
+
+                    Panzerplayer[1].Status = new K_Status();
+                    Panzerplayer[1].Status.State = 0;
+                }
+            }
 
 
             //Spielfeld erstellen
@@ -163,87 +200,27 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
+            _KgameManager.GameField = randomeSpielfeld;
+            _KgameManager.Objects.Add(Panzerplayer[0]);
+            _KgameManager.Objects.Add(randomeSpielfeld);
+            _KgameManager.Objects.Add(testField2);
 
-            _gameManager.Objects.Add(Panzerplayer);
-            _gameManager.Objects.Add(randomeSpielfeld);
-            _gameManager.Objects.Add(testField2);
+            if (Panzerplayer.Count() > 1)
+            {
+                _KgameManager.Objects.Add(Panzerplayer[1]);
+            }
 
         }
 
         public void TickGameCall()
         {
             randomeSpielfeld.removeHoles();
-            if (_gameState == 0)
+
+            foreach(K_Player player in Panzerplayer)
             {
-
-                        int y = 0;
-                        int ry = 0;
-                        int ly = 0;
-
-                        while (randomeSpielfeld.getField(_playerxpos, y) == 0)
-                        {
-                            y++;
-                        }
-                        _playerypos = y;
-
-                        y = 0;
-                        while (randomeSpielfeld.getField(_playerxpos + 10, y) == 0)
-                        {
-                            y++;
-                        }
-                        ry = y;
-
-                        y = 0;
-                        while (randomeSpielfeld.getField(_playerxpos - 10, y) == 0)
-                        {
-                            y++;
-                        }
-                        ly = y;
-
-                        _playerrot = (float)(Math.Atan(((float)ry - (float)ly) / 20));
-          
-                    Panzerplayer.yPos = _playerypos;
-                    Panzerplayer.Rotation = ((float)180 / (float)Math.PI) * _playerrot;
-
-                    //Fahren
-                    if (Keyboard.IsKeyDown(Key.A) && Panzerplayer.xPos > 25 && _playerrot < 1.04)
-                    {
-                        Panzerplayer.xPos -= (int)(((double)3 * Math.Cos(_playerrot)) + 1);
-                    }
-
-                    if (Keyboard.IsKeyDown(Key.D) && Panzerplayer.xPos < 775 && _playerrot > -1.04)
-                    {
-                        Panzerplayer.xPos += (int)(((double)3 * Math.Cos(_playerrot)) + 1);
-                    }
-
-                    //Rohr drehen
-                    if (Keyboard.IsKeyDown(Key.W))
-                    {
-                        Panzerplayer.Angle += 3;
-                    }
-
-                    if (Keyboard.IsKeyDown(Key.S))
-                    {
-                        Panzerplayer.Angle -= 3;
-                    }
-
-                    _playerxpos = Panzerplayer.xPos;
-                
-
-                //Schuss
-                if (Keyboard.IsKeyDown(Key.L))
-                {
-                    _gameState = 1;
-                }
-                if (_gameState == 1)
-                {
-                    if (Keyboard.IsKeyDown(Key.Z))
-                    {
-                        _gameState = 0;
-                    }
-                }
-
+                player.updatePosition(randomeSpielfeld);
             }
+           
         }
     }
 }

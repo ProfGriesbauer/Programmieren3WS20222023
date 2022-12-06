@@ -71,6 +71,7 @@ namespace OOPGames
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame()); 
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
@@ -90,10 +91,13 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
-            OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
+            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF()); 
+            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
 
             OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
 
@@ -120,6 +124,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
 
             //OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             InitializeComponent();
@@ -150,12 +155,7 @@ namespace OOPGames
         /// <summary>
         /// //////////////////////////////////////
         /// </summary>
-        
-        public void RunDinoGame()
-        {
-            OOPGames.Classes.GruppeJ.Dino_Game.StartDinoGame();
 
-        }
         /// <summary>
         /// ///////////////////////////////
         /// </summary>
@@ -383,17 +383,23 @@ namespace OOPGames
         {
             List<IGameRules> usableRules = new List<IGameRules>();
             IPaintGame selectedPainter = PaintList.SelectedItem as IPaintGame;
-            if (selectedPainter != null)
+            try
             {
-                foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
+                if (selectedPainter != null)
                 {
-                    IGameField field= data.CurrentField;
-                    if (field!=null && field.CanBePaintedBy(selectedPainter))
+                    foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
                     {
-                        usableRules.Add(data);
+                        IGameField field = data.CurrentField;
+                        if (field != null && field.CanBePaintedBy(selectedPainter))
+                        {
+                            usableRules.Add(data);
+                        }
+
                     }
-                    
                 }
+            } catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
             }
 
             IGameRules selectedRule = GK_OpenSelectionWindow<IGameRules>(usableRules, "Painter Selection" , "Useable Rules");
@@ -406,20 +412,28 @@ namespace OOPGames
         {
             List<IPaintGame> usablePainters = new List<IPaintGame>();
             IGameRules selectedRule = RulesList.SelectedItem as IGameRules;
-            if (selectedRule != null)
-            {
-                IGameField field= selectedRule.CurrentField;
-                if (field != null)
-                {
-                    foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
-                    {
-                        if (field.CanBePaintedBy(data))
-                        {
-                            usablePainters.Add(data);
-                        }
 
+            try
+            {
+                if (selectedRule != null)
+                {
+                    IGameField field = selectedRule.CurrentField;
+                    if (field != null)
+                    {
+                        foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
+                        {
+                            if (field.CanBePaintedBy(data))
+                            {
+                                usablePainters.Add(data);
+                            }
+
+                        }
                     }
                 }
+            } 
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
             }
 
             IPaintGame selectedPainter = GK_OpenSelectionWindow<IPaintGame>(usablePainters, "Painter Selection", "Useable Painters");

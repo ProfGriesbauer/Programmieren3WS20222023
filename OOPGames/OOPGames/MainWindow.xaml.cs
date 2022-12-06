@@ -30,6 +30,8 @@ using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
 using System.Windows.Markup;
 using Brushes = System.Windows.Media.Brushes;
 using OOPGames.Classes.Gruppe_K.Form;
+using OOPGames.Interfaces.Gruppe_J;
+using System.Windows.Forms;
 
 namespace OOPGames
 {
@@ -57,6 +59,7 @@ namespace OOPGames
             ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
@@ -71,13 +74,13 @@ namespace OOPGames
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
-            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame()); 
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new B_Pong_Painter());
 
             //Rules
+            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
@@ -89,20 +92,20 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
-            OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF()); 
-            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
+            OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
 
             OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
 
 
             //Players
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanTicTacToePlayer_G());
             OOPGamesManager.Singleton.RegisterPlayer(new ComputerTicTacToePlayer_G());
@@ -169,6 +172,11 @@ namespace OOPGames
                     _CurrentRules.CurrentField != null &&
                     _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
                 {
+                    //Flüssigerer Spielverlauf durch kürzere Intervallschritte
+                    if (_CurrentPainter is GJ_IDinoPaintGame)
+                    {
+                        _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                    }
                     ((IPaintGame2)_CurrentPainter).TickPaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 }
 
@@ -304,7 +312,7 @@ namespace OOPGames
             _PaintTimer = null;
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) 
         {
             if (_CurrentRules == null) return;
             int winner = _CurrentRules.CheckIfPLayerWon();
@@ -317,6 +325,10 @@ namespace OOPGames
                 if (_CurrentRules.MovesPossible &&
                     _CurrentPlayer is IHumanGamePlayer)
                 {
+                    if (_CurrentPlayer is GJ_DinoGamePlayer && e.ImeProcessedKey == Key.Space && ((GJ_DinoGameRules)_CurrentRules).jumping == false)
+                    {
+                        ((GJ_DinoGameRules)_CurrentRules).jumping = true;
+                    }
                     IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new KeySelection(e.Key), _CurrentRules.CurrentField);
                     if (pm != null)
                     {

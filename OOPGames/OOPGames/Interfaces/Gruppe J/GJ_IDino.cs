@@ -35,7 +35,7 @@ namespace OOPGames.Interfaces.Gruppe_J
 
         public abstract bool gameOver { get; }
 
-        public abstract int jumpspeed { get; set; }
+        public abstract int jumpSpeed { get; set; }
 
         public abstract int force { get; set; }
 
@@ -50,6 +50,8 @@ namespace OOPGames.Interfaces.Gruppe_J
         public abstract int CheckIfPLayerWon();
         public abstract void ClearField();
         public abstract void DoMove(GJ_DinoPlayMove move);
+
+        public abstract void Jump();
         
         public void DoMove(IPlayMove move)
         {
@@ -65,12 +67,18 @@ namespace OOPGames.Interfaces.Gruppe_J
 
     public interface GJ_IDinoGameField : IGameField
     {
-        int this[int i] { get; set; }
+        //int this[int i] { get; set; }
+
+        List<Obstacle> obstacles { get; set;  }
+
+        int DinoYPos { get; set; }
+        int DinoXPos { get; set; }
     }
 
     public abstract class GJ_IDinoPaintGame : IPaintGame2
     {
         public abstract string Name { get; }
+
 
         public abstract void PaintDinoGameField(Canvas canvas, GJ_IDinoGameField currentField);
 
@@ -82,7 +90,16 @@ namespace OOPGames.Interfaces.Gruppe_J
             }
         }
 
-        public abstract void TickPaintGameField(Canvas canvas, IGameField currentField);
+
+        public  void TickPaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is GJ_IDinoGameField)
+            {
+                PaintDinoGameField(canvas, (GJ_IDinoGameField) currentField);
+    }
+}
+
+
     }
 
     public interface GJ_IDinoPlayMove : IPlayMove

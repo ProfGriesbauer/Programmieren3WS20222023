@@ -8,12 +8,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace OOPGames.Classes.Gruppe_K
 {
     internal class K_RulesZielschiessen : IGameRules2
     {
-        K_GameObjectManager _gameManager;
+        K_GameObjectManager _gameManager=new K_GameObjectManager();
+       
+        K_Player Panzerplayer = new K_Player();
+        K_GameField randomeSpielfeld = new K_GameField();
+        
         int _gameState = 0;
         int _playerxpos = 50;
         int _playerypos = 0;
@@ -46,7 +51,6 @@ namespace OOPGames.Classes.Gruppe_K
             _gameState = 0;
 
             //Panzerspieler erstellen
-            K_Player Panzerplayer = new K_Player();
             K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
             K_DrawObject.DrawSetting drawSettingTankR = new K_DrawObject.DrawSetting();
             drawSettingTank.Scale = 2;
@@ -66,7 +70,6 @@ namespace OOPGames.Classes.Gruppe_K
 
 
             //Spielfeld erstellen
-            K_GameField randomeSpielfeld = new K_GameField();
 
             List<Color> colorList = new List<Color>();
             colorList.Add(Colors.Transparent);
@@ -109,85 +112,128 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
+            // Add Test Hole to Field
+            int holeX = 50;
+            int holeY = 350;
+            int holeRX = 60;
+            int holeRY = 30;
+            for (int x = -holeRX; x < holeRX; x++)
+            {
+                for (int y = -holeRY; y < holeRY; y++)
+                {
+                    float x2 = (holeRY / (float)holeRX) * x * x;
+                    float y2 = (holeRX / (float)holeRY) * y * y;
+                    if ((x2 + y2) <= holeRX * holeRY)
+                    {
+                        randomeSpielfeld.setField(x + holeX, y + holeY, 0);
+                    }
+                }
+            }
+
+
+            // testField K_GameField object
+            K_GameField testField2 = new K_GameField();
+
+
+            testField2.Palette = new BitmapPalette(colorList);
+
+            // Set drawIndex
+            testField2.drawIndex = 0;
+
+
+            Random random = new Random();
+            int resPos = random.Next(200) + 100;
+
+            for (int x = 0; x < testField2.Width; x++)
+            {
+                for (int y = 0; y < testField2.Height; y++)
+                {
+                    if (x % resPos < (y - 100))
+                    {
+                        testField2.setField(x, y, 3);
+                    }
+                    else
+                    {
+                        testField2.setField(x, y, 1);
+                    }
+                }
+                if (x % 300 >= 299)
+                {
+                    resPos = random.Next(200) + 100;
+                }
+            }
+
+
             _gameManager.Objects.Add(Panzerplayer);
             _gameManager.Objects.Add(randomeSpielfeld);
+            _gameManager.Objects.Add(testField2);
 
         }
 
         public void TickGameCall()
         {
-
+            randomeSpielfeld.removeHoles();
             if (_gameState == 0)
             {
 
-                foreach (K_GameObject data in _gameManager.Objects)
-                {
-
-                    if (data is K_GameField)
-                    {
                         int y = 0;
                         int ry = 0;
                         int ly = 0;
 
-                        while (((K_GameField)data).getField(_playerxpos, y) == 0)
+                        while (randomeSpielfeld.getField(_playerxpos, y) == 0)
                         {
                             y++;
                         }
                         _playerypos = y;
 
                         y = 0;
-                        while (((K_GameField)data).getField(_playerxpos + 10, y) == 0)
+                        while (randomeSpielfeld.getField(_playerxpos + 10, y) == 0)
                         {
                             y++;
                         }
                         ry = y;
 
                         y = 0;
-                        while (((K_GameField)data).getField(_playerxpos - 10, y) == 0)
+                        while (randomeSpielfeld.getField(_playerxpos - 10, y) == 0)
                         {
                             y++;
                         }
                         ly = y;
 
                         _playerrot = (float)(Math.Atan(((float)ry - (float)ly) / 20));
-                    }
+          
+                    Panzerplayer.yPos = _playerypos;
+                    Panzerplayer.Rotation = ((float)180 / (float)Math.PI) * _playerrot;
 
-                    if (data is K_Player)
+                    //Fahren
+                    if (Keyboard.IsKeyDown(Key.A) && Panzerplayer.xPos > 25 && _playerrot < 1.04)
                     {
-                        ((K_Player)data).yPos = _playerypos;
-                        ((K_Player)data).Rotation = ((float)180 / (float)Math.PI) * _playerrot;
-
-                        //Fahren
-                        if (Keyboard.IsKeyDown(Key.A) && ((K_Player)data).xPos > 25 && _playerrot < 1.04)
-                        {
-                            ((K_Player)data).xPos -= (int)(((double)3 * Math.Cos(_playerrot)) + 1);
-                        }
-
-                        if (Keyboard.IsKeyDown(Key.D) && ((K_Player)data).xPos < 775 && _playerrot > -1.04)
-                        {
-                            ((K_Player)data).xPos += (int)(((double)3 * Math.Cos(_playerrot)) + 1);
-                        }
-
-                        //Rohr drehen
-                        if (Keyboard.IsKeyDown(Key.W))
-                        {
-                            ((K_Player)data).Angle += 3;
-                        }
-
-                        if (Keyboard.IsKeyDown(Key.S))
-                        {
-                            ((K_Player)data).Angle -= 3;
-                        }
-
-                        _playerxpos = ((K_Player)data).xPos;
+                        Panzerplayer.xPos -= (int)(((double)3 * Math.Cos(_playerrot)) + 1);
                     }
 
-                    //Schuss
-                    if (Keyboard.IsKeyDown(Key.L))
+                    if (Keyboard.IsKeyDown(Key.D) && Panzerplayer.xPos < 775 && _playerrot > -1.04)
                     {
-                        _gameState = 1;
+                        Panzerplayer.xPos += (int)(((double)3 * Math.Cos(_playerrot)) + 1);
                     }
 
+                    //Rohr drehen
+                    if (Keyboard.IsKeyDown(Key.W))
+                    {
+                        Panzerplayer.Angle += 3;
+                    }
+
+                    if (Keyboard.IsKeyDown(Key.S))
+                    {
+                        Panzerplayer.Angle -= 3;
+                    }
+
+                    _playerxpos = Panzerplayer.xPos;
+                
+
+                //Schuss
+                if (Keyboard.IsKeyDown(Key.L))
+                {
+                    _gameState = 1;
                 }
                 if (_gameState == 1)
                 {

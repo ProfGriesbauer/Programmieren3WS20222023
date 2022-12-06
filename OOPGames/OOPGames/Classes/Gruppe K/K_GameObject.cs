@@ -51,7 +51,11 @@ namespace OOPGames.Classes.Gruppe_K
         }
         public byte getField(int x, int y)
         {
-            return _field[x + y * _width];
+            if (x >= 0 && x < Width && y >= 0 && y < Height)
+            {
+                return _field[x + y * _width];
+            }
+            return 0;
         }
         public void setField(int x, int y, byte value)
         {

@@ -52,59 +52,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Classes\Gruppe K\Form\K_InformationWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Classes\Gruppe K\Form\K_SelectionWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Assets\G\noinput.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Assets\G\noinput.Designer.cs">
-      <DependentUpon>noinput.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Assets\G\MaxSizeWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Assets\G\MaxSizeWindow.Designer.cs">
-      <DependentUpon>MaxSizeWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Ball_Pong.cs" />
-    <Compile Include="Classes\Gruppe B\B_Pong\B_HumanPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Paddle_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Painter_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Rules_Pong.cs" />
@@ -112,7 +67,6 @@
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
-    <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
@@ -120,25 +74,19 @@
     <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
+    <Compile Include="Classes\Gruppe E\E_Painter.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
-    <Compile Include="Classes\Gruppe E\E_VierGewinnt.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
-    <Compile Include="Classes\Gruppe K\Form\K_InformationWindow.xaml.cs">
-      <DependentUpon>K_InformationWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\Gruppe K\Form\K_SelectionWindow.xaml.cs">
-      <DependentUpon>K_SelectionWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes\Gruppe K\K_Computerplayer.cs" />
-    <Compile Include="Classes\Gruppe K\K_RulesZielschiessen.cs" />
+    <Compile Include="Classes\Gruppe K\K_RulesGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
-    <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeI\I_TTTMove.cs" />
     <Compile Include="Classes\GruppeI\PlayerI.cs" />
     <Compile Include="Classes\GruppeI\TTTField.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
+    <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeJ\Dino_Game.cs" />
     <Compile Include="Classes\GruppeJ\Form1.cs">
       <SubType>Form</SubType>
@@ -152,7 +100,6 @@
     <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\GruppeJ\GJ_DinoGame.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />
@@ -168,11 +115,8 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPaintPongGameB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
-    <Compile Include="Interfaces\Gruppe E\I_E_4Gewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
-    <Compile Include="Interfaces\Gruppe J\GJ_IDino.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
-    <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
     <Compile Include="Interfaces\IGameRules.cs" />
     <Compile Include="Interfaces\IPaintGame.cs" />
@@ -198,12 +142,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Assets\G\noinput.resx">
-      <DependentUpon>noinput.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\G\MaxSizeWindow.resx">
-      <DependentUpon>MaxSizeWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Classes\GruppeJ\Dino_Form.resx">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Gruppe C\" />
+    <Folder Include="Interfaces\Gruppe E\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -264,8 +203,26 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\G\noinput.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Net.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Windows.Forms.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C:\Users\jonip\Documents\Karriere\3_Studium\Programmieren\Semester 3\Programmieren3WS20222023\OOPGames\OOPGames\obj\Debug\MainWindow.g.cs" />
+    <Compile Include="C:\Users\jonip\Documents\Karriere\3_Studium\Programmieren\Semester 3\Programmieren3WS20222023\OOPGames\OOPGames\obj\Debug\App.g.cs" />
+  </ItemGroup>
 </Project>

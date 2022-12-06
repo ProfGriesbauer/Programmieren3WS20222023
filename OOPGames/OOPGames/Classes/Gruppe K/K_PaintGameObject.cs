@@ -1,6 +1,7 @@
 ﻿using OOPGames.Interfaces.Gruppe_K;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
@@ -19,14 +21,27 @@ using Image = System.Windows.Controls.Image;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    internal class K_PaintGameObject : IK_PaintGameObject
+    class K_PaintGameObject : IK_PaintGameObject
     {
+        float dT = 0f;
+        DateTime lastTime = DateTime.Now;
         public string Name { get { return "K Painter tbd"; } }
 
 
 
         public void PaintGameField(Canvas canvas, List<K_GameObject> data)
         {
+            if (dT > 0)
+            {
+                dT = (float)(System.DateTime.Now.Subtract(lastTime).TotalMilliseconds / 1000f);
+            }
+            else
+            {
+                dT = 40f / 1000f;
+            }
+            lastTime = System.DateTime.Now;
+
+
             canvas.Children.Clear();
             foreach (K_GameObject obj in data) {
                 if (obj is K_GameField)
@@ -53,6 +68,7 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                 }
             }
+            drawText(canvas.ActualWidth - 100, 10, "FPS: " + (int)(1 / dT), 20, Colors.Black, Colors.White, canvas);
         }
 
 
@@ -68,21 +84,17 @@ namespace OOPGames.Classes.Gruppe_K
 
         private void PaintK_Player(Canvas canvas, K_Player obj)
         {
-            // TODO Finish Canon implementation
-            drawImage(canvas, obj);
-            
+            drawImageAll(canvas, obj);
         }
 
         private void PaintK_Projectile(Canvas canvas, K_Projectile obj)
         {
-            // TODO Implement PaintK_Projectile
-            drawImage(canvas, obj);
+            drawImageAll(canvas, obj);
         }
 
         private void PaintK_Target(Canvas canvas, K_Target obj)
         {
-            // TODO Implement PaintK_Target
-            drawImage(canvas, obj);
+            drawImageAll(canvas, obj);
         }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
@@ -95,50 +107,81 @@ namespace OOPGames.Classes.Gruppe_K
 
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
-            if (currentField is K_GameObjectManager)
+            if (currentField is IK_GameField)
             {
                 PaintGameField(canvas, ((K_GameObjectManager)currentField).Objects);
-            }
+            } 
         }
 
 
         private void drawImage(Canvas canvas, K_DrawObject obj)
         {
-            drawImage(canvas, obj, 0);
+            Canvas container = new Canvas();
+            RotateTransform rot = new RotateTransform();
+            rot.Angle = obj.Rotation;
+            rot.CenterX = obj.xCenter;
+            rot.CenterY = obj.yCenter;
+            container.RenderTransform = rot;
+
+            canvas.Children.Add(container);
+
+            Canvas.SetZIndex(container, obj.drawIndex);
+            Canvas.SetTop(container, obj.yPos);
+            Canvas.SetLeft(container, obj.xPos);
+            drawImage(container, obj, 0);
         }
         private void drawImage(Canvas canvas, K_DrawObject obj, int imageIndex)
         {
-            drawImage(canvas, obj, imageIndex, obj.xPos, obj.yPos, obj.xCenter, obj.yCenter, obj.Rotation, obj.Scale, obj.drawIndex);
+            drawImage(canvas, obj, imageIndex,obj.Image[imageIndex].Item2.xPos, obj.Image[imageIndex].Item2.yPos, obj.Image[imageIndex].Item2.xCenter, obj.Image[imageIndex].Item2.yCenter, obj.Image[imageIndex].Item2.Rotation, obj.Image[imageIndex].Item2.Scale, obj.Image[imageIndex].Item2.DrawIndex);
         }
         private void drawImageAll(Canvas canvas, K_DrawObject obj)
         {
-            for(int i=0; i < obj.Image.Count; i++)
+            Canvas container=new Canvas();
+            RotateTransform rot = new RotateTransform();
+            rot.Angle = obj.Rotation;
+            rot.CenterX = obj.xCenter;
+            rot.CenterY = obj.yCenter;
+            container.RenderTransform = rot;
+
+            canvas.Children.Add(container);
+
+            Canvas.SetZIndex(container, obj.drawIndex);
+            Canvas.SetTop(container, obj.yPos);
+            Canvas.SetLeft(container, obj.xPos);
+            for (int i=0; i < obj.Image.Count; i++)
             {
-                drawImage(canvas, obj, i);
+                drawImage(container, obj, i);
             }
         }
 
         private void drawImage(Canvas canvas, K_DrawObject obj, int imageIndex, int xPos, int yPos, int xCenter, int yCenter, float rotation, float scale, int drawIndex)
         {
-            if (imageIndex>=0 && obj.Image.Count>imageIndex) {
-                ImageBrush img = new ImageBrush();
-                img.ImageSource = obj.Image[imageIndex];
-                Label container = new Label();
-                RenderOptions.SetBitmapScalingMode(container, BitmapScalingMode.NearestNeighbor);
-                container.Width = obj.Image[imageIndex].PixelWidth * scale;
-                container.Height = obj.Image[imageIndex].PixelHeight * scale;
-                container.Background = img;
-                RotateTransform rot = new RotateTransform();
-                rot.Angle = rotation;
-                rot.CenterX = xCenter;
-                rot.CenterY = yCenter;
-                container.RenderTransform = rot;
+            try
+            {
+                if (imageIndex >= 0 && obj.Image.Count > imageIndex)
+                {
+                    ImageBrush img = new ImageBrush();
+                    img.ImageSource = obj.Image[imageIndex].Item1;
+                    Label container = new Label();
+                    RenderOptions.SetBitmapScalingMode(container, BitmapScalingMode.NearestNeighbor);
+                    container.Width = obj.Image[imageIndex].Item1.PixelWidth * scale;
+                    container.Height = obj.Image[imageIndex].Item1.PixelHeight * scale;
+                    container.Background = img;
+                    RotateTransform rot = new RotateTransform();
+                    rot.Angle = rotation;
+                    rot.CenterX = xCenter;
+                    rot.CenterY = yCenter;
+                    container.RenderTransform = rot;
 
-                canvas.Children.Add(container);
+                    canvas.Children.Add(container);
 
-                Canvas.SetZIndex(container, drawIndex);
-                Canvas.SetTop(container, yPos);
-                Canvas.SetLeft(container, xPos);
+                    Canvas.SetZIndex(container, drawIndex);
+                    Canvas.SetTop(container, yPos);
+                    Canvas.SetLeft(container, xPos);
+                }
+            } catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
         private void drawText(double x, double y, string text, int size, Color colorText, Color colorBackground, Canvas canvas)

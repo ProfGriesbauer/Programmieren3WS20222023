@@ -68,6 +68,7 @@ namespace OOPGames
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             //OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame()); 
 
             //OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
 
@@ -90,7 +91,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
-            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF()); 
+            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
 
             //OOPGamesManager.Singleton.RegisterRules(new RulerSV());
 
@@ -115,6 +117,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
@@ -144,12 +147,7 @@ namespace OOPGames
         /// <summary>
         /// //////////////////////////////////////
         /// </summary>
-        
-        public void RunDinoGame()
-        {
-            OOPGames.Classes.GruppeJ.Dino_Game.StartDinoGame();
 
-        }
         /// <summary>
         /// ///////////////////////////////
         /// </summary>

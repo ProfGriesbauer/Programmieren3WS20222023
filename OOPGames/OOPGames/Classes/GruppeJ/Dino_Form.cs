@@ -131,5 +131,15 @@ namespace OOPGames.Classes.GruppeJ
         {
 
         }
+
+        private void Dino_Form_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

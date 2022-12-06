@@ -90,7 +90,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
-            OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
@@ -383,17 +383,23 @@ namespace OOPGames
         {
             List<IGameRules> usableRules = new List<IGameRules>();
             IPaintGame selectedPainter = PaintList.SelectedItem as IPaintGame;
-            if (selectedPainter != null)
+            try
             {
-                foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
+                if (selectedPainter != null)
                 {
-                    IGameField field= data.CurrentField;
-                    if (field!=null && field.CanBePaintedBy(selectedPainter))
+                    foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
                     {
-                        usableRules.Add(data);
+                        IGameField field = data.CurrentField;
+                        if (field != null && field.CanBePaintedBy(selectedPainter))
+                        {
+                            usableRules.Add(data);
+                        }
+
                     }
-                    
                 }
+            } catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
             }
 
             IGameRules selectedRule = GK_OpenSelectionWindow<IGameRules>(usableRules, "Painter Selection" , "Useable Rules");
@@ -406,20 +412,28 @@ namespace OOPGames
         {
             List<IPaintGame> usablePainters = new List<IPaintGame>();
             IGameRules selectedRule = RulesList.SelectedItem as IGameRules;
-            if (selectedRule != null)
-            {
-                IGameField field= selectedRule.CurrentField;
-                if (field != null)
-                {
-                    foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
-                    {
-                        if (field.CanBePaintedBy(data))
-                        {
-                            usablePainters.Add(data);
-                        }
 
+            try
+            {
+                if (selectedRule != null)
+                {
+                    IGameField field = selectedRule.CurrentField;
+                    if (field != null)
+                    {
+                        foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
+                        {
+                            if (field.CanBePaintedBy(data))
+                            {
+                                usablePainters.Add(data);
+                            }
+
+                        }
                     }
                 }
+            } 
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
             }
 
             IPaintGame selectedPainter = GK_OpenSelectionWindow<IPaintGame>(usablePainters, "Painter Selection", "Useable Painters");

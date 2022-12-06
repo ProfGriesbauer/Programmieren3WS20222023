@@ -130,7 +130,7 @@
       <DependentUpon>K_SelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Gruppe K\K_Computerplayer.cs" />
-    <Compile Include="Classes\Gruppe K\K_RulesGameObject.cs" />
+    <Compile Include="Classes\Gruppe K\K_RulesZielschiessen.cs" />
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />

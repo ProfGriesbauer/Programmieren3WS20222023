@@ -50,6 +50,7 @@ namespace OOPGames
 
         public void calculate()
         {
+            paddleX = (int)Math.Round(paddleX + stepsize);
         }
     }
 }

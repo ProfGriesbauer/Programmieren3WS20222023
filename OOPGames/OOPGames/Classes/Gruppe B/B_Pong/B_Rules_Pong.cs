@@ -3,61 +3,112 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OOPGames.Classes.Gruppe_B.B_Pong;
 using System.Timers;
 
 namespace OOPGames
 {
     public class B_Rules_Pong : IPongRulesB
     {
-        public IPongFieldB PongField => throw new NotImplementedException();
-
-        public string Name { get { return "Ich vergesse Sachen"; } }
-
-        public IGameField CurrentField => throw new NotImplementedException();
-
-        public bool MovesPossible => throw new NotImplementedException();
-
-        public int CheckIfPLayerWon()
+        B_GameField_Pong _PongField = new B_GameField_Pong();
+        public IPongFieldB PongField
         {
-            throw new NotImplementedException();
+            get
+            {
+                return _PongField;
+            }
+        }
+
+        public string Name { get { return "GruppeBPongRules"; } }
+
+        public IGameField CurrentField { get { return PongField; } }
+
+        public bool MovesPossible
+        {
+            get
+            {
+                if (_PongField.paddle1.paddleX >= 50 
+                    && _PongField.paddle1.paddleX <= 350
+                    && _PongField.paddle2.paddleX >= 50 
+                    && _PongField.paddle2.paddleX <= 350)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public int CheckIfPLayerWon() // Spieler 1 oben Spieler 2 unten
+        {
+            //if (_PongField.ball.ballY <= 50 + _PongField.ball.radius)
+            //{
+            //    return 2;
+            //}
+
+            //if (_PongField.ball.ballY >= 350 - _PongField.ball.radius)
+            //{
+            //    return 1;
+            //}
+            return -1;
         }
 
         public void ClearField()
         {
-            throw new NotImplementedException();
+            _PongField = new B_GameField_Pong();
         }
 
         public void DoMove(IPlayMove move)
         {
-            throw new NotImplementedException();
+            if (move is IPongMoveB)
+            {
+                DoPongMove((IPongMoveB)move);
+            }
         }
 
         public void DoPongMove(IPongMoveB move)
         {
-            if (move.PlayerNumber == 1)
+            if (move.PlayerNumber == 1 && _PongField.paddle1.paddleX + move.moveDirection >= 50 
+                && _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth + move.moveDirection <= 350)
             {
-                //_PongField.paddle1.stepsize = move.moveDirection;
-               // _PongField.paddle1.calculate();
-                
+                _PongField.paddle1.stepsize = move.moveDirection;
+                _PongField.paddle1.calculate();
             }
-
-            if (move.PlayerNumber == 2)
+            if (move.PlayerNumber == 2 && _PongField.paddle2.paddleX + move.moveDirection >= 50 
+                && _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth + move.moveDirection <= 350)
             {
-               // _PongField.paddle2.stepsize = move.moveDirection;
-              //  _PongField.paddle2.calculate();
-                
+                _PongField.paddle2.stepsize = move.moveDirection;
+                _PongField.paddle2.calculate();
             }
         }
 
         public void StartedGameCall()
         {
-            throw new NotImplementedException();
+
         }
 
         public void TickGameCall()
         {
-            throw new NotImplementedException();
+            if (_PongField.ball.ballX - _PongField.ball.radius - 5.5 <= 50)
+            {
+                _PongField.ball.velocityX = _PongField.ball.velocityX * -1;
+            }
+            if (_PongField.ball.ballX + _PongField.ball.radius + 5.5 >= 350)
+            {
+                _PongField.ball.velocityX = _PongField.ball.velocityX * -1;
+            }
+            if (_PongField.ball.ballY - _PongField.ball.radius <= 80
+                && _PongField.ball.ballX >= _PongField.paddle1.paddleX 
+                && _PongField.ball.ballX <= _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth)
+            {
+                _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
+            }
+            if (_PongField.ball.ballY + _PongField.ball.radius >= 520 
+                && _PongField.ball.ballX >= _PongField.paddle2.paddleX
+                && _PongField.ball.ballX <= _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth)
+            {
+                _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
+            }
+            Console.WriteLine(_PongField.paddle2.paddleX);
+            _PongField.ball.calculate();
         }
     }
 }

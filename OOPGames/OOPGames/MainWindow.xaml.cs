@@ -281,6 +281,12 @@ namespace OOPGames
                         }
                         IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }*/
+                    /*
+                    if (_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
+                    {
+                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton, _CurrentRules.CurrentField);
+                    }
+                    */
                     IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     
                     if (pm != null)

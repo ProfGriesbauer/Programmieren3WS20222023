@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using OOPGames;
 
-namespace OOPGames.Classes.Gruppe_B.B_Pong
+namespace OOPGames
 {
     public class B_HumanPlayer_Pong : IHumanPongPlayerB
     {

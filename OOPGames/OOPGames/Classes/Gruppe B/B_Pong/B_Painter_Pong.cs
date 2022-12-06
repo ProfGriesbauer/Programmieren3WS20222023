@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using OOPGames.Classes.Gruppe_B.B_Pong;
 
 namespace OOPGames
 {

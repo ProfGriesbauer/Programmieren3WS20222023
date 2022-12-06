@@ -1,5 +1,6 @@
 ﻿using OOPGames.Classes.Gruppe_E;
 using OOPGames.Classes.Gruppe_K;
+using OOPGames.Classes.GruppeJ;
 using OOPGames.Interfaces.Gruppe_J;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OOPGames
@@ -18,32 +20,30 @@ namespace OOPGames
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public int pos { get; set; }
+        public int posY { get; set; }
+        public int posX { get; set; }
         public Image image { get; set; }
 
-        public Obstacle (Canvas canvas, BitmapSource source)
+        public Obstacle (BitmapSource source)
         {
             image = new Image
             {
                 Height = source.Height,
                 Width = source.Width,
-                Source = source
+                Source = source,
             };
-            canvas.Children.Add(image); 
+            posY = 365;
             Random rand = new Random();
-            Canvas.SetTop(image, 300);
-            Canvas.SetLeft(image, 300 + rand.Next(0,100));
-            //canvas.set
+            
+            posX = 550 + rand.Next(0, 500);
+           
         }
-        private int getLeftPos;
         public int GetLeftPos {
-        get { return getLeftPos - (int)(0.5 * this.Width); }
-        set { getLeftPos = value; }
+            get { return posX - (int)(0.5 * this.Width); }
         }
-        public int getTopPos()
-        { return pos - (int)(0.5 * this.Height); }
-
-    }
+        public int GetTopPos()
+        { return posY - (int)(0.5 * this.Height); }
+}
     public class GJ_DinoPlayMove : GJ_IDinoPlayMove
     {
         public int PlayerNumber { get { return 1; } }
@@ -60,65 +60,57 @@ namespace OOPGames
 
         public override void PaintDinoGameField(Canvas canvas, GJ_IDinoGameField currentField)
         {
-            // Painting Starting Game Field
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
+            Color lineColor = Color.FromRgb(40, 40, 40);
+            Brush lineStroke = new SolidColorBrush(lineColor);
+            Line l1 = new Line() { X1 = 0, Y1 = 417, X2 = 555, Y2 = 417, Stroke = lineStroke, StrokeThickness = 20.0 };
+            canvas.Children.Add(l1);
             Image dinoPic = new Image();
-            dinoPic.Width = 40;
-            dinoPic.Height = 43;
-            // Mögliche Option, den Ressourcenpfad relativ im Projekt zu schreiben, vorerst lokal auf meinem PC (Jannik)
-            //dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;componentResources/running.gif"));
-            dinoPic.Source = new BitmapImage(new Uri("C:\\Users\\Jannik\\Google Drive\\WS23\\Programmieren 3\\Project\\Programmieren3WS20222023\\OOPGames\\OOPGames\\Resources\\running.gif"));
+            //dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/running.gif"));
+            dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/running.gif"));
+            dinoPic.Width = dinoPic.Source.Width;
+            dinoPic.Height= dinoPic.Source.Height;
             canvas.Children.Add(dinoPic);
-            Canvas.SetTop(dinoPic, 200);
-            
+            //Canvas.SetTop(dinoPic, currentField.DinoYPos);
+            Canvas.SetTop(dinoPic, currentField.DinoYPos);
+            Canvas.SetLeft(dinoPic, currentField.DinoXPos);
+            foreach (Obstacle x in currentField.obstacles)
+            {
+                //Sobald Obstacle im Zeichenbereich ist
+                if(x.posX <= 550)
+                {
+                    canvas.Children.Add((x.image));
+                    Canvas.SetTop(x.image, x.posY);
+                    Canvas.SetLeft(x.image, x.posX);
+
+                }
+            }
+
             //ImageBrush dino = new ImageBrush(new ImageSource(""));
         }
 
-        public void PaintGameField(Canvas canvas, IGameField currentField)
-        {
-            if (currentField is GJ_DinoGameField)
-            {
-                PaintDinoGameField(canvas, (GJ_DinoGameField)currentField);
-            }
-        }
-
-        public override void TickPaintGameField(Canvas canvas, IGameField currentField)
-        {
-            //Nur Temporär eingefügt!
-            if (currentField is GJ_DinoGameField)
-            {
-                TickPaintDinoGameField(canvas, (GJ_DinoGameField)currentField);
-            }
-        }
         public void TickPaintDinoGameField(Canvas canvas, GJ_DinoGameField currentField)
         {
-            // Painting Starting Game Field
-            canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
-            canvas.Background = new SolidColorBrush(bgColor);
-            Image dinoPic = new Image();
-            dinoPic.Width = 40;
-            dinoPic.Height = 43;
-            TextBlock score = new TextBlock();
-            score.Text = "Score: ";
-            canvas.Children.Add(score);
-            //Canvas.Set
-            // Mögliche Option, den Ressourcenpfad relativ im Projekt zu schreiben, vorerst lokal auf meinem PC (Jannik)
-            //dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;componentResources/running.gif"));
-            dinoPic.Source = new BitmapImage(new Uri("C:\\Users\\Jannik\\Google Drive\\WS23\\Programmieren 3\\Project\\Programmieren3WS20222023\\OOPGames\\OOPGames\\Resources\\running.gif"));
-            canvas.Children.Add(dinoPic);
-            Canvas.SetTop(dinoPic, 200);
-            GJ_DinoGameRules rules= new GJ_DinoGameRules();
-            Canvas.SetLeft(dinoPic, rules.getDinoXPosition);   
+            PaintDinoGameField(canvas, currentField);  
         }
+
+       
     }
 
         
     public class GJ_DinoGameField : GJ_IDinoGameField
     {
         int[,] _Field = new int[3, 3];
+
+        public List<Obstacle> obstacles { get; set; }
+        public int DinoYPos { get; set; }
+        public int DinoXPos { get; set; }
+
+        // bool jumping { get; set; }  
+
+        /*
         public int this[int i]
         {
             get
@@ -130,6 +122,7 @@ namespace OOPGames
                 _Field[0, 0] = 0;
             }
         }
+        */
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is GJ_IDinoPaintGame;
@@ -150,15 +143,43 @@ namespace OOPGames
 
         public override bool gameOver { get; }
 
-        public override int jumpspeed { get; set; }
+        public override int jumpSpeed { get; set; }
         public override int force { get; set; }
         public override int gameScore { get; set; }
         public override int ObstacleSpeed { get; set; }
         public override int dinoYPosition { get; set; }
 
-        private const int dinoXPosition = 60;
+        private const int dinoXPosition = 100;
+        public int DinoXPosition => dinoXPosition;
 
         public override int scoreNumber { get; set; }
+
+        public override void Jump()
+        {
+            dinoYPosition += jumpSpeed;
+            if (jumping == true && force < 0)
+            {
+                jumping = false;
+
+            }
+            if (jumping == true)
+            {
+                jumpSpeed = -12;
+                force -= 1;
+            }
+            else
+            {
+                jumpSpeed = 12;
+            }
+                
+            if (dinoYPosition > 364 && jumping == false)
+            {
+                force = 12;
+                dinoYPosition = 365;
+                jumpSpeed = 0;
+            }
+            _currentField.DinoYPos = dinoYPosition;
+        }
 
         public int getDinoXPosition { get { return dinoXPosition; } }
 
@@ -168,10 +189,14 @@ namespace OOPGames
         { 
 
             obstacles.Add(ob);
+            _currentField.obstacles = obstacles;
         }
 
         public void removeObstacle(Obstacle ob)
-        { obstacles.Remove(ob); }
+        {
+            obstacles.Remove(ob);
+            _currentField.obstacles.Remove(ob);
+        }
 
         public int getObstacleCount()
         { return obstacles.Count; }
@@ -181,33 +206,32 @@ namespace OOPGames
             Random rand = new Random();
             foreach (Obstacle x in obstacles)
             {
-                if (x is Obstacle)
-                { 
-                    x.GetLeftPos -= ObstacleSpeed;
-                    if (x.GetLeftPos < 100)
+                    x.posX -= ObstacleSpeed;
+                    if (x.GetLeftPos < 30)
                     {
                         // Temporär Canvasbreite Hardcoded
-                        x.GetLeftPos = 550 + rand.Next(200, 500) + (x.Width * 25);
+                        x.posX = 550 + rand.Next(200, 500) + (x.Width * 25);
                         gameScore++;
                         scoreNumber++;
                     }
                     // DinoWidth = 40, DinoHeight = 43
-                    if (((dinoYPosition + 43)>x.getTopPos()) && ((dinoXPosition + 40) > x.getTopPos()) && (dinoXPosition < (x.Width + x.GetLeftPos)))
+                    if (((dinoYPosition + 43)>x.GetTopPos()) && ((dinoXPosition + 40) > x.GetTopPos()) && (dinoXPosition < (x.Width + x.posX)))
                     {
-                        //TODO:
-                        // fm.S_G_Dino.Image = Properties.Resources.dead;
-                        //fm.TxtScore.Text += "\nPress R to restart the game!";
-                        //Player.IsGameOver = true;
+                    //TODO:
+                    // fm.S_G_Dino.Image = Properties.Resources.dead;
+                    //fm.TxtScore.Text += "\nPress R to restart the game!";
+                        _currentField.obstacles = obstacles;
                         return 1;
 
                     }
-                }
+
             }
             if (scoreNumber > 10)
             {
-                //Player.ObstacleSpeed++;
+                ObstacleSpeed++;
                 scoreNumber = 0;
             }
+            _currentField.obstacles = obstacles;
             return 0;
         }
 
@@ -224,15 +248,32 @@ namespace OOPGames
         public override void StartedGameCall()
         {
             jumping = false;
+            jumpSpeed= 0;   
             force = 12;
             gameScore= 0;
             scoreNumber = 0;
+            dinoYPosition = 365;
+            ObstacleSpeed = 5;
+            _currentField.DinoYPos= dinoYPosition;
+            _currentField.DinoXPos= dinoXPosition;
             obstacles = new List<Obstacle>();
+            BitmapImage bmi1 = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/obstacle-1.gif"));
+            Obstacle obs1 = new Obstacle(bmi1);
+            obs1.posY -= 4;
+            obstacles.Add(obs1);
+            BitmapImage bmi2 = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/obstacle-2.gif"));
+            Obstacle obs2= new Obstacle(bmi2);
+            obs2.posY += 10;
+            obs2.posX += 400;
+            obstacles.Add(obs2);
+            _currentField.obstacles = obstacles;
         }
 
         public override void TickGameCall()
         {
-            
+            Jump();
+            CheckIfPLayerWon();
+
         }
     }
 

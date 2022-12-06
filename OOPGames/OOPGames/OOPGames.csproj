@@ -239,16 +239,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\dead.png" />
+    <Resource Include="Resources\dead.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\obstacle-1.gif" />
+    <Resource Include="Resources\obstacle-1.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\obstacle-2.gif" />
+    <Resource Include="Resources\obstacle-2.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\running.gif" />
+    <Resource Include="Resources\running.gif" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\K\Panzer.png">

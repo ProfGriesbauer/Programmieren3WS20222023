@@ -66,12 +66,14 @@ namespace OOPGames
 
         public void DoPongMove(IPongMoveB move)
         {
-            if (move.PlayerNumber == 1)
+            if (move.PlayerNumber == 1 && _PongField.paddle1.paddleX + move.moveDirection >= 50 
+                && _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth + move.moveDirection <= 350)
             {
                 _PongField.paddle1.stepsize = move.moveDirection;
                 _PongField.paddle1.calculate();
             }
-            if (move.PlayerNumber == 2)
+            if (move.PlayerNumber == 2 && _PongField.paddle2.paddleX + move.moveDirection >= 50 
+                && _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth + move.moveDirection <= 350)
             {
                 _PongField.paddle2.stepsize = move.moveDirection;
                 _PongField.paddle2.calculate();
@@ -105,7 +107,7 @@ namespace OOPGames
             {
                 _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
             }
-            Console.WriteLine(_PongField.paddle2.paddleY);
+            Console.WriteLine(_PongField.paddle2.paddleX);
             _PongField.ball.calculate();
         }
     }

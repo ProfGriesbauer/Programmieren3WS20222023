@@ -82,9 +82,9 @@ namespace OOPGames
 
     public class B_GameField_Pong : IPongFieldB
     {
-        B_Ball _ball = new B_Ball(10, 1, 1);
-        B_Paddle _paddle1 = new B_Paddle(1, true);
-        B_Paddle _paddle2 = new B_Paddle(2, false);
+        B_Ball _ball = new B_Ball(10, 3, 3);
+        B_Paddle _paddle1 = new B_Paddle(1, false);
+        B_Paddle _paddle2 = new B_Paddle(2, true);
         public B_Ball ball { get { return _ball; } set { _ball = value; } }
         public B_Paddle paddle1 { get { return _paddle1; } set { _paddle1 = value; } }
         public B_Paddle paddle2 { get { return _paddle2; } set { _paddle2 = value; } }

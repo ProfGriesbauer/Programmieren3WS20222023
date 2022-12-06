@@ -126,7 +126,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
 
-            //OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;

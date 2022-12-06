@@ -26,8 +26,10 @@ namespace OOPGames
         {
             get
             {
-                if (_PongField.paddle1.paddleX > 50 && _PongField.paddle1.paddleX < 350 
-                    && _PongField.paddle2.paddleX > 50 && _PongField.paddle2.paddleX < 350)
+                if (_PongField.paddle1.paddleX >= 50 
+                    && _PongField.paddle1.paddleX <= 350
+                    && _PongField.paddle2.paddleX >= 50 
+                    && _PongField.paddle2.paddleX <= 350)
                 {
                     return true;
                 }
@@ -37,15 +39,15 @@ namespace OOPGames
 
         public int CheckIfPLayerWon() // Spieler 1 oben Spieler 2 unten
         {
-            if (_PongField.ball.ballY <= 50 + _PongField.ball.radius)
-            {
-                return 2;
-            }
+            //if (_PongField.ball.ballY <= 50 + _PongField.ball.radius)
+            //{
+            //    return 2;
+            //}
 
-            if (_PongField.ball.ballY >= 350 - _PongField.ball.radius)
-            {
-                return 1;
-            }
+            //if (_PongField.ball.ballY >= 350 - _PongField.ball.radius)
+            //{
+            //    return 1;
+            //}
             return -1;
         }
 
@@ -68,13 +70,11 @@ namespace OOPGames
             {
                 _PongField.paddle1.stepsize = move.moveDirection;
                 _PongField.paddle1.calculate();
-                
             }
             if (move.PlayerNumber == 2)
             {
                 _PongField.paddle2.stepsize = move.moveDirection;
                 _PongField.paddle2.calculate();
-                
             }
         }
 
@@ -85,25 +85,28 @@ namespace OOPGames
 
         public void TickGameCall()
         {
-            if (_PongField.ball.ballX - _PongField.ball.radius <= 50)
+            if (_PongField.ball.ballX - _PongField.ball.radius - 5.5 <= 50)
             {
                 _PongField.ball.velocityX = _PongField.ball.velocityX * -1;
             }
-            if (_PongField.ball.ballX + _PongField.ball.radius >= 350)
+            if (_PongField.ball.ballX + _PongField.ball.radius + 5.5 >= 350)
             {
                 _PongField.ball.velocityX = _PongField.ball.velocityX * -1;
             }
-            if (_PongField.ball.ballY - _PongField.ball.radius <= 80 && _PongField.ball.ballX == _PongField.paddle1.paddleX)
+            if (_PongField.ball.ballY - _PongField.ball.radius <= 80
+                && _PongField.ball.ballX >= _PongField.paddle1.paddleX 
+                && _PongField.ball.ballX <= _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth)
             {
                 _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
             }
-            if (_PongField.ball.ballY + _PongField.ball.radius >= 520 && _PongField.ball.ballX == _PongField.paddle2.paddleX)
+            if (_PongField.ball.ballY + _PongField.ball.radius >= 520 
+                && _PongField.ball.ballX >= _PongField.paddle2.paddleX
+                && _PongField.ball.ballX <= _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth)
             {
-                _PongField.ball.velocityY = -_PongField.ball.velocityY * -1;
+                _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
             }
-
+            Console.WriteLine(_PongField.paddle2.paddleY);
             _PongField.ball.calculate();
         }
     }
 }
-

@@ -143,7 +143,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             _Shipfield.Phase = GamePhase;
         }
 
-        public int CheckHit(int r, int c, int Playernumber)             //Schussfunktion
+        public int CheckHit(int r, int c, int Playernumber)//Schussfunktion
         {
             if (Playernumber == 2)
             {

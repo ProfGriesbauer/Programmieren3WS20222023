@@ -45,7 +45,8 @@ namespace OOPGames.Classes.Gruppe_K
         {
             _KgameManager = new K_GameObjectManager();
             _KgameManager.Status = new K_Status();
-            
+            Panzerplayer = new List<K_Player>();
+            randomeSpielfeld = new K_GameField();
 
             IGamePlayer player1= _OOPmanager.activePlayers.ElementAt(0); 
 

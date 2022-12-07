@@ -32,6 +32,7 @@ using Brushes = System.Windows.Media.Brushes;
 using OOPGames.Classes.Gruppe_K.Form;
 using OOPGames.Interfaces.Gruppe_J;
 using System.Windows.Forms;
+using OOPGames.Interfaces.Gruppe_K;
 
 namespace OOPGames
 {
@@ -186,6 +187,34 @@ namespace OOPGames
                 {
                     ((IGameRules2)_CurrentRules).TickGameCall();
                 }
+
+                InputTick();
+
+            }
+        }
+
+        private void InputTick()
+        {
+            int winner = _CurrentRules.CheckIfPLayerWon();
+
+
+            if (winner == 0)
+            {
+                K_MouseSelectionTick mouse = new K_MouseSelectionTick((int)Mouse.GetPosition(PaintCanvas).X, (int)Mouse.GetPosition(PaintCanvas).Y);
+                K_KeySelectionTick key = new K_KeySelectionTick();
+              
+
+                if (_CurrentPlayer1 !=null && _CurrentPlayer1 is IK_HumanPlayer) {
+                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(mouse, _CurrentRules.CurrentField);
+                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
+                }
+                if (_CurrentPlayer2 != null && _CurrentPlayer2 is IK_HumanPlayer)
+                {
+                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(mouse, _CurrentRules.CurrentField);
+                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
+                }
+              
+
             }
         }
 
@@ -330,9 +359,13 @@ namespace OOPGames
             _PaintTimer.Stop();
             _PaintTimer = null;
         }
-
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            K_KeySelectionTick.removeKey(e.Key);
+        }
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) 
         {
+            K_KeySelectionTick.addKey(e.Key);
             if (_CurrentRules == null) return;
             int winner = _CurrentRules.CheckIfPLayerWon();
             if (winner > 0)

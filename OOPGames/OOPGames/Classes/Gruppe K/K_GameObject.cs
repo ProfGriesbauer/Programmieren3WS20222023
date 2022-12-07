@@ -513,38 +513,38 @@ namespace OOPGames.Classes.Gruppe_K
             K_Move move = new K_Move();
             move.Position = PositionData;
             
-            if (selection is KeySelection && field is K_GameObjectManager)
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager)
             {
-                KeySelection inputData = (KeySelection)selection;
+                K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
                 K_GameField gameField = ((K_GameObjectManager)field).GameField;
                 if (Status.State== 0)
                 {
                     float rot=getAngleField(gameField);
                     
                     //Fahren
-                    if (inputData.Key == Key.A && xPos > 25 && rot < 1.04)
+                    if (inputData.Keys.Contains(Key.A) && xPos > 25 && rot < 1.04)
                     {
                         xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
-                    if (inputData.Key == Key.D && xPos < 775 && rot > -1.04)
+                    if (inputData.Keys.Contains(Key.D) && xPos < 775 && rot > -1.04)
                     {
                         xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
                     //Rohr drehen
-                    if (inputData.Key == Key.W)
+                    if (inputData.Keys.Contains(Key.W))
                     {
                         Angle += 3;
                     }
 
-                    if (inputData.Key == Key.S)
+                    if (inputData.Keys.Contains(Key.S))
                     {
                         Angle -= 3;
                     }
 
                     //Schuss
-                    if (inputData.Key == Key.Space)
+                    if (inputData.Keys.Contains(Key.E))
                     {
                         Status.State = 1;
                     }
@@ -552,7 +552,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
                 if (Status.State == 1)
                 {
-                    if (inputData.Key == Key.Z)
+                    if (inputData.Keys.Contains(Key.R))
                     {
                         Status.State = 0;
                     }
@@ -587,45 +587,49 @@ namespace OOPGames.Classes.Gruppe_K
             K_Move move = new K_Move();
             move.Position = PositionData;
 
-            if (selection is KeySelection && field is K_GameObjectManager)
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager)
             {
-                KeySelection inputData = (KeySelection)selection;
+                K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
                 K_GameField gameField = ((K_GameObjectManager)field).GameField;
                 if (Status.State == 0)
                 {
                     float rot = getAngleField(gameField);
 
                     //Fahren
-                    if (inputData.Key == Key.Left && xPos > 25 && rot < 1.04)
+                    if (inputData.Keys.Contains(Key.Left) && xPos > 25 && rot < 1.04)
                     {
                         xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
-                    if (inputData.Key == Key.Right && xPos < 775 && rot > -1.04)
+                    if (inputData.Keys.Contains(Key.Right) && xPos < 775 && rot > -1.04)
                     {
                         xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
-                    //Schuss
-                    if (inputData.Key == Key.Up)
-                    {
-                        Status.State = 1;
-                    }
-                }
-                if (Status.State == 1)
-                {
 
-                    if (inputData.Key == Key.Down)
-                    {
-                        Status.State = 0;
-                    }
                 }
             }
-            if(selection is IClickSelection)
-            {
-                IClickSelection inputData = (IClickSelection)selection;
-                //Rohr drehen
-                Angle = (float)((180 / Math.PI) * Math.Atan2(inputData.YClickPos-yPos, inputData.XClickPos- xPos))-Rotation;
 
+            if (selection is ClickSelection)
+            {
+                    //Schuss
+                if (Status.State == 0)
+                {
+                   Status.State = 1;
+                }
+                else
+                {
+                  Status.State = 0;
+                }
+            }
+
+            if(selection is K_MouseSelectionTick)
+            {
+                K_MouseSelectionTick inputData = (K_MouseSelectionTick)selection;
+                //Rohr drehen
+                if (Image.Count >= 2)
+                {
+                    Angle = (float)((180 / Math.PI) * Math.Atan2(inputData.YPos - (yPos + (Image[1].Item2.yPos - Image[1].Item2.yCenter)), inputData.XPos - (xPos + (Image[1].Item2.xPos - Image[1].Item2.xCenter)))) - Rotation;
+                }
             }
             return move;
         }
@@ -656,6 +660,61 @@ namespace OOPGames.Classes.Gruppe_K
     class K_Object : K_DrawObject
     {
     
+    }
+
+    public class K_MouseSelectionTick : IClickSelection
+    {
+       
+        int _PositionX=0;
+        int _PositionY=0;
+
+        public K_MouseSelectionTick( int positionX, int positionY)
+        {
+            
+            _PositionX = positionX;
+            _PositionY = positionY;
+        
+        }
+
+        public int YPos { get { return _PositionY; } }
+        public int XPos { get { return _PositionX; } }
+
+        public MoveType MoveType { get { return MoveType.click; } }
+
+        public int XClickPos => 0;
+
+        public int YClickPos => 0;
+    }
+
+    public class K_KeySelectionTick : IKeySelection
+    {
+        Key _Key;
+        int _ClickX = 0;
+        int _ClickY = 0;
+        static List<Key> _Keys=new List<Key>();
+       
+        public static void addKey(Key key)
+        {
+            if (!_Keys.Contains(key))
+            {
+                _Keys.Add(key);
+            }
+        }
+
+        public static void removeKey(Key key)
+        {
+            if (_Keys.Contains(key))
+            {
+                _Keys.Remove(key);
+            }
+        }
+
+
+        public Key Key { get { return _Key; } }
+
+        public List<Key> Keys { get { return _Keys; } }
+
+        public MoveType MoveType { get { return MoveType.key; } }
     }
 
 }

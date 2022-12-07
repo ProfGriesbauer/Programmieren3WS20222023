@@ -48,11 +48,11 @@ namespace OOPGames.Classes.Gruppe_K
             Panzerplayer = new List<K_Player>();
             randomeSpielfeld = new K_GameField();
 
-            IGamePlayer player1= _OOPmanager.activePlayers.ElementAt(0); 
+            
 
             //Panzerspieler erstellen
-            if (player1 is K_Player) {
-
+            if (_OOPmanager.activePlayers.Count() > 0 && _OOPmanager.activePlayers.ElementAt(0) is K_Player) {
+                IGamePlayer player1 = _OOPmanager.activePlayers.ElementAt(0);
                 Panzerplayer.Add((K_Player)player1);
 
                 K_DrawObject.DrawSetting drawSettingTank = new K_DrawObject.DrawSetting();
@@ -62,25 +62,24 @@ namespace OOPGames.Classes.Gruppe_K
                 drawSettingTank.yPos = 100;
                 drawSettingTank.Rotation = 0;
                 drawSettingTank.DrawIndex = 10;
-                Panzerplayer[0].PositionData = drawSettingTank;
-                Panzerplayer[0].loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
+                Panzerplayer.Last<K_Player>().PositionData = drawSettingTank;
+                Panzerplayer.Last<K_Player>().loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
                 drawSettingTankR.Scale = drawSettingTank.Scale / 2;
                 drawSettingTankR.DrawIndex = drawSettingTank.DrawIndex - 1;
                 drawSettingTankR.yPos -= (int)(15 * drawSettingTankR.Scale);
                 drawSettingTankR.ID = "gun";
-                Panzerplayer[0].loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
-                Panzerplayer[0].AngleID = drawSettingTankR.ID;
+                Panzerplayer.Last<K_Player>().loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
+                Panzerplayer.Last<K_Player>().AngleID = drawSettingTankR.ID;
 
-                Panzerplayer[0].Status=new K_Status();
-                Panzerplayer[0].Status.State = 0;
+                Panzerplayer.Last<K_Player>().Status=new K_Status();
+                Panzerplayer.Last<K_Player>().Status.State = 0;
             }
-            if (_OOPmanager.activePlayers.Count() > 1)
+            if (_OOPmanager.activePlayers.Count() > 1 && _OOPmanager.activePlayers.ElementAt(1) is K_Player)
             {
                 IGamePlayer player2 = _OOPmanager.activePlayers.ElementAt(1);
 
                 //Panzerspieler erstellen
-                if (player2 is K_Player)
-                {
+             
 
                     Panzerplayer.Add((K_Player)player2);
 
@@ -91,19 +90,19 @@ namespace OOPGames.Classes.Gruppe_K
                     drawSettingTank.yPos = 100;
                     drawSettingTank.Rotation = 0;
                     drawSettingTank.DrawIndex = 10;
-                    Panzerplayer[1].PositionData = drawSettingTank;
-                    Panzerplayer[1].loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
+                    Panzerplayer.Last<K_Player>().PositionData = drawSettingTank;
+                    Panzerplayer.Last<K_Player>().loadImage("Assets/K/Panzer.png", K_DrawObject.Position.CenterBottom);
                     drawSettingTankR.Scale = drawSettingTank.Scale / 2;
                     drawSettingTankR.DrawIndex = drawSettingTank.DrawIndex - 1;
                     drawSettingTankR.yPos -= (int)(15 * drawSettingTankR.Scale);
                     drawSettingTankR.ID = "gun";
-                    Panzerplayer[1].loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
-                    Panzerplayer[1].AngleID = drawSettingTankR.ID;
-                    Panzerplayer[1].Angle = 180;
+                    Panzerplayer.Last<K_Player>().loadImage("Assets/K/PanzerR.png", drawSettingTankR, K_DrawObject.Position.LeftCenter);
+                    Panzerplayer.Last<K_Player>().AngleID = drawSettingTankR.ID;
+                    Panzerplayer.Last<K_Player>().Angle = 180;
 
-                    Panzerplayer[1].Status = new K_Status();
-                    Panzerplayer[1].Status.State = 0;
-                }
+                    Panzerplayer.Last<K_Player>().Status = new K_Status();
+                    Panzerplayer.Last<K_Player>().Status.State = 0;
+                
             }
 
 
@@ -202,14 +201,15 @@ namespace OOPGames.Classes.Gruppe_K
             }
 
             _KgameManager.GameField = randomeSpielfeld;
-            _KgameManager.Objects.Add(Panzerplayer[0]);
+            
             _KgameManager.Objects.Add(randomeSpielfeld);
             _KgameManager.Objects.Add(testField2);
 
-            if (Panzerplayer.Count() > 1)
+           foreach (K_Player data in Panzerplayer)
             {
-                _KgameManager.Objects.Add(Panzerplayer[1]);
+                _KgameManager.Objects.Add(data);
             }
+           
 
         }
 

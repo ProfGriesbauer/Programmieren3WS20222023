@@ -69,14 +69,20 @@ namespace OOPGames
             if (move.PlayerNumber == 1 && _PongField.paddle1.paddleX + move.moveDirection >= 50 
                 && _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth + move.moveDirection <= 350)
             {
-                _PongField.paddle1.stepsize = move.moveDirection;
-                _PongField.paddle1.calculate();
+                if (_PongField.paddle1.stepsize != move.moveDirection)
+                {
+                    _PongField.paddle1.stepsize = move.moveDirection;
+                    _PongField.paddle1.calculate();
+                }
             }
             if (move.PlayerNumber == 2 && _PongField.paddle2.paddleX + move.moveDirection >= 50 
                 && _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth + move.moveDirection <= 350)
             {
-                _PongField.paddle2.stepsize = move.moveDirection;
-                _PongField.paddle2.calculate();
+                if(_PongField.paddle2.stepsize != move.moveDirection)
+                {
+                    _PongField.paddle2.stepsize = move.moveDirection;
+                    _PongField.paddle2.calculate();
+                }
             }
         }
 
@@ -109,6 +115,19 @@ namespace OOPGames
             }
             Console.WriteLine(_PongField.paddle2.paddleX);
             _PongField.ball.calculate();
+
+            if (_PongField.paddle1.paddleX >= 55
+                && _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth <= 346)
+            {
+                _PongField.paddle1.calculate();
+            }
+            if (_PongField.paddle2.paddleX >= 55
+                && _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth <= 346)
+            {
+                _PongField.paddle2.calculate();
+            }
         }
+
+        
     }
 }

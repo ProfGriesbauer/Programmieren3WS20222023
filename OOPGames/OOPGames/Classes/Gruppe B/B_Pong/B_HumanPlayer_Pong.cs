@@ -42,6 +42,10 @@ namespace OOPGames
                 {
                     return new B_Move_Pong(4, 2);
                 }
+                if (sel.Key == Key.S)
+                {
+                    return new B_Move_Pong(0, 2);
+                }
                 if (sel.Key is Key.J)
                 {
                     return new B_Move_Pong(-4, 1);
@@ -49,6 +53,10 @@ namespace OOPGames
                 if (sel.Key == Key.L)
                 {
                     return new B_Move_Pong(4, 1);
+                }
+                if (sel.Key == Key.K)
+                {
+                    return new B_Move_Pong(0, 1);
                 }
                 else
                 {

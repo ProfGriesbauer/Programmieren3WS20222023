@@ -39,16 +39,19 @@ namespace OOPGames
 
         public int CheckIfPLayerWon() // Spieler 1 oben Spieler 2 unten
         {
-            //if (_PongField.ball.ballY <= 50 + _PongField.ball.radius)
-            //{
-            //    return 2;
-            //}
+            if (_PongField.ball.ballY <= 50 + _PongField.ball.radius + _PongField.paddle1.lineThickness / 2)
+            {
+                _PongField.freezeField();
+                return 2;
+                
+            }
 
-            //if (_PongField.ball.ballY >= 350 - _PongField.ball.radius)
-            //{
-            //    return 1;
-            //}
-            return -1;
+            if (_PongField.ball.ballY >= 550 - _PongField.ball.radius - _PongField.paddle1.lineThickness / 2)
+            {
+                _PongField.freezeField();
+                return 1;
+            }
+            return 0;
         }
 
         public void ClearField()
@@ -101,19 +104,19 @@ namespace OOPGames
             {
                 _PongField.ball.velocityX = _PongField.ball.velocityX * -1;
             }
-            if (_PongField.ball.ballY - _PongField.ball.radius <= 80
+            if (_PongField.ball.ballY - _PongField.ball.radius - _PongField.paddle1.lineThickness/2 <= 80
                 && _PongField.ball.ballX >= _PongField.paddle1.paddleX 
                 && _PongField.ball.ballX <= _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth)
             {
                 _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
             }
-            if (_PongField.ball.ballY + _PongField.ball.radius >= 520 
+            if (_PongField.ball.ballY + _PongField.ball.radius + _PongField.paddle1.lineThickness / 2 >= 520 
                 && _PongField.ball.ballX >= _PongField.paddle2.paddleX
                 && _PongField.ball.ballX <= _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth)
             {
                 _PongField.ball.velocityY = _PongField.ball.velocityY * -1;
             }
-            Console.WriteLine(_PongField.paddle2.paddleX);
+            
             _PongField.ball.calculate();
 
             if (_PongField.paddle1.paddleX >= 55

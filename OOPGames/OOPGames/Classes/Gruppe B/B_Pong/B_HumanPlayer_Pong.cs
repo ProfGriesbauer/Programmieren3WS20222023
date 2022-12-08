@@ -101,6 +101,14 @@ namespace OOPGames
         {
             return painter is B_Pong_Painter;
         }
+
+        public void freezeField()
+        {
+            _ball.velocityX = 0;
+            _ball.velocityY = 0;
+            _paddle1.stepsizeMultiplier = 0;
+            _paddle2.stepsizeMultiplier = 0;
+        }
     }
 
 

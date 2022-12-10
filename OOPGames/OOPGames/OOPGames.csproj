@@ -268,5 +268,15 @@
   <ItemGroup>
     <Resource Include="Assets\G\noinput.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\K\Target.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\K\Normaler_Schuss.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

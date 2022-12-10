@@ -9,6 +9,7 @@ using System.Windows.Media;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_K
 {
@@ -19,7 +20,14 @@ namespace OOPGames.Classes.Gruppe_K
 
         List<K_Player> Panzerplayer = new List<K_Player>();
         K_GameField randomeSpielfeld = new K_GameField();
-       
+        K_Target randomeTarget = new K_Target();
+        K_Projectile stdSchuss = new K_Projectile();
+
+        int _gamestate = 0;
+        int _shootpow = 650;
+        int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
+        double _t = 0;                                                               //Zeit für Schussberechnung
+        double _lastt = 0;
 
         public string Name { get { return "K Rules Zielschießen"; } }
 
@@ -41,16 +49,42 @@ namespace OOPGames.Classes.Gruppe_K
         {
             
         }
+
+
+        private void createhole(int mx, int my, int r)
+        {
+
+            int holeX = mx;
+            int holeY = my;
+            int holeRX = r;
+            int holeRY = r;
+            for (int x = -holeRX; x < holeRX; x++)
+            {
+                for (int y = -holeRY; y < holeRY; y++)
+                {
+                    float x2 = (holeRY / (float)holeRX) * x * x;
+                    float y2 = (holeRX / (float)holeRY) * y * y;
+                    if ((x2 + y2) <= holeRX * holeRY)
+                    {
+                        randomeSpielfeld.setField(x + holeX, y + holeY, 0);
+                    }
+                }
+            }
+        }
+
         public void StartedGameCall()
         {
             _KgameManager = new K_GameObjectManager();
             _KgameManager.Status = new K_Status();
             Panzerplayer = new List<K_Player>();
             randomeSpielfeld = new K_GameField();
+            randomeTarget = new K_Target();
+            stdSchuss = new K_Projectile();
 
+            _gamestate = 0;
             
-
-            //Panzerspieler erstellen
+            
+            //Panzerspieler 1 erstellen
             if (_OOPmanager.activePlayers.Count() > 0 && _OOPmanager.activePlayers.ElementAt(0) is K_Player) {
                 IGamePlayer player1 = _OOPmanager.activePlayers.ElementAt(0);
                 Panzerplayer.Add((K_Player)player1);
@@ -74,12 +108,13 @@ namespace OOPGames.Classes.Gruppe_K
                 Panzerplayer.Last<K_Player>().Status=new K_Status();
                 Panzerplayer.Last<K_Player>().Status.State = 0;
             }
+
+            /*
+            //Panzerspieler 2 erstellen
+            
             if (_OOPmanager.activePlayers.Count() > 1 && _OOPmanager.activePlayers.ElementAt(1) is K_Player)
             {
                 IGamePlayer player2 = _OOPmanager.activePlayers.ElementAt(1);
-
-                //Panzerspieler erstellen
-             
 
                     Panzerplayer.Add((K_Player)player2);
 
@@ -104,7 +139,7 @@ namespace OOPGames.Classes.Gruppe_K
                     Panzerplayer.Last<K_Player>().Status.State = 0;
                 
             }
-
+            */
 
             //Spielfeld erstellen
 
@@ -149,27 +184,32 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-            // Add Test Hole to Field
-            int holeX = 50;
-            int holeY = 350;
-            int holeRX = 60;
-            int holeRY = 30;
-            for (int x = -holeRX; x < holeRX; x++)
-            {
-                for (int y = -holeRY; y < holeRY; y++)
-                {
-                    float x2 = (holeRY / (float)holeRX) * x * x;
-                    float y2 = (holeRX / (float)holeRY) * y * y;
-                    if ((x2 + y2) <= holeRX * holeRY)
-                    {
-                        randomeSpielfeld.setField(x + holeX, y + holeY, 0);
-                    }
-                }
-            }
+            //Target erstellen
 
+            K_DrawObject.DrawSetting drawSettingTarget = new K_DrawObject.DrawSetting();
+            drawSettingTarget.Scale = 4;
+            drawSettingTarget.xPos = rand.Next(50,750);
+            drawSettingTarget.yPos = 50;
+            drawSettingTarget.Rotation = 0;
+            drawSettingTarget.DrawIndex = 10;
+            randomeTarget.PositionData = drawSettingTarget;
+            randomeTarget.loadImage("Assets/K/Target.png", K_DrawObject.Position.Center);
+
+            //Projectile erstellen
+
+            K_DrawObject.DrawSetting drawSettingProjectile = new K_DrawObject.DrawSetting();
+            drawSettingProjectile.Scale = 1;
+            drawSettingProjectile.xPos = -20;                                                                   
+            drawSettingProjectile.yPos = 0;
+            drawSettingProjectile.Rotation = 0;
+            drawSettingProjectile.DrawIndex = 7;
+            stdSchuss.PositionData = drawSettingProjectile;
+            stdSchuss.loadImage("Assets/K/Normaler_Schuss.png", K_DrawObject.Position.Center);
+
+            
 
             // testField K_GameField object
-            K_GameField testField2 = new K_GameField();
+            K_GameField testField2 = new K_GameField();         //Hintergrund
 
 
             testField2.Palette = new BitmapPalette(colorList);
@@ -199,11 +239,17 @@ namespace OOPGames.Classes.Gruppe_K
                     resPos = random.Next(200) + 100;
                 }
             }
+            
 
             _KgameManager.GameField = randomeSpielfeld;
             
             _KgameManager.Objects.Add(randomeSpielfeld);
+            
             _KgameManager.Objects.Add(testField2);
+
+            _KgameManager.Objects.Add(randomeTarget);
+
+            _KgameManager.Objects.Add(stdSchuss);
 
            foreach (K_Player data in Panzerplayer)
             {
@@ -217,11 +263,79 @@ namespace OOPGames.Classes.Gruppe_K
         {
             randomeSpielfeld.removeHoles();
 
-            foreach(K_Player player in Panzerplayer)
+            if(_gamestate == 0)
             {
-                player.updatePosition(randomeSpielfeld);
+                stdSchuss.xPos = -20;
+                stdSchuss.yPos = 0;
+
+                Panzerplayer[0].updatePosition(randomeSpielfeld);
+
+                if (Keyboard.IsKeyDown(Key.O)) { _shootpow++; }
+                if (Keyboard.IsKeyDown(Key.P)) { _shootpow--; }
+
+
+                if (Panzerplayer[0].Status.State == 1)          //Wenn diese Eigenschaft = 1, wurde Schuss gedrückt
+                {
+                    _gamestate = 1;
+                    _t = 0;
+                    _lastt = 0;
+                }
+            
             }
-           
+            
+            if (_gamestate == 1)
+            {
+                _t += 0.04;
+
+                double prodx = Panzerplayer[0].xPos;
+                double prody = Panzerplayer[0].yPos;
+
+                for(double _n = _lastt; _n < _t; _n += 0.004)               //8 mal pro Frame Koalisionsberechnung
+                {
+                    prodx = Panzerplayer[0].xPos + Math.Cos((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)_shootpow * _n;
+                    prody = Panzerplayer[0].yPos + Math.Sin((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)_shootpow * _n  + 0.5 * _gravitation * Math.Pow(_n, 2);
+
+                    double Abstand = Math.Sqrt(Math.Pow(prodx-randomeTarget.xPos, 2)+ Math.Pow(prody - randomeTarget.yPos, 2));
+                    
+                    if(Abstand < (10 * randomeTarget.Scale))                //wenn Target berührt
+                    {
+                        Random rando = new Random();
+                        _gamestate = 0;
+                        randomeTarget.xPos = rando.Next(50, randomeSpielfeld.Width-50);
+
+                        int ymax= 0;
+                        while (randomeSpielfeld.getField(randomeTarget.xPos, ymax) == 0)
+                        {
+                            ymax++;
+                        }
+
+                        randomeTarget.yPos = rando.Next(50, ymax);
+                        Panzerplayer[0].Status.State = 0;
+                        
+                    }
+
+                    if (randomeSpielfeld.getField((int)prodx, (int)prody) == 2)     //wenn Boden berührt
+                    {
+                        _gamestate = 0;
+                        createhole((int)prodx, (int)prody, 10);
+                        Panzerplayer[0].Status.State = 0;
+                    }
+
+                }
+
+                if (prodx < 0 || prodx > randomeSpielfeld.Width)        //1 mal pro Frame: Prüfung ob außerhalb von Maprand
+                {
+                    _gamestate = 0;
+                    Panzerplayer[0].Status.State = 0;
+                }
+                else
+                {
+                    stdSchuss.xPos = (int)prodx;
+                    stdSchuss.yPos = (int)prody;
+                }
+                
+                _lastt = _t;
+            }
         }
     }
 }

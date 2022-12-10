@@ -92,7 +92,6 @@ namespace OOPGames.Classes.GruppeJ
                 jumping = true;
             }
         }
-
         private void keyisup(object sender, KeyEventArgs e)
         {
             if (jumping == true)

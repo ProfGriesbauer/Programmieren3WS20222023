@@ -382,6 +382,9 @@ namespace OOPGames.Classes.Gruppe_K
         }
 
         public float Angle { get => getAngle(); set => setAngle(value); }
+
+        public float Schusspow { get; set; }
+
         public abstract string Name { get; }
         public abstract int PlayerNumber { get; }
 
@@ -543,20 +546,29 @@ namespace OOPGames.Classes.Gruppe_K
                         Angle -= 3;
                     }
 
+                    //Schussstärke
+                    if (inputData.Keys.Contains(Key.O))
+                    {
+                        Schusspow += 3;
+                    }
+
+                    if (inputData.Keys.Contains(Key.P))
+                    {
+                        Schusspow -= 3;
+                    }
+
+
                     //Schuss
                     if (inputData.Keys.Contains(Key.E))
                     {
                         Status.State = 1;
                     }
-                 
-                }
-                if (Status.State == 1)
-                {
-                    if (inputData.Keys.Contains(Key.R))
+                    else
                     {
                         Status.State = 0;
                     }
                 }
+                
             }
             return move;
         }
@@ -606,6 +618,16 @@ namespace OOPGames.Classes.Gruppe_K
                         xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
+                    //Schussstärke
+                    if (inputData.Keys.Contains(Key.Up))
+                    {
+                        Schusspow += 3;
+                    }
+
+                    if (inputData.Keys.Contains(Key.Down))
+                    {
+                        Schusspow -= 3;
+                    }
                 }
             }
 

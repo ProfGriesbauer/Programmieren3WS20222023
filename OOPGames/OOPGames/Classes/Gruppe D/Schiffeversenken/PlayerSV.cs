@@ -54,6 +54,11 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                         {
                             return new SVMove(c, r, _PlayerNumber);
                         }
+                        if (click.XClickPos > 450 + (r * 50) && click.XClickPos < 850 + (r * 50) &&
+                            click.YClickPos > 50 + (c * 50) && click.YClickPos < 450 + (c * 50))
+                        {
+                            return new SVMove(c, r, _PlayerNumber);
+                        }
 
                     }
                 }

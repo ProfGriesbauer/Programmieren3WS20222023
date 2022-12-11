@@ -77,7 +77,7 @@ namespace OOPGames
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/dead.png"));
             }
-            else
+            else /*if(rules.dinoHealth == "alive")*/
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/running.gif"));
             }
@@ -98,11 +98,11 @@ namespace OOPGames
 
                 }
             }
-
             TextBlock score = new TextBlock();
 
+
             score.Text = "Score: " + rules.gameScore + rules.resetText;
-            score.FontSize=20;
+            score.FontSize = 20;
             Canvas.SetLeft(score, 20);
             Canvas.SetTop(score, 50);
             canvas.Children.Add(score);
@@ -112,9 +112,12 @@ namespace OOPGames
 
         public void TickPaintDinoGameField(Canvas canvas, GJ_DinoGameField currentField)
         {
-            PaintDinoGameField(canvas, currentField);  
+            GJ_DinoGameRules rules = new GJ_DinoGameRules();
+            rules.CheckIfPLayerWon();
+            PaintDinoGameField(canvas, currentField);
+
+
         }
- 
 
     }
 
@@ -167,7 +170,7 @@ namespace OOPGames
         public override int force { get; set; }
         public override int gameScore { get; set; }
         public override string resetText { get; set; }
-        public override string dinoHealth { get; set; }
+        public override string dinoHealth { get; set; } 
         public override int ObstacleSpeed { get; set; }
         public override int dinoYPosition { get; set; }
 
@@ -175,6 +178,7 @@ namespace OOPGames
         public int DinoXPosition => dinoXPosition;
 
         public override int scoreNumber { get; set; }
+        public int startNumber = 0;
 
         public override void Jump()
         {
@@ -241,8 +245,6 @@ namespace OOPGames
                     // DinoWidth = 40, DinoHeight = 43
                     if (((dinoYPosition + 43)>x.GetTopPos()) && ((dinoXPosition + 40) > x.GetTopPos()) && (dinoXPosition < (x.Width + x.posX)))
                     {
-                    //TODO:
-                    // = Properties.Resources.dead;
                         dinoHealth = "dead";
                         resetText= "\nPress R to restart the game!";
                         _currentField.obstacles = obstacles;
@@ -272,24 +274,34 @@ namespace OOPGames
 
         public override void StartedGameCall()
         {
-            dinoHealth = "dead";
+            if(startNumber==0)
+            {
+                Start();
+                startNumber = 1;
+            }
+
+        }
+
+        public void Start()
+        {
+            dinoHealth = "alive";
             jumping = false;
-            jumpSpeed= 0;   
+            jumpSpeed = 0;
             force = 12;
-            gameScore= 0;
+            gameScore = 0;
             resetText = "";
             scoreNumber = 0;
             dinoYPosition = 365;
             ObstacleSpeed = 5;
-            _currentField.DinoYPos= dinoYPosition;
-            _currentField.DinoXPos= dinoXPosition;
+            _currentField.DinoYPos = dinoYPosition;
+            _currentField.DinoXPos = dinoXPosition;
             obstacles = new List<Obstacle>();
             BitmapImage bmi1 = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/obstacle-1.gif"));
             Obstacle obs1 = new Obstacle(bmi1);
             obs1.posY -= 4;
             obstacles.Add(obs1);
             BitmapImage bmi2 = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/obstacle-2.gif"));
-            Obstacle obs2= new Obstacle(bmi2);
+            Obstacle obs2 = new Obstacle(bmi2);
             obs2.posY += 10;
             obs2.posX += 400;
             obstacles.Add(obs2);
@@ -300,7 +312,7 @@ namespace OOPGames
         {
             KeyAction();
             Jump();
-            CheckIfPLayerWon();
+           // CheckIfPLayerWon();
 
         }
 

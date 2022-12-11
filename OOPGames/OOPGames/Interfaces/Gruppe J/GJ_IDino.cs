@@ -100,8 +100,8 @@ namespace OOPGames.Interfaces.Gruppe_J
             if (currentField is GJ_IDinoGameField)
             {
                 PaintDinoGameField(canvas, (GJ_IDinoGameField) currentField);
-    }
-}
+            }
+        }
 
 
     }

@@ -306,7 +306,6 @@ namespace OOPGames
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
            
-            
             if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
@@ -333,7 +332,8 @@ namespace OOPGames
                             if (_CurrentRules is IRulerSV)
                             {
                                IRulerSV _CurrentRulesD = (IRulerSV)_CurrentRules; 
-                                 _CurrentRulesD.RotateShip();
+                               _CurrentRulesD.RotateShip();
+                               _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                             }
 
                           

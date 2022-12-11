@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         int[,] _P1shoot = new int[8, 8] { { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 } };
         int[,] _P2shoot = new int[8, 8] { { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-        int _GamePhase = 3;
+        int _GamePhase = 1;
         int _HorVer = 1; // 1: Schiffe vertikal, 2:Schiffe horizontal
 
 
@@ -163,6 +164,10 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         public int CheckIfPLayerWon()
         {
+            if (ShipCounter == 0)
+            {
+                return -1;
+            }
             int _hitsP1 = ShipCounter / 2; // Anzahl der Schifffelder gesamt , geteilt durch 2 --> kann angepasst werden in SetShip-Funktion
             int _hitsP2 = ShipCounter / 2;
             for (int i = 0; i < 8; i++)
@@ -217,7 +222,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         public void DoShipMove(IShipMove move)
         {
-
+            
             int ShipPlaceable(int r, int c, int ShipLength, int HorVer, int PlayerNumber)     //Schaut, ob in der Umgebung ein Schiff ist
             {
                 if (HorVer == 1)    //vertikal
@@ -303,10 +308,19 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
+        public void RotateShip()
+        {
+            if (_Shipfield.HorVer == 1 )
+            {
+                _Shipfield.HorVer = 2;
+            }
+            else
+            {
+                _Shipfield.HorVer = 1;
+            }
+        }
 
-
-
-            public int SetShip(int r, int c, int Playernumber)
+        public int SetShip(int r, int c, int Playernumber)
             {
                 if (_Shipfield[r, c, Playernumber] == 0)
                 {

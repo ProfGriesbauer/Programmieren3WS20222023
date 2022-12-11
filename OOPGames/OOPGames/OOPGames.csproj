@@ -119,6 +119,7 @@
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeversenken\PlayerSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe E\E_VierGewinnt.cs" />

@@ -251,7 +251,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             int GamePhase = currentField.Phase;
             int _Ship = currentField.Ships(2, 2);
 
-            currentField.HorVer = 2; //tests
+             
 
             int _Rotation = currentField.HorVer;
             int _CurrentPlayer = 0;

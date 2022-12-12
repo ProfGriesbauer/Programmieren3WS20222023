@@ -96,6 +96,7 @@ namespace OOPGames
 
         public void TickGameCall()
         {
+            // Ball an Bande abprallen
             if (_PongField.ball.ballX - _PongField.ball.radius - 5.5 <= 50)
             {
                 _PongField.ball.velocityX = (float)(_PongField.ball.velocityX * -1.1);
@@ -104,6 +105,7 @@ namespace OOPGames
             {
                 _PongField.ball.velocityX = (float)(_PongField.ball.velocityX * -1.1);
             }
+            // Ball an Paddle normal abprallen 
             if (_PongField.ball.ballY - _PongField.ball.radius - _PongField.paddle1.lineThickness/2 <= 80
                 && _PongField.ball.ballX >= _PongField.paddle1.paddleX 
                 && _PongField.ball.ballX <= _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth)
@@ -116,9 +118,41 @@ namespace OOPGames
             {
                 _PongField.ball.velocityY = (float)(_PongField.ball.velocityY * -1.1);
             }
-            
+            // Ball an Paddle Eck abprallen
+            //Linke Ecke
+            float factor = 3;
+            if (_PongField.ball.ballY - _PongField.ball.radius - _PongField.paddle1.lineThickness / 2 <= 80
+                && _PongField.ball.ballX >= _PongField.paddle1.paddleX
+                && _PongField.ball.ballX <= _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth * 0.05)
+            {
+                _PongField.ball.velocityY = (float)(_PongField.ball.velocityY * -1.1 + (factor - _PongField.ball.velocityY));
+                factor = (float)(factor * 1.1);
+            }
+            if (_PongField.ball.ballY + _PongField.ball.radius + _PongField.paddle1.lineThickness / 2 >= 520
+                && _PongField.ball.ballX >= _PongField.paddle2.paddleX
+                && _PongField.ball.ballX <= _PongField.paddle2.paddleX + _PongField.paddle2.lineWidth * 0.05)
+            {
+                _PongField.ball.velocityY = (float)(_PongField.ball.velocityY * -1.1 - (factor - _PongField.ball.velocityY));
+                factor = (float)(factor * 1.1);
+            }
+            //Rechte Ecke
+            if (_PongField.ball.ballY - _PongField.ball.radius - _PongField.paddle1.lineThickness / 2 <= 80
+                && _PongField.ball.ballX >= _PongField.paddle1.paddleX
+                && _PongField.ball.ballX <= _PongField.paddle1.lineWidth - _PongField.paddle1.lineWidth * 0.05)
+            {
+                _PongField.ball.velocityY = (float)(_PongField.ball.velocityY * -1.1 + (factor - _PongField.ball.velocityY));
+                factor = (float)(factor * 1.1);
+            }
+            if (_PongField.ball.ballY + _PongField.ball.radius + _PongField.paddle1.lineThickness / 2 >= 520
+                && _PongField.ball.ballX >= _PongField.paddle2.paddleX
+                && _PongField.ball.ballX <= _PongField.paddle2.lineWidth - _PongField.paddle2.lineWidth * 0.05)
+            {
+                _PongField.ball.velocityY = (float)(_PongField.ball.velocityY * -1.1 - (factor - _PongField.ball.velocityY));
+                factor = (float)(factor * 1.1);
+            }
             _PongField.ball.calculate();
 
+            // Paddle Brenzung
             if (_PongField.paddle1.paddleX >= 55
                 && _PongField.paddle1.paddleX + _PongField.paddle1.lineWidth <= 346)
             {

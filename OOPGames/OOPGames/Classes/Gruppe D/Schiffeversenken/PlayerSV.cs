@@ -12,7 +12,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
     public class PlayerSV : IHumanSV
     {
         int _PlayerNumber = 0;
-        public string Name {  get { return "IHumanPlayerSV"; } }
+        public string Name {  get { return "HumanPlayerSV"; } }
 
         public int PlayerNumber { get {  return _PlayerNumber; } }
 

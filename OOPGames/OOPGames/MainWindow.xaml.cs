@@ -65,6 +65,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
@@ -78,8 +79,8 @@ namespace OOPGames
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
 
             //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
 
@@ -92,7 +93,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
-            OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
+            //OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
 
             OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
@@ -105,6 +106,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_easy());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_hard());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_VierGewinntHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_VierGewinntComputerPlayer_Random());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());

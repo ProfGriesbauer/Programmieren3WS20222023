@@ -133,7 +133,8 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
    }
     public class C_MRules : C_IMinesweeperRules
     {
-        public C_IMinesweeperField MinesweeperField => throw new NotImplementedException();
+        C_MinesweeperField _Field = new C_MinesweeperField();
+        public C_IMinesweeperField MinesweeperField { get { return _Field; } }
 
         public string Name => throw new NotImplementedException();
 

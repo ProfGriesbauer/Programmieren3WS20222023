@@ -113,6 +113,8 @@
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
+    <Compile Include="Classes\Gruppe C\Minesweeper\C_IMinsweeper.cs" />
+    <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
@@ -225,7 +227,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\Gruppe C\Minesweeper\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <ItemGroup>

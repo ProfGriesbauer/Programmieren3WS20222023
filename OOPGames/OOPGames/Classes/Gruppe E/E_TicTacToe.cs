@@ -15,7 +15,7 @@ namespace OOPGames
 { 
     public class E_Painter : IPaintTicTacToe
     {
-        public string Name { get { return "E_Painter"; } }
+        public string Name { get { return "E_TicTacToePainter"; } }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {

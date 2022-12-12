@@ -12,7 +12,7 @@ public class I_TicTacToeRules : IGameRules
     public IGameField CurrentField { get { return _BigField; } }
 
 
-    public bool MovesPossible //Fehler  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public bool MovesPossible //Fehler/Ausbessern  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         get
         {

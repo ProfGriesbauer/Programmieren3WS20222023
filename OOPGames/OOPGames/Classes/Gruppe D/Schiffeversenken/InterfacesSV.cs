@@ -24,6 +24,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         int Ships(int w, int p); //w 1= Pop 2=peek
                                  //p 1= Player1 2= Player2
        
+        void ResetShipStack();
        
     }
     public interface IRulerSV : IGameRules

@@ -22,8 +22,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
 
 
-        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 2, 2, 2, 2, 3, 3, 3, 4, 4, 5 }); // schifflänge 
-        Stack<int> _SchiffeP2 = new Stack<int>(new int[] { 2, 2, 2, 2, 3, 3, 3, 4, 4, 5 });
+        Stack<int> _SchiffeP1 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 }); // schifflänge 
+        Stack<int> _SchiffeP2 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 });
         public int this[int r, int c, int w] 
         { 
             get  
@@ -79,6 +79,12 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is IPaintSV;
+        }
+
+        public void ResetShipStack()
+        {
+            _SchiffeP1 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 });
+            _SchiffeP2 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 });
         }
 
         public int Ships(int w, int p)
@@ -209,6 +215,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     }
                 }
             }
+            _Shipfield.ResetShipStack();
+            _Shipfield.Phase = 1;
         }
 
         public void DoMove(IPlayMove move)
@@ -233,11 +241,17 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         return 1;
                     }
-                    if (_Shipfield[c, r - 1, PlayerNumber] > 0)
+                    if (_Shipfield[i - 1, c, PlayerNumber] > 0)
                     {
                         return 1;
                     }
-                    if (_Shipfield[c, r + ShipLength, PlayerNumber] > 0)
+                    /*
+                    if (r + ShipLength >= 8)
+                    {
+                        return 0;
+                    }
+                    */
+                    if (_Shipfield[r + ShipLength, c, PlayerNumber] > 0)
                     {
                         return 1;
                     }
@@ -256,11 +270,17 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         return 1;
                     }
-                    if (_Shipfield[c - 1, r, PlayerNumber] > 0)
+                    if (_Shipfield[r, c - 1, PlayerNumber] > 0)
                     {
                         return 1;
                     }
-                    if (_Shipfield[c + ShipLength, r, PlayerNumber] > 0)
+                    /*
+                    if (c + ShipLength >= 8)
+                    {
+                        return 0;
+                    }
+                    */
+                    if (_Shipfield[r, c + ShipLength, PlayerNumber] > 0)
                     {
                         return 1;
                     }
@@ -284,7 +304,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 
                 if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && _PlayerNumber < 3)
                 {
-                    if (_Shipfield.HorVer == 1 && (move.Row + _Shipfield.Ships(2, _PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
+                    if (_Shipfield.HorVer == 1 && (move.Row + _Shipfield.Ships(2, _PlayerNumber) <= 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
                     {
                         int _Ship = SetShip(move.Row, move.Column, _PlayerNumber);
                         for (int i = 0; i < _Ship; i++)
@@ -292,7 +312,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                             _Shipfield[move.Row + i, move.Column, _PlayerNumber] = _Ship;
                         }
                     }
-                    else if (_Shipfield.HorVer == 2 && (move.Column + _Shipfield.Ships(2, _PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
+                    else if (_Shipfield.HorVer == 2 && (move.Column + _Shipfield.Ships(2, _PlayerNumber) <= 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
                     {
                         int _Ship = SetShip(move.Row, move.Column, _PlayerNumber);
                         for (int i = 0; i < _Ship; i++)
@@ -305,13 +325,16 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         if (GamePhase == 3)
         {
-            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
+            if (_Shipfield[move.Row, move.Column, _PlayerNumber + 2] == 0)
             {
-                _Shipfield[move.Row, move.Column, 3] = CheckHit(move.Row, move.Column, move.PlayerNumber);
-            }
-            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
-            {
-                _Shipfield[move.Row, move.Column, 4] = CheckHit(move.Row, move.Column, move.PlayerNumber);
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
+                {
+                    _Shipfield[move.Row, move.Column, 3] = CheckHit(move.Row, move.Column, move.PlayerNumber);
+                }
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
+                {
+                    _Shipfield[move.Row, move.Column, 4] = CheckHit(move.Row, move.Column, move.PlayerNumber);
+                }
             }
         }
     }
@@ -333,12 +356,12 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             if (_Shipfield[r, c, Playernumber] == 0)
             {
                 ShipCounter = ShipCounter + _Shipfield.Ships(2, Playernumber);
-                if (ShipCounter == 30)
+                if (ShipCounter == 25)
                 {
                     ChangePhase();
                     return 0;
                 }
-                if (ShipCounter == 60)
+                if (ShipCounter == 50)
                 {
                     ChangePhase();
                     return 0;

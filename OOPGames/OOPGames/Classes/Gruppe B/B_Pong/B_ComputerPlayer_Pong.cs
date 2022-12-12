@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace OOPGames
 {
 
-    public class B_ComputerPlayer_Pong : IComputerGamePlayer
+    public class B_ComputerPlayer_Pong : IComputerPongPlayerB
     {
         int _PlayerNumber = 0;
 
@@ -18,22 +18,46 @@ namespace OOPGames
 
         public bool CanBeRuledBy(IGameRules rules)
         {
-            return rules is B_Rules_Pong;
+            return rules is IPongRulesB;
         }
 
 
         public IPlayMove GetMove(IGameField field)
         {
-            IPongFieldB pongfield = (IPongFieldB)field;
+            if (field is IPongFieldB)
+            {
+                return GetMove((IPongFieldB)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+
+        public IGamePlayer Clone()
+        {
+            B_ComputerPlayer_Pong other = new B_ComputerPlayer_Pong();
+            other.SetPlayerNumber(_PlayerNumber);
+            return other;
+        }
+
+        public IPongMoveB GetMove(IPongFieldB field)
+        {
+            
 
             if (_PlayerNumber == 1)
             {
-                if (pongfield.ball.ballX > pongfield.paddle1.paddleX)
+                if (field.ball.ballX > field.paddle1.paddleX + field.paddle1.lineWidth/2)
                 {
                     return new B_Move_Pong(4, 1);
                 }
 
-                if (pongfield.ball.ballX < pongfield.paddle1.paddleX)
+                if (field.ball.ballX < field.paddle1.paddleX + field.paddle1.lineWidth / 2)
                 {
                     return new B_Move_Pong(-4, 1);
                 }
@@ -45,12 +69,12 @@ namespace OOPGames
 
             if (_PlayerNumber == 2)
             {
-                if (pongfield.ball.ballX > pongfield.paddle2.paddleX)
+                if (field.ball.ballX > field.paddle2.paddleX + field.paddle2.lineWidth / 2)
                 {
                     return new B_Move_Pong(4, 2);
                 }
 
-                if (pongfield.ball.ballX < pongfield.paddle2.paddleX)
+                if (field.ball.ballX < field.paddle2.paddleX + field.paddle2.lineWidth / 2)
                 {
                     return new B_Move_Pong(-4, 2);
                 }
@@ -60,23 +84,9 @@ namespace OOPGames
 
             else { return null; }
         }
-
-        public void SetPlayerNumber(int playerNumber)
-        {
-            _PlayerNumber = playerNumber;
-        }
-
-        IGamePlayer IGamePlayer.Clone()
-        {
-            IGamePlayer other = new B_ComputerPlayer_Pong();
-            other.SetPlayerNumber(_PlayerNumber);
-            return other;
-        }
     }
 }
 
 
 
-//velocity.ball abfragen
-//velocity.Paddle definieren
-//                übergeben
+

@@ -1,6 +1,6 @@
 ﻿using OOPGames;
 using OOPGames.Classes.Gruppe_C;
-using OOPGames.Classes.Gruppe_H;
+//using OOPGames.Classes.Gruppe_H;
 using OOPGames.Interfaces.Gruppe_H;
 using System;
 using System.Collections.Generic;
@@ -36,14 +36,14 @@ namespace OOPGames
               
         public void PaintGameField(Canvas canvas, IGameField currentField)              //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
         {
-            Console.WriteLine("Fehler1.1");
+ 
             if (currentField is I_H_TicTacToeField)
             {
                 PaintTicTacToeField(canvas, (I_H_TicTacToeField)currentField);
             }
             else 
             {
-                Console.WriteLine("Fehler 1");
+
             }
         }
 
@@ -53,10 +53,10 @@ namespace OOPGames
             canvas.Children.Clear();
             //Zufällig auswählen von einem von vier Farbschemen. Jesdes Mitglied der Gruppe legt ein eigenes Farbschema fest
             Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
-            System.Windows.Media.Color bgColor = System.Windows.Media.Color.FromRgb(255, 255, 255);                                   //Variable Hintergrundfarbe
-            System.Windows.Media.Color lineColor = System.Windows.Media.Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
-            System.Windows.Media.Color XColor = System.Windows.Media.Color.FromRgb(0, 255, 0);                                        //Variable Farbe X Spieler
-            System.Windows.Media.Color OColor = System.Windows.Media.Color.FromRgb(0, 0, 255);                                        //Variable Farbe O Spieler
+            Color bgColor = Color.FromRgb(255, 255, 255);                                   //Variable Hintergrundfarbe
+            Color lineColor = Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
+            Color XColor = Color.FromRgb(0, 255, 0);                                        //Variable Farbe X Spieler
+            Color OColor = Color.FromRgb(0, 0, 255);                                        //Variable Farbe O Spieler
                                                                                             //switch (zufall.Next(1, 5))                                                    //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
                                                                                             //PROBLEM: Feld wird bei jedem Klick neu gezeichnet und dadurch auch jedes mal ein neues Farbschema ausgewählt!!!!
                                                                                             //evtl. oben unter public class ein Bool erstellen, das nur einmal nutzung sicherstellt?
@@ -112,6 +112,14 @@ namespace OOPGames
 
             //int X0 = (int) (HorizontalAlignment.Right - HorizontalAlignment.Left) /2;
             //int Y0 = (int)(VerticalAlignment.Bottom - VerticalAlignment.Top) / 2;
+           /*
+            double left = Canvas.GetLeft(canvas);
+            double right = Canvas.GetRight(canvas);
+            double top = Canvas.GetTop(canvas);
+            double bottom = Canvas.GetBottom(canvas);
+            d = (int) (right - left)/3;
+           */
+
             //Vertikal
             Line l1 = new Line() { X1 = X0+d, Y1 = Y0, X2 = X0+d, Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
@@ -151,33 +159,33 @@ namespace OOPGames
                         if (current.Player == 1)
                         {
 
-                            Line X1 = new Line() { X1 = X0 + (j * d), Y1 = Y0 + (i * d), X2 = X0 + d + (j * d), Y2 = Y0 + d + (i * d), Stroke = XStroke, StrokeThickness = 3.0 };
-                            //canvas.Children.Add(X1);
-                            Line X2 = new Line() { X1 = X0 + (j * d), Y1 = Y0 + d + (i * d), X2 = X0 + d + (j * d), Y2 = Y0 + (i * d), Stroke = XStroke, StrokeThickness = 3.0 };
-                            //canvas.Children.Add(X2);
-                            Canvas.SetTop(current.Symbol, 150);
-                            Canvas.SetLeft(current.Symbol, 100);
+                            int X = X0 + (i * d);   //100
+                            int Y = Y0 + (j * d);   //150
+
+
+                            Canvas.SetTop(current.Symbol, Y);
+                            Canvas.SetLeft(current.Symbol, X);
                             canvas.Children.Add(current.Symbol);
-                            //canvas.Children.
+
 
                             
-                            
-                            
-                            
+
                             //canvas.ActualHeight --> Canvas Größe Anpassen
                         }
-                        else if (currentField[i, j] == 2)
+                        else if (current.Player == 2)
                         {
-                            Ellipse OE = new Ellipse() { Margin = new Thickness(X0 + (j * d), Y0 + (i * d), 0, 0), Width = d, Height = d, Stroke = OStroke, StrokeThickness = 3.0 };
-                            canvas.Children.Add(OE);
+                            int X = X0 + (i * d);
+                            int Y = Y0 + (j * d);
+
+                            Canvas.SetTop(current.Symbol, Y);
+                            Canvas.SetLeft(current.Symbol, X);
+                            canvas.Children.Add(current.Symbol);
+
+                            
                         }
 
 
                     }
-
-
-
-
 
                     else if (currentField[i, j] == 1)
                     {
@@ -338,37 +346,28 @@ namespace OOPGames
                 
                 rowAbweichung = rowRnd - move.Row;                                      //soll die Abweichung berechnen und an die Abweichungs Variablen übergeben.
                 columnAbweichung = columnRnd - move.Column;
-
+            
                 if (move.PlayerNumber == 1)
                 {
 
+                    Image Kreuz = new Image();
+                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
+                    Kreuz.Height = 150;
+                    Kreuz.Width = 150;
 
+                    _Spielfeld[rowRnd, columnRnd].Symbol = Kreuz;
 
-                    //System.Drawing.Image image = System.Drawing.Image.FromFile("C:\\Users\\Samue\\Documents\\Schild.png.jfif\"");
-                    //e.Graphics.DrawImage(image, 0, 0, 50, 50);
-
-                    Image Schild = new Image();
-                    Schild.Source = new BitmapImage(new Uri("C:/Users/Samue/Documents/Schild.png"));
-                    Schild.Height = 150;
-                    Schild.Width = 150;
-
-                    //Höhe Breite
-
-
-                    _Spielfeld[rowRnd, columnRnd].Symbol = Schild;
-
-
-
-
-
-                    //_Spielfeld[rowNew, columnNew].Symbol =
-
+                    //"C:/Users/Samuel/Documents/Programmieren3WS20222023/OOPGames/OOPGames/Resources/schildkroete.png"
                 }
                 else
                 {
+                    Image Kreis = new Image();
+                    Kreis.Source = Kreis.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
+                    Kreis.Height = 150;
+                    Kreis.Width = 150;
 
+                    _Spielfeld[rowRnd, columnRnd].Symbol = Kreis;
 
-                    //_Spielfeld[rowNew, columNew].Symbol = YSymbol
                 }
 
 
@@ -396,32 +395,23 @@ namespace OOPGames
 
                 if (move.PlayerNumber == 1) {
 
+                    Image Kreuz = new Image();
+                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
+                    Kreuz.Height = 150;
+                    Kreuz.Width = 150;
 
-
-                    //System.Drawing.Image image = System.Drawing.Image.FromFile("C:\\Users\\Samue\\Documents\\Schild.png.jfif\"");
-                    //e.Graphics.DrawImage(image, 0, 0, 50, 50);
-
-                    Image Schild = new Image();
-                    Schild.Source = new BitmapImage(new Uri("C:/Users/Samue/Documents/Schild.png"));
-                    
-
-                    //Höhe Breite
-
-
-                    _Spielfeld[rowNew, columnNew].Symbol = Schild;
-
-
-
-                    
-
-                    //_Spielfeld[rowNew, columnNew].Symbol =
+                    _Spielfeld[rowNew, columnNew].Symbol = Kreuz;
 
                 }
                 else 
                 {
-                    
 
-                    //_Spielfeld[rowNew, columNew].Symbol = YSymbol
+                    Image Kreis = new Image();
+                    Kreis.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
+                    Kreis.Height = 150;
+                    Kreis.Width = 150;
+
+                    _Spielfeld[rowNew, columnNew].Symbol = Kreis;
                 }
             }
 

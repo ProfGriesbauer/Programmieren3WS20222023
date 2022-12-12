@@ -125,12 +125,6 @@
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe E\E_VierGewinnt.cs" />
     <Compile Include="Classes\Gruppe H\H_TicTacToe.cs" />
-    <Compile Include="Classes\Gruppe H\PictureBox1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Classes\Gruppe H\PictureBox1.Designer.cs">
-      <DependentUpon>PictureBox1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Classes\Gruppe K\Form\K_InformationWindow.xaml.cs">
       <DependentUpon>K_InformationWindow.xaml</DependentUpon>
     </Compile>
@@ -214,9 +208,6 @@
     <EmbeddedResource Include="Assets\G\MaxSizeWindow.resx">
       <DependentUpon>MaxSizeWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Classes\Gruppe H\PictureBox1.resx">
-      <DependentUpon>PictureBox1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Classes\GruppeJ\Dino_Form.resx">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -294,6 +285,7 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
+    <Resource Include="Resources\Gruppe H\Schildkröte.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

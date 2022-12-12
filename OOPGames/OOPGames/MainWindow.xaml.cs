@@ -74,7 +74,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
-            OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
 
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());

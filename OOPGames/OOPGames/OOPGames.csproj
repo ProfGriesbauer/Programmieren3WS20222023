@@ -253,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\dead.png" />
+    <Resource Include="Resources\schildkroete.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\obstacle-1.gif" />

@@ -16,16 +16,21 @@ namespace OOPGames.Interfaces.Gruppe_E
         int this[int r, int c] { get; set; }
 
     }
-
     public interface I_E_VierGewinntRules : IGameRules
     {
         I_E_VierGewinntField VierGewinntField { get; }
         void DoVierGewinntMove(I_E_VierGewinntMove move);
     }
-    
-    
     public interface I_E_VierGewinntMove : IRowMove, IColumnMove
     {
 
+    }
+    public interface I_E_VierGewinntHumanPlayer : IHumanGamePlayer
+    {
+        I_E_VierGewinntMove GetMove(IMoveSelection selection, I_E_VierGewinntField field);
+    }
+    public interface I_E_VierGewinntComputerPlayer : IComputerGamePlayer
+    {
+        I_E_VierGewinntMove GetMove(I_E_VierGewinntField field);
     }
 }

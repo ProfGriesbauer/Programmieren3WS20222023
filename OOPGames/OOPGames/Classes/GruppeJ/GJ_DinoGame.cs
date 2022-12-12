@@ -57,7 +57,7 @@ namespace OOPGames
     public class GJ_DinoPaintGame : GJ_IDinoPaintGame
     {
         public override string Name { get { return "GJ_DinoPainter"; } }
-
+            
         public override void PaintDinoGameField(Canvas canvas, GJ_IDinoGameField currentField)
         {
             canvas.Children.Clear();

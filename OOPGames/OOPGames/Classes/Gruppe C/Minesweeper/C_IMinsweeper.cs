@@ -34,13 +34,17 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
     }
     public interface C_IClickselection2 : IClickSelection
     {
-        bool RightClick { get; set; }
-        bool LeftClick { get; set; }
+        bool RightClick { get; }
+        bool LeftClick { get; }
     }
+    //Objekt zur Übergabe von Clickposition und Rechts-/Linksklickk
+    //button = 0 --> Linksklick
+    //button = 2 --> Rechtsklick
     public class C_ClickSelection : ClickSelection, C_IClickselection2
     {
         bool _Rightclick;
         bool _Leftclick;
+
 
         public C_ClickSelection(int clickX, int clickY, int Button) : base(clickX, clickY)
         {
@@ -62,6 +66,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
 
         public bool RightClick { get { return _Rightclick; } }
         public bool LeftClick { get { return _Leftclick; } }
+
 
 
     }

@@ -7,12 +7,19 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-/*namespace OOPGames.Classes.Gruppe_C.Minesweeper
+namespace OOPGames.Classes.Gruppe_C.Minesweeper
 {
 
    public class C_MinesweeperField : C_IMinesweeperField
    {
-       Segment[,] _Field = new Segment[16, 16] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+        Segment[,] _Field = new Segment[16, 16];
+
+       public C_MinesweeperField()
+        {
+            for (int i = 0; i < 16; i++)
+                for (int j=0; j < 16; j++)
+                    _Field[i, j] = new Segment();
+        }
 
 
        public Segment this[int r, int c]
@@ -25,7 +32,7 @@ using System.Windows.Shapes;
                }
                else
                {
-                   return 0;
+                    return null;
                }
            }
            set
@@ -80,7 +87,7 @@ using System.Windows.Shapes;
 
    }
 
-   /*public class C_MPainter : C_IPaintMinesweeper
+   public class C_MPainter : C_IPaintMinesweeper
    {
        public string Name => throw new NotImplementedException();
 
@@ -124,5 +131,34 @@ using System.Windows.Shapes;
            throw new NotImplementedException();
        }
    }
+    public class C_MRules : C_IMinesweeperRules
+    {
+        public C_IMinesweeperField MinesweeperField => throw new NotImplementedException();
+
+        public string Name => throw new NotImplementedException();
+
+        public IGameField CurrentField => throw new NotImplementedException();
+
+        public bool MovesPossible => throw new NotImplementedException();
+
+        public int CheckIfPLayerWon()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearField()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoMinesweeperMove(C_IMinesweeperMove move)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoMove(IPlayMove move)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
-*/

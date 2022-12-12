@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,12 @@ namespace OOPGames.Classes.GruppeI
 {
     public interface I_ISubField : ITicTacToeField
     {
-        //kommt vlllt noch was
+        int Nummer { get; }
+        int X { get; }
+        int Y { get; }
+        int SX { get; }
+        int SY { get; }
+        bool Active { get; set; }
     }
 
     public class ISubField : I_ISubField
@@ -27,6 +33,16 @@ namespace OOPGames.Classes.GruppeI
             this.sx = sx;
             this.sy = sy;
             this.active = active;
+        }
+
+        public int Nummer { get { return nummer; } }
+        public int X  {get { return x; } }
+        public int Y {get { return y; } }
+        public int SX {get { return sx; } }
+        public int SY {get { return sy; } }
+        public bool Active {
+            get { return active;} 
+            set {active = value;}
         }
 
         public int this[int r, int c]
@@ -53,7 +69,7 @@ namespace OOPGames.Classes.GruppeI
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is PainterI;
+            return painter is IPaintTicTacToe;
         }
     }
 
@@ -100,7 +116,7 @@ namespace OOPGames.Classes.GruppeI
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is PainterI;
+            return painter is IPaintTicTacToe;
         }
     }
 }

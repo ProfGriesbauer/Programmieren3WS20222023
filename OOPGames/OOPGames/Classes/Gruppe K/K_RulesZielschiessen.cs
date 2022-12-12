@@ -24,7 +24,7 @@ namespace OOPGames.Classes.Gruppe_K
         K_Projectile stdSchuss = new K_Projectile();
 
         int _gamestate = 0;
-        int _shootpow = 650;
+        //int _shootpow = 650;
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
         double _lastt = 0;
@@ -107,6 +107,7 @@ namespace OOPGames.Classes.Gruppe_K
 
                 Panzerplayer.Last<K_Player>().Status=new K_Status();
                 Panzerplayer.Last<K_Player>().Status.State = 0;
+                Panzerplayer.Last<K_Player>().Schusspow = 650;
             }
 
             /*
@@ -187,7 +188,7 @@ namespace OOPGames.Classes.Gruppe_K
             //Target erstellen
 
             K_DrawObject.DrawSetting drawSettingTarget = new K_DrawObject.DrawSetting();
-            drawSettingTarget.Scale = 4;
+            drawSettingTarget.Scale = 3;
             drawSettingTarget.xPos = rand.Next(50,750);
             drawSettingTarget.yPos = 50;
             drawSettingTarget.Rotation = 0;
@@ -269,16 +270,13 @@ namespace OOPGames.Classes.Gruppe_K
                 stdSchuss.yPos = 0;
 
                 Panzerplayer[0].updatePosition(randomeSpielfeld);
-
-                if (Keyboard.IsKeyDown(Key.O)) { _shootpow++; }
-                if (Keyboard.IsKeyDown(Key.P)) { _shootpow--; }
-
+                
 
                 if (Panzerplayer[0].Status.State == 1)          //Wenn diese Eigenschaft = 1, wurde Schuss gedrückt
                 {
                     _gamestate = 1;
                     _t = 0;
-                    _lastt = 0;
+                    _lastt = 0; 
                 }
             
             }
@@ -289,11 +287,12 @@ namespace OOPGames.Classes.Gruppe_K
 
                 double prodx = Panzerplayer[0].xPos;
                 double prody = Panzerplayer[0].yPos;
+                int removestate = 0;
 
-                for(double _n = _lastt; _n < _t; _n += 0.004)               //8 mal pro Frame Koalisionsberechnung
+                for(double _n = _lastt; _n < _t; _n += 0.002)               //20 mal pro Frame Koalisionsberechnung
                 {
-                    prodx = Panzerplayer[0].xPos + Math.Cos((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)_shootpow * _n;
-                    prody = Panzerplayer[0].yPos + Math.Sin((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)_shootpow * _n  + 0.5 * _gravitation * Math.Pow(_n, 2);
+                    prodx = Panzerplayer[0].xPos + Math.Cos((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow * _n;
+                    prody = Panzerplayer[0].yPos + Math.Sin((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow * _n  + 0.5 * _gravitation * Math.Pow(_n, 2);
 
                     double Abstand = Math.Sqrt(Math.Pow(prodx-randomeTarget.xPos, 2)+ Math.Pow(prody - randomeTarget.yPos, 2));
                     
@@ -314,11 +313,12 @@ namespace OOPGames.Classes.Gruppe_K
                         
                     }
 
-                    if (randomeSpielfeld.getField((int)prodx, (int)prody) == 2)     //wenn Boden berührt
+                    if (randomeSpielfeld.getField((int)prodx, (int)prody) == 2 && removestate == 0 && _t > 0.05)     //wenn Boden berührt
                     {
                         _gamestate = 0;
-                        createhole((int)prodx, (int)prody, 10);
+                        createhole((int)prodx, (int)prody, 25);
                         Panzerplayer[0].Status.State = 0;
+                        removestate = 1;
                     }
 
                 }

@@ -41,33 +41,14 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                         int _Rotation = 0;
                         if (currentField[r+1, c, Player] > 1) //liegt das Schiff horizental?
                         { 
-                            for (int i=0; i<5; i++)
-                            {
-                                if (currentField[r + i, c, Player] > 1)
-                                {
-                                    _Ship++;
-                                    _Rotation = 1;
-                                }
-                                else
-                                {
-                                    i=5;
-                                }
-                            }
+                            _Ship = currentField[r, c, Player];
+                            _Rotation = 1;
+
                         }
                         else 
                         {
-                            for (int i = 0; i < 5; i++)
-                            {
-                                if (currentField[r, c + i, Player] > 1)
-                                {
-                                    _Ship++;
-                                    _Rotation = 2;
-                                }
-                                else
-                                {
-                                    i = 5;
-                                }
-                            }
+                            _Ship = currentField[r, c, Player];
+                            _Rotation = 2;
                         }
                         int y = (50 * r) + 50;
                         int x = (50 * c) + 20 ;
@@ -251,7 +232,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             int GamePhase = currentField.Phase;
             int _Ship = currentField.Ships(2, 2);
 
-            currentField.HorVer = 2; //tests
+             
 
             int _Rotation = currentField.HorVer;
             int _CurrentPlayer = 0;
@@ -266,20 +247,6 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             Color blueC = Color.FromRgb(0, 0, 255);
             Brush blue = new SolidColorBrush(blueC);
 
-            currentField[0, 1, 1] = 2; //testet die FindShip function
-            currentField[0, 2, 1] = 2;
-
-            currentField[0, 4, 1] = 3;
-            currentField[0, 5, 1] = 3;
-            currentField[0, 6, 1] = 3;
-
-            currentField[5, 5, 1] = 2;
-            currentField[6, 5, 1] = 2;
-
-            currentField[4, 7, 2] = 4;
-            currentField[5, 7, 2] = 4;
-            currentField[6, 7, 2] = 4;
-            currentField[7, 7, 2] = 4;
 
             if (GamePhase == 1 || GamePhase == 2)
             {
@@ -376,15 +343,6 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     Line l = new Line() { X1 = 450, Y1 = y, X2 = 850, Y2 = y, Stroke = lineStroke, StrokeThickness = 3.0 };
                     canvas.Children.Add(l);
                 }
-                //for Painting Test
-                currentField[0, 0, 4] = 1;
-                currentField[0, 1, 4] = 2;
-                currentField[0, 2, 4] = 2;
-
-                currentField[4, 7, 3] = 2;
-                currentField[5, 7, 3] = 2;
-                currentField[6, 7, 3] = 2;
-                currentField[7, 7, 3] = 2;
 
                 for (int i = 0; i < 8; i++)
                 {

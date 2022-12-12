@@ -106,14 +106,14 @@ namespace OOPGames.Classes.GruppeI
                                 //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
                                 //       }
 
-                                Line X1 = new Line() { X1 = 20 + (60 * j), Y1 = 20 + (60 * i), X2 = 80 + (60 * j), Y2 = 80 + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
+                                Line X1 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + (60 * i) , X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + 60 + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(X1);
-                                Line X2 = new Line() { X1 = 20 + (60 * j), Y1 = 80 + (60 * i), X2 = 80 + (60 * j), Y2 = 20 + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
+                                Line X2 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + 60 + (60 * i), X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(X2);
                             }
                             else if (bigfield.SubFields[t][i, j] == 2) //kleine Rechtecke zeichnen 
                             {
-                                Rectangle OE = new Rectangle() { Margin = new Thickness(25 + (60 * j), 25 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
+                                Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X + 5 + (60 * j), bigfield.SubFields[t].Y + 5 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(OE);
                             }
                             else if (bigfield.SubFields[t][i, j] == 3) //groﬂe Kreuze zeichnen

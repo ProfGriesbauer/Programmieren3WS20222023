@@ -69,11 +69,10 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
@@ -99,8 +98,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
-            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
-            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF()); 
+            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject()); 
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
 
             OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
@@ -189,6 +187,11 @@ namespace OOPGames
                 if (_CurrentRules is IGameRules2)
                 {
                     ((IGameRules2)_CurrentRules).TickGameCall();
+                }
+
+                if (_CurrentRules is IGameRulesF)
+                {
+                    ((IGameRulesF)_CurrentRules).TickGameCall(_CurrentPlayer);
                 }
 
                 InputTick();

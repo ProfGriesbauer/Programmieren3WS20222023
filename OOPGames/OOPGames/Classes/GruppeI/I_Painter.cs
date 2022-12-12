@@ -12,11 +12,20 @@ using System.Windows.Shapes;
 
 namespace OOPGames.Classes.GruppeI
 {
-    public class PainterI : BaseTicTacToePaint
+    public class PainterI : IPaintTicTacToe
     {
-        public override string Name { get { return "Painter Gruppe I"; } }
+        public string Name { get { return "Painter Gruppe I"; } }
 
-        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
+
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is IGameField)
+            {
+                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
+            }
+        }
+
+        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(135, 206, 250);

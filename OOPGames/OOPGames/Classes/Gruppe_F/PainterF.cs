@@ -26,7 +26,8 @@ namespace OOPGames
             Brush XStroke = new SolidColorBrush(XColor);
             Color OColor = Color.FromRgb(255, 102, 255);
             Brush OStroke = new SolidColorBrush(OColor);
-
+            Color LooseColor = Color.FromRgb(255, 0, 0);
+            Brush LooseStroke = new SolidColorBrush(LooseColor);
             Line l1 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l1);
             Line l2 = new Line() { X1 = 220, Y1 = 10, X2 = 220, Y2 = 330, Stroke = lineStroke, StrokeThickness = 8.0 };
@@ -35,15 +36,21 @@ namespace OOPGames
             canvas.Children.Add(l3);
             Line l4 = new Line() { X1 = 10, Y1 = 220, X2 = 330, Y2 = 220, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l4);
-
-            /*if (currentField is IFTicTacToeField)
+            
+            if (currentField is IFTicTacToeField)
             {
                 if (((IFTicTacToeField)currentField).CurrentWinner == 1)
                 {
-                    Line l0 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = lineStroke, StrokeThickness = 80.0 };
+                    
+                    Line l0 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = LooseStroke, StrokeThickness = ((IFTicTacToeField)currentField).Thickness };
                     canvas.Children.Add(l0);
                 }
-            }*/
+                else if (((IFTicTacToeField)currentField).CurrentWinner == 2){
+                    Line l0 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = lineStroke, StrokeThickness = ((IFTicTacToeField)currentField).Thickness };
+                    canvas.Children.Add(l0);
+                }
+            }
+            
 
             for (int i = 0; i < 3; i++)
             {
@@ -51,6 +58,7 @@ namespace OOPGames
                 {
                     if (currentField[i, j] == 1)
                     {
+                       
                         Line X1 = new Line() { X1 = 30 + (j * 100), Y1 = 30 + (i * 100), X2 = 110 + (j * 100), Y2 = 110 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X1);
                         Line X2 = new Line() { X1 = 30 + (j * 100), Y1 = 110 + (i * 100), X2 = 110 + (j * 100), Y2 = 30 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };

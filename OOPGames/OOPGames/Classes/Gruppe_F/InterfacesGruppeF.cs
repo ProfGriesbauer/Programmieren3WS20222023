@@ -14,5 +14,15 @@ namespace OOPGames
     public interface IFTicTacToeField : ITicTacToeField
     {
         int CurrentWinner { get;  set; }
+        int Thickness { get; set; }
+
     }
+    
+    public interface IGameRulesF : IGameRules2
+    {
+        void TickGameCall(IGamePlayer currentPlayer);
+       int Thickness { get; set; }
+    }
+    
+  
 }

@@ -279,26 +279,45 @@ namespace OOPGames.Classes.Gruppe_E
         {
             Random rand = new Random();
 
-            /*for (int z = 0; z < 100; z++)
+            for (int z = 0; z < 100; z++)
             {
                 int c = rand.Next(0, 7);
-
-                for (int r = 0; r < 6; r++)
+                if (field[5, c] <= 0)
                 {
-                    if (field[r, c] > 0)
+                    z = 100;
+                    return new E_VierGewinntMove(5, c, _PlayerNumber);
+                }
+                else
+                {
+                    for (int r = 0; r < 6; r++)
                     {
-                        z = 100;
-                        return new E_VierGewinntMove(r - 1, c, _PlayerNumber);
-                    }
-                    else if (field[5, c] <= 0)
-                    {
-                        z = 100;
-                        return new E_VierGewinntMove(5, c, _PlayerNumber);
+                        if (field[r, c] > 0 && r != 0)
+                        {
+                            z = 100;
+                            return new E_VierGewinntMove(r - 1, c, _PlayerNumber);
+                        }
+                        else if (field[r, c] > 0 && r == 0)
+                        {
+                            r = 6;
+                        }
                     }
                 }
-            }*/
+                //    for (int r = 0; r < 6; r++)
+                //    {
+                //        if (field[r, c] > 0)
+                //        {
+                //            z = 1000;
+                //            return new E_VierGewinntMove(r - 1, c, _PlayerNumber);
+                //        }
+                //        else if (field[5, c] <= 0)
+                //        {
+                //            z = 1000;
+                //            return new E_VierGewinntMove(5, c, _PlayerNumber);
+                //        }
+                //    }
+            }
 
-            int f = rand.Next(0, 41);
+            /*int f = rand.Next(0, 41);
             for (int i=0;i<42;i++)
             {
                 int c = f % 7;
@@ -321,7 +340,7 @@ namespace OOPGames.Classes.Gruppe_E
                 {
                     f++;
                 }
-            }
+            }*/
             return null;
         }
 

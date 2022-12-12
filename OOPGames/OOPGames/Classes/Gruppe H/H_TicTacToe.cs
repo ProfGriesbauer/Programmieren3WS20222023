@@ -1,6 +1,6 @@
 ﻿using OOPGames;
 using OOPGames.Classes.Gruppe_C;
-using OOPGames.Classes.Gruppe_H;
+//using OOPGames.Classes.Gruppe_H;
 using OOPGames.Interfaces.Gruppe_H;
 using System;
 using System.Collections.Generic;
@@ -36,14 +36,14 @@ namespace OOPGames
               
         public void PaintGameField(Canvas canvas, IGameField currentField)              //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
         {
-            Console.WriteLine("Fehler1.1");
+ 
             if (currentField is I_H_TicTacToeField)
             {
                 PaintTicTacToeField(canvas, (I_H_TicTacToeField)currentField);
             }
             else 
             {
-                Console.WriteLine("Fehler 1");
+
             }
         }
 
@@ -112,6 +112,14 @@ namespace OOPGames
 
             //int X0 = (int) (HorizontalAlignment.Right - HorizontalAlignment.Left) /2;
             //int Y0 = (int)(VerticalAlignment.Bottom - VerticalAlignment.Top) / 2;
+           /*
+            double left = Canvas.GetLeft(canvas);
+            double right = Canvas.GetRight(canvas);
+            double top = Canvas.GetTop(canvas);
+            double bottom = Canvas.GetBottom(canvas);
+            d = (int) (right - left)/3;
+           */
+
             //Vertikal
             Line l1 = new Line() { X1 = X0+d, Y1 = Y0, X2 = X0+d, Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
@@ -150,17 +158,27 @@ namespace OOPGames
 
                         if (current.Player == 1)
                         {
-                            Canvas.SetTop(current.Symbol, 150);
-                            Canvas.SetLeft(current.Symbol, 100);
+
+                            int X = X0 + (i * d);   //100
+                            int Y = Y0 + (j * d);   //150
+
+
+                            Canvas.SetTop(current.Symbol, Y);
+                            Canvas.SetLeft(current.Symbol, X);
                             canvas.Children.Add(current.Symbol);
 
+
+                            
 
                             //canvas.ActualHeight --> Canvas Größe Anpassen
                         }
                         else if (current.Player == 2)
                         {
-                            Canvas.SetTop(current.Symbol, 150);
-                            Canvas.SetLeft(current.Symbol, 100);
+                            int X = X0 + (i * d);
+                            int Y = Y0 + (j * d);
+
+                            Canvas.SetTop(current.Symbol, Y);
+                            Canvas.SetLeft(current.Symbol, X);
                             canvas.Children.Add(current.Symbol);
 
                             
@@ -333,7 +351,7 @@ namespace OOPGames
                 {
 
                     Image Kreuz = new Image();
-                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/schildkroete.png"));
+                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
                     Kreuz.Height = 150;
                     Kreuz.Width = 150;
 
@@ -344,7 +362,7 @@ namespace OOPGames
                 else
                 {
                     Image Kreis = new Image();
-                    Kreis.Source = Kreis.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Schildkröte.png"));
+                    Kreis.Source = Kreis.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
                     Kreis.Height = 150;
                     Kreis.Width = 150;
 
@@ -378,7 +396,7 @@ namespace OOPGames
                 if (move.PlayerNumber == 1) {
 
                     Image Kreuz = new Image();
-                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Schildkroete.png"));
+                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
                     Kreuz.Height = 150;
                     Kreuz.Width = 150;
 
@@ -389,7 +407,7 @@ namespace OOPGames
                 {
 
                     Image Kreis = new Image();
-                    Kreis.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Schildkröte.png"));
+                    Kreis.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Schildkröte.png"));
                     Kreis.Height = 150;
                     Kreis.Width = 150;
 

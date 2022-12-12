@@ -44,18 +44,26 @@ namespace OOPGames.Classes.GruppeI
                 if (sel.XClickPos > 200 && sel.XClickPos < 380 && sel.YClickPos > 380 && sel.YClickPos < 560) { f = 7; px = 180; py = 360; }
                 if (sel.XClickPos > 380 && sel.XClickPos < 560 && sel.YClickPos > 380 && sel.YClickPos < 560) { f = 8; px = 360; py = 360; }
 
-                for (int i = 0; i < 3; i++)                         
+                IBigTicTacToeField bigfield = null;
+                if (field is IBigTicTacToeField)
                 {
-                    for (int j = 0; j < 3; j++)
+                    bigfield = (IBigTicTacToeField)field;
+                    for (int i = 0; i < 3; i++)
                     {
-                        if (sel.XClickPos > 20+ px + (j * 60) && sel.XClickPos < 80+px + (j * 60) &&
-                            sel.YClickPos > 20+py + (i * 60) && sel.YClickPos < 80+py + (i * 20) &&
-                            field[i, j] <= 0)
+                        for (int j = 0; j < 3; j++)
                         {
-                            return new TicTacToeMove_I(f,i, j, _PlayerNumber);
+                            if (sel.XClickPos > 20 + px + (j * 60) && sel.XClickPos < 80 + px + (j * 60) &&
+                                sel.YClickPos > 20 + py + (i * 60) && sel.YClickPos < 80 + py + (i * 20) &&
+                                bigfield.SubFields[f][i, j] <= 0)
+                            {
+                                return new TicTacToeMove_I(f, i, j, _PlayerNumber);
+                            }
                         }
                     }
                 }
+
+
+                
             }
 
             return null;

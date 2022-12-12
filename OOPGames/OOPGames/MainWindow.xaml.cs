@@ -35,6 +35,7 @@ using System.Windows.Forms;
 using OOPGames.Interfaces.Gruppe_K;
 using OOPGames.Classes.Gruppe_D.Schiffeversenken;
 using Application = System.Windows.Forms.Application;
+using OOPGames.Classes.Gruppe_C.Minesweeper;
 
 namespace OOPGames
 {
@@ -356,19 +357,18 @@ namespace OOPGames
                           
                         }
    
+                    }                   
+                    else if(_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
+                    {
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton), _CurrentRules.CurrentField);
                     }
                     else
                     {
-                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }
-                    /*
-                    if (_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
-                    {
-                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton, _CurrentRules.CurrentField);
-                    }
-                    */
-                    
-                    
+
+
+
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);

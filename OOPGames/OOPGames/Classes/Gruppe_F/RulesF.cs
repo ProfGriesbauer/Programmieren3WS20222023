@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OOPGames
 {
     
-    public class FTicTacToeField : ITicTacToeField// IFTicTacToeField
+    public class FTicTacToeField : ITicTacToeField, IFTicTacToeField
     {
         int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
         int _CurrentWinner;
+        int _StrokeThickness;
+        int _Color;
 
         public int this[int r, int c]
         {
@@ -47,18 +50,37 @@ namespace OOPGames
             }
         }
 
-      
+        public int Thickness
+        { get { return _StrokeThickness;
+            } 
+            set { _StrokeThickness = value;
+            }
+        }
+
+        public int LooseColor
+        {
+            get
+            {
+                return _Color;
+            }
+            set
+            {
+                _Color = value;
+            }
+        }
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is TTTPaint;
         }
     }
-    public class TTTRulesF : BaseTicTacToeRules, IGameRules2//, IFieldSum
+    public class TTTRulesF : BaseTicTacToeRules, IGameRulesF//,IFieldSum
     {
         int timerCounter;
         int FieldSumOld;
         int FieldSum;
+        int CurrentPlayer;
+        int StrokeThickness;
 
         FTicTacToeField _Field = new FTicTacToeField();
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
@@ -104,6 +126,8 @@ namespace OOPGames
             }
         }
 
+        public int Thickness { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public override int CheckIfPLayerWon()
         {
             for (int i = 0; i < 3; i++)
@@ -134,7 +158,16 @@ namespace OOPGames
         {
             if (timerCounter > 2000 && checkFieldSum  == 0)
             {
-                _Field.CurrentWinner = 1;
+                if(CurrentPlayer==1)
+                {
+                    _Field.CurrentWinner = 2;
+                    _Field.Thickness = 60;
+                }
+                else {
+                    _Field.CurrentWinner = 1;
+                    _Field.Thickness = 120;
+                }
+                
             }
         }
 
@@ -147,6 +180,8 @@ namespace OOPGames
                     _Field[i, j] = 0;
                 }
             }
+            _Field.Thickness = 0;
+            timerCounter = 0;
         }
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
@@ -168,6 +203,11 @@ namespace OOPGames
             timerCounter+=40;
             CheckIfPlayerWonTime();
           
+        }
+
+        public void TickGameCall(IGamePlayer currentPlayer)
+        {
+            CurrentPlayer = currentPlayer.PlayerNumber;
         }
     }
 }

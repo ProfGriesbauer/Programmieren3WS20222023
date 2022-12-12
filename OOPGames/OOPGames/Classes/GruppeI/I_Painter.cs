@@ -95,7 +95,7 @@ namespace OOPGames.Classes.GruppeI
                         //       {
                         //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
                         //       }
-                        //using (var soundPlayer = new SoundPlayer("Assets\I\click-47609.wav"))
+                        //using (var soundPlayer = new SoundPlayer("Assets\I\notification-1-126509.wav"))
                         //       {
                         //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
                         //       }

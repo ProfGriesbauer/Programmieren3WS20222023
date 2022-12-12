@@ -1,4 +1,4 @@
-﻿using OOPGames.Classes.Gruppe_B;
+using OOPGames.Classes.Gruppe_B;
 //using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
@@ -34,6 +34,7 @@ using OOPGames.Interfaces.Gruppe_J;
 using System.Windows.Forms;
 using OOPGames.Interfaces.Gruppe_K;
 using OOPGames.Classes.Gruppe_D.Schiffeversenken;
+using Application = System.Windows.Forms.Application;
 
 namespace OOPGames
 {
@@ -292,8 +293,9 @@ namespace OOPGames
                             _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
                         }
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                        
                     }
-
+                    Application.DoEvents();
                     winner = _CurrentRules.CheckIfPLayerWon();
                     if (winner > 0)
                     {

@@ -8,7 +8,11 @@ namespace OOPGames.Classes.GruppeI
 {
     public interface I_ISubField : ITicTacToeField
     {
-        //kommt vlllt noch was
+        //kommt vllt noch was
+        int X { get; }
+        int Y { get; }
+        int SX { get; }
+        int SY { get; }
     }
 
     public class ISubField : I_ISubField
@@ -28,6 +32,11 @@ namespace OOPGames.Classes.GruppeI
             this.sy = sy;
             this.active = active;
         }
+
+        public int X  {get { return x; } }
+        public int Y {get { return y; } }
+        public int SX {get { return sx; } }
+        public int SY {get { return sy; } }
 
         public int this[int r, int c]
         {

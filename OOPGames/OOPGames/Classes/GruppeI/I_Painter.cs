@@ -87,12 +87,19 @@ namespace OOPGames.Classes.GruppeI
                 {
                     if (currentField[i, j] == 1) //kleine Kreuze zeichnen
                     {
-                     //soundPlayer.Play("Assets/interface-1-126517.wav"); 
-                     //using (var soundPlayer = new SoundPlayer("Assets\I\interface-1-126517.wav"))
-                     //       {
-                     //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
-                     //       }
-                        
+                        //using (var soundPlayer = new SoundPlayer("Assets\I\interface-1-126517.wav"))
+                        //       {
+                        //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                        //       }
+                        //using (var soundPlayer = new SoundPlayer("Assets\I\click-47609.wav"))
+                        //       {
+                        //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                        //       }
+                        //using (var soundPlayer = new SoundPlayer("Assets\I\click-47609.wav"))
+                        //       {
+                        //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                        //       }
+
                         Line X1 = new Line() { X1 = 20 + (60*j), Y1 = 20 + (60*i), X2 = 80 + (60*j), Y2 = 80 + (60*i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                         canvas.Children.Add(X1);
                         Line X2 = new Line() { X1 = 20 + (60*j), Y1 = 80 + (60*i), X2 = 80 + (60*j), Y2 = 20 + (60*i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };

@@ -21,6 +21,10 @@ namespace OOPGames
         {
             get; set;
         }
+        public int stepsizeMultiplier
+        {
+            get; set;
+        }
         public int lineThickness
         {
             get;
@@ -46,10 +50,12 @@ namespace OOPGames
             stepsize = 1;
             lineThickness = 10;
             lineWidth = 75;
+            stepsizeMultiplier = 1;
         }
 
         public void calculate()
         {
+            paddleX = (int)Math.Round(paddleX + stepsize * stepsizeMultiplier) ;
         }
     }
 }

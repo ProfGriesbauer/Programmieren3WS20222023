@@ -12,11 +12,21 @@ using System.Windows.Shapes;
 
 namespace OOPGames.Classes.GruppeI
 {
-    public class PainterI : BaseTicTacToePaint
+    public class PainterI : IPaintTicTacToe
     {
-        public override string Name { get { return "Painter Gruppe I"; } }
+        public string Name { get { return "Painter Gruppe I"; } }
 
-        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
+
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            if (currentField is IGameField)
+            {
+                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
+            }
+        }
+
+
+        public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(135, 206, 250);
@@ -71,47 +81,61 @@ namespace OOPGames.Classes.GruppeI
             paintLine(20,560,560,560, StrokeThickness_GrFe);
 
             //Kreuze und Kreise zeichnen                    //vllt noch andere Formen?
-
-            for (int i = 0; i < 9; i++)
+            IBigTicTacToeField bigfield = null;
+            if (currentField is IBigTicTacToeField)
             {
-                for (int j = 0; j < 9; j++)
-                {
-                    if (currentField[i, j] == 1) //kleine Kreuze zeichnen
+                bigfield = (IBigTicTacToeField)currentField;
+                for (int t = 0; t < 9; t++)
+                { 
+                    for (int i = 0; i < 3; i++)
                     {
-                     //soundPlayer.Play("Assets/interface-1-126517.wav"); 
-                     //using (var soundPlayer = new SoundPlayer("Assets\I\interface-1-126517.wav"))
-                     //       {
-                     //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
-                     //       }
-                        
-                        Line X1 = new Line() { X1 = 20 + (60*j), Y1 = 20 + (60*i), X2 = 80 + (60*j), Y2 = 80 + (60*i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (60*j), Y1 = 80 + (60*i), X2 = 80 + (60*j), Y2 = 20 + (60*i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 2) //kleine Rechtecke zeichnen 
-                    {
-                        Rectangle OE = new Rectangle() { Margin = new Thickness(25 + (60*j), 25 + (60*i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
-                        canvas.Children.Add(OE);
-                    }
-                    else if (currentField[i, j] == 3) //große Kreuze zeichnen
-                    {
-                        Line X1 = new Line() { X1 = 20 + (180 * j), Y1 = 20 + (180 * i), X2 = 200 + (180 * j), Y2 = 200 + (180 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (180 * j), Y1 = 200 + (180 * i), X2 = 200 + (180 * j), Y2 = 20 + (180 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 4) //große Rechtecke zeichnen 
-                    {
-                        Rectangle OE = new Rectangle() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i ), 0, 0), Width = 180, Height = 180, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
-                        canvas.Children.Add(OE);
-                    }
-                    else if (currentField[i, j] == 5) //Unentschieden zeichnen 
-                    {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i), 0, 0), Width = 180, Height = 180, Stroke = UStroke, StrokeThickness = StrokeThickness_GrO };
-                        canvas.Children.Add(OE);
-                    }
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (bigfield.SubFields[t][i, j] == 1) //kleine Kreuze zeichnen
+                            {
+                                //using (var soundPlayer = new SoundPlayer("Assets\I\interface-1-126517.wav"))
+                                //       {
+                                //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                                //       }
+                                //using (var soundPlayer = new SoundPlayer("Assets\I\click-47609.wav"))
+                                //       {
+                                //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                                //       }
+                                //using (var soundPlayer = new SoundPlayer("Assets\I\notification-1-126509.wav"))
+                                //       {
+                                //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                                //       }
 
+                                Line X1 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + (60 * i) , X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + 60 + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
+                                canvas.Children.Add(X1);
+                                Line X2 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + 60 + (60 * i), X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
+                                canvas.Children.Add(X2);
+                            }
+                            else if (bigfield.SubFields[t][i, j] == 2) //kleine Rechtecke zeichnen 
+                            {
+                                Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X + 5 + (60 * j), bigfield.SubFields[t].Y + 5 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
+                                canvas.Children.Add(OE);
+                            }
+                            else if (bigfield.SubFields[t][i, j] == 3) //große Kreuze zeichnen
+                            {
+                                Line X1 = new Line() { X1 = 20 + (180 * j), Y1 = 20 + (180 * i), X2 = 200 + (180 * j), Y2 = 200 + (180 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                                canvas.Children.Add(X1);
+                                Line X2 = new Line() { X1 = 20 + (180 * j), Y1 = 200 + (180 * i), X2 = 200 + (180 * j), Y2 = 20 + (180 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                                canvas.Children.Add(X2);
+                            }
+                            else if (bigfield.SubFields[t][i, j] == 4) //große Rechtecke zeichnen 
+                            {
+                                Rectangle OE = new Rectangle() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i), 0, 0), Width = 180, Height = 180, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
+                                canvas.Children.Add(OE);
+                            }
+                            else if (bigfield.SubFields[t][i, j] == 5) //Unentschieden zeichnen 
+                            {
+                                Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i), 0, 0), Width = 180, Height = 180, Stroke = UStroke, StrokeThickness = StrokeThickness_GrO };
+                                canvas.Children.Add(OE);
+                            }
+                        }
+
+                    }
                 }
             }
         }

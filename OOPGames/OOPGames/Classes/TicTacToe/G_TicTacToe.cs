@@ -1,11 +1,13 @@
 ﻿using System; 
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq; 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Text; 
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,7 +18,14 @@ using static OOPGames.TicTacToeRules_G;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using static OOPGames.MainWindow;
-using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
+using Brush = System.Windows.Media.Brush;
+using Color = System.Windows.Media.Color;
+using ProgressBar = System.Windows.Controls.ProgressBar;
+using Orientation = System.Windows.Controls.Orientation;
+using TextBox = System.Windows.Controls.TextBox;
+using Label = System.Windows.Forms.Label;
+using Button = System.Windows.Forms.Button;
+using OOPGames.Assets.G;
 
 namespace OOPGames
 {
@@ -209,6 +218,8 @@ namespace OOPGames
         static int _Score1;
         static int _Score2;
         static int _CurrentPlayer;
+        static int _MaxSize = 20;
+        static bool _notcalled = true;
         public override string Name { get { return "GruppeGTicTacToePaint"; } }
 
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
@@ -217,7 +228,6 @@ namespace OOPGames
             {
                 PaintTicTacToeField_G(canvas, (ITicTacToeField_G)currentField);
             }
-
         }
         public static int Score1
         {
@@ -234,6 +244,18 @@ namespace OOPGames
         {
             get { return _CurrentPlayer; }
             set { _CurrentPlayer = value; }
+        }
+
+        public static int MaxSize
+        {
+            get { return _MaxSize; }
+            set { _MaxSize = value; }
+        }
+
+        public static bool Notcalled
+        {
+            get { return _notcalled; }
+            set { _notcalled = value; }
         }
 
         // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
@@ -274,10 +296,14 @@ namespace OOPGames
             Progress.Value = value;
             Progress.Orientation = Orientation.Vertical;
             canvas.Children.Add(Progress);
-
-
-            PaintScore(canvas);
             
+            PaintScore(canvas);
+
+            if (_notcalled)
+            {
+                InputSize();
+                _notcalled = false;
+            }
         }
 
         void PaintScore(Canvas canvas)
@@ -289,7 +315,7 @@ namespace OOPGames
             TBscore1.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
             Canvas.SetLeft(TBscore1, 10);
             Canvas.SetTop(TBscore1, 420);
-            if (_CurrentPlayer == 2)
+            if (_CurrentPlayer == 2 || _CurrentPlayer == 0)
             {
                 TBscore1.Background = ColorPlayer1;
             }
@@ -306,7 +332,7 @@ namespace OOPGames
             Progress1.Width = 300;
             Progress1.Height = 20;
             Progress1.Minimum = 0;
-            Progress1.Maximum = 3;
+            Progress1.Maximum = _MaxSize;
             Progress1.Value = Score1;
             Progress1.Orientation = Orientation.Horizontal;
             canvas.Children.Add(Progress1);
@@ -335,11 +361,17 @@ namespace OOPGames
             Canvas.SetLeft(Progress2, 100);
             Progress2.Width = 300;
             Progress2.Height = 20;
-            Progress2.Minimum = 0; 
-            Progress2.Maximum = 3;
+            Progress2.Minimum = 0;
+            Progress2.Maximum = _MaxSize;
             Progress2.Value = Score2;
             Progress2.Orientation = Orientation.Horizontal;
             canvas.Children.Add(Progress2);
+        }
+        
+        void InputSize()
+        {
+            MaxSizeWindow Fenster = new MaxSizeWindow();
+            Fenster.Show();
         }
 
     }
@@ -449,7 +481,7 @@ namespace OOPGames
             if (whohasthree > 0) 
             {
 
-                if (Score1<3 && Score2<3)
+                if (Score1 < MaxSize && Score2 < MaxSize)
                 {
                     _Field.increaseField();
                 }
@@ -470,9 +502,18 @@ namespace OOPGames
                 {
                     _Field.increaseField();
                 }
+                else if (Score1 > Score2)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+
             }
 
-            if(Score1 >= 3 || Score2 >= 3 || MovesPossible==false)
+            if(Score1 >= MaxSize || Score2 >= MaxSize )
             {
                 if (Score1 == 3)
                 {
@@ -488,6 +529,9 @@ namespace OOPGames
 
         public override void ClearField()
         {
+
+            Notcalled = true;
+            
             while (_Field.Field.Count>9)
             {
                 _Field.Field.RemoveAt(9);
@@ -837,8 +881,23 @@ namespace OOPGames
         {
             _PlayerNumber = playerNumber;
         }
-    }
 
+        static void testkey(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+          
+            if (e.Alt)
+            {
+                Console.WriteLine("alt wurde gedrückt");
+            }
+           
+            if (e.KeyValue == 65)
+            Console.WriteLine("A wurde gedrückt");
+        }
+
+ 
+
+    }
+ 
     public class ComputerTicTacToePlayer_G : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -898,6 +957,23 @@ namespace OOPGames
                 }
             }
 
+            foreach(Casket c1 in field.Field)
+            {
+                if(c1.player==_PlayerNumber && c1.flag==false)
+                {
+                    foreach(Casket c2 in field.Field) // Suchen nach einem freien Feld neben c1
+                    {
+                        if(c2.player==0) // Feld muss unbesetzt sein
+                        {
+                            if((c2.x >= c1.x-1) && (c2.x <= c1.x+1) && (c2.y >= c1.y-1) && (c2.y <= c1.y+1)) // Feld darf max 1 Kästchen entfernt sein (auch diagonal)
+                            {
+                                return new TicTacToeMove(c2.y, c2.x, _PlayerNumber);
+                            }
+                        }
+                        
+                    }
+                }
+            }
 
 
 

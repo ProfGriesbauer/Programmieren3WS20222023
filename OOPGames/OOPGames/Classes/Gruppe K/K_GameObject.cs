@@ -1,20 +1,36 @@
 ﻿using OOPGames.Interfaces.Gruppe_K;
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
-
+using static OOPGames.Classes.Gruppe_K.K_DrawObject;
 
 namespace OOPGames.Classes.Gruppe_K
 {
     class K_GameObjectManager : IK_GameField
     {
             List<K_GameObject> _objects = new List<K_GameObject>();
+            K_GameField _gameField;
+            K_Status _status;
 
         public List<K_GameObject> Objects
         {
             get { return _objects; }
             set { _objects = value; }
         }
+
+        public K_Status Status
+        {
+            get { return _status;}
+            set { _status = value; }
+        }
+
+        public K_GameField GameField
+        {
+            get { return _gameField;}
+            set { _gameField = value; }
+        }
+
         public bool CanBePaintedBy(IPaintGame painter)
         {
             if (painter is IK_PaintGameObject)
@@ -35,6 +51,9 @@ namespace OOPGames.Classes.Gruppe_K
         int _Score;
         int _TurnCounter;
         K_GameObject _ActivePlayer;
+        int _state;
+
+        public int State { get { return _state; } set { _state = value; } }
     }
 
     class K_GameField : K_GameObject
@@ -51,7 +70,11 @@ namespace OOPGames.Classes.Gruppe_K
         }
         public byte getField(int x, int y)
         {
-            return _field[x + y * _width];
+            if (x >= 0 && x < Width && y >= 0 && y < Height)
+            {
+                return _field[x + y * _width];
+            }
+            return 0;
         }
         public void setField(int x, int y, byte value)
         {
@@ -344,26 +367,38 @@ namespace OOPGames.Classes.Gruppe_K
         }
     }
 
-    class K_Player: K_DrawObject
+    abstract class K_Player: K_DrawObject, IK_HumanPlayer
     {
         String _AngleID;
         float _DriveRange;
         float _ShootForce;
         float _Health;
-
+        K_Status _Status=new K_Status();
   
         public String AngleID
         {
             get { return _AngleID; }
             set { _AngleID = value; }
         }
-        public float Angle
-        {
-            get { return getAngle(); }
-            set { setAngle(value); }
-        }
 
-        float getAngle()
+        public float Angle { get => getAngle(); set => setAngle(value); }
+
+        public float Schusspow { get; set; }
+
+        public abstract string Name { get; }
+        public abstract int PlayerNumber { get; }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            if (rules is K_RulesZielschiessen)
+            {
+                return true;
+            }
+            return false;
+        }
+        public abstract IGamePlayer Clone();
+
+        public float getAngle()
         {
             foreach (Tuple<BitmapImage, DrawSetting> data in Image)
             {
@@ -374,7 +409,12 @@ namespace OOPGames.Classes.Gruppe_K
             }
             return 0;
         }
-        void setAngle(float angle)
+
+        public K_Status Status{ get { return _Status; } set { _Status = value; } }
+
+        public abstract IPlayMove GetMove(IMoveSelection selection, IGameField field);
+
+        public void setAngle(float angle)
         {
             foreach (Tuple<BitmapImage, DrawSetting> data in Image)
             {
@@ -383,6 +423,242 @@ namespace OOPGames.Classes.Gruppe_K
                     data.Item2.Rotation = angle;
                 }
             }
+        }
+
+        public abstract void SetPlayerNumber(int playerNumber);
+
+        public float getAngleField(K_GameField gameField)
+        {
+            int y = 0;
+            int ry = 0;
+            int ly = 0;
+
+            while (gameField.getField(xPos, y) == 0 && y < gameField.Height)
+            {
+                y++;
+            }
+
+            y = 0;
+            while (gameField.getField(xPos + 10, y) == 0 && y < gameField.Height)
+            {
+                y++;
+            }
+            ry = y;
+
+            y = 0;
+            while (gameField.getField(xPos - 10, y) == 0 && y < gameField.Height)
+            {
+                y++;
+            }
+            ly = y;
+            return (float)(Math.Atan(((float)ry - (float)ly) / 20));
+
+        }
+        public void updatePosition(K_GameField gameField)
+        {
+            int y = 0;
+            int ry = 0;
+            int ly = 0;
+            float rot = 0f;
+
+            while (gameField.getField(xPos, y) == 0 && y<gameField.Height)
+            {
+                y++;
+            }
+
+            y = 0;
+            while (gameField.getField(xPos + 10, y) == 0 && y < gameField.Height)
+            {
+                y++;
+            }
+            ry = y;
+
+            y = 0;
+            while (gameField.getField(xPos - 10, y) == 0 && y < gameField.Height)
+            {
+                y++;
+            }
+            ly = y;
+
+            yPos = y;
+            rot = (float)(Math.Atan(((float)ry - (float)ly) / 20));
+
+        
+            Rotation = ((float)180 / (float)Math.PI) * rot;
+        }
+    }
+
+    class K_Move : IPlayMove
+    {
+        DrawSetting _position;
+        int _playerNumber;
+        public int PlayerNumber { get { return _playerNumber; } set { _playerNumber = value; } }
+        public DrawSetting Position { get { return _position; } set { _position = value; } }
+        
+    }
+
+    class K_HumanPlayer1 : K_Player
+    {
+        private int _PlayerNumber;
+        public override string Name { get { return "K Human Player Keyboard Input"; } }
+
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+        public override IGamePlayer Clone()
+        {
+            K_HumanPlayer1 ttthp = new K_HumanPlayer1();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override IPlayMove GetMove(IMoveSelection selection, IGameField field)
+        {
+            K_Move move = new K_Move();
+            move.Position = PositionData;
+            
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager)
+            {
+                K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
+                K_GameField gameField = ((K_GameObjectManager)field).GameField;
+                if (Status.State== 0)
+                {
+                    float rot=getAngleField(gameField);
+                    
+                    //Fahren
+                    if (inputData.Keys.Contains(Key.A) && xPos > 25 && rot < 1.04)
+                    {
+                        xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
+                    }
+
+                    if (inputData.Keys.Contains(Key.D) && xPos < 775 && rot > -1.04)
+                    {
+                        xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
+                    }
+
+                    //Rohr drehen
+                    if (inputData.Keys.Contains(Key.W))
+                    {
+                        Angle += 3;
+                    }
+
+                    if (inputData.Keys.Contains(Key.S))
+                    {
+                        Angle -= 3;
+                    }
+
+                    //Schussstärke
+                    if (inputData.Keys.Contains(Key.O))
+                    {
+                        Schusspow += 3;
+                    }
+
+                    if (inputData.Keys.Contains(Key.P))
+                    {
+                        Schusspow -= 3;
+                    }
+
+
+                    //Schuss
+                    if (inputData.Keys.Contains(Key.E))
+                    {
+                        Status.State = 1;
+                    }
+                    else
+                    {
+                        Status.State = 0;
+                    }
+                }
+                
+            }
+            return move;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
+
+    class K_HumanPlayer2 : K_Player
+    {
+        private int _PlayerNumber;
+        public override string Name { get { return "K Human Player Keyboard+Mouse Input"; } }
+
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+
+        public override IGamePlayer Clone()
+        {
+            K_HumanPlayer2 ttthp = new K_HumanPlayer2();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override IPlayMove GetMove(IMoveSelection selection, IGameField field)
+        {
+            K_Move move = new K_Move();
+            move.Position = PositionData;
+
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager)
+            {
+                K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
+                K_GameField gameField = ((K_GameObjectManager)field).GameField;
+                if (Status.State == 0)
+                {
+                    float rot = getAngleField(gameField);
+
+                    //Fahren
+                    if (inputData.Keys.Contains(Key.Left) && xPos > 25 && rot < 1.04)
+                    {
+                        xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
+                    }
+
+                    if (inputData.Keys.Contains(Key.Right) && xPos < 775 && rot > -1.04)
+                    {
+                        xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
+                    }
+
+                    //Schussstärke
+                    if (inputData.Keys.Contains(Key.Up))
+                    {
+                        Schusspow += 3;
+                    }
+
+                    if (inputData.Keys.Contains(Key.Down))
+                    {
+                        Schusspow -= 3;
+                    }
+                }
+            }
+
+            if (selection is ClickSelection)
+            {
+                    //Schuss
+                if (Status.State == 0)
+                {
+                   Status.State = 1;
+                }
+                else
+                {
+                  Status.State = 0;
+                }
+            }
+
+            if(selection is K_MouseSelectionTick)
+            {
+                K_MouseSelectionTick inputData = (K_MouseSelectionTick)selection;
+                //Rohr drehen
+                if (Image.Count >= 2)
+                {
+                    Angle = (float)((180 / Math.PI) * Math.Atan2(inputData.YPos - (yPos + (Image[1].Item2.yPos - Image[1].Item2.yCenter)), inputData.XPos - (xPos + (Image[1].Item2.xPos - Image[1].Item2.xCenter)))) - Rotation;
+                }
+            }
+            return move;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
         }
     }
 
@@ -406,6 +682,61 @@ namespace OOPGames.Classes.Gruppe_K
     class K_Object : K_DrawObject
     {
     
+    }
+
+    public class K_MouseSelectionTick : IClickSelection
+    {
+       
+        int _PositionX=0;
+        int _PositionY=0;
+
+        public K_MouseSelectionTick( int positionX, int positionY)
+        {
+            
+            _PositionX = positionX;
+            _PositionY = positionY;
+        
+        }
+
+        public int YPos { get { return _PositionY; } }
+        public int XPos { get { return _PositionX; } }
+
+        public MoveType MoveType { get { return MoveType.click; } }
+
+        public int XClickPos => 0;
+
+        public int YClickPos => 0;
+    }
+
+    public class K_KeySelectionTick : IKeySelection
+    {
+        Key _Key;
+        int _ClickX = 0;
+        int _ClickY = 0;
+        static List<Key> _Keys=new List<Key>();
+       
+        public static void addKey(Key key)
+        {
+            if (!_Keys.Contains(key))
+            {
+                _Keys.Add(key);
+            }
+        }
+
+        public static void removeKey(Key key)
+        {
+            if (_Keys.Contains(key))
+            {
+                _Keys.Remove(key);
+            }
+        }
+
+
+        public Key Key { get { return _Key; } }
+
+        public List<Key> Keys { get { return _Keys; } }
+
+        public MoveType MoveType { get { return MoveType.key; } }
     }
 
 }

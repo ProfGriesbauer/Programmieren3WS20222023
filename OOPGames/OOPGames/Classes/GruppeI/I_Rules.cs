@@ -1,4 +1,4 @@
-using OOPGames;
+ï»¿using OOPGames;
 using OOPGames.Classes.GruppeI;
 using System.ComponentModel;
 using System.Windows.Navigation;
@@ -12,11 +12,11 @@ public class I_TicTacToeRules : IGameRules
     public IGameField CurrentField { get { return _BigField; } }
 
 
-    public bool MovesPossible
+    public bool MovesPossible //Fehler/Ausbessern  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         get
         {
-            for (int t = 0; t < 9; t++)
+            for (int t = 0; t < 81; t++)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -35,7 +35,7 @@ public class I_TicTacToeRules : IGameRules
         }
     }
 
-    public int CheckIfPLayerWon() //für großes Feld -> brauchen wir auch noch für kleine Felder, aber als eigene Funktion
+    public int CheckIfPLayerWon() //fï¿½r groï¿½es Feld -> brauchen wir auch noch fï¿½r kleine Felder, aber als eigene Funktion
     {
         for (int i = 0; i < 3; i++)
         {
@@ -94,4 +94,3 @@ public class I_TicTacToeRules : IGameRules
     }
 }
 
-    

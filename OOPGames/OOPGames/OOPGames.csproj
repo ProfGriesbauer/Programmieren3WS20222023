@@ -90,8 +90,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assets\G\noinput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\G\noinput.Designer.cs">
+      <DependentUpon>noinput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\G\MaxSizeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\G\MaxSizeWindow.Designer.cs">
+      <DependentUpon>MaxSizeWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Ball_Pong.cs" />
+    <Compile Include="Classes\Gruppe B\B_Pong\B_ComputerPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_HumanPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Paddle_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Painter_Pong.cs" />
@@ -106,6 +119,7 @@
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeversenken\PlayerSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe E\E_VierGewinnt.cs" />
@@ -117,10 +131,11 @@
       <DependentUpon>K_SelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Gruppe K\K_Computerplayer.cs" />
-    <Compile Include="Classes\Gruppe K\K_RulesGameObject.cs" />
+    <Compile Include="Classes\Gruppe K\K_RulesZielschiessen.cs" />
     <Compile Include="Classes\Gruppe K\K_PaintGameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_GameObject.cs" />
     <Compile Include="Classes\Gruppe K\K_Painter_RotatingField.cs" />
+    <Compile Include="Classes\GruppeI\I_Rules.cs" />
     <Compile Include="Classes\GruppeI\I_TTTMove.cs" />
     <Compile Include="Classes\GruppeI\PlayerI.cs" />
     <Compile Include="Classes\GruppeI\TTTField.cs" />
@@ -138,6 +153,7 @@
     <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\GruppeJ\GJ_DinoGame.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />
@@ -155,6 +171,8 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
     <Compile Include="Interfaces\Gruppe E\I_E_4Gewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
+    <Compile Include="Interfaces\Gruppe J\GJ_IDino.cs" />
+    <Compile Include="Interfaces\Gruppe K\IK_HumanPlayer.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
@@ -182,6 +200,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Assets\G\noinput.resx">
+      <DependentUpon>noinput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\G\MaxSizeWindow.resx">
+      <DependentUpon>MaxSizeWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Classes\GruppeJ\Dino_Form.resx">
       <DependentUpon>Dino_Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,6 +225,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Classes\Gruppe C\Minesweeper\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <ItemGroup>
@@ -216,16 +241,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\dead.png" />
+    <Resource Include="Resources\dead.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\obstacle-1.gif" />
+    <Resource Include="Resources\obstacle-1.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\obstacle-2.gif" />
+    <Resource Include="Resources\obstacle-2.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\running.gif" />
+    <Resource Include="Resources\running.gif" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\K\Panzer.png">
@@ -243,7 +268,21 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Classes\GruppeI\interface-1-126517.wav" />
+    <Resource Include="Assets\G\noinput.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\K\Target.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\K\Normaler_Schuss.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\I\click-47609.wav" />
+    <Content Include="Assets\I\interface-1-126517.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

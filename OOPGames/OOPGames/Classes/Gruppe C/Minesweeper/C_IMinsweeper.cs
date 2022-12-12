@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
+
 namespace OOPGames.Classes.Gruppe_C.Minesweeper
 {
     public interface C_IPaintMinesweeper : IPaintGame2
@@ -33,16 +34,40 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
     }
     public interface C_IClickselection2 : IClickSelection
     {
-        bool RightClick { get; set; }
-        bool LeftClick { get; set; }
+        bool RightClick { get; }
+        bool LeftClick { get; }
     }
+    //Objekt zur Übergabe von Clickposition und Rechts-/Linksklickk
+    //button = 0 --> Linksklick
+    //button = 2 --> Rechtsklick
     public class C_ClickSelection : ClickSelection, C_IClickselection2
     {
-        public C_ClickSelection (int clickX, int clickY, bool butt) : base(clickX, clickY)
-        {
+        bool _Rightclick;
+        bool _Leftclick;
 
+
+        public C_ClickSelection(int clickX, int clickY, int Button) : base(clickX, clickY)
+        {
+            if (Button == 0)
+            {
+                _Leftclick = true;
+            }
+            else if (Button == 2)
+            {
+                _Rightclick = true;
+            }
+            else
+            {
+                _Rightclick = false;
+                _Leftclick = false;
+            }
         }
-        public bool RightClick { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool LeftClick { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+        public bool RightClick { get { return _Rightclick; } }
+        public bool LeftClick { get { return _Leftclick; } }
+
+
+
     }
 }

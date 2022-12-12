@@ -90,7 +90,22 @@ namespace OOPGames
 
     public class B_GameField_Pong : IPongFieldB
     {
-        B_Ball _ball = new B_Ball(10, 3, 3);
+        public int Y_Direction;
+        public float X_Direction;
+        B_Ball _ball;
+        public B_GameField_Pong()
+        {
+            Random rnd = new Random();
+            Y_Direction = rnd.Next(-1, 1);
+            if (Y_Direction == 0)
+            {
+                Y_Direction = 1;
+            }
+            Y_Direction = Y_Direction * 3;
+            X_Direction = rnd.Next(2, 4);
+            _ball = new B_Ball(10, X_Direction, Y_Direction);
+        }
+  
         B_Paddle _paddle1 = new B_Paddle(1, false);
         B_Paddle _paddle2 = new B_Paddle(2, true);
         public B_Ball ball { get { return _ball; } set { _ball = value; } }

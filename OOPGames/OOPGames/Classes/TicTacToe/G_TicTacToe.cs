@@ -881,8 +881,23 @@ namespace OOPGames
         {
             _PlayerNumber = playerNumber;
         }
-    }
 
+        static void testkey(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+          
+            if (e.Alt)
+            {
+                Console.WriteLine("alt wurde gedrückt");
+            }
+           
+            if (e.KeyValue == 65)
+            Console.WriteLine("A wurde gedrückt");
+        }
+
+ 
+
+    }
+ 
     public class ComputerTicTacToePlayer_G : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;

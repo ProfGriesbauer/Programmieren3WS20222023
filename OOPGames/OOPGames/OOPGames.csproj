@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Ball_Pong.cs" />
+    <Compile Include="Classes\Gruppe B\B_Pong\B_ComputerPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_HumanPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Paddle_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Painter_Pong.cs" />
@@ -112,13 +113,13 @@
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
-    <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
     <Compile Include="Classes\Gruppe D\RulesD.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\InterfacesSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\PainterSV.cs" />
+    <Compile Include="Classes\Gruppe D\Schiffeversenken\PlayerSV.cs" />
     <Compile Include="Classes\Gruppe D\Schiffeversenken\RulerSV.cs" />
     <Compile Include="Classes\Gruppe E\E_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe E\E_VierGewinnt.cs" />
@@ -224,6 +225,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Classes\Gruppe C\Minesweeper\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +279,10 @@
     <EmbeddedResource Include="Assets\K\Normaler_Schuss.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\I\click-47609.wav" />
+    <Content Include="Assets\I\interface-1-126517.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

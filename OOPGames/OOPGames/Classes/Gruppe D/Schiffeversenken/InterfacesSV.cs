@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using OOPGames;
 
 namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 {
@@ -27,16 +28,29 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     }
     public interface IRulerSV : IGameRules
     {
-        void DoShipMove(IShipMove move);
+        void DoShipMove(ISVMove move);
         void ChangePhase();
         int CheckHit(int r, int c, int Playernumber);
         int SetShip(int r, int c, int Playernumber);
+        void RotateShip();
     }
 
-    public interface IShipMove : IRowMove, IColumnMove
+
+  public interface IHumanSV : IHumanGamePlayer
+    {
+        ISVMove GetMove(IMoveSelection selection, IFieldSV field);
+    }
+
+    public interface ISVMove : IRowMove, IColumnMove
     {
 
     }
+
+
+
 }
+
+
+
 
 

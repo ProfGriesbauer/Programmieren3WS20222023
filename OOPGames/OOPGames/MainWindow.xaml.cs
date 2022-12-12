@@ -1,4 +1,4 @@
-﻿using OOPGames.Classes.Gruppe_B;
+using OOPGames.Classes.Gruppe_B;
 //using OOPGames.Classes.Gruppe_F;
 using OOPGames.Classes.Gruppe_C;
 using OOPGames.Classes.Gruppe_K;
@@ -33,6 +33,8 @@ using OOPGames.Classes.Gruppe_K.Form;
 using OOPGames.Interfaces.Gruppe_J;
 using System.Windows.Forms;
 using OOPGames.Interfaces.Gruppe_K;
+using OOPGames.Classes.Gruppe_D.Schiffeversenken;
+using Application = System.Windows.Forms.Application;
 
 namespace OOPGames
 {
@@ -131,8 +133,10 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer1());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer2());
+            OOPGamesManager.Singleton.RegisterPlayer(new PlayerSV());
 
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer_Pong());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
@@ -289,8 +293,9 @@ namespace OOPGames
                             _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
                         }
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                        
                     }
-
+                    Application.DoEvents();
                     winner = _CurrentRules.CheckIfPLayerWon();
                     if (winner > 0)
                     {
@@ -304,7 +309,6 @@ namespace OOPGames
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
            
-            
             if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
@@ -313,28 +317,43 @@ namespace OOPGames
             {
                 if (_CurrentRules.MovesPossible &&
                     _CurrentPlayer is IHumanGamePlayer)
-                {
-                    /*if (_CurrentPlayer is ISVPlayer) // added by Gruppe D BITTE NICHT LÖSCHEN WIRD NOCH BENÖTIGT LG Tim
-                    {
-                        int click = 0;
 
-                        if (e.ChangedButton == MouseButton.Left)
+                {
+                    IPlayMove pm = null;
+                    if (_CurrentPlayer is IHumanSV) // added by Gruppe D BITTE NICHT LÖSCHEN WIRD NOCH BENÖTIGT LG Tim
+                    {
+                        
+
+                        if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            click = 1;
+                           
+                             pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                         } 
-                        if (e.ChangedButton == MouseButton.Right)
+
+                        if (e.RightButton == MouseButtonState.Pressed)
                         {
-                            click = 2;
+                            if (_CurrentRules is IRulerSV)
+                            {
+                               IRulerSV _CurrentRulesD = (IRulerSV)_CurrentRules; 
+                               _CurrentRulesD.RotateShip();
+                               _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                            }
+
+                          
                         }
-                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
-                    }*/
+   
+                    }
+                    else
+                    {
+                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                    }
                     /*
                     if (_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
                     {
                         IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton, _CurrentRules.CurrentField);
                     }
                     */
-                    IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                    
                     
                     if (pm != null)
                     {

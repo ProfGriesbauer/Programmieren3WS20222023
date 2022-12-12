@@ -61,7 +61,7 @@ namespace OOPGames
         GJ_DinoGameRules rules = new GJ_DinoGameRules();
 
         public override string Name { get { return "GJ_DinoPainter"; } }
-
+            
         public override void PaintDinoGameField(Canvas canvas, GJ_IDinoGameField currentField)
         {
 

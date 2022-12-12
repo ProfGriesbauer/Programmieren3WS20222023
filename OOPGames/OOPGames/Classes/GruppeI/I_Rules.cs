@@ -12,11 +12,11 @@ public class I_TicTacToeRules : IGameRules
     public IGameField CurrentField { get { return _BigField; } }
 
 
-    public bool MovesPossible
+    public bool MovesPossible //Fehler  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         get
         {
-            for (int t = 0; t < 9; t++)
+            for (int t = 0; t < 81; t++)
             {
                 for (int i = 0; i < 3; i++)
                 {

@@ -8,7 +8,6 @@ namespace OOPGames.Classes.GruppeI
 {
     public interface I_ISubField : ITicTacToeField
     {
-        //kommt vllt noch was
         int X { get; }
         int Y { get; }
         int SX { get; }

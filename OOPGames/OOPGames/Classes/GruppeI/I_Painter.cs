@@ -113,7 +113,7 @@ namespace OOPGames.Classes.GruppeI
                             }
                             else if (bigfield.SubFields[t][i, j] == 2) //kleine Rechtecke zeichnen 
                             {
-                                Rectangle OE = new Rectangle() { Margin = new Thickness(25 + (60 * j), 25 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
+                                Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X + 5 + (60 * j), bigfield.SubFields[t].Y + 5 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(OE);
                             }
                             else if (bigfield.SubFields[t][i, j] == 3) //groﬂe Kreuze zeichnen

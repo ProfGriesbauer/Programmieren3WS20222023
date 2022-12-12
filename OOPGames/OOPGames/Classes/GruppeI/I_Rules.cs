@@ -35,7 +35,7 @@ public class I_TicTacToeRules : IGameRules
         }
     }
 
-    public int CheckIfPLayerWon() //für großes Feld -> brauchen wir auch noch für kleine Felder, aber als eigene Funktion
+    public int CheckIfPLayerWon() //f�r gro�es Feld -> brauchen wir auch noch f�r kleine Felder, aber als eigene Funktion
     {
         for (int i = 0; i < 3; i++)
         {

@@ -30,6 +30,10 @@ using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
 using System.Windows.Markup;
 using Brushes = System.Windows.Media.Brushes;
 using OOPGames.Classes.Gruppe_K.Form;
+using OOPGames.Interfaces.Gruppe_J;
+using System.Windows.Forms;
+using OOPGames.Interfaces.Gruppe_K;
+using OOPGames.Classes.Gruppe_D.Schiffeversenken;
 
 namespace OOPGames
 {
@@ -57,6 +61,7 @@ namespace OOPGames
             ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
@@ -77,6 +82,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new B_Pong_Painter());
 
             //Rules
+            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
@@ -88,17 +94,20 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
             OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
-            OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
+            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
+            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF()); 
+            OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
 
             OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
 
 
             //Players
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanTicTacToePlayer_G());
             OOPGamesManager.Singleton.RegisterPlayer(new ComputerTicTacToePlayer_G());
@@ -120,8 +129,12 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer1());
+            OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer2());
+            OOPGamesManager.Singleton.RegisterPlayer(new PlayerSV());
 
-            //OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
@@ -150,12 +163,7 @@ namespace OOPGames
         /// <summary>
         /// //////////////////////////////////////
         /// </summary>
-        
-        public void RunDinoGame()
-        {
-            OOPGames.Classes.GruppeJ.Dino_Game.StartDinoGame();
 
-        }
         /// <summary>
         /// ///////////////////////////////
         /// </summary>
@@ -169,6 +177,11 @@ namespace OOPGames
                     _CurrentRules.CurrentField != null &&
                     _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
                 {
+                    //Flüssigerer Spielverlauf durch kürzere Intervallschritte
+                    if (_CurrentPainter is GJ_IDinoPaintGame)
+                    {
+                        _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                    }
                     ((IPaintGame2)_CurrentPainter).TickPaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 }
 
@@ -176,27 +189,60 @@ namespace OOPGames
                 {
                     ((IGameRules2)_CurrentRules).TickGameCall();
                 }
+
+                InputTick();
+
+            }
+        }
+
+        private void InputTick()
+        {
+            int winner = _CurrentRules.CheckIfPLayerWon();
+
+
+            if (winner == 0)
+            {
+                K_MouseSelectionTick mouse = new K_MouseSelectionTick((int)Mouse.GetPosition(PaintCanvas).X, (int)Mouse.GetPosition(PaintCanvas).Y);
+                K_KeySelectionTick key = new K_KeySelectionTick();
+              
+
+                if (_CurrentPlayer1 !=null && _CurrentPlayer1 is IK_HumanPlayer) {
+                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(mouse, _CurrentRules.CurrentField);
+                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
+                }
+                if (_CurrentPlayer2 != null && _CurrentPlayer2 is IK_HumanPlayer)
+                {
+                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(mouse, _CurrentRules.CurrentField);
+                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
+                }
+              
+
             }
         }
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
+            List<IGamePlayer> activePlayers=new List<IGamePlayer>();
             _CurrentPlayer1 = null;
             if (Player1List.SelectedItem is IGamePlayer)
             {
                 _CurrentPlayer1 = ((IGamePlayer)Player1List.SelectedItem).Clone();
                 _CurrentPlayer1.SetPlayerNumber(1);
+                activePlayers.Add(_CurrentPlayer1);
             }
             _CurrentPlayer2 = null;
             if (Player2List.SelectedItem is IGamePlayer)
             {
                 _CurrentPlayer2 = ((IGamePlayer)Player2List.SelectedItem).Clone();
                 _CurrentPlayer2.SetPlayerNumber(2);
+                activePlayers.Add(_CurrentPlayer2);
             }
 
             _CurrentPlayer = null;
             _CurrentPainter = PaintList.SelectedItem as IPaintGame;
             _CurrentRules = RulesList.SelectedItem as IGameRules;
+
+            OOPGamesManager.Singleton.RegisterActivePlayers(activePlayers);
 
             if (_CurrentRules is IGameRules2)
             {
@@ -204,7 +250,7 @@ namespace OOPGames
             }
 
             if (_CurrentPainter != null &&
-                _CurrentRules != null && _CurrentPlayer1 != null && _CurrentPlayer2 != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
+                _CurrentRules != null && _CurrentPlayer1 != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
             {
                 _CurrentPlayer = _CurrentPlayer1;
                 Status.Text = "Game startet!";
@@ -240,7 +286,10 @@ namespace OOPGames
                     {
                         _CurrentRules.DoMove(pm);
                         _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
 
@@ -257,7 +306,6 @@ namespace OOPGames
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
            
-            
             if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
@@ -266,28 +314,52 @@ namespace OOPGames
             {
                 if (_CurrentRules.MovesPossible &&
                     _CurrentPlayer is IHumanGamePlayer)
-                {
-                    /*if (_CurrentPlayer is ISVPlayer) // added by Gruppe D BITTE NICHT LÖSCHEN WIRD NOCH BENÖTIGT LG Tim
-                    {
-                        int click = 0;
 
-                        if (e.ChangedButton == MouseButton.Left)
+                {
+                    IPlayMove pm = null;
+                    if (_CurrentPlayer is IHumanSV) // added by Gruppe D BITTE NICHT LÖSCHEN WIRD NOCH BENÖTIGT LG Tim
+                    {
+                        
+
+                        if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            click = 1;
+                           
+                             pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                         } 
-                        if (e.ChangedButton == MouseButton.Right)
+
+                        if (e.RightButton == MouseButtonState.Pressed)
                         {
-                            click = 2;
+                            if (_CurrentRules is IRulerSV)
+                            {
+                               IRulerSV _CurrentRulesD = (IRulerSV)_CurrentRules; 
+                               _CurrentRulesD.RotateShip();
+                               _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                            }
+
+                          
                         }
-                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
-                    }*/
-                    IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+   
+                    }
+                    else
+                    {
+                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                    }
+                    /*
+                    if (_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
+                    {
+                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton, _CurrentRules.CurrentField);
+                    }
+                    */
+                    
                     
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
                         _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
                         OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
@@ -303,9 +375,13 @@ namespace OOPGames
             _PaintTimer.Stop();
             _PaintTimer = null;
         }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            K_KeySelectionTick.removeKey(e.Key);
+        }
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) 
+        {
+            K_KeySelectionTick.addKey(e.Key);
             if (_CurrentRules == null) return;
             int winner = _CurrentRules.CheckIfPLayerWon();
             if (winner > 0)
@@ -317,11 +393,18 @@ namespace OOPGames
                 if (_CurrentRules.MovesPossible &&
                     _CurrentPlayer is IHumanGamePlayer)
                 {
+                    if (_CurrentPlayer is GJ_DinoGamePlayer && e.ImeProcessedKey == Key.Space && ((GJ_DinoGameRules)_CurrentRules).jumping == false)
+                    {
+                        ((GJ_DinoGameRules)_CurrentRules).jumping = true;
+                    }
                     IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new KeySelection(e.Key), _CurrentRules.CurrentField);
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
                         OnPlayerChanged(_CurrentRules);
                         Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
@@ -346,7 +429,10 @@ namespace OOPGames
         { 
             if (_CurrentRules is IGameRulesB) 
             {
-                _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                if (_CurrentPlayer2 != null)
+                {
+                    _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                }
                 OnPlayerChanged(_CurrentRules);
                 //DoComputerMoves();
             }
@@ -383,18 +469,26 @@ namespace OOPGames
         {
             List<IGameRules> usableRules = new List<IGameRules>();
             IPaintGame selectedPainter = PaintList.SelectedItem as IPaintGame;
-            if (selectedPainter != null)
-            {
-                foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
+      
+                if (selectedPainter != null)
                 {
-                    IGameField field= data.CurrentField;
-                    if (field!=null && field.CanBePaintedBy(selectedPainter))
+                    foreach (IGameRules data in OOPGamesManager.Singleton.Rules)
                     {
-                        usableRules.Add(data);
+                    try
+                    {
+                        IGameField field = data.CurrentField;
+                        if (field != null && field.CanBePaintedBy(selectedPainter))
+                        {
+                            usableRules.Add(data);
+                        }
+
                     }
-                    
+                    catch (Exception exp)
+                    {
+                        Console.WriteLine(exp.Message);
+                    }
                 }
-            }
+            } 
 
             IGameRules selectedRule = GK_OpenSelectionWindow<IGameRules>(usableRules, "Painter Selection" , "Useable Rules");
             if (selectedRule != null)
@@ -402,25 +496,83 @@ namespace OOPGames
                 RulesList.SelectedItem = selectedRule;
             }
         }
+      
+        private void GK_ShowCompatiblePlayers(object sender, RoutedEventArgs e)
+        {
+            List<IGamePlayer> usablePlayers = new List<IGamePlayer>();
+            IGameRules selectedRule = RulesList.SelectedItem as IGameRules;
+
+           
+                if (selectedRule != null)
+                {
+                        foreach (IGamePlayer data in OOPGamesManager.Singleton.Players)
+                        {
+                            try
+                            {
+                        if (data.CanBeRuledBy(selectedRule))
+                        {
+
+                            usablePlayers.Add(data);
+                        }
+                             }
+                             catch (Exception exp)
+                            {
+                                Console.WriteLine(exp.Message);
+                               }
+
+                        }
+                    
+                }
+
+            IGamePlayer selectedPlayer = GK_OpenSelectionWindow<IGamePlayer>(usablePlayers, "Player 1 Selection", "Useable Player 1");
+            if (selectedPlayer != null)
+            {
+                Player1List.SelectedItem = selectedPlayer;
+            }
+            if (usablePlayers.Count != 0)
+            {
+                selectedPlayer = GK_OpenSelectionWindow<IGamePlayer>(usablePlayers, "Player 2 Selection", "Useable Player 2");
+                if (selectedPlayer != null)
+                {
+                    Player2List.SelectedItem = selectedPlayer;
+                }
+            }
+        }
         private void GK_ShowCompatiblePainters(object sender, RoutedEventArgs e)
         {
             List<IPaintGame> usablePainters = new List<IPaintGame>();
             IGameRules selectedRule = RulesList.SelectedItem as IGameRules;
-            if (selectedRule != null)
-            {
-                IGameField field= selectedRule.CurrentField;
-                if (field != null)
-                {
-                    foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
-                    {
-                        if (field.CanBePaintedBy(data))
-                        {
-                            usablePainters.Add(data);
-                        }
 
+           
+                if (selectedRule != null)
+            {
+                try
+                {
+                    IGameField field = selectedRule.CurrentField;
+                    if (field != null)
+                    {
+                        foreach (IPaintGame data in OOPGamesManager.Singleton.Painters)
+                        {
+                            try
+                            {
+                                if (field.CanBePaintedBy(data))
+                                {
+                                    usablePainters.Add(data);
+                                }
+                            }
+                            catch (Exception exp)
+                            {
+                                Console.WriteLine(exp.Message);
+                            }
+                        }
                     }
                 }
-            }
+                catch (Exception exp)
+                {
+                    Console.WriteLine(exp.Message);
+                }
+            } 
+           
 
             IPaintGame selectedPainter = GK_OpenSelectionWindow<IPaintGame>(usablePainters, "Painter Selection", "Useable Painters");
             if (selectedPainter != null)
@@ -445,7 +597,7 @@ namespace OOPGames
             bool result = (bool)selectionform.ShowDialog();
             while (result);
 
-            return selectionform.selectionPerformed ? (T)selectionform.K_selectionList.SelectedItem : default(T); ;
+            return selectionform.selectionPerformed ? (T)selectionform.K_selectionList.SelectedItem : default(T);
         }
 
 

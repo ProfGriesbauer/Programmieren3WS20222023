@@ -14,11 +14,14 @@ namespace OOPGames
         IList<IGamePlayer> _Players;
         IList<IGameRules> _Rules;
 
+        IList<IGamePlayer> _activePlayers;
+
         public OOPGamesManager ()
         {
             _Painters = new List<IPaintGame>();
             _Players = new List<IGamePlayer>();
             _Rules = new List<IGameRules>();
+            _activePlayers = new List<IGamePlayer>();
         }
 
         public void RegisterPainter (IPaintGame painter)
@@ -34,6 +37,14 @@ namespace OOPGames
         public void RegisterPlayer(IGamePlayer player)
         {
             _Players.Add(player);
+        }
+
+        public void RegisterActivePlayers(IList<IGamePlayer> activePlayers)
+        {
+            _activePlayers.Clear();
+            foreach (IGamePlayer player in activePlayers) {
+                _activePlayers.Add(player);
+                    }
         }
 
         public void UnregisterPlayer(IGamePlayer player)
@@ -54,6 +65,8 @@ namespace OOPGames
         public IEnumerable<IPaintGame> Painters { get { return _Painters; } }
 
         public IEnumerable<IGamePlayer> Players {  get { return _Players; } }
+
+        public IEnumerable<IGamePlayer> activePlayers { get { return _activePlayers; } }
 
         public IEnumerable<IGameRules> Rules { get { return _Rules; } }
 

@@ -92,7 +92,6 @@ namespace OOPGames.Classes.GruppeJ
                 jumping = true;
             }
         }
-
         private void keyisup(object sender, KeyEventArgs e)
         {
             if (jumping == true)
@@ -128,6 +127,16 @@ namespace OOPGames.Classes.GruppeJ
         }
 
         private void txtScore_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Dino_Form_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
         {
 
         }

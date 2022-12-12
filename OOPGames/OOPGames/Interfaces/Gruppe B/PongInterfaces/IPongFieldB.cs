@@ -12,6 +12,7 @@ namespace OOPGames
         B_Paddle paddle1 { get; set; }
         B_Paddle paddle2 { get; set; }
 
+        void freezeField();
         
     }
 }

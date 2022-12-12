@@ -45,16 +45,18 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.WindowText;
-            this.pictureBox1.Location = new System.Drawing.Point(-2, 405);
+            this.pictureBox1.Location = new System.Drawing.Point(-2, 329);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(802, 49);
+            this.pictureBox1.Size = new System.Drawing.Size(602, 40);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // Dino
             // 
             this.Dino.Image = global::OOPGames.Properties.Resources.running;
-            this.Dino.Location = new System.Drawing.Point(88, 365);
+            this.Dino.Location = new System.Drawing.Point(66, 297);
+            this.Dino.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Dino.Name = "Dino";
             this.Dino.Size = new System.Drawing.Size(40, 43);
             this.Dino.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -66,18 +68,21 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::OOPGames.Properties.Resources.obstacle_1;
-            this.pictureBox3.Location = new System.Drawing.Point(431, 362);
+            this.pictureBox3.Location = new System.Drawing.Point(323, 294);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(23, 46);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Tag = "Kaktus";
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // pictureBox4
             // 
             this.pictureBox4.Image = global::OOPGames.Properties.Resources.obstacle_2;
-            this.pictureBox4.Location = new System.Drawing.Point(483, 375);
+            this.pictureBox4.Location = new System.Drawing.Point(362, 305);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(32, 33);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -101,27 +106,30 @@
             // 
             this.txtScore.AutoSize = true;
             this.txtScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScore.Location = new System.Drawing.Point(12, 9);
+            this.txtScore.Location = new System.Drawing.Point(9, 7);
+            this.txtScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtScore.Name = "txtScore";
-            this.txtScore.Size = new System.Drawing.Size(119, 32);
+            this.txtScore.Size = new System.Drawing.Size(93, 26);
             this.txtScore.TabIndex = 4;
             this.txtScore.Text = "Score: 0";
             this.txtScore.Click += new System.EventHandler(this.txtScore_Click);
             // 
             // Dino_Form
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(802, 450);
+            this.ClientSize = new System.Drawing.Size(602, 366);
             this.Controls.Add(this.txtScore);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.Dino);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Dino_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dino_Game";
+            this.Load += new System.EventHandler(this.Dino_Form_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyisdown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyisup);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

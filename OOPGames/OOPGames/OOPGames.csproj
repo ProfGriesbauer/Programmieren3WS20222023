@@ -253,7 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\dead.png" />
-    <Resource Include="Resources\schildkroete.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\obstacle-1.gif" />
@@ -295,6 +294,7 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
+    <Resource Include="Resources\Gruppe H\Schildkröte.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

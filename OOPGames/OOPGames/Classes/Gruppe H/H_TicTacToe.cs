@@ -333,7 +333,7 @@ namespace OOPGames
                 {
 
                     Image Kreuz = new Image();
-                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/schildkroete.png"));
+                    Kreuz.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/schildkroete.png"));
                     Kreuz.Height = 150;
                     Kreuz.Width = 150;
 

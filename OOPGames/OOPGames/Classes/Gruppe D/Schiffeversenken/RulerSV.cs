@@ -22,8 +22,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
 
 
-        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 }); // schifflänge 
-        Stack<int> _SchiffeP2 = new Stack<int>(new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 });
+        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 2, 2, 2, 2, 3, 3, 3, 4, 4, 5 }); // schifflänge 
+        Stack<int> _SchiffeP2 = new Stack<int>(new int[] { 2, 2, 2, 2, 3, 3, 3, 4, 4, 5 });
         public int this[int r, int c, int w] 
         { 
             get  
@@ -213,100 +213,108 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         public void DoMove(IPlayMove move)
         {
-            if (move is IShipMove)
+            if (move is ISVMove)
             {
-                DoShipMove((IShipMove)move);
+                DoShipMove((ISVMove)move);
 
             }
         }
-
-        public void DoShipMove(IShipMove move)
+        int ShipPlaceable(int r, int c, int ShipLength, int HorVer, int PlayerNumber)     //Schaut, ob in der Umgebung ein Schiff ist
         {
-            
-            int ShipPlaceable(int r, int c, int ShipLength, int HorVer, int PlayerNumber)     //Schaut, ob in der Umgebung ein Schiff ist
+            if (HorVer == 1)    //vertikal
             {
-                if (HorVer == 1)    //vertikal
+                for (int i = r; i < r + ShipLength; i++)
                 {
-                    for (int i = r; i < r + ShipLength; i++)
+                    if (_Shipfield[i, c - 1, PlayerNumber] > 0)
                     {
-                        if (_Shipfield[i, c - 1, PlayerNumber] > 0)
-                        {
-                            return 1;//-> Schiff ist in Umgebung vorhanden
-                        }
-                        if (_Shipfield[i, c + 1, PlayerNumber] > 0)
-                        {
-                            return 1;
-                        }
-                        if (_Shipfield[c, r - 1, PlayerNumber] > 0)
-                        {
-                            return 1;
-                        }
-                        if (_Shipfield[c, r + ShipLength, PlayerNumber] > 0)
-                        {
-                            return 1;
-                        }
+                        return 1;//-> Schiff ist in Umgebung vorhanden
                     }
+                    if (_Shipfield[i, c + 1, PlayerNumber] > 0)
+                    {
+                        return 1;
+                    }
+                    if (_Shipfield[c, r - 1, PlayerNumber] > 0)
+                    {
+                        return 1;
+                    }
+                    if (_Shipfield[c, r + ShipLength, PlayerNumber] > 0)
+                    {
+                        return 1;
+                    }
+                }
 
-                }
-                else if (HorVer == 2)   //horizontal
-                {
-                    for (int i = c; i < c + ShipLength; i++)
-                    {
-                        if (_Shipfield[r - 1, i, PlayerNumber] > 0)
-                        {
-                            return 1;//-> Schiff ist in Umgebung vorhanden
-                        }
-                        if (_Shipfield[r + 1, i, PlayerNumber] > 0)
-                        {
-                            return 1;
-                        }
-                        if (_Shipfield[c - 1, r, PlayerNumber] > 0)
-                        {
-                            return 1;
-                        }
-                        if (_Shipfield[c + ShipLength, r, PlayerNumber] > 0)
-                        {
-                            return 1;
-                        }
-                    }
-                }
-                return 0;
             }
-
-
+            else if (HorVer == 2)   //horizontal
+            {
+                for (int i = c; i < c + ShipLength; i++)
+                {
+                    if (_Shipfield[r - 1, i, PlayerNumber] > 0)
+                    {
+                        return 1;//-> Schiff ist in Umgebung vorhanden
+                    }
+                    if (_Shipfield[r + 1, i, PlayerNumber] > 0)
+                    {
+                        return 1;
+                    }
+                    if (_Shipfield[c - 1, r, PlayerNumber] > 0)
+                    {
+                        return 1;
+                    }
+                    if (_Shipfield[c + ShipLength, r, PlayerNumber] > 0)
+                    {
+                        return 1;
+                    }
+                }
+            }
+            return 0;
+        }
+        public void DoShipMove(ISVMove move)
+        {
+            int _PlayerNumber = move.PlayerNumber;
             if (GamePhase == 1 || GamePhase == 2)
             {
-                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber < 3)
+                if (GamePhase == 1 )
                 {
-                    if (_Shipfield.HorVer == 1 && (move.Row + _Shipfield.Ships(2, move.PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, move.PlayerNumber), _Shipfield.HorVer, move.PlayerNumber) == 0)
+                    _PlayerNumber = 1;
+                }
+                else
+                {
+                    _PlayerNumber = 2;
+                }
+                
+                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && _PlayerNumber < 3)
+                {
+                    if (_Shipfield.HorVer == 1 && (move.Row + _Shipfield.Ships(2, _PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
                     {
-                        for (int i = 0; i < _Shipfield.Ships(2, move.PlayerNumber); i++)
+                        int _Ship = SetShip(move.Row, move.Column, _PlayerNumber);
+                        for (int i = 0; i < _Ship; i++)
                         {
-                            _Shipfield[move.Row + i, move.Column, move.PlayerNumber] = SetShip(move.Row + i, move.Column, move.PlayerNumber);
+                            _Shipfield[move.Row + i, move.Column, _PlayerNumber] = _Ship;
                         }
                     }
-                    else if (_Shipfield.HorVer == 2 && (move.Column + _Shipfield.Ships(2, move.PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, move.PlayerNumber), _Shipfield.HorVer, move.PlayerNumber) == 0)
+                    else if (_Shipfield.HorVer == 2 && (move.Column + _Shipfield.Ships(2, _PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
                     {
-                        for (int i = 0; i < _Shipfield.Ships(2, move.PlayerNumber); i++)
+                        int _Ship = SetShip(move.Row, move.Column, _PlayerNumber);
+                        for (int i = 0; i < _Ship; i++)
                         {
-                            _Shipfield[move.Row, move.Column + i, move.PlayerNumber] = SetShip(move.Row, move.Column + i, move.PlayerNumber);
+                            _Shipfield[move.Row, move.Column + i, _PlayerNumber] = _Ship;
                         }
                     }
                 }
-            }
+        }
 
-            if (GamePhase == 3)
+        if (GamePhase == 3)
+        {
+            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
             {
-                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 1)
-                {
-                    _Shipfield[move.Row, move.Column, 3] = CheckHit(move.Row, move.Column, move.PlayerNumber);
-                }
-                if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
-                {
-                    _Shipfield[move.Row, move.Column, 4] = CheckHit(move.Row, move.Column, move.PlayerNumber);
-                }
+                _Shipfield[move.Row, move.Column, 3] = CheckHit(move.Row, move.Column, move.PlayerNumber);
+            }
+            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && move.PlayerNumber == 2)
+            {
+                _Shipfield[move.Row, move.Column, 4] = CheckHit(move.Row, move.Column, move.PlayerNumber);
             }
         }
+    }
 
         public void RotateShip()
         {
@@ -321,22 +329,23 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         }
 
         public int SetShip(int r, int c, int Playernumber)
+        {
+            if (_Shipfield[r, c, Playernumber] == 0)
             {
-                if (_Shipfield[r, c, Playernumber] == 0)
+                ShipCounter = ShipCounter + _Shipfield.Ships(2, Playernumber);
+                if (ShipCounter == 30)
                 {
-                    ShipCounter = ShipCounter + _Shipfield.Ships(2, Playernumber);
-                    if (ShipCounter == 30)
-                    {
-                        ChangePhase();
-                    }
-                    if (ShipCounter == 60)
-                    {
-                         ChangePhase();
-                    }
-                    //return _Shipfield.Ships(1, Playernumber);
+                    ChangePhase();
+                    return 0;
                 }
-
+                if (ShipCounter == 60)
+                {
+                    ChangePhase();
+                    return 0;
+                }
                 return _Shipfield.Ships(1, Playernumber);
             }
+            return 0;
+           }
         }
     }

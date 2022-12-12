@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 using OOPGames;
 using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
 
@@ -49,17 +50,19 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                 {
                     for (int c = 0; c < 8; c++)
                     {
-                        if (click.XClickPos > 20 + (r * 50) && click.XClickPos < 420 + (r * 50) &&
-                            click.YClickPos > 50 + (c * 50) && click.YClickPos < 450 + (c * 50))
+                        if (click.XClickPos > 20 + (r * 50) && click.XClickPos < 70 + (r * 50) &&
+                            click.YClickPos > 50 + (c * 50) && click.YClickPos < 100 + (c * 50))
                         {
                             return new SVMove(c, r, _PlayerNumber);
                         }
-                        if (click.XClickPos > 450 + (r * 50) && click.XClickPos < 850 + (r * 50) &&
-                            click.YClickPos > 50 + (c * 50) && click.YClickPos < 450 + (c * 50))
+                        if (field.Phase == 3)
                         {
-                            return new SVMove(c, r, _PlayerNumber);
+                            if (click.XClickPos > 450 + (r * 50) && click.XClickPos < 500 + (r * 50) &&
+                                click.YClickPos > 50 + (c * 50) && click.YClickPos < 100 + (c * 50))
+                            {
+                                return new SVMove(c, r, _PlayerNumber);
+                            }
                         }
-
                     }
                 }
             }

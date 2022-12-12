@@ -245,10 +245,12 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         return 1;
                     }
+                    /*
                     if (r + ShipLength >= 8)
                     {
                         return 0;
                     }
+                    */
                     if (_Shipfield[r + ShipLength, c, PlayerNumber] > 0)
                     {
                         return 1;
@@ -272,10 +274,12 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                     {
                         return 1;
                     }
+                    /*
                     if (c + ShipLength >= 8)
                     {
                         return 0;
                     }
+                    */
                     if (_Shipfield[r, c + ShipLength, PlayerNumber] > 0)
                     {
                         return 1;
@@ -300,7 +304,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                 
                 if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 8 && _PlayerNumber < 3)
                 {
-                    if (_Shipfield.HorVer == 1 && (move.Row + _Shipfield.Ships(2, _PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
+                    if (_Shipfield.HorVer == 1 && (move.Row + _Shipfield.Ships(2, _PlayerNumber) <= 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
                     {
                         int _Ship = SetShip(move.Row, move.Column, _PlayerNumber);
                         for (int i = 0; i < _Ship; i++)
@@ -308,7 +312,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
                             _Shipfield[move.Row + i, move.Column, _PlayerNumber] = _Ship;
                         }
                     }
-                    else if (_Shipfield.HorVer == 2 && (move.Column + _Shipfield.Ships(2, _PlayerNumber) < 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
+                    else if (_Shipfield.HorVer == 2 && (move.Column + _Shipfield.Ships(2, _PlayerNumber) <= 8) && ShipPlaceable(move.Row, move.Column, _Shipfield.Ships(2, _PlayerNumber), _Shipfield.HorVer, _PlayerNumber) == 0)
                     {
                         int _Ship = SetShip(move.Row, move.Column, _PlayerNumber);
                         for (int i = 0; i < _Ship; i++)

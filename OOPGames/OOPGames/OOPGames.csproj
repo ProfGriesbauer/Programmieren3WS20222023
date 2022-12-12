@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Classes\Gruppe B\B_Painter.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Ball_Pong.cs" />
+    <Compile Include="Classes\Gruppe B\B_Pong\B_ComputerPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_HumanPlayer_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Paddle_Pong.cs" />
     <Compile Include="Classes\Gruppe B\B_Pong\B_Painter_Pong.cs" />

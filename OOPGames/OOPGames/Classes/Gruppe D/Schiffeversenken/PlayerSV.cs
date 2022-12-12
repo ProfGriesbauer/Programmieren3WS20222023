@@ -72,7 +72,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                             {
                                 return new SVMove(r, c, _PlayerNumber);
                             }
-                        }
+                        }  
                     }
                 }
             }

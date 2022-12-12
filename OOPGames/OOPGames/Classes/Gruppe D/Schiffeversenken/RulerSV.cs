@@ -19,11 +19,12 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         int _GamePhase = 1;
         int _HorVer = 1; // 1: Schiffe vertikal, 2:Schiffe horizontal
+        int _FirstClick = 1;
 
 
 
-        Stack<int> _SchiffeP1 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 }); // schifflänge 
-        Stack<int> _SchiffeP2 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 });
+        Stack<int> _SchiffeP1 = new Stack<int>(new int[] { 2, 2, 3, 3, 4, 4, 5 }); // schifflänge 
+        Stack<int> _SchiffeP2 = new Stack<int>(new int[] { 2, 2, 3, 3, 4, 4, 5 });
         public int this[int r, int c, int w] 
         { 
             get  
@@ -76,6 +77,13 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             set { _HorVer = value; }
         }
 
+        public int FirstClick 
+        {
+            get { return _FirstClick; }
+
+            set { _FirstClick = value; } 
+        }
+
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is IPaintSV;
@@ -83,8 +91,11 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         public void ResetShipStack()
         {
-            _SchiffeP1 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 });
-            _SchiffeP2 = new Stack<int>(new int[] {2, 2, 2, 3, 3, 4, 4, 5 });
+            _SchiffeP1.Clear();
+            _SchiffeP2.Clear();
+
+            _SchiffeP1 = new Stack<int>(new int[] {2, 2, 3, 3, 4, 4, 5 }); 
+            _SchiffeP2 = new Stack<int>(new int[] {2, 2, 3, 3, 4, 4, 5 });
         }
 
         public int Ships(int w, int p)
@@ -217,6 +228,8 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
             _Shipfield.ResetShipStack();
             _Shipfield.Phase = 1;
+            GamePhase = 1;
+            ShipCounter = 0;
         }
 
         public void DoMove(IPlayMove move)
@@ -356,15 +369,16 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             if (_Shipfield[r, c, Playernumber] == 0)
             {
                 ShipCounter = ShipCounter + _Shipfield.Ships(2, Playernumber);
-                if (ShipCounter == 25)
+                if (ShipCounter == 23)
                 {
                     ChangePhase();
-                    return 0;
+                    return _Shipfield.Ships(1, Playernumber);
                 }
-                if (ShipCounter == 50)
+                if (ShipCounter == 46)
                 {
+                    _Shipfield.FirstClick = 0;
                     ChangePhase();
-                    return 0;
+                    return _Shipfield.Ships(1, Playernumber);
                 }
                 return _Shipfield.Ships(1, Playernumber);
             }

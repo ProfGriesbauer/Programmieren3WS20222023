@@ -40,6 +40,8 @@ namespace OOPGames.Interfaces.Gruppe_J
         public abstract int force { get; set; }
 
         public abstract int gameScore{ get; set; }
+
+
         public abstract string dinoHealth { get; set; }
 
 

@@ -8,23 +8,24 @@ using System.Xaml;
 
 namespace OOPGames.Classes.GruppeI
 {
-    public class Human_PlayerI: BaseHumanTicTacToePlayer
+    public class Human_PlayerI: IHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "Human_TTT-Player_I"; } }
+        public string Name { get { return "Human_TTT-Player_I"; } }
 
-        public override int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return _PlayerNumber; } }
 
-        public override IGamePlayer Clone()
+        public IGamePlayer Clone()
         {
-            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            Human_PlayerI ttthp = new Human_PlayerI();
             ttthp.SetPlayerNumber(_PlayerNumber);
 
             return ttthp;
         }
 
-        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
+
+        public ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
             int f = 0;
             int px = 0;
@@ -33,15 +34,15 @@ namespace OOPGames.Classes.GruppeI
             {
                 IClickSelection sel = (IClickSelection)selection;
                 
-                if (sel.XClickPos > 20 && sel.XClickPos < 80 && sel.YClickPos > 20 && sel.YClickPos < 80) { f = 0; px = 0; py = 0; }
-                if (sel.XClickPos > 80 && sel.XClickPos < 140 && sel.YClickPos > 20 && sel.YClickPos < 80) { f = 1; px = 60; py = 0; }
-                if (sel.XClickPos > 140 && sel.XClickPos < 200 && sel.YClickPos > 20 && sel.YClickPos < 80) { f = 2; px = 120; py = 0; }
-                if (sel.XClickPos > 20 && sel.XClickPos < 80 && sel.YClickPos > 80 && sel.YClickPos < 140) { f = 3; px = 0; py = 60; }
-                if (sel.XClickPos > 80 && sel.XClickPos < 140 && sel.YClickPos > 80 && sel.YClickPos < 140) { f = 4; px = 60; py = 60; }
-                if (sel.XClickPos > 140 && sel.XClickPos < 200 && sel.YClickPos > 80 && sel.YClickPos < 140) { f = 5; px = 120; py = 60; }
-                if (sel.XClickPos > 20 && sel.XClickPos < 80 && sel.YClickPos > 140 && sel.YClickPos < 200) { f = 6; px = 0; py = 120; }
-                if (sel.XClickPos > 80 && sel.XClickPos < 140 && sel.YClickPos > 140 && sel.YClickPos < 200) { f = 7; px = 60; py = 120; }
-                if (sel.XClickPos > 140 && sel.XClickPos < 200 && sel.YClickPos > 140 && sel.YClickPos < 200) { f = 8; px = 120; py = 120; }
+                if (sel.XClickPos > 20 && sel.XClickPos < 200 && sel.YClickPos > 20 && sel.YClickPos < 200) { f = 0; px = 0; py = 0; }
+                if (sel.XClickPos > 200 && sel.XClickPos < 380 && sel.YClickPos > 20 && sel.YClickPos < 200) { f = 1; px = 180; py = 0; }
+                if (sel.XClickPos > 380 && sel.XClickPos < 560 && sel.YClickPos > 20 && sel.YClickPos < 200) { f = 2; px = 360; py = 0; }
+                if (sel.XClickPos > 20 && sel.XClickPos < 200 && sel.YClickPos > 200 && sel.YClickPos < 380) { f = 3; px = 0; py = 180; }
+                if (sel.XClickPos > 200 && sel.XClickPos < 380 && sel.YClickPos > 200 && sel.YClickPos < 380) { f = 4; px = 180; py = 180; }
+                if (sel.XClickPos > 380 && sel.XClickPos < 560 && sel.YClickPos > 200 && sel.YClickPos < 380) { f = 5; px = 360; py = 180; }
+                if (sel.XClickPos > 20 && sel.XClickPos < 200 && sel.YClickPos > 380 && sel.YClickPos < 560) { f = 6; px = 0; py = 360; }
+                if (sel.XClickPos > 200 && sel.XClickPos < 380 && sel.YClickPos > 380 && sel.YClickPos < 560) { f = 7; px = 180; py = 360; }
+                if (sel.XClickPos > 380 && sel.XClickPos < 560 && sel.YClickPos > 380 && sel.YClickPos < 560) { f = 8; px = 360; py = 360; }
 
                 for (int i = 0; i < 3; i++)                         
                 {
@@ -65,9 +66,26 @@ namespace OOPGames.Classes.GruppeI
 
         }
 
-        public override void SetPlayerNumber(int playerNumber)
+        public void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
+        }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is IGameRules; //Umgeschrieben
+        }
+
+        IPlayMove IHumanGamePlayer.GetMove(IMoveSelection selection, IGameField field)
+        {
+            if (field is ITicTacToeField)
+            {
+                return GetMove(selection, (ITicTacToeField)field);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

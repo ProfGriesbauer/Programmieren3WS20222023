@@ -89,8 +89,8 @@
             <Button x:Name="ShowCompatiblePainters" Content="Compatible Painters" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatiblePainters" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="5,5,0,0"/>
             <Button x:Name="ShowCompatiblePlayers" Content="Compatible Players" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatiblePlayers" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="145,5,0,0"/>
             <Button x:Name="ShowCompatibleRules" Content="Compatible Rules" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GK_ShowCompatibleRules" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="280,5,0,0"/>
-            
-            
+
+
             <Button x:Name="ChooseColor" Content="Choose Color" HorizontalAlignment="Left" VerticalAlignment="Center" Click="GJ_ChooseColor" Grid.Row="8" RenderTransformOrigin="1.523,0.621" Margin="405,5,0,0"/>
         </Grid>
     </Grid>

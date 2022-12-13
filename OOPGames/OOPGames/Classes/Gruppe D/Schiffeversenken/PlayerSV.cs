@@ -59,7 +59,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                             }
                         }
                         
-                        if (field.Phase == 3)
+                        if (field.Phase == 3 && field.FirstClick == 1)
                         {
                             if (click.XClickPos > 20 + (c * 50) && click.XClickPos < 70 + (c * 50) &&
                             click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50) && _PlayerNumber == 1)
@@ -74,6 +74,10 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                             }
                         }  
                     }
+                }
+                if (click.XClickPos > 0 && click.XClickPos < 20 && click.YClickPos > 600 && click.YClickPos < 700)
+                {
+                    field.FirstClick = 1;
                 }
             }
             return null;

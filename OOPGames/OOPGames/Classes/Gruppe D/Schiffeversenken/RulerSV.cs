@@ -19,7 +19,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
 
         int _GamePhase = 1;
         int _HorVer = 1; // 1: Schiffe vertikal, 2:Schiffe horizontal
-        int _FirstClick = 1;
+        int _FirstClick = 0;
 
 
 

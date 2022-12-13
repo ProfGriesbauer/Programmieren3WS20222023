@@ -172,13 +172,6 @@ namespace OOPGames
             }
                 
         }
-        /// <summary>
-        /// //////////////////////////////////////
-        /// </summary>
-
-        /// <summary>
-        /// ///////////////////////////////
-        /// </summary>
 
         private void _PaintTimer_Tick(object sender, EventArgs e)
         {

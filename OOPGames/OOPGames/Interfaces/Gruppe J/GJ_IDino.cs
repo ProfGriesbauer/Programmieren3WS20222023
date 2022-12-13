@@ -33,7 +33,6 @@ namespace OOPGames.Interfaces.Gruppe_J
 
         public abstract bool jumping { get; set; }
 
-        public abstract bool gameOver { get; }
 
         public abstract int jumpSpeed { get; set; }
 
@@ -41,11 +40,6 @@ namespace OOPGames.Interfaces.Gruppe_J
 
         public abstract int gameScore{ get; set; }
 
-
-        public abstract string dinoHealth { get; set; }
-
-
-        public abstract string resetText { get; set; }
 
         public abstract int ObstacleSpeed { get; set; }
 
@@ -73,7 +67,6 @@ namespace OOPGames.Interfaces.Gruppe_J
 
     public interface GJ_IDinoGameField : IGameField
     {
-        //int this[int i] { get; set; }
 
         List<Obstacle> obstacles { get; set;  }
 

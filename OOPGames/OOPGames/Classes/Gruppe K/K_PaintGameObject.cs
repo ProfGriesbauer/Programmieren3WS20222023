@@ -16,6 +16,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using Color = System.Windows.Media.Color;
 using Image = System.Windows.Controls.Image;
 
@@ -62,13 +63,18 @@ namespace OOPGames.Classes.Gruppe_K
                     {
                         PaintK_Target(canvas, (K_Target)obj);
                     }
+                    else if (obj is K_Text)
+                    {
+                        K_Text text = ((K_Text)obj);
+                        drawText(text.xPos, text.yPos, text.Text, text.FontSize, text.TextColor, text.BackgroundColor,canvas,text.drawIndex);
+                    }
                     else
                     {
                         drawImage(canvas, (K_DrawObject)obj);
                     }
                 }
             }
-            drawText(canvas.ActualWidth - 100, 10, "FPS: " + (int)(1 / dT), 20, Colors.Black, Colors.White, canvas);
+            drawText(canvas.ActualWidth - 100, 10, "FPS: " + (int)(1 / dT), 20, Colors.Black, Colors.White, canvas,200);
         }
 
 
@@ -184,13 +190,14 @@ namespace OOPGames.Classes.Gruppe_K
                 Console.WriteLine(e.Message);
             }
         }
-        private void drawText(double x, double y, string text, int size, Color colorText, Color colorBackground, Canvas canvas)
+        private void drawText(double x, double y, string text, int size, Color colorText, Color colorBackground, Canvas canvas, int drawIndex)
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Text = text;
             textBlock.Foreground = new SolidColorBrush(colorText);
             textBlock.Background = new SolidColorBrush(colorBackground);
             textBlock.FontSize = size;
+            Canvas.SetZIndex(textBlock, drawIndex);
             Canvas.SetLeft(textBlock, x);
             Canvas.SetTop(textBlock, y);
             canvas.Children.Add(textBlock);

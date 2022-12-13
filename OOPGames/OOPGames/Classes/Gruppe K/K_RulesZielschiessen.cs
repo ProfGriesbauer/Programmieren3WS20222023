@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    internal class K_RulesZielschiessen : IGameRules2
+    internal class K_RulesZielschiessen : K_RulesPanzer, IGameRules2
     {
         OOPGamesManager _OOPmanager= OOPGamesManager.Singleton;
         K_GameObjectManager _KgameManager=new K_GameObjectManager();
@@ -23,6 +23,8 @@ namespace OOPGames.Classes.Gruppe_K
         K_Target randomeTarget = new K_Target();
         K_Projectile stdSchuss = new K_Projectile();
 
+       
+
         int _gamestate = 0;
         //int _shootpow = 650;
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
@@ -31,7 +33,8 @@ namespace OOPGames.Classes.Gruppe_K
 
         public string Name { get { return "K Rules Zielschießen"; } }
 
-        public bool MovesPossible { get { return true; } }
+        public bool MovesPossible { get { return _movePossible; } }
+
 
         IGameField IGameRules.CurrentField { get { return _KgameManager; } }
 
@@ -240,6 +243,20 @@ namespace OOPGames.Classes.Gruppe_K
                     resPos = random.Next(200) + 100;
                 }
             }
+            
+
+            // Text
+            K_Text text = new K_Text();
+            text.xPos = 100;
+            text.yPos = 100;
+            text.Text = "Test";
+            text.FontSize = 20;
+            text.TextColor = Colors.Black;
+            text.BackgroundColor = Colors.Transparent;
+            text.drawIndex = 200;
+            _KgameManager.Objects.Add(text);
+
+
             
 
             _KgameManager.GameField = randomeSpielfeld;

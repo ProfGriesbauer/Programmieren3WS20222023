@@ -221,18 +221,40 @@ namespace OOPGames
             {
                 K_MouseSelectionTick mouse = new K_MouseSelectionTick((int)Mouse.GetPosition(PaintCanvas).X, (int)Mouse.GetPosition(PaintCanvas).Y);
                 K_KeySelectionTick key = new K_KeySelectionTick();
+                IPlayMove pm=null;
               
 
                 if (_CurrentPlayer1 !=null && _CurrentPlayer1 is IK_HumanPlayer) {
                    ((IK_HumanPlayer)_CurrentPlayer1).GetMove(mouse, _CurrentRules.CurrentField);
-                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
+                   pm=((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
                 }
                 if (_CurrentPlayer2 != null && _CurrentPlayer2 is IK_HumanPlayer)
                 {
                    ((IK_HumanPlayer)_CurrentPlayer2).GetMove(mouse, _CurrentRules.CurrentField);
-                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
+                   pm=((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
                 }
-              
+                if (_CurrentRules.MovesPossible && _CurrentPlayer is IK_HumanPlayer)
+                {
+                    if (_CurrentRules is K_RulesPanzer)
+                    {
+                        ((K_RulesPanzer)_CurrentRules).resetMovePossible();
+                    }
+                    if (pm != null)
+                    {
+                        _CurrentRules.DoMove(pm);
+                    }
+                    _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                    if (_CurrentPlayer2 != null)
+                    {
+                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                    }
+                    OnPlayerChanged(_CurrentRules);
+                    Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                }
+
+                DoComputerMoves();
+
+
 
             }
         }

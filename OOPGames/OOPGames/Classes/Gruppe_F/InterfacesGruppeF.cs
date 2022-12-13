@@ -9,7 +9,7 @@ namespace OOPGames
 
     public interface IFieldSum
     {
-        int? checkFieldSum { get;  }
+        int? CheckFieldSum { get;  }
     }
     public interface IFTicTacToeField : ITicTacToeField
     {

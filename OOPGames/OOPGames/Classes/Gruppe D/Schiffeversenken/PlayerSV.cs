@@ -50,29 +50,24 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                 {
                     for (int c = 0; c < 8; c++)
                     {
-                        if (field.Phase == 1 || field.Phase == 2)
+                        if (click.XClickPos > 20 + (r * 50) && click.XClickPos < 70 + (r * 50) &&
+                            click.YClickPos > 50 + (c * 50) && click.YClickPos < 100 + (c * 50))
                         {
-                            if (click.XClickPos > 20 + (c * 50) && click.XClickPos < 70 + (c * 50) &&
-                            click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50))
-                            {
-                                return new SVMove(r, c, _PlayerNumber);
-                            }
+                            return new SVMove(c, r, _PlayerNumber);
                         }
+<<<<<<< HEAD
                         
                         if (field.Phase == 3 && field.FirstClick == 1)
+=======
+                        if (field.Phase == 3)
+>>>>>>> 1aa28e674fd49775c66baaae41790b3c2ae66c93
                         {
-                            if (click.XClickPos > 20 + (c * 50) && click.XClickPos < 70 + (c * 50) &&
-                            click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50) && _PlayerNumber == 1)
+                            if (click.XClickPos > 450 + (r * 50) && click.XClickPos < 500 + (r * 50) &&
+                                click.YClickPos > 50 + (c * 50) && click.YClickPos < 100 + (c * 50))
                             {
-                                return new SVMove(r, c, _PlayerNumber);
+                                return new SVMove(c, r, _PlayerNumber);
                             }
-
-                            if (click.XClickPos > 450 + (c * 50) && click.XClickPos < 500 + (c * 50) &&
-                                click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50) && _PlayerNumber == 2)
-                            {
-                                return new SVMove(r, c, _PlayerNumber);
-                            }
-                        }  
+                        }
                     }
                 }
             }

@@ -92,28 +92,17 @@ namespace OOPGames
     {
         public int Y_Direction;
         public float X_Direction;
-        public float Y_Factor;
         B_Ball _ball;
         public B_GameField_Pong()
         {
             Random rnd = new Random();
-            X_Direction = rnd.Next(-1, 1);
-            if (X_Direction == 0)
+            Y_Direction = rnd.Next(-1, 1);
+            if (Y_Direction == 0)
             {
-                X_Direction = 1;
+                Y_Direction = 1;
             }
-            X_Direction *= 3;
-            Y_Factor = rnd.Next(-1, 1);
-            Y_Direction = rnd.Next(2, 4);
-            if (Y_Factor == -1)
-            {
-                Y_Direction *= -1;
-            }
-            if (Y_Factor == 1)
-            {
-                Y_Direction *= 1;
-            }
-
+            Y_Direction = Y_Direction * 3;
+            X_Direction = rnd.Next(2, 4);
             _ball = new B_Ball(10, X_Direction, Y_Direction);
         }
   

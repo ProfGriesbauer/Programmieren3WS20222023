@@ -11,7 +11,7 @@ namespace OOPGames
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "AIGruppeF_v1_2"; } }
+        public override string Name { get { return "ComputerPlayerF"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 

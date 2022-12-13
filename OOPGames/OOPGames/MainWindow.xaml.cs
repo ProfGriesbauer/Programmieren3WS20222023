@@ -69,19 +69,17 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new K_PaintGameObject());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
-<<<<<<< HEAD
+
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-=======
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
->>>>>>> d58cc0a4b7379156a1f079aec005b9c848e7a928
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
@@ -133,8 +131,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer()); 
-            OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new HumanPlayerF());
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
@@ -326,7 +324,25 @@ namespace OOPGames
            
             if (winner > 0)
             {
-                Status.Text = "Player " + winner + " Won!";
+                if (_CurrentRules is IGameRulesF)
+                {
+                    if (winner == 1 || winner==2)
+                    {
+                        Status.Text = "Player " + winner + " Won!";
+                    }
+                    if (winner == 3)
+                    {
+                        Status.Text = "Time is up!!! Player 1 Won!";
+                    }
+                    if (winner == 4)
+                    {
+                        Status.Text = "Time is up!!! Player 2 Won!";
+                    }
+                }
+                else
+                {
+                    Status.Text = "Player " + winner + " Won!";
+                }
             }
             else
             {

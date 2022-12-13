@@ -125,11 +125,13 @@ namespace OOPGames
                 return 0;
             }
         }
-
         public int Thickness { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         public override int CheckIfPLayerWon()
         {
+            if (_Field.CurrentWinner > 0)
+            {
+                return _Field.CurrentWinner;
+            }
             for (int i = 0; i < 3; i++)
             {
                 if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
@@ -160,11 +162,11 @@ namespace OOPGames
             {
                 if(CurrentPlayer==1)
                 {
-                    _Field.CurrentWinner = 2;
+                    _Field.CurrentWinner = 4;
                     _Field.Thickness = 60;
                 }
                 else {
-                    _Field.CurrentWinner = 1;
+                    _Field.CurrentWinner = 3;
                     _Field.Thickness = 120;
                 }
                 
@@ -182,6 +184,7 @@ namespace OOPGames
             }
             _Field.Thickness = 0;
             timerCounter = 0;
+            _Field.CurrentWinner = 0;
         }
 
         public override void DoTicTacToeMove(ITicTacToeMove move)

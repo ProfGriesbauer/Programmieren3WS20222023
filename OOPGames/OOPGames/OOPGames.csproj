@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Gruppe_F\HumanPlayer.cs" />
     <Compile Include="System\Windows\Forms\PictureBox1.cs" />
     <Page Include="Classes\Gruppe K\Form\K_InformationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

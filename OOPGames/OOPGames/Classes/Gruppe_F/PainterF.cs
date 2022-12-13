@@ -37,19 +37,21 @@ namespace OOPGames
             Line l4 = new Line() { X1 = 10, Y1 = 220, X2 = 330, Y2 = 220, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l4);
             
-            if (currentField is IFTicTacToeField)
+            /*if (currentField is IFTicTacToeField)
             {
                 if (((IFTicTacToeField)currentField).CurrentWinner == 1)
                 {
                     
-                    Line l0 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = LooseStroke, StrokeThickness = ((IFTicTacToeField)currentField).Thickness };
+                    Line l0 = new Line() { X1 = 10, Y1 = 170, X2 = 330, Y2 = 170, Stroke = LooseStroke, StrokeThickness = ((IFTicTacToeField)currentField).Thickness };
                     canvas.Children.Add(l0);
                 }
                 else if (((IFTicTacToeField)currentField).CurrentWinner == 2){
-                    Line l0 = new Line() { X1 = 120, Y1 = 10, X2 = 120, Y2 = 330, Stroke = lineStroke, StrokeThickness = ((IFTicTacToeField)currentField).Thickness };
+                    Line l0 = new Line() { X1 = 10, Y1 = 170, X2 = 330, Y2 = 170, Stroke = lineStroke, StrokeThickness = ((IFTicTacToeField)currentField).Thickness };
                     canvas.Children.Add(l0);
                 }
+                
             }
+            */
             
 
             for (int i = 0; i < 3; i++)

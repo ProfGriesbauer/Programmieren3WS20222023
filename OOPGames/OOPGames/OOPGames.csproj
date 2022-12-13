@@ -74,7 +74,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
+    <Compile Include="Classes\Gruppe_F\HumanPlayer.cs" />
+=======
     <Compile Include="Classes\Gruppe K\K_RulesPanzer.cs" />
+>>>>>>> 5b27a8313391cb77787b0802dc0994dab0ba27f1
     <Compile Include="System\Windows\Forms\PictureBox1.cs" />
     <Page Include="Classes\Gruppe K\Form\K_InformationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

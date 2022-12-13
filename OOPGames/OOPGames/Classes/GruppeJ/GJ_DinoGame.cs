@@ -76,7 +76,7 @@ namespace OOPGames
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/dead.png"));
             }
-            else
+            else if(rules.dinoHealth == "alive")
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/running.gif"));
             }
@@ -118,10 +118,7 @@ namespace OOPGames
         public List<Obstacle> obstacles { get; set; }
         public int DinoYPos { get; set; }
         public int DinoXPos { get; set; }
-        public string DinoHealth { get; set; }
-        public string RestartGameText { get; set; }
-        public int Score { get; set; }
-
+  
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
@@ -209,7 +206,6 @@ namespace OOPGames
                         // Temporär Canvasbreite Hardcoded
                         x.posX = 550 + rand.Next(200, 500) + (x.Width * 25);
                         gameScore++;
-                        _currentField.Score = gameScore;
                         scoreNumber++;
                     }
                     // DinoWidth = 40, DinoHeight = 43
@@ -269,14 +265,10 @@ namespace OOPGames
             obstacles = new List<Obstacle>();
             BitmapImage bmi1 = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/obstacle-1.gif"));
             Obstacle obs1 = new Obstacle(bmi1);
-            obs1.Width = (int)obs1.image.Width;
-            obs1.Height = (int)obs1.image.Height;
             obs1.posY -= 4;
             obstacles.Add(obs1);
             BitmapImage bmi2 = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/obstacle-2.gif"));
             Obstacle obs2 = new Obstacle(bmi2);
-            obs2.Width = (int)obs2.image.Width;
-            obs2.Height = (int)obs2.image.Height;
             obs2.posY += 10;
             obs2.posX += 400;
             obstacles.Add(obs2);

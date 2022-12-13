@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static OOPGames.Classes.Gruppe_K.K_DrawObject;
 
@@ -130,6 +129,7 @@ namespace OOPGames.Classes.Gruppe_K
       
 
         List<Tuple<BitmapImage,DrawSetting>> _image = new List<Tuple<BitmapImage, DrawSetting>>();
+
         public class DrawSetting
         {
             private String _ID = "";
@@ -739,20 +739,4 @@ namespace OOPGames.Classes.Gruppe_K
         public MoveType MoveType { get { return MoveType.key; } }
     }
 
-    class K_Text : K_DrawObject
-    {
-        private String _Text="";
-        private int _fontSize=12;
-        private Color _textColor=Colors.Black;
-        private Color _backgroundColor=Colors.Transparent;
-        
-        
-
-        public String Text { get { return _Text; } set { _Text = value; } }
-        public int FontSize { get { return _fontSize; } set { _fontSize = value; } }
-
-        public Color TextColor { get { return _textColor; } set { _textColor = value; } }   
-        public Color BackgroundColor { get { return _backgroundColor; } set { _backgroundColor = value; } }
-
-    }
 }

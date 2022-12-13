@@ -75,14 +75,12 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
-<<<<<<< HEAD
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
 
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
-=======
 
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
@@ -90,7 +88,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
 
->>>>>>> 5b27a8313391cb77787b0802dc0994dab0ba27f1
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());

@@ -35,6 +35,7 @@ using System.Windows.Forms;
 using OOPGames.Interfaces.Gruppe_K;
 using OOPGames.Classes.Gruppe_D.Schiffeversenken;
 using Application = System.Windows.Forms.Application;
+using OOPGames.Classes.Gruppe_C.Minesweeper;
 
 namespace OOPGames
 {
@@ -74,12 +75,22 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+<<<<<<< HEAD
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
 
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+=======
+
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+
+>>>>>>> 5b27a8313391cb77787b0802dc0994dab0ba27f1
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
@@ -219,18 +230,36 @@ namespace OOPGames
             {
                 K_MouseSelectionTick mouse = new K_MouseSelectionTick((int)Mouse.GetPosition(PaintCanvas).X, (int)Mouse.GetPosition(PaintCanvas).Y);
                 K_KeySelectionTick key = new K_KeySelectionTick();
+                IPlayMove pm=null;
               
 
                 if (_CurrentPlayer1 !=null && _CurrentPlayer1 is IK_HumanPlayer) {
                    ((IK_HumanPlayer)_CurrentPlayer1).GetMove(mouse, _CurrentRules.CurrentField);
-                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
+                   pm=((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
                 }
                 if (_CurrentPlayer2 != null && _CurrentPlayer2 is IK_HumanPlayer)
                 {
                    ((IK_HumanPlayer)_CurrentPlayer2).GetMove(mouse, _CurrentRules.CurrentField);
-                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
+                   pm=((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
                 }
-              
+                if (_CurrentRules.MovesPossible && _CurrentPlayer is IK_HumanPlayer)
+                {
+                    if (_CurrentRules is K_RulesPanzer)
+                    {
+                        ((K_RulesPanzer)_CurrentRules).resetMovePossible();
+                    }
+                    if (pm != null)
+                    {
+                        _CurrentRules.DoMove(pm);
+                    }
+                    _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                    if (_CurrentPlayer2 != null)
+                    {
+                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                    }
+                    OnPlayerChanged(_CurrentRules);
+                    Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                }
 
             }
         }
@@ -373,19 +402,18 @@ namespace OOPGames
                           
                         }
    
+                    }                   
+                    else if(_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
+                    {
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton), _CurrentRules.CurrentField);
                     }
                     else
                     {
-                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }
-                    /*
-                    if (_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
-                    {
-                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton, _CurrentRules.CurrentField);
-                    }
-                    */
-                    
-                    
+
+
+
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);

@@ -130,7 +130,6 @@ namespace OOPGames.Classes.Gruppe_K
       
 
         List<Tuple<BitmapImage,DrawSetting>> _image = new List<Tuple<BitmapImage, DrawSetting>>();
-
         public class DrawSetting
         {
             private String _ID = "";

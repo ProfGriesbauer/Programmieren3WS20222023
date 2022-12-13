@@ -252,10 +252,6 @@ namespace OOPGames
                     Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 }
 
-                DoComputerMoves();
-
-
-
             }
         }
 

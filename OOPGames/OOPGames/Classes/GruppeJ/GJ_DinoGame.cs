@@ -358,7 +358,7 @@ namespace OOPGames
 
         public void KeyAction()
         {
-            if (Keyboard.IsKeyDown(Key.Space) && jumping == false)
+            if (Keyboard.IsKeyDown(Key.Space) && jumping == false && dinoHealth == "alive")
             {
                 jumping = true;
             }

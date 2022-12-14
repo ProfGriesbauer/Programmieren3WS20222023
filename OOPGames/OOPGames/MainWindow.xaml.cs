@@ -63,12 +63,12 @@ namespace OOPGames
             ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
-            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
+            /*OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
-            OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
+            OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());*/
             OOPGamesManager.Singleton.RegisterPainter(new K_PaintGameObject());
-            OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
+            /*OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
 
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
@@ -103,9 +103,10 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
-            OOPGamesManager.Singleton.RegisterRules(new B_Rules());
+            OOPGamesManager.Singleton.RegisterRules(new B_Rules());*/
             OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
-            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+            OOPGamesManager.Singleton.RegisterRules(new K_Rules1v1());
+            /*OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
             //OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
             //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject()); 
@@ -138,15 +139,15 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
-            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());*/
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer1());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer2());
-            OOPGamesManager.Singleton.RegisterPlayer(new PlayerSV());
+           /* OOPGamesManager.Singleton.RegisterPlayer(new PlayerSV());
 
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer_Pong());
             OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());*/
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
@@ -228,21 +229,19 @@ namespace OOPGames
                 }
                 if (_CurrentRules.MovesPossible && _CurrentPlayer is IK_HumanPlayer)
                 {
-                    if (_CurrentRules is K_RulesPanzer)
-                    {
-                        ((K_RulesPanzer)_CurrentRules).resetMovePossible();
-                    }
+
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
+
+                        _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                        if (_CurrentPlayer2 != null)
+                        {
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                        }
+                        OnPlayerChanged(_CurrentRules);
+                        Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                     }
-                    _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                    if (_CurrentPlayer2 != null)
-                    {
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
-                    }
-                    OnPlayerChanged(_CurrentRules);
-                    Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 }
 
             }

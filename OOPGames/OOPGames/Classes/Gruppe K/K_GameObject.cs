@@ -53,8 +53,10 @@ namespace OOPGames.Classes.Gruppe_K
         int _TurnCounter;
         K_GameObject _ActivePlayer;
         int _state;
+        bool _canmove ;
 
         public int State { get { return _state; } set { _state = value; } }
+        public bool CanMove { get { return _canmove; } set { _canmove = value; } }
     }
 
     class K_GameField : K_GameObject
@@ -516,7 +518,7 @@ namespace OOPGames.Classes.Gruppe_K
             K_Move move = new K_Move();
             move.Position = PositionData;
             
-            if (selection is K_KeySelectionTick && field is K_GameObjectManager)
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager && Status.CanMove)
             {
                 K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
                 K_GameField gameField = ((K_GameObjectManager)field).GameField;
@@ -570,7 +572,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
                 
             }
-            return move;
+            return null;
         }
 
         public override void SetPlayerNumber(int playerNumber)
@@ -599,7 +601,7 @@ namespace OOPGames.Classes.Gruppe_K
             K_Move move = new K_Move();
             move.Position = PositionData;
 
-            if (selection is K_KeySelectionTick && field is K_GameObjectManager)
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager && Status.CanMove)
             {
                 K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
                 K_GameField gameField = ((K_GameObjectManager)field).GameField;
@@ -631,7 +633,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-            if (selection is ClickSelection)
+            if (selection is ClickSelection && Status.CanMove)
             {
                     //Schuss
                 if (Status.State == 0)
@@ -644,7 +646,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-            if(selection is K_MouseSelectionTick)
+            if(selection is K_MouseSelectionTick && Status.CanMove)
             {
                 K_MouseSelectionTick inputData = (K_MouseSelectionTick)selection;
                 //Rohr drehen
@@ -653,7 +655,7 @@ namespace OOPGames.Classes.Gruppe_K
                     Angle = (float)((180 / Math.PI) * Math.Atan2(inputData.YPos - (yPos + (Image[1].Item2.yPos - Image[1].Item2.yCenter)), inputData.XPos - (xPos + (Image[1].Item2.xPos - Image[1].Item2.xCenter)))) - Rotation;
                 }
             }
-            return move;
+            return null;
         }
 
         public override void SetPlayerNumber(int playerNumber)

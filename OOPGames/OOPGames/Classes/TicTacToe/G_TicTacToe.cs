@@ -1,9 +1,9 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text; 
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -26,6 +26,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using Label = System.Windows.Forms.Label;
 using Button = System.Windows.Forms.Button;
 using OOPGames.Assets.G;
+using System.Windows.Media.Animation;
 
 namespace OOPGames
 {
@@ -35,6 +36,7 @@ namespace OOPGames
         int y { get; set; }
         int size { get; set; }
         bool flag { get; set; }
+        bool keyFlag { get; set; }
         int player { get; set; } // evtl IGamePlayer anstelle von int
         void paintFrame(Canvas canvas);
         void paintFill(Canvas canvas);
@@ -47,10 +49,10 @@ namespace OOPGames
         int Fieldsize { get; set; }
         List<Casket> Field { get; }
         void increaseField();
-        
+
     }
 
-    public class Casket : ICasket 
+    public class Casket : ICasket
     {
         public Casket(Casket c)
         {
@@ -67,6 +69,7 @@ namespace OOPGames
         int _y;
         int _size;
         bool _flag;
+        bool _keyFlag;
         int _player;
         public int x
         {
@@ -86,10 +89,16 @@ namespace OOPGames
 
             set { _size = value; }
         }
-        public bool flag 
+        public bool flag
         {
             get { return _flag; }
             set { _flag = value; }
+        }
+
+        public bool keyFlag
+        {
+            get { return _keyFlag; }
+            set { _keyFlag = value; }
         }
         public int player
         {
@@ -99,47 +108,60 @@ namespace OOPGames
         }
         public void paintFrame(Canvas canvas)
         {
-            Color lineColor = Color.FromRgb(255, 0, 0);
+            Color lineColor = Color.FromRgb(0, 0, 0);
+            if (_keyFlag)
+            {
+                lineColor = Color.FromRgb(255, 0, 0);
+            }
+
             Brush lineStroke = new SolidColorBrush(lineColor);
 
             //Obere Linie
-            Line Up = new Line() {
+            Line Up = new Line()
+            {
                 X1 = (_x) * _size,
                 Y1 = (_y) * _size,
                 X2 = (_x + 1) * _size,
                 Y2 = (_y) * _size,
                 Stroke = lineStroke,
-                StrokeThickness = 3.0 };
+                StrokeThickness = 3.0
+            };
             canvas.Children.Add(Up);
 
             //Untere Linie
-            Line Down = new Line() {
+            Line Down = new Line()
+            {
                 X1 = (_x) * _size,
-                Y1 = (_y + 1 ) * _size,
-                X2 = (_x + 1 ) * _size,
+                Y1 = (_y + 1) * _size,
+                X2 = (_x + 1) * _size,
                 Y2 = (_y + 1) * _size,
                 Stroke = lineStroke,
-                StrokeThickness = 3.0 };
+                StrokeThickness = 3.0
+            };
             canvas.Children.Add(Down);
-            
+
             //Linke Linie
-            Line Left = new Line() {
+            Line Left = new Line()
+            {
                 X1 = (_x) * _size,
                 Y1 = (_y) * _size,
                 X2 = (_x) * _size,
                 Y2 = (_y + 1) * _size,
                 Stroke = lineStroke,
-                StrokeThickness = 3.0 };
+                StrokeThickness = 3.0
+            };
             canvas.Children.Add(Left);
 
             //Rechte Linie
-            Line Right = new Line() {
+            Line Right = new Line()
+            {
                 X1 = (_x + 1) * _size,
                 Y1 = (_y) * _size,
                 X2 = (_x + 1) * _size,
                 Y2 = (_y + 1) * _size,
                 Stroke = lineStroke,
-                StrokeThickness = 3.0 };
+                StrokeThickness = 3.0
+            };
             canvas.Children.Add(Right);
         }
         public void paintFill(Canvas canvas)
@@ -158,7 +180,7 @@ namespace OOPGames
             Color OColor;
             if (_flag) OColor = Color.FromRgb(0, 255, 255);
             else OColor = Color.FromRgb(0, 0, 255);
-            
+
 
             Brush XStroke = new SolidColorBrush(XColor);
             Brush OStroke = new SolidColorBrush(OColor);
@@ -166,32 +188,38 @@ namespace OOPGames
 
             if (_player == 1)
             {
-                Line l1 = new Line() {
-                    X1 = ((_x) * _size)+5,
-                    Y1 = ((_y) * _size)+5,
-                    X2 = ((_x + 1) * _size)-5,
-                    Y2 = ((_y + 1) * _size)-5,
+                Line l1 = new Line()
+                {
+                    X1 = ((_x) * _size) + 5,
+                    Y1 = ((_y) * _size) + 5,
+                    X2 = ((_x + 1) * _size) - 5,
+                    Y2 = ((_y + 1) * _size) - 5,
                     Stroke = XStroke,
-                    StrokeThickness = 2.0 };
-                Line l2 = new Line() {
-                    X1 = ((_x) * _size)+5,
-                    Y1 = ((_y + 1) * _size)-5,
-                    X2 = ((_x + 1) * _size)-5,
-                    Y2 = ((_y) * _size)+5,
+                    StrokeThickness = 2.0
+                };
+                Line l2 = new Line()
+                {
+                    X1 = ((_x) * _size) + 5,
+                    Y1 = ((_y + 1) * _size) - 5,
+                    X2 = ((_x + 1) * _size) - 5,
+                    Y2 = ((_y) * _size) + 5,
                     Stroke = XStroke,
-                    StrokeThickness = 2.0 };
+                    StrokeThickness = 2.0
+                };
                 canvas.Children.Add(l1);
                 canvas.Children.Add(l2);
             }
             else if (_player == 2)
             {
-                Ellipse OE = new Ellipse() {
-                    Margin = new Thickness(((_x) * _size)+4,
-                    ((_y) * _size)+4, 0, 0),
-                    Width = _size-8,
-                    Height = _size-8,
+                Ellipse OE = new Ellipse()
+                {
+                    Margin = new Thickness(((_x) * _size) + 4,
+                    ((_y) * _size) + 4, 0, 0),
+                    Width = _size - 8,
+                    Height = _size - 8,
                     Stroke = OStroke,
-                    StrokeThickness = 2.0 };
+                    StrokeThickness = 2.0
+                };
                 canvas.Children.Add(OE);
             }
         }
@@ -211,7 +239,7 @@ namespace OOPGames
 
     }
 
-    
+
 
     public class TicTacToePaint_G : BaseTicTacToePaint, IPaintGame2
     {
@@ -278,6 +306,10 @@ namespace OOPGames
                 C.paintFrame(canvas);
                 C.paintFill(canvas);
             }
+            foreach (Casket C in currentField.Field)
+            {
+                if (C.keyFlag) C.paintFrame(canvas);
+            }
 
             ProgressBar Progress = new ProgressBar();
             Progress.Foreground = new SolidColorBrush(Color.FromRgb(250, 0, 125));
@@ -289,14 +321,14 @@ namespace OOPGames
             Progress.Minimum = 0;
             Progress.Maximum = field_G.Field.Count;
             int value = 0;
-            foreach(Casket c in field_G.Field)
+            foreach (Casket c in field_G.Field)
             {
                 if (c.player != 0) { value++; }
             }
             Progress.Value = value;
             Progress.Orientation = Orientation.Vertical;
             canvas.Children.Add(Progress);
-            
+
             PaintScore(canvas);
 
             if (_notcalled)
@@ -367,7 +399,7 @@ namespace OOPGames
             Progress2.Orientation = Orientation.Horizontal;
             canvas.Children.Add(Progress2);
         }
-        
+
         void InputSize()
         {
             MaxSizeWindow Fenster = new MaxSizeWindow();
@@ -432,15 +464,15 @@ namespace OOPGames
     }
 
     */
-    public class TicTacToeRules_G : BaseTicTacToeRules
+    public class TicTacToeRules_G : BaseTicTacToeRules, IGameRules2
     {
         public TicTacToeRules_G()
         {
             _Rules = this;
         }
-            
 
-            
+
+
 
         TicTacToeField_G _Field = new TicTacToeField_G();
         static TicTacToeRules_G _Rules;
@@ -461,7 +493,7 @@ namespace OOPGames
             {
                 foreach (Casket C in _Field.Field)
                 {
-                    if(C.player==0)
+                    if (C.player == 0)
                     {
                         return true;
                     }
@@ -478,7 +510,7 @@ namespace OOPGames
             int whohasthree = threeinarow(_Field.Field);
 
 
-            if (whohasthree > 0) 
+            if (whohasthree > 0)
             {
 
                 if (Score1 < MaxSize && Score2 < MaxSize)
@@ -513,9 +545,9 @@ namespace OOPGames
 
             }
 
-            if(Score1 >= MaxSize || Score2 >= MaxSize )
+            if (Score1 >= MaxSize || Score2 >= MaxSize)
             {
-                if (Score1 == 3)
+                if (Score1 == MaxSize)
                 {
                     return 1;
                 }
@@ -531,15 +563,15 @@ namespace OOPGames
         {
 
             Notcalled = true;
-            
-            while (_Field.Field.Count>9)
+
+            while (_Field.Field.Count > 9)
             {
                 _Field.Field.RemoveAt(9);
             }
 
-            foreach(Casket C in _Field.Field)
+            foreach (Casket C in _Field.Field)
             {
-                C.player=0;
+                C.player = 0;
                 C.flag = false;
                 C.size = _Field.Fieldsize / 3;
             }
@@ -689,14 +721,24 @@ namespace OOPGames
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
 
-            foreach(Casket cas in _Field.Field)
+            foreach (Casket cas in _Field.Field)
             {
-                if(cas.x == move.Column && cas.y == move.Row)
+                if (cas.x == move.Column && cas.y == move.Row)
                 {
                     cas.player = move.PlayerNumber;
                 }
             }
-                //  _Field[move.Row, move.Column] = move.PlayerNumber;
+            //  _Field[move.Row, move.Column] = move.PlayerNumber;
+        }
+
+        void IGameRules2.StartedGameCall()
+        {
+
+        }
+
+        void IGameRules2.TickGameCall()
+        {
+
         }
     }
 
@@ -716,7 +758,7 @@ namespace OOPGames
         {
             get { return _Field; }
         }
-        
+
 
         // Initialisieren 3x3 Feld
         public TicTacToeField_G()
@@ -778,7 +820,7 @@ namespace OOPGames
             }
 
             // Spalte hinzufügen
-            for (int i = 0; i < (lastSize)+1; i++)
+            for (int i = 0; i < (lastSize) + 1; i++)
             {
                 Casket C = new Casket();
                 C.x = lastSize;
@@ -829,6 +871,8 @@ namespace OOPGames
     public class HumanTicTacToePlayer_G : BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
+        int _xPosKeys = 0;
+        int _yPosKeys = 0;
 
         public override string Name { get { return "GruppeGHumanTicTacToePlayer"; } }
 
@@ -843,36 +887,94 @@ namespace OOPGames
 
         public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
-            if (field is ITicTacToeField_G)
+            if (field is ITicTacToeField_G && selection is IClickSelection)
             {
-                return GetMove_G(selection, (ITicTacToeField_G)field);
+                return GetMove_GClick((IClickSelection)selection, (ITicTacToeField_G)field);
+            }
+            if (field is ITicTacToeField_G && selection is IKeySelection)
+            {
+                return GetMove_GKeys((IKeySelection)selection, (ITicTacToeField_G)field);
             }
             Console.WriteLine("Kein passendes Gruppe G Feld");
             return null;
         }
 
-        public ITicTacToeMove GetMove_G(IMoveSelection selection, ITicTacToeField_G field_G)
+        public ITicTacToeMove GetMove_GClick(IClickSelection sel, ITicTacToeField_G field_G)
         {
-            //List<Casket> field = field_G.Field;
 
-            if (selection is IClickSelection)
+            foreach (Casket cas in field_G.Field)
             {
-                IClickSelection sel = (IClickSelection)selection;
-
-                foreach(Casket cas in field_G.Field)
+                if (cas.isMySpace(sel.XClickPos, sel.YClickPos) != null && cas.player == 0)
                 {
-                    if(cas.isMySpace(sel.XClickPos, sel.YClickPos) != null && cas.player==0)
+                    Console.WriteLine(sel.YClickPos + ";" + sel.YClickPos);
+                    Console.WriteLine(cas.x + ";" + cas.y + ";" + cas.size);
+
+                    return new TicTacToeMove(cas.y, cas.x, _PlayerNumber);
+                }
+
+            }
+
+
+            return null;
+        }
+
+        public ITicTacToeMove GetMove_GKeys(IKeySelection sel, ITicTacToeField_G field_G)
+        {
+
+            int _size = (int)Math.Sqrt(field_G.Field.Count);
+
+            switch (sel.Key)
+            {
+                case Key.W:
+                    if (_yPosKeys > 0)
                     {
-                        Console.WriteLine(sel.YClickPos + ";" + sel.YClickPos);
-                        Console.WriteLine(cas.x + ";" + cas.y + ";" + cas.size);
-
-                        CurrentPlayer = _PlayerNumber;
-
-                        return new TicTacToeMove(cas.y, cas.x, _PlayerNumber);
+                        _yPosKeys--;
                     }
-
+                    break;
+                case Key.S:
+                    if (_yPosKeys < _size - 1)
+                    {
+                        _yPosKeys++;
+                    }
+                    break;
+                case Key.A:
+                    if (_xPosKeys > 0)
+                    {
+                        _xPosKeys--;
+                    }
+                    break;
+                case Key.D:
+                    if (_xPosKeys < _size - 1)
+                    {
+                        _xPosKeys++;
+                    }
+                    break;
+                case Key.E:
+                    foreach (Casket c in field_G.Field)
+                    {
+                        c.keyFlag = false;
+                    }
+                    int _x = _xPosKeys;
+                    int _y = _yPosKeys;
+                    _xPosKeys = 0;
+                    _yPosKeys = 0;
+                    return new TicTacToeMove(_y, _x, _PlayerNumber);
+                default:
+                    break;
+            }
+            foreach (Casket c in field_G.Field)
+            {
+                if (c.x == _xPosKeys && c.y == _yPosKeys)
+                {
+                    c.keyFlag = true;
+                }
+                else
+                {
+                    c.keyFlag = false;
                 }
             }
+
+
 
             return null;
         }
@@ -882,22 +984,11 @@ namespace OOPGames
             _PlayerNumber = playerNumber;
         }
 
-        static void testkey(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-          
-            if (e.Alt)
-            {
-                Console.WriteLine("alt wurde gedrückt");
-            }
-           
-            if (e.KeyValue == 65)
-            Console.WriteLine("A wurde gedrückt");
-        }
 
- 
 
     }
- 
+
+
     public class ComputerTicTacToePlayer_G : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -916,7 +1007,7 @@ namespace OOPGames
 
         public override ITicTacToeMove GetMove(ITicTacToeField field)
         {
-            
+
             if (field is ITicTacToeField_G)
             {
                 return GetMove_G((ITicTacToeField_G)field);
@@ -934,10 +1025,10 @@ namespace OOPGames
 
             foreach (Casket c in Clone)
             {
-                if(c.player==0)
+                if (c.player == 0)
                 {
                     c.player = _PlayerNumber;
-                    if(Rules.threeinarow(Clone) !=0)
+                    if (Rules.threeinarow(Clone) != 0)
                     {
                         return new TicTacToeMove(c.y, c.x, _PlayerNumber);
                     }
@@ -957,20 +1048,20 @@ namespace OOPGames
                 }
             }
 
-            foreach(Casket c1 in field.Field)
+            foreach (Casket c1 in field.Field)
             {
-                if(c1.player==_PlayerNumber && c1.flag==false)
+                if (c1.player == _PlayerNumber && c1.flag == false)
                 {
-                    foreach(Casket c2 in field.Field) // Suchen nach einem freien Feld neben c1
+                    foreach (Casket c2 in field.Field) // Suchen nach einem freien Feld neben c1
                     {
-                        if(c2.player==0) // Feld muss unbesetzt sein
+                        if (c2.player == 0) // Feld muss unbesetzt sein
                         {
-                            if((c2.x >= c1.x-1) && (c2.x <= c1.x+1) && (c2.y >= c1.y-1) && (c2.y <= c1.y+1)) // Feld darf max 1 Kästchen entfernt sein (auch diagonal)
+                            if ((c2.x >= c1.x - 1) && (c2.x <= c1.x + 1) && (c2.y >= c1.y - 1) && (c2.y <= c1.y + 1)) // Feld darf max 1 Kästchen entfernt sein (auch diagonal)
                             {
                                 return new TicTacToeMove(c2.y, c2.x, _PlayerNumber);
                             }
                         }
-                        
+
                     }
                 }
             }
@@ -979,7 +1070,7 @@ namespace OOPGames
 
 
             Random rand = new Random();
-            int f = rand.Next(0,field.Field.Count-1);
+            int f = rand.Next(0, field.Field.Count - 1);
 
             while (true)
             {

@@ -627,7 +627,5 @@ namespace OOPGames
 
             return selectionform.selectionPerformed ? (T)selectionform.K_selectionList.SelectedItem : default(T);
         }
-
-
     }
 }

@@ -29,6 +29,9 @@ namespace OOPGames
     public class H_TicTacToePaint : I_H_PaintTicTacToe                                   //  Änderung: leite von IPaintTicTacToe ab                      //HTicTacToe leitet von der Interface Klasse IPaintTicTacToe ab
     {
         public string Name { get { return "H Painter TicTacToe"; } }                     //die öffentliche Variable Name beinhaltet den Name des Painters. Bei einer get-Anfrage wird der Name zurückgegeben.
+
+        bool ersterAufruf = false;                                                       //für die Farbmuster Auswahl, speichert ob schon einmal aufgerufen wurde
+        int farbmuster;                                                                  //das zufällig ausgewählte Farbmuster wird gespeichert
               
         public void PaintGameField(Canvas canvas, IGameField currentField)               //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
         {
@@ -45,18 +48,23 @@ namespace OOPGames
         //Field zeichnen wurde von Griesbauer kopiert (farben "angepasst" :P)
         public void PaintTicTacToeField(Canvas canvas, I_H_TicTacToe currentField)        //zeichnet dann tatsächlich das Spielfeld.
         {
-            canvas.Children.Clear();                                                        //Zufällig auswählen von einem von vier Farbschemen. Jedes Mitglied der Gruppe legt ein eigenes Farbschema fest
-            Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
+            canvas.Children.Clear();
             System.Windows.Media.Color bgColor = System.Windows.Media.Color.FromRgb(255, 255, 255);                                   //Variable Hintergrundfarbe
             System.Windows.Media.Color lineColor = System.Windows.Media.Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
             System.Windows.Media.Color XColor = System.Windows.Media.Color.FromRgb(0, 255, 0);                                        //Variable Farbe X Spieler
             System.Windows.Media.Color OColor = System.Windows.Media.Color.FromRgb(0, 0, 255);                                        //Variable Farbe O Spieler
-                                                                                            //switch (zufall.Next(1, 5))                                                    //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
-                                                                                            //PROBLEM: Feld wird bei jedem Klick neu gezeichnet und dadurch auch jedes mal ein neues Farbschema ausgewählt!!!!
-                                                                                            //evtl. oben unter public class ein Bool erstellen, das nur einmal nutzung sicherstellt?
+                                                                                                                                      //switch (zufall.Next(1, 5))                                                    //zufällig wird eine Zahl generiert, diese entscheidet wessen Farbmodell verwendet wird.
+                                                                                                                                      //PROBLEM: Feld wird bei jedem Klick neu gezeichnet und dadurch auch jedes mal ein neues Farbschema ausgewählt!!!!
+                                                                                                                                      //evtl. oben unter public class ein Bool erstellen, das nur einmal nutzung sicherstellt?
 
-            
-            switch(3)
+            //Zufällig auswählen von einem von vier Farbschemen. Jedes Mitglied der Gruppe legt ein eigenes Farbschema fest
+            if (ersterAufruf == false)
+            {
+                Random zufall = new Random();                                               //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
+                farbmuster = zufall.Next(1, 5);                                             //es wird zufällig ein Farbmuster festgelegt
+                ersterAufruf = true;                                                        //Erster Aufruf ist erfolgt
+            }
+            switch(farbmuster)                                                              //das ausgewählte Farbmuster wird angewendet
             {
                 case 1: //Farbschema Annalena                                               //Farbschema Annalena
                     bgColor = Color.FromRgb(177, 18, 37);                                   //Hintergrundfarbe
@@ -64,28 +72,28 @@ namespace OOPGames
                     XColor = Color.FromRgb(134, 113, 130);                                  //Farbe X Spieler
                     OColor = Color.FromRgb(211, 109, 61);                                   //Farbe O Spieler
                     break;
-                /*
-            case 2: //Farbschema Jan                                                    //Farbschema Jan
-                bgColor = Color.FromRgb(0, 255, 0);                                     //Hintergrundfarbe
-                lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
-                XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
-                OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
-                break;
-            */
-                case 3: //Farbschema Samuel                                                 //Farbschema Samuel
-                    bgColor = System.Windows.Media.Color.FromRgb(125  , 30, 0100);                               //Hintergrundfarbe
-                    lineColor = System.Windows.Media.Color.FromRgb(255, 100, 50);                                //Linienfarbe Spielfeld
-                    XColor = System.Windows.Media.Color.FromRgb(100 , 255, 15);                                  //Farbe X Spieler
-                    OColor = System.Windows.Media.Color.FromRgb(255, 3, 150);                                    //Farbe O Spieler
+                
+                case 2: //Farbschema Jan                                                    //Farbschema Jan
+                    bgColor = Color.FromRgb(225, 255, 225);                                 //Hintergrundfarbe
+                    lineColor = Color.FromRgb(0, 0, 0);                                     //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(0, 255, 0);                                      //Farbe X Spieler
+                    OColor = Color.FromRgb(0, 0, 255);                                      //Farbe O Spieler
                     break;
-               /*
+            
+                case 3: //Farbschema Samuel                                                 //Farbschema Samuel
+                    bgColor = System.Windows.Media.Color.FromRgb(125  , 30, 100);           //Hintergrundfarbe
+                    lineColor = System.Windows.Media.Color.FromRgb(255, 100, 50);           //Linienfarbe Spielfeld
+                    XColor = System.Windows.Media.Color.FromRgb(100 , 255, 15);             //Farbe X Spieler
+                    OColor = System.Windows.Media.Color.FromRgb(255, 3, 150);               //Farbe O Spieler
+                    break;
+               
                 case 4: //Farbschema Moritz                                                 //Farbschema Moritz
                     bgColor = Color.FromRgb(9, 0, 196);                                     //Hintergrundfarbe
                     lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
                     XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
                     OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
                     break;
-               */
+               
 
             }
             

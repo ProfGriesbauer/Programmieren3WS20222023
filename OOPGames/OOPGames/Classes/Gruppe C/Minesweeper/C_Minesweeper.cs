@@ -76,7 +76,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
            {
                for (int c = 0; c < 3; c++)
                {
-                   if (_Field[x - 1 + r, y - 1 + c].Segment.CheckMine() == 1)
+                  // if (_Field[x - 1 + r, y - 1 + c].Segment.CheckMine() == 1)
                    {
                        count++;
                    }

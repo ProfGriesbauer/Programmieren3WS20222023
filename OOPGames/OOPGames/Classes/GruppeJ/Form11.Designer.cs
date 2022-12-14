@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OOPGames.Classes.GruppeJ {
+/*namespace OOPGames.Classes.GruppeJ {
     using System;
     
     
@@ -59,4 +59,4 @@ namespace OOPGames.Classes.GruppeJ {
             }
         }
     }
-}
+}*/

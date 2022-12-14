@@ -74,6 +74,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\GruppeJ\Dino_Form.cs" />
+    <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
+      <DependentUpon>Dino_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\GruppeJ\Dino_Game.cs" />
+    <Compile Include="Classes\GruppeJ\Form1.cs" />
+    <Compile Include="Classes\GruppeJ\Form1.designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\GruppeJ\Form11.Designer.cs" />
+    <Compile Include="Classes\GruppeJ\GJ_DinoGame.cs" />
+    <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />
+    <Compile Include="Classes\Gruppe_F\HumanPlayer.cs" />
+    <Compile Include="Interfaces\Gruppe J\GJ_IDino.cs" />
+    <Compile Include="System\Windows\Forms\PictureBox1.cs" />
     <Page Include="Classes\Gruppe K\Form\K_InformationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,6 +128,8 @@
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
     <Compile Include="Classes\Gruppe C\C_Painter.cs" />
+    <Compile Include="Classes\Gruppe C\Minesweeper\C_IMinsweeper.cs" />
+    <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />
     <Compile Include="Classes\Gruppe D\PainterD.cs" />
     <Compile Include="Classes\Gruppe D\PlayerD.cs" />
@@ -140,26 +157,12 @@
     <Compile Include="Classes\GruppeI\PlayerI.cs" />
     <Compile Include="Classes\GruppeI\TTTField.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
-    <Compile Include="Classes\GruppeJ\Dino_Game.cs" />
-    <Compile Include="Classes\GruppeJ\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Classes\GruppeJ\Form1.designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\GruppeJ\Dino_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Classes\GruppeJ\Dino_Form.Designer.cs">
-      <DependentUpon>Dino_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\GruppeJ\GJ_DinoGame.cs" />
+    <Compile Include="Classes\Gruppe_F\InterfacesGruppeF.cs" />
     <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
-    <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\G_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
@@ -171,7 +174,6 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
     <Compile Include="Interfaces\Gruppe E\I_E_4Gewinnt.cs" />
     <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
-    <Compile Include="Interfaces\Gruppe J\GJ_IDino.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_HumanPlayer.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />
@@ -225,7 +227,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\Gruppe C\Minesweeper\" />
     <Folder Include="Interfaces\Gruppe C\" />
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +284,7 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
+    <Resource Include="Resources\Gruppe H\Schildkröte.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

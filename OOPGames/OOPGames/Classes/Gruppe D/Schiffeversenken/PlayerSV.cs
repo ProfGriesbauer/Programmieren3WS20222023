@@ -50,19 +50,29 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeversenken
                 {
                     for (int c = 0; c < 8; c++)
                     {
-                        if (click.XClickPos > 20 + (r * 50) && click.XClickPos < 70 + (r * 50) &&
-                            click.YClickPos > 50 + (c * 50) && click.YClickPos < 100 + (c * 50))
+                        if (field.Phase == 1 || field.Phase == 2)
                         {
-                            return new SVMove(c, r, _PlayerNumber);
-                        }
-                        if (field.Phase == 3)
-                        {
-                            if (click.XClickPos > 450 + (r * 50) && click.XClickPos < 500 + (r * 50) &&
-                                click.YClickPos > 50 + (c * 50) && click.YClickPos < 100 + (c * 50))
+                            if (click.XClickPos > 20 + (c * 50) && click.XClickPos < 70 + (c * 50) &&
+                            click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50))
                             {
-                                return new SVMove(c, r, _PlayerNumber);
+                                return new SVMove(r, c, _PlayerNumber);
                             }
                         }
+                        
+                        if (field.Phase == 3)
+                        {
+                            if (click.XClickPos > 20 + (c * 50) && click.XClickPos < 70 + (c * 50) &&
+                            click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50) && _PlayerNumber == 1)
+                            {
+                                return new SVMove(r, c, _PlayerNumber);
+                            }
+
+                            if (click.XClickPos > 450 + (c * 50) && click.XClickPos < 500 + (c * 50) &&
+                                click.YClickPos > 50 + (r * 50) && click.YClickPos < 100 + (r * 50) && _PlayerNumber == 2)
+                            {
+                                return new SVMove(r, c, _PlayerNumber);
+                            }
+                        }  
                     }
                 }
             }

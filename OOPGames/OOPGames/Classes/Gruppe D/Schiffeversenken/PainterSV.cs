@@ -230,7 +230,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         public void PaintShipField(Canvas canvas, IFieldSV currentField)
         {
             int GamePhase = currentField.Phase;
-            int _Ship = currentField.Ships(2, 2);
+            //int _Ship = currentField.Ships(2, 2);
 
              
 

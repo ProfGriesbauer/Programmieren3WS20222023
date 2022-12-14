@@ -19,11 +19,13 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
         //p_location stores location of Ships with 1
         //p_shoot can return 0 for nothing; 1 for shot but nothing; 2 hit ship ; 
         int Phase { get; set; } //gibt Spielphase an; 1: P1 setzt, 2: P2 setzt, 3: beide Spieler schießen abwechselnd
+        int FirstClick { get; set; }    //verhindert automatischen Klick bei Phasenwechsel
         int HorVer { get; set; } //gibt Zustand der Schiffe an: 1: Schiffe vertikal, 2:Schiffe horizontal
 
         int Ships(int w, int p); //w 1= Pop 2=peek
                                  //p 1= Player1 2= Player2
        
+        void ResetShipStack();
        
     }
     public interface IRulerSV : IGameRules

@@ -4,47 +4,77 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Drawing;
+using System.Windows.Forms;
+using System.Windows;
+using System.Runtime.InteropServices;
+using System.Windows.Controls;
 
 namespace OOPGames.Interfaces.Gruppe_H
 {
-    public interface IHCasket
+
+    public interface IHFeld
     {
         //Soll vorgeben, dass es ein Schnecken, ein X und ein O Objekt (Symbol/Grafik/etc.) geben soll. (und get/set können?)
+        int Player { get; set; }
+        Image Symbol { get; set; }
+
     }
 
-    public class HCasket : IHCasket
+
+
+    public interface I_H_TicTacToeField : IGameField
     {
-        //(Objekte für Schnecke/X/O sollen existieren ung bei Abfrage zurückgegeben werden.-->Falsch?)
-        //Hier wird festgelegt, was der Painter zeichnen soll, es wird weg gegengen werden von dem Field mit 0/1/2 als Auswahl???
+
+        IHFeld GetFeldAt(int r, int c);     //wenn davon abgeleitet wird, dann muss eine Funktion names GetCasketAt implementiert sein, die das Symbol von IHCasket an den entsprechen Koordinaten bekommt.
+        int this[int r, int c] { get; set; }
+
     }
 
-    public interface I_H_TicTacToeField : ITicTacToeField
+
+    public interface I_H_PaintTicTacToe : IPaintGame
     {
-        IHCasket GetCasketAt(int r, int c);     //wenn davon abgeleitet wird, dann muss eine Funktion names GetCasketAt implementiert sein, die das Symbol von IHCasket an den entsprechen Koordinaten bekommt.
+        void PaintTicTacToeField(Canvas canvas, I_H_TicTacToeField currentField);
     }
 
-    public class H_TicTacToeField : I_H_TicTacToeField
+
+    public interface I_H_TicTacToeRules : IGameRules
+    { 
+        I_H_TicTacToeField TicTacToeField { get; }
+
+        void DoTicTacToeMove(I_H_TicTacToeMove move);
+
+    }
+
+    public interface I_H_HumanTicTacToePlayer : IHumanGamePlayer
     {
-        IHCasket[,] _Field = new IHCasket[3, 3]; //Leitet von kommentar darüber ab erstellt ein 3x3 Feld, das in jedem Feld IHCaskethaben muss????
+        I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToeField field);
+        
+    }
 
-        public H_TicTacToeField()               //in jedes Feld des 3x3Spielfelds wird HCasket eingefügt, darin sind dann alle Symbole der Spieler enthalten.?
-        {
-            _Field[0, 0] = new HCasket();
+    public interface I_H_TicTacToeMove : IRowMove, IColumnMove
+    { 
+    }
 
-            _Field[1, 1] = new HCasket();
+    public interface I_H_PlayMove
+    {
+        int PlayerNumber { get; }
+    }
 
-        }
 
-        public int this[int r, int c] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    
+}
 
-        public bool CanBePaintedBy(IPaintGame painter)
-        {
-            throw new NotImplementedException();
-        }
 
-        public IHCasket GetCasketAt(int r, int c)
-        {
-            throw new NotImplementedException();
-        }
+
+
+   
+
+  
+/*
+    public interface I_H_GameField
+    {
+        bool CanBePaintedBy(I_Painter painter);
     }
 }
+    */

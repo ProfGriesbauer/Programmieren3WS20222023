@@ -35,6 +35,7 @@ using System.Windows.Forms;
 using OOPGames.Interfaces.Gruppe_K;
 using OOPGames.Classes.Gruppe_D.Schiffeversenken;
 using Application = System.Windows.Forms.Application;
+using OOPGames.Classes.Gruppe_C.Minesweeper;
 
 namespace OOPGames
 {
@@ -69,24 +70,38 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new K_PaintGameObject());
             OOPGamesManager.Singleton.RegisterPainter(new B_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
+
+            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new PainterD());
+            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new B_Pong_Painter());
+            OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
+
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
 
             //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
 
@@ -94,17 +109,16 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
-            OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
-            OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
+            //OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
-            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject());
-            OOPGamesManager.Singleton.RegisterRules(new TTTRulesF()); 
+            //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject()); 
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());
 
             OOPGamesManager.Singleton.RegisterRules(new B_Rules_Pong());
+            OOPGamesManager.Singleton.RegisterRules(new H_TicTacToeRules());
 
 
             //Players
@@ -115,6 +129,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_easy());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer_hard());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_VierGewinntHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_VierGewinntComputerPlayer_Random());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());
@@ -123,11 +139,9 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer()); 
-            OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF());
+            OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new HumanPlayerF());
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
-            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
@@ -137,6 +151,8 @@ namespace OOPGames
 
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer_Pong());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
@@ -162,13 +178,6 @@ namespace OOPGames
             }
                 
         }
-        /// <summary>
-        /// //////////////////////////////////////
-        /// </summary>
-
-        /// <summary>
-        /// ///////////////////////////////
-        /// </summary>
 
         private void _PaintTimer_Tick(object sender, EventArgs e)
         {
@@ -192,6 +201,11 @@ namespace OOPGames
                     ((IGameRules2)_CurrentRules).TickGameCall();
                 }
 
+                if (_CurrentRules is IGameRulesF)
+                {
+                    ((IGameRulesF)_CurrentRules).TickGameCall(_CurrentPlayer);
+                }
+
                 InputTick();
 
             }
@@ -206,18 +220,36 @@ namespace OOPGames
             {
                 K_MouseSelectionTick mouse = new K_MouseSelectionTick((int)Mouse.GetPosition(PaintCanvas).X, (int)Mouse.GetPosition(PaintCanvas).Y);
                 K_KeySelectionTick key = new K_KeySelectionTick();
+                IPlayMove pm=null;
               
 
                 if (_CurrentPlayer1 !=null && _CurrentPlayer1 is IK_HumanPlayer) {
                    ((IK_HumanPlayer)_CurrentPlayer1).GetMove(mouse, _CurrentRules.CurrentField);
-                   ((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
+                   pm=((IK_HumanPlayer)_CurrentPlayer1).GetMove(key, _CurrentRules.CurrentField);
                 }
                 if (_CurrentPlayer2 != null && _CurrentPlayer2 is IK_HumanPlayer)
                 {
                    ((IK_HumanPlayer)_CurrentPlayer2).GetMove(mouse, _CurrentRules.CurrentField);
-                   ((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
+                   pm=((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
                 }
-              
+                if (_CurrentRules.MovesPossible && _CurrentPlayer is IK_HumanPlayer)
+                {
+                    if (_CurrentRules is K_RulesPanzer)
+                    {
+                        ((K_RulesPanzer)_CurrentRules).resetMovePossible();
+                    }
+                    if (pm != null)
+                    {
+                        _CurrentRules.DoMove(pm);
+                    }
+                    _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                    if (_CurrentPlayer2 != null)
+                    {
+                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                    }
+                    OnPlayerChanged(_CurrentRules);
+                    Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                }
 
             }
         }
@@ -311,7 +343,25 @@ namespace OOPGames
            
             if (winner > 0)
             {
-                Status.Text = "Player " + winner + " Won!";
+                if (_CurrentRules is IGameRulesF)
+                {
+                    if (winner == 1 || winner==2)
+                    {
+                        Status.Text = "Player " + winner + " Won!";
+                    }
+                    if (winner == 3)
+                    {
+                        Status.Text = "Time is up!!! Player 1 Won!";
+                    }
+                    if (winner == 4)
+                    {
+                        Status.Text = "Time is up!!! Player 2 Won!";
+                    }
+                }
+                else
+                {
+                    Status.Text = "Player " + winner + " Won!";
+                }
             }
             else
             {
@@ -342,19 +392,18 @@ namespace OOPGames
                           
                         }
    
+                    }                   
+                    else if(_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
+                    {
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton), _CurrentRules.CurrentField);
                     }
                     else
                     {
-                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }
-                    /*
-                    if (_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
-                    {
-                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton, _CurrentRules.CurrentField);
-                    }
-                    */
-                    
-                    
+
+
+
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);

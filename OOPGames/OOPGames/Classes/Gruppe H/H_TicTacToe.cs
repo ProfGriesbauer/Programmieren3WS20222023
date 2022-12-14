@@ -193,8 +193,8 @@ namespace OOPGames
         //ein neues Spielfeld wird erstellt, bzw. eine Instanz der Spielfeldklasse erzeugt. Das neue Spielfeld nennt sich "_Spielfeld".
         H_TicTacToeField _Spielfeld = new H_TicTacToeField();
         bool specialRuleMoveDone = false;                                       //Variable die erfasst ob der erste Zug bereits gemacht wurde.
-        static int rowAbweichung;                                               //Variabeln die die Abweichung für die Spezialregeln erfassen.
-        static int columnAbweichung;                                            //static, damit auch im Player zugegriffen werden kann, bessere Lösung nötig!
+        int rowAbweichung;                                                      //Variabeln die die Abweichung für die Spezialregeln erfassen.
+        int columnAbweichung;
         public int RowAbweichung { get { return(rowAbweichung); } }
         public int ColumnAbweichung { get { return(columnAbweichung); } }
         public I_H_TicTacToe TicTacToeField { get { return _Spielfeld; } }      //gibt beim Aufruf das aktuelle (erstellte) Spielfeld zurück. Wurde im gegensatz zum Griesbauer Beispiel _Spielfeld statt _Field genannt.
@@ -272,7 +272,7 @@ namespace OOPGames
         }
 
         //Bild setzen
-        public void DoMove(IPlayMove move)                                                          //so gibts keine Fehlermeldung mehr nur ist das jetzt richtig und was genau habe ich gemacht???
+        public void DoMove(IPlayMove move)
         {
             if (move is I_H_TicTacToeMove)                                                          //überprüft ob auch wirklich ein TicTacToe Move gemacht wurde und ITicTacToe Move implementiert (aus Griesbauer BaseTicTacToe)
             {
@@ -283,7 +283,7 @@ namespace OOPGames
                 }
                 else                                                                                //specialRuleMoveDone ist true, bedeutet das ist der zweite Move und die spezial regeln gelten.
                 {
-                    newRuleMove((I_H_TicTacToeMove)move);                                           //ruft Objekt newRuleMove auf
+                    secondMove((I_H_TicTacToeMove)move);                                           //ruft Objekt newRuleMove auf
                 }
             }
         }
@@ -323,7 +323,7 @@ namespace OOPGames
         }
 
         //ab dem zweiten Spielzug, es sollte die Regel vom ersten erfasst und übernommen werden.
-        public void newRuleMove(I_H_TicTacToeMove move)
+        public void secondMove(I_H_TicTacToeMove move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)    //erste Zeile von Griesbauer, überprüft ob der move innerhalb des 3x3 Feldes war.
             {
@@ -349,6 +349,7 @@ namespace OOPGames
                 }
             }
         }
+
         //berechnung der abweichenden Koordinate. Abweichung und original Koordinate müssen übergeben werden.
         public int abweichung(int koordinate, int abw)
         {
@@ -382,6 +383,12 @@ namespace OOPGames
         int _PlayerNumber = 0;
         public string Name { get { return "H_TicTacToeHumanPlayer"; } }
         public int PlayerNumber { get { return _PlayerNumber; } }
+
+        int _rowAbweichung;
+        int _columnAbweichung;
+        public int RowAbweichung { set { _rowAbweichung = value; } }
+        public int ColumnAbweichung { set { _columnAbweichung = value; } }
+
         public I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToe field) 
         {
             int d = 150;                                                                            //Distanz zwischen den Linien
@@ -400,8 +407,8 @@ namespace OOPGames
                            sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d))
                         {
                             I_H_TicTacToeRules regel = new H_TicTacToeRules();
-                            int abwR = regel.abweichung(i, regel.RowAbweichung);
-                            int abwC = regel.abweichung(j, regel.ColumnAbweichung);
+                            int abwR = regel.abweichung(i, _rowAbweichung);
+                            int abwC = regel.abweichung(j, _columnAbweichung);
 
                             if (field[abwR, abwC] <= 0)
                             {

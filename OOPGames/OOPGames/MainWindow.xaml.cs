@@ -36,6 +36,7 @@ using OOPGames.Interfaces.Gruppe_K;
 using OOPGames.Classes.Gruppe_D.Schiffeversenken;
 using Application = System.Windows.Forms.Application;
 using OOPGames.Classes.Gruppe_C.Minesweeper;
+using OOPGames.Interfaces.Gruppe_H;
 
 namespace OOPGames
 {
@@ -396,6 +397,20 @@ namespace OOPGames
                     else if(_CurrentPlayer is C_IHumanMinesweeperPlayer) //added by Gruppe C BITTE NICHT LÖSCHEN Lg Oli
                     {
                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y,(int)e.ChangedButton), _CurrentRules.CurrentField);
+                    }
+                    else if(_CurrentPlayer is I_H_HumanTicTacToePlayer && _CurrentRules is I_H_TicTacToeRules) //added by Gruppe H bitte nicht löschen lg Moritz
+                    {
+                        if (_CurrentPlayer1 is I_H_HumanTicTacToePlayer)
+                        {
+                            ((I_H_HumanTicTacToePlayer)_CurrentPlayer1).RowAbweichung = ((I_H_TicTacToeRules)_CurrentRules).RowAbweichung;
+                            ((I_H_HumanTicTacToePlayer)_CurrentPlayer1).ColumnAbweichung = ((I_H_TicTacToeRules)_CurrentRules).ColumnAbweichung;
+                        }
+                        if (_CurrentPlayer2 is I_H_HumanTicTacToePlayer)
+                        {
+                            ((I_H_HumanTicTacToePlayer)_CurrentPlayer2).RowAbweichung = ((I_H_TicTacToeRules)_CurrentRules).RowAbweichung;
+                            ((I_H_HumanTicTacToePlayer)_CurrentPlayer2).ColumnAbweichung = ((I_H_TicTacToeRules)_CurrentRules).ColumnAbweichung;
+                        }
+                        pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }
                     else
                     {

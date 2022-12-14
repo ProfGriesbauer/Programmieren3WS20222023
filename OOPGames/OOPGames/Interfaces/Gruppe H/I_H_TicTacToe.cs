@@ -46,13 +46,17 @@ namespace OOPGames.Interfaces.Gruppe_H
         int abweichung(int koordinate, int abw);
         int RowAbweichung { get; }
         int ColumnAbweichung { get; }
-
+        void firstMove(I_H_TicTacToeMove move);
+        void secondMove(I_H_TicTacToeMove move);
     }
 
     public interface I_H_HumanTicTacToePlayer : IHumanGamePlayer
     {
         I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToe field);
-        
+
+        int RowAbweichung { set; }
+        int ColumnAbweichung { set; }
+
     }
 
     public interface I_H_TicTacToeMove : IRowMove, IColumnMove

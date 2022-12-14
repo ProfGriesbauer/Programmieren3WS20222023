@@ -53,7 +53,7 @@ namespace OOPGames
         }
     }
 
-    public class GJ_DinoPaintGame : GJ_IDinoPaintGame
+   /* public class GJ_DinoPaintGame : GJ_IDinoPaintGame
     {
         GJ_DinoGameRules rules = new GJ_DinoGameRules();
 
@@ -329,6 +329,6 @@ namespace OOPGames
         {
             PlayerNumber = playerNumber;
         }
-    }
+    }*/
 
 }

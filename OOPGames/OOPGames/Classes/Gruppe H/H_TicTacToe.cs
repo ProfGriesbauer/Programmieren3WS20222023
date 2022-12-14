@@ -33,9 +33,9 @@ namespace OOPGames
         public void PaintGameField(Canvas canvas, IGameField currentField)               //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
         {
             Console.WriteLine("Fehler1.1");
-            if (currentField is I_H_TicTacToeField)
+            if (currentField is I_H_TicTacToe)
             {
-                PaintTicTacToeField(canvas, (I_H_TicTacToeField)currentField);
+                PaintTicTacToeField(canvas, (I_H_TicTacToe)currentField);
             }
             else 
             {
@@ -43,7 +43,7 @@ namespace OOPGames
             }
         }
         //Field zeichnen wurde von Griesbauer kopiert (farben "angepasst" :P)
-        public void PaintTicTacToeField(Canvas canvas, I_H_TicTacToeField currentField)        //zeichnet dann tatsächlich das Spielfeld.
+        public void PaintTicTacToeField(Canvas canvas, I_H_TicTacToe currentField)        //zeichnet dann tatsächlich das Spielfeld.
         {
             canvas.Children.Clear();                                                        //Zufällig auswählen von einem von vier Farbschemen. Jedes Mitglied der Gruppe legt ein eigenes Farbschema fest
             Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
@@ -133,19 +133,19 @@ namespace OOPGames
                 for (int j = 0; j < 3; j++)
                 {
                     IHFeld current = null;
-                    if (currentField is I_H_TicTacToeField)
+                    if (currentField is I_H_TicTacToe)
                     {
-                        current  = ((I_H_TicTacToeField)currentField).GetFeldAt(i, j);
+                        current  = ((I_H_TicTacToe)currentField).GetFeldAt(i, j);
                         if (current.Player == 1)
                         {
 
                             Line X1 = new Line() { X1 = X0 + (j * d), Y1 = Y0 + (i * d), X2 = X0 + d + (j * d), Y2 = Y0 + d + (i * d), Stroke = XStroke, StrokeThickness = 3.0 };
-                            //canvas.Children.Add(X1);
+                            canvas.Children.Add(X1);
                             Line X2 = new Line() { X1 = X0 + (j * d), Y1 = Y0 + d + (i * d), X2 = X0 + d + (j * d), Y2 = Y0 + (i * d), Stroke = XStroke, StrokeThickness = 3.0 };
-                            //canvas.Children.Add(X2);
-                            Canvas.SetTop(current.Symbol, 150);
-                            Canvas.SetLeft(current.Symbol, 100);
-                            canvas.Children.Add(current.Symbol);
+                            canvas.Children.Add(X2);
+                            //Canvas.SetTop(current.Symbol, 150);
+                            //Canvas.SetLeft(current.Symbol, 100);
+                            //canvas.Children.Add(current.Symbol);
                             //canvas.Children.
                             
                             //canvas.ActualHeight --> Canvas Größe Anpassen
@@ -183,39 +183,25 @@ namespace OOPGames
     }
 
 
-    //Hier kommen unsere Fancy Regeln hin :D
-    /*public class H_TicTacToeRules : ITicTacToeRules
-    {
-
-    }*/
-
     /* Allg. Infos zu Rules:
      * in den Feldern werden Spielernummern hinterlegt: Spielernummer 0= Feld frei, 1 oder 2 = der jeweilige Spieler hat dort ein X oder O.
      * 
      * Spielfeld Aufbau: oben links ist 0,0; unten rechts 2,2; unten links ist 2,0; oben rechts ist 0,2; der rest sollte sich erklären wenn man es aufzeichnet.
      */
-
-
-    //Moritz Vorschlag:
-    /*Probleme:
-     * Gleichstand wird noch nicht erkannt.
-     * Spezialregel wird erst beim 2.Spiel angewendet, vermutlich weil da zum ersten mal 'specialRuleMoveDone = false' gemacht wird --> Problem hat sich gerade von selbst behoben??
-     * auf ein belegtes feld kann nicht geklickt werden, auch wenn die Spezialregel auf ein freies setzen würde. 
-     * --> Im Player wird überprüft ob das Feld frei ist, es muss ein Player erzeugt werden, der diesbezüglich angepasst ist.
-     * --> Aktuell kann ein bestehendes Feld mit der spezialregel überschrieben werden.
-    */
     public class H_TicTacToeRules : I_H_TicTacToeRules
     {
         //ein neues Spielfeld wird erstellt, bzw. eine Instanz der Spielfeldklasse erzeugt. Das neue Spielfeld nennt sich "_Spielfeld".
         H_TicTacToeField _Spielfeld = new H_TicTacToeField();
         bool specialRuleMoveDone = false;                                       //Variable die erfasst ob der erste Zug bereits gemacht wurde.
-        int rowAbweichung;                                                      //Variabeln die die Abweichung für die Spezialregeln erfassen.
-        int columnAbweichung;
-        public I_H_TicTacToeField TicTacToeField { get { return _Spielfeld; } }    //gibt beim Aufruf das aktuelle (erstellte) Spielfeld zurück. Wurde im gegensatz zum Griesbauer Beispiel _Spielfeld statt _Field genannt.
+        static int rowAbweichung;                                               //Variabeln die die Abweichung für die Spezialregeln erfassen.
+        static int columnAbweichung;                                            //static, damit auch im Player zugegriffen werden kann, bessere Lösung nötig!
+        public int RowAbweichung { get { return(rowAbweichung); } }
+        public int ColumnAbweichung { get { return(columnAbweichung); } }
+        public I_H_TicTacToe TicTacToeField { get { return _Spielfeld; } }      //gibt beim Aufruf das aktuelle (erstellte) Spielfeld zurück. Wurde im gegensatz zum Griesbauer Beispiel _Spielfeld statt _Field genannt.
 
 
         //Es wird überprüft, ob der Spieler innerhalb des Spielfeldes (3 breit, 3 hoch) geklickt hat, wenn Ja wird dem _Spielfeld der die Feldnummern und die Spielernummer übergeben
-        public void DoTicTacToeMove(I_H_TicTacToeMove spielerZug) //move wird übergeben, hier SpielerZug genannt für besseres verständnis
+        public void DoTicTacToeMove(I_H_TicTacToeMove spielerZug)               //move wird übergeben, hier SpielerZug genannt für besseres verständnis
         {
             if (spielerZug.Column <= 3 && spielerZug.Column >= 0 && spielerZug.Row <= 3 && spielerZug.Row >= 0)
             {
@@ -235,7 +221,7 @@ namespace OOPGames
                     _Spielfeld[row, column].Player = 0;
                     _Spielfeld[row, column].Symbol = null;
 
-                    specialRuleMoveDone = false;                //zähler für erste Bewegung wird auf null gesetzt
+                    specialRuleMoveDone = false;                                //zähler für erste Bewegung wird auf null gesetzt
                 }
             }
         }
@@ -244,18 +230,18 @@ namespace OOPGames
         //Funktion wird aufgerufen um zu prüfen, ob jemand gewonnen hat. --> Tippfehler in IGameRules PLayer wenn Player geschrieben wird, wird Implementierung nicht erkannt.
         public int CheckIfPLayerWon()
         {
-             for (int i = 0; i <= 2; i++)                                                                                                            //Überprüfung ob im ersten Feld der 3 Reihen ein Spieler gesetzt hat (Spieler > 0) und ob immer derselbe Spieler in eine der drei Reihen gesetzt hat. Gibt ggf. den Spieler zurück.
+             for (int i = 0; i <= 2; i++)                                                                                                                                                           //Überprüfung ob im ersten Feld der 3 Reihen ein Spieler gesetzt hat (Spieler > 0) und ob immer derselbe Spieler in eine der drei Reihen gesetzt hat. Gibt ggf. den Spieler zurück.
              {
                  if (_Spielfeld[0, i].Player >  0 && _Spielfeld[0, i].Player == _Spielfeld[1, i].Player && _Spielfeld[0, i].Player == _Spielfeld[2, i].Player) { return (_Spielfeld[0, i].Player); }
              }
-             for (int i = 0; i <= 2; i++)                                                                                                            //Überprüfung der drei Spalten, ggf. Rückgabe des Spielers.
+             for (int i = 0; i <= 2; i++)                                                                                                                                                           //Überprüfung der drei Spalten, ggf. Rückgabe des Spielers.
              {
                  if (_Spielfeld[i, 0].Player > 0 && _Spielfeld[i, 0].Player == _Spielfeld[i, 1].Player && _Spielfeld[i, 0].Player == _Spielfeld[i, 2].Player) { return (_Spielfeld[i, 0].Player); }
              }
              if (_Spielfeld[0, 0].Player > 0 && _Spielfeld[0, 0].Player == _Spielfeld[1, 1].Player && _Spielfeld[0, 0].Player == _Spielfeld[2, 2].Player) { return (_Spielfeld[0, 0].Player); }     //Überprüfung der beiden Diagonalen, ggf. Rückgabe des Spielers.
              if (_Spielfeld[0, 2].Player > 0 && _Spielfeld[0, 2].Player == _Spielfeld[1, 1].Player && _Spielfeld[0, 2].Player == _Spielfeld[2, 0].Player) { return (_Spielfeld[0, 2].Player); }
 
-             return (-1);                                                                                                                           //Wenn bis hierher kein Return genutzt wurde, hat noch keiner gewonnen. Es wird -1 übergeben. (Siehe Interface, kein gewinner = -1)
+             return (-1);                                                                                                                                                                           //Wenn bis hierher kein Return genutzt wurde, hat noch keiner gewonnen. Es wird -1 übergeben. (Siehe Interface, kein gewinner = -1)
                 
         
             }
@@ -272,7 +258,7 @@ namespace OOPGames
         //überprüft alle Felder ob eines noch den Spielerwert 0 hat, wenn ja kann dort noch gesetzt werden --> true wird zurückgegeben. Wenn keines leer ist, false.
         public bool MovesPossible
         {
-            get                                                         //get, weil in den IGameRules von denen abgeleitet wird, ist das als get deffiniert --> soll nur gelesen werden können? Außerdem das Programm schimpft sont???
+            get                                                                                     //get, weil in den IGameRules von denen abgeleitet wird, ist das als get deffiniert --> soll nur gelesen werden können? Außerdem das Programm schimpft sont???
             {
                 for (int r = 0; r <= 2; r++)
                 {
@@ -286,18 +272,18 @@ namespace OOPGames
         }
 
         //Bild setzen
-        public void DoMove(IPlayMove move)                              //so gibts keine Fehlermeldung mehr nur ist das jetzt richtig und was genau habe ich gemacht???
+        public void DoMove(IPlayMove move)                                                          //so gibts keine Fehlermeldung mehr nur ist das jetzt richtig und was genau habe ich gemacht???
         {
-            if (move is I_H_TicTacToeMove)                                                         //überprüft ob auch wirklich ein TicTacToe Move gemacht wurde und ITicTacToe Move implementiert (aus Griesbauer BaseTicTacToe)
+            if (move is I_H_TicTacToeMove)                                                          //überprüft ob auch wirklich ein TicTacToe Move gemacht wurde und ITicTacToe Move implementiert (aus Griesbauer BaseTicTacToe)
             {
                 if (specialRuleMoveDone == false)
                 {
-                    specialRuleMoveDone = true;                                                 //Erster Move wurde gemacht, Variable wird auf true gesetzt
-                    firstMove((I_H_TicTacToeMove)move);                                           //ruft Objekt first Move auf, Klammer Inhalt ven Griesbauer, was tut er genau??? --> scheint die Werte das aktuellen moves (angekliktes Feld?) zu übergeben??
+                    specialRuleMoveDone = true;                                                     //Erster Move wurde gemacht, Variable wird auf true gesetzt
+                    firstMove((I_H_TicTacToeMove)move);                                             //ruft Objekt first Move auf, Klammer Inhalt ven Griesbauer, was tut er genau??? --> scheint die Werte das aktuellen moves (angekliktes Feld?) zu übergeben??
                 }
-                else                                                                            //specialRuleMoveDone ist true, bedeutet das ist der zweite Move und die spezial regeln gelten.
+                else                                                                                //specialRuleMoveDone ist true, bedeutet das ist der zweite Move und die spezial regeln gelten.
                 {
-                    newRuleMove((I_H_TicTacToeMove)move);                                          //ruft Objekt newRuleMove auf
+                    newRuleMove((I_H_TicTacToeMove)move);                                           //ruft Objekt newRuleMove auf
                 }
             }
         }
@@ -321,7 +307,7 @@ namespace OOPGames
                     //e.Graphics.DrawImage(image, 0, 0, 50, 50);
 
                     Image Schild = new Image();
-                    Schild.Source = new BitmapImage(new Uri("C:/Users/Samue/Documents/Schild.png"));
+                    Schild.Source = new BitmapImage(new Uri("C:/Users/morit/Desktop/X.png")); //C:/Users/Samue/Documents/Schild.png
                     Schild.Height = 150;
                     Schild.Width = 150;
 
@@ -339,15 +325,10 @@ namespace OOPGames
         //ab dem zweiten Spielzug, es sollte die Regel vom ersten erfasst und übernommen werden.
         public void newRuleMove(I_H_TicTacToeMove move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)   //erste Zeile von Griesbauer
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)    //erste Zeile von Griesbauer, überprüft ob der move innerhalb des 3x3 Feldes war.
             {
-                int rowNew = move.Row + rowAbweichung;                                  //soll abweichung addieren
-                int columnNew = move.Column + columnAbweichung;
-
-                if (rowNew < 0) { rowNew = rowNew + 3; }                                 //stellt fest, ob das neue Feld außerhalb vom Spielfeld ist und passt an, damit das Kreuz auf der anderen Seite entsteht.
-                if (rowNew > 2) { rowNew = rowNew - 3; }
-                if (columnNew < 0) { columnNew = columnNew + 3; }
-                if (columnNew > 2) { columnNew = columnNew - 3; }
+                int rowNew = abweichung(move.Row, rowAbweichung);                        //berechnet Abweichendes Spielfeld mithilfe der Abweichung die im ersten Zug festgelegt wurde.
+                int columnNew = abweichung(move.Column, columnAbweichung);
 
                 _Spielfeld[rowNew, columnNew].Player = move.PlayerNumber;                //übergibt die an die Regeln angepassten Koordinaten an das Spielfeld, zusammen mit der Spieler Nummer.
 
@@ -356,7 +337,7 @@ namespace OOPGames
                     //e.Graphics.DrawImage(image, 0, 0, 50, 50);
 
                     Image Schild = new Image();
-                    Schild.Source = new BitmapImage(new Uri("C:/Users/Samue/Documents/Schild.png"));
+                    Schild.Source = new BitmapImage(new Uri("C:/Users/morit/Desktop/X.png"));
 
                     //Höhe Breite
                     _Spielfeld[rowNew, columnNew].Symbol = Schild;
@@ -367,6 +348,14 @@ namespace OOPGames
                     //_Spielfeld[rowNew, columNew].Symbol = YSymbol
                 }
             }
+        }
+        //berechnung der abweichenden Koordinate. Abweichung und original Koordinate müssen übergeben werden.
+        public int abweichung(int koordinate, int abw)
+        {
+            int kNew = koordinate + abw;                                                //soll abweichung addieren
+            if (kNew < 0) { kNew = kNew + 3; }                                          //stellt fest, ob das neue Feld außerhalb vom Spielfeld ist und passt an, damit das Kreuz auf der anderen Seite entsteht.
+            if (kNew > 2) { kNew = kNew - 3; }
+            return(kNew);
         }
     }
 
@@ -393,7 +382,7 @@ namespace OOPGames
         int _PlayerNumber = 0;
         public string Name { get { return "H_TicTacToeHumanPlayer"; } }
         public int PlayerNumber { get { return _PlayerNumber; } }
-        public I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToeField field) 
+        public I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToe field) 
         {
             int d = 150;                                                                            //Distanz zwischen den Linien
             int X0 = 100;                                                                           //x0;y0 Linke obere Ecke des Feldes
@@ -406,13 +395,27 @@ namespace OOPGames
                 {
                     for (int j = 0; j < 3; j++)
                     {
+
                         if (sel.XClickPos > X0 + (j * d) && sel.XClickPos < X0 + d + (j * d) &&
-                            sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d) &&
-                            field[i, j] <= 0)
+                           sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d))
+                        {
+                            I_H_TicTacToeRules regel = new H_TicTacToeRules();
+                            int abwR = regel.abweichung(i, regel.RowAbweichung);
+                            int abwC = regel.abweichung(j, regel.ColumnAbweichung);
+
+                            if (field[abwR, abwC] <= 0)
+                            {
+                                return new H_TicTacToeMove(i, j, _PlayerNumber);
+                            } 
+                        }
+                        /*
+                        if (sel.XClickPos > X0 + (j * d) && sel.XClickPos < X0 + d + (j * d) &&
+                                sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d) &&
+                                field[i, j] <= 0)
                         {
                             return new H_TicTacToeMove(i, j, _PlayerNumber);
-                           
-                        }
+
+                        }*/
                     }
                 }
             }
@@ -433,9 +436,9 @@ namespace OOPGames
 
         public IPlayMove GetMove(IMoveSelection selection, IGameField field)
         {
-            if (field is I_H_TicTacToeField)                                                                       // Hier I_H_TicTacToeField
+            if (field is I_H_TicTacToe)                                                                       // Hier I_H_TicTacToeField
             {
-                return GetMove(selection, (I_H_TicTacToeField)field);
+                return GetMove(selection, (I_H_TicTacToe)field);
             }
             else
             {
@@ -525,7 +528,7 @@ namespace OOPGames
         }
     }
 
-    public class H_TicTacToeField : I_H_TicTacToeField
+    public class H_TicTacToeField : I_H_TicTacToe
     {
         IHFeld[,] _Feld = new IHFeld[3, 3];      //Leitet von kommentar darüber ab erstellt ein 3x3 Feld, das in jedem Feld IHCaskethaben muss????
         public H_TicTacToeField()               //in jedes Feld des 3x3Spielfelds wird HCasket eingefügt, darin sind dann alle Symbole der Spieler enthalten.?
@@ -561,7 +564,7 @@ namespace OOPGames
                 }
             }
         }
-        int I_H_TicTacToeField.this[int r, int c]
+        int I_H_TicTacToe.this[int r, int c]
         {
             get
             {
@@ -591,7 +594,7 @@ namespace OOPGames
             return _Feld[r, c];     // ????
 
         } */
-        IHFeld I_H_TicTacToeField.GetFeldAt(int r, int c)
+        IHFeld I_H_TicTacToe.GetFeldAt(int r, int c)
         {
             return _Feld[r, c];
         }

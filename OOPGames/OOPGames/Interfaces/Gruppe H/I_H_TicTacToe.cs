@@ -23,7 +23,7 @@ namespace OOPGames.Interfaces.Gruppe_H
 
 
 
-    public interface I_H_TicTacToeField : IGameField
+    public interface I_H_TicTacToe : IGameField
     {
 
         IHFeld GetFeldAt(int r, int c);     //wenn davon abgeleitet wird, dann muss eine Funktion names GetCasketAt implementiert sein, die das Symbol von IHCasket an den entsprechen Koordinaten bekommt.
@@ -34,21 +34,24 @@ namespace OOPGames.Interfaces.Gruppe_H
 
     public interface I_H_PaintTicTacToe : IPaintGame
     {
-        void PaintTicTacToeField(Canvas canvas, I_H_TicTacToeField currentField);
+        void PaintTicTacToeField(Canvas canvas, I_H_TicTacToe currentField);
     }
 
 
     public interface I_H_TicTacToeRules : IGameRules
     { 
-        I_H_TicTacToeField TicTacToeField { get; }
+        I_H_TicTacToe TicTacToeField { get; }
 
         void DoTicTacToeMove(I_H_TicTacToeMove move);
+        int abweichung(int koordinate, int abw);
+        int RowAbweichung { get; }
+        int ColumnAbweichung { get; }
 
     }
 
     public interface I_H_HumanTicTacToePlayer : IHumanGamePlayer
     {
-        I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToeField field);
+        I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToe field);
         
     }
 

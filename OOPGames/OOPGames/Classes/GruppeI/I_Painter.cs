@@ -29,7 +29,7 @@ namespace OOPGames.Classes.GruppeI
         public void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(135, 206, 250);
+            Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
@@ -116,26 +116,27 @@ namespace OOPGames.Classes.GruppeI
                                 Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X + 5 + (60 * j), bigfield.SubFields[t].Y + 5 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(OE);
                             }
-                            else if (bigfield.SubFields[t][i, j] == 3) //groﬂe Kreuze zeichnen
-                            {
-                                Line X1 = new Line() { X1 = 20 + (180 * j), Y1 = 20 + (180 * i), X2 = 200 + (180 * j), Y2 = 200 + (180 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
-                                canvas.Children.Add(X1);
-                                Line X2 = new Line() { X1 = 20 + (180 * j), Y1 = 200 + (180 * i), X2 = 200 + (180 * j), Y2 = 20 + (180 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
-                                canvas.Children.Add(X2);
-                            }
-                            else if (bigfield.SubFields[t][i, j] == 4) //groﬂe Rechtecke zeichnen 
-                            {
-                                Rectangle OE = new Rectangle() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i), 0, 0), Width = 180, Height = 180, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
-                                canvas.Children.Add(OE);
-                            }
-                            else if (bigfield.SubFields[t][i, j] == 5) //Unentschieden zeichnen 
-                            {
-                                Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i), 0, 0), Width = 180, Height = 180, Stroke = UStroke, StrokeThickness = StrokeThickness_GrO };
-                                canvas.Children.Add(OE);
-                            }
+                            
                         }
 
                     }
+                    if (bigfield.SubFields[t].WonByPlayer == 1) //groﬂe Kreuze zeichnen
+                    {
+                        Line X1 = new Line() { X1 = bigfield.SubFields[t].X, Y1 = bigfield.SubFields[t].Y, X2 = bigfield.SubFields[t].X+ bigfield.SubFields[t].SX, Y2 = bigfield.SubFields[t].Y + bigfield.SubFields[t].SY, Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = bigfield.SubFields[t].X, Y1 = bigfield.SubFields[t].Y+ bigfield.SubFields[t].SY, X2 = bigfield.SubFields[t].X+ bigfield.SubFields[t].SX, Y2 = bigfield.SubFields[t].Y, Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                        canvas.Children.Add(X2);
+                    }
+                    else if (bigfield.SubFields[t].WonByPlayer == 2) //groﬂe Rechtecke zeichnen 
+                    {
+                        Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X, bigfield.SubFields[t].Y, 0, 0), Width = bigfield.SubFields[t].SX, Height = bigfield.SubFields[t].SY, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
+                        canvas.Children.Add(OE);
+                    }
+                    /*else if (bigfield.SubFields[t][i, j] == 5) //Unentschieden zeichnen 
+                    {
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (180 * j), 20 + (180 * i), 0, 0), Width = 180, Height = 180, Stroke = UStroke, StrokeThickness = StrokeThickness_GrO };
+                        canvas.Children.Add(OE);
+                    }*/
                 }
             }
         }

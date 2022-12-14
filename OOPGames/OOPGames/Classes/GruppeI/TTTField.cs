@@ -15,14 +15,14 @@ namespace OOPGames.Classes.GruppeI
         int SX { get; }
         int SY { get; }
         bool Active { get; set; }
+        int WonByPlayer { get; set;}
     }
 
     public class ISubField : I_ISubField
     {
         int[,] _SubField = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
-
-        int nummer, x, y, sx, sy;
+        int nummer, x, y, sx, sy, wonByPlayer;
         bool active;                //wird Feld gerade gespielt oder nicht
 
         public ISubField(int nummer, int x, int y, int sx, int sy, bool active)
@@ -33,6 +33,7 @@ namespace OOPGames.Classes.GruppeI
             this.sx = sx;
             this.sy = sy;
             this.active = active;
+            this.wonByPlayer = 0;
         }
 
         public int Nummer { get { return nummer; } }
@@ -43,6 +44,10 @@ namespace OOPGames.Classes.GruppeI
         public bool Active {
             get { return active;} 
             set {active = value;}
+        }
+        public int WonByPlayer { 
+            get { return wonByPlayer;}
+            set {wonByPlayer = value;}
         }
 
         public int this[int r, int c]
@@ -112,6 +117,7 @@ namespace OOPGames.Classes.GruppeI
             SubFields.Add(new ISubField(6, 20, 380, 180, 180, false));
             SubFields.Add(new ISubField(7, 200, 380, 180, 180, false));
             SubFields.Add(new ISubField(8, 380, 380, 180, 180, false));
+            //SubFields.Add(new ISubField(9, 20, 20, 540, 540, false));  //subfield, das quasi unser Bigfield darstellt
         }
 
         public bool CanBePaintedBy(IPaintGame painter)

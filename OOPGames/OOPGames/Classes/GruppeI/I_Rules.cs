@@ -35,27 +35,45 @@ public class I_TicTacToeRules : IGameRules
         }
     }
 
-    public int CheckIfPLayerWon() //f�r gro�es Feld -> brauchen wir auch noch f�r kleine Felder, aber als eigene Funktion
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            if (_BigField[i, 0] > 0 && _BigField[i, 0] == _BigField[i, 1] && _BigField[i, 1] == _BigField[i, 2])
-            {
-                return _BigField[i, 0];
-            }
-            else if (_BigField[0, i] > 0 && _BigField[0, i] == _BigField[1, i] && _BigField[1, i] == _BigField[2, i])
-            {
-                return _BigField[0, i];
-            }
-        }
 
-        if (_BigField[0, 0] > 0 && _BigField[0, 0] == _BigField[1, 1] && _BigField[1, 1] == _BigField[2, 2])
+
+    public int CheckIfPLayerWon() //für großes Feld -> brauchen wir auch noch f�r kleine Felder, aber als eigene Funktion
+    {
+        CheckIfSmallField_IsWon();
+        //waagrecht
+        if (_BigField.SubFields[0].WonByPlayer == _BigField.SubFields[1].WonByPlayer && _BigField.SubFields[1].WonByPlayer == _BigField.SubFields[2].WonByPlayer)
         {
-            return _BigField[0, 0];
+            return _BigField.SubFields[0].WonByPlayer;
         }
-        else if (_BigField[0, 2] > 0 && _BigField[0, 2] == _BigField[1, 1] && _BigField[1, 1] == _BigField[2, 0])
+        else if (_BigField.SubFields[3].WonByPlayer == _BigField.SubFields[4].WonByPlayer && _BigField.SubFields[4].WonByPlayer == _BigField.SubFields[5].WonByPlayer)
         {
-            return _BigField[0, 2];
+            return _BigField.SubFields[3].WonByPlayer;
+        }
+        else if (_BigField.SubFields[6].WonByPlayer == _BigField.SubFields[7].WonByPlayer && _BigField.SubFields[7].WonByPlayer == _BigField.SubFields[8].WonByPlayer)
+        {
+            return _BigField.SubFields[6].WonByPlayer;
+        }
+        //senkrecht
+        else if (_BigField.SubFields[0].WonByPlayer == _BigField.SubFields[3].WonByPlayer && _BigField.SubFields[3].WonByPlayer == _BigField.SubFields[6].WonByPlayer)
+        {
+            return _BigField.SubFields[0].WonByPlayer;
+        }
+        else if (_BigField.SubFields[1].WonByPlayer == _BigField.SubFields[4].WonByPlayer && _BigField.SubFields[4].WonByPlayer == _BigField.SubFields[7].WonByPlayer)
+        {
+            return _BigField.SubFields[1].WonByPlayer;
+        }
+        else if (_BigField.SubFields[2].WonByPlayer == _BigField.SubFields[5].WonByPlayer && _BigField.SubFields[5].WonByPlayer == _BigField.SubFields[8].WonByPlayer)
+        {
+            return _BigField.SubFields[2].WonByPlayer;
+        }
+        //diagonal
+        else if (_BigField.SubFields[0].WonByPlayer == _BigField.SubFields[4].WonByPlayer && _BigField.SubFields[4].WonByPlayer == _BigField.SubFields[8].WonByPlayer)
+        {
+            return _BigField.SubFields[0].WonByPlayer;
+        }
+        else if (_BigField.SubFields[2].WonByPlayer == _BigField.SubFields[4].WonByPlayer && _BigField.SubFields[4].WonByPlayer == _BigField.SubFields[6].WonByPlayer)
+        {
+            return _BigField.SubFields[2].WonByPlayer;
         }
 
         return -1;
@@ -92,5 +110,43 @@ public class I_TicTacToeRules : IGameRules
             DoTTTMove((ITTTMove)move);
         }
     }
+
+    //ab hier kommen nur noch Game-speziefische Rules
+
+    //aktionsradius auf ein Subfield begrenzen
+    //check if player won für subfield -> unentscheiden = zufallsentscheid -> win = playernumber + 2 -> nach Entscheidung Subfield wieder inactive setzen 
+    public void CheckIfSmallField_IsWon()
+    {
+        for (int t = 0; t < 9; t++)
+        {
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (_BigField.SubFields[t][i, 0] >= 0 && _BigField.SubFields[t][i, 0] == _BigField.SubFields[t][i, 1] && _BigField.SubFields[t][i, 1] == _BigField.SubFields[t][i, 2])
+                {
+                    _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][i,0];
+                    break;
+                }
+                else if (_BigField.SubFields[t][0, i] >= 0 && _BigField.SubFields[t][0, i] == _BigField.SubFields[t][1, i] && _BigField.SubFields[t][1, i] == _BigField.SubFields[t][2, i])
+                {
+                    _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][0, i];
+                    break;
+                }
+            }
+
+            if (_BigField.SubFields[t][0, 0] > 0 && _BigField.SubFields[t][0, 0] == _BigField.SubFields[t][1, 1] && _BigField.SubFields[t][1, 1] == _BigField.SubFields[t][2, 2])
+            {
+                _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][0, 0];
+                break;
+            }
+            else if (_BigField.SubFields[t][0, 2] > 0 && _BigField.SubFields[t][0, 2] == _BigField.SubFields[t][1, 1] && _BigField.SubFields[t][1, 1] == _BigField.SubFields[t][2, 0])
+            {
+                _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][0, 2];
+                break;
+            }
+
+        }
+    }
+    
 }
 

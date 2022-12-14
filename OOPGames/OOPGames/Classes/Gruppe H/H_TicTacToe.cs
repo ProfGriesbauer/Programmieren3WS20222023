@@ -25,16 +25,12 @@ namespace OOPGames
     // Feld malen 
     // BaseTicTacToe anlegen
     //public interface IPaintTicTacToe:
-
-
-
-
     //TicTacToe Painter selbst implementiert
-    public class H_TicTacToePaint : I_H_PaintTicTacToe                               //  Ändrung: leite von IPaintTicTacToe ab                      //HTicTacToe leitet von der Interface Klasse IPaintTicTacToe ab
+    public class H_TicTacToePaint : I_H_PaintTicTacToe                                   //  Änderung: leite von IPaintTicTacToe ab                      //HTicTacToe leitet von der Interface Klasse IPaintTicTacToe ab
     {
-        public string Name { get { return "H Painter TicTacToe"; } }  //die öffentliche Variable Name beinhaltet den Name des Painters. Bei einer get-Anfrage wird der Name zurückgegeben.
+        public string Name { get { return "H Painter TicTacToe"; } }                     //die öffentliche Variable Name beinhaltet den Name des Painters. Bei einer get-Anfrage wird der Name zurückgegeben.
               
-        public void PaintGameField(Canvas canvas, IGameField currentField)              //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
+        public void PaintGameField(Canvas canvas, IGameField currentField)               //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
         {
             Console.WriteLine("Fehler1.1");
             if (currentField is I_H_TicTacToeField)
@@ -46,12 +42,10 @@ namespace OOPGames
                 Console.WriteLine("Fehler 1");
             }
         }
-
         //Field zeichnen wurde von Griesbauer kopiert (farben "angepasst" :P)
         public void PaintTicTacToeField(Canvas canvas, I_H_TicTacToeField currentField)        //zeichnet dann tatsächlich das Spielfeld.
         {
-            canvas.Children.Clear();
-            //Zufällig auswählen von einem von vier Farbschemen. Jesdes Mitglied der Gruppe legt ein eigenes Farbschema fest
+            canvas.Children.Clear();                                                        //Zufällig auswählen von einem von vier Farbschemen. Jedes Mitglied der Gruppe legt ein eigenes Farbschema fest
             Random zufall = new Random();                                                   //Random Objekt namens zufall wird erstellt, die Funktion gibts vom System :D
             System.Windows.Media.Color bgColor = System.Windows.Media.Color.FromRgb(255, 255, 255);                                   //Variable Hintergrundfarbe
             System.Windows.Media.Color lineColor = System.Windows.Media.Color.FromRgb(0, 0, 0);                                       //Variable Linienfarbe Spielfeld
@@ -64,20 +58,20 @@ namespace OOPGames
             
             switch(3)
             {
-                /*
                 case 1: //Farbschema Annalena                                               //Farbschema Annalena
-                    bgColor = Color.FromRgb(0, 0, 0);                                       //Hintergrundfarbe
-                    lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
-                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
-                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                    bgColor = Color.FromRgb(177, 18, 37);                                   //Hintergrundfarbe
+                    lineColor = Color.FromRgb(242, 211, 193);                               //Linienfarbe Spielfeld
+                    XColor = Color.FromRgb(134, 113, 130);                                  //Farbe X Spieler
+                    OColor = Color.FromRgb(211, 109, 61);                                   //Farbe O Spieler
                     break;
-                case 2: //Farbschema Jan                                                    //Farbschema Jan
-                    bgColor = Color.FromRgb(0, 255, 0);                                     //Hintergrundfarbe
-                    lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
-                    XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
-                    OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
-                    break;
-                */
+                /*
+            case 2: //Farbschema Jan                                                    //Farbschema Jan
+                bgColor = Color.FromRgb(0, 255, 0);                                     //Hintergrundfarbe
+                lineColor = Color.FromRgb(255, 255, 255);                               //Linienfarbe Spielfeld
+                XColor = Color.FromRgb(0, 0, 0);                                        //Farbe X Spieler
+                OColor = Color.FromRgb(255, 0, 0);                                      //Farbe O Spieler
+                break;
+            */
                 case 3: //Farbschema Samuel                                                 //Farbschema Samuel
                     bgColor = System.Windows.Media.Color.FromRgb(125  , 30, 0100);                               //Hintergrundfarbe
                     lineColor = System.Windows.Media.Color.FromRgb(255, 100, 50);                                //Linienfarbe Spielfeld
@@ -103,13 +97,9 @@ namespace OOPGames
             //Zeichnen der Linien 
             // Noch keine Anpassung auf Spielfeld
             // Spielfeldwerte (d = Abstand zwischen zwei Linien, X0 und Y0 ist der Eckpunkt oben links)
-            
-            
             int d = 150;
             int X0 = 100;
             int Y0 = 150;
-
-
             //int X0 = (int) (HorizontalAlignment.Right - HorizontalAlignment.Left) /2;
             //int Y0 = (int)(VerticalAlignment.Bottom - VerticalAlignment.Top) / 2;
             //Vertikal
@@ -146,8 +136,6 @@ namespace OOPGames
                     if (currentField is I_H_TicTacToeField)
                     {
                         current  = ((I_H_TicTacToeField)currentField).GetFeldAt(i, j);
-
-
                         if (current.Player == 1)
                         {
 
@@ -159,10 +147,6 @@ namespace OOPGames
                             Canvas.SetLeft(current.Symbol, 100);
                             canvas.Children.Add(current.Symbol);
                             //canvas.Children.
-
-                            
-                            
-                            
                             
                             //canvas.ActualHeight --> Canvas Größe Anpassen
                         }
@@ -174,10 +158,6 @@ namespace OOPGames
 
 
                     }
-
-
-
-
 
                     else if (currentField[i, j] == 1)
                     {
@@ -280,10 +260,8 @@ namespace OOPGames
         
             }
 
-
         //erstellt die öffentliche Variable Name, diese wird (mit etwas Glück) vom Programmfenster ausgelesen und angezeigt
         public string Name { get { return "H_TicTacToe_Rules"; } }
-
 
         //Übergibt das aktuelle Spielfeld (Klasse TicTacToe Field) an IGameField.
         //Was das dann macht und wie das genau funktioniert: ???  ; Implemntierung in Griesbauer BaseTicTacToe und TicTacToe abgeguckt und zwischenschritt in Basisklasse rausgekürzt oder so ?
@@ -306,8 +284,6 @@ namespace OOPGames
                 return false;
             }
         }
-
-
 
         //Bild setzen
         public void DoMove(IPlayMove move)                              //so gibts keine Fehlermeldung mehr nur ist das jetzt richtig und was genau habe ich gemacht???
@@ -341,9 +317,6 @@ namespace OOPGames
 
                 if (move.PlayerNumber == 1)
                 {
-
-
-
                     //System.Drawing.Image image = System.Drawing.Image.FromFile("C:\\Users\\Samue\\Documents\\Schild.png.jfif\"");
                     //e.Graphics.DrawImage(image, 0, 0, 50, 50);
 
@@ -353,30 +326,14 @@ namespace OOPGames
                     Schild.Width = 150;
 
                     //Höhe Breite
-
-
                     _Spielfeld[rowRnd, columnRnd].Symbol = Schild;
-
-
-
-
-
                     //_Spielfeld[rowNew, columnNew].Symbol =
-
                 }
                 else
                 {
-
-
                     //_Spielfeld[rowNew, columNew].Symbol = YSymbol
                 }
-
-
             }
-
-
-
-
         }
 
         //ab dem zweiten Spielzug, es sollte die Regel vom ersten erfasst und übernommen werden.
@@ -395,44 +352,22 @@ namespace OOPGames
                 _Spielfeld[rowNew, columnNew].Player = move.PlayerNumber;                //übergibt die an die Regeln angepassten Koordinaten an das Spielfeld, zusammen mit der Spieler Nummer.
 
                 if (move.PlayerNumber == 1) {
-
-
-
                     //System.Drawing.Image image = System.Drawing.Image.FromFile("C:\\Users\\Samue\\Documents\\Schild.png.jfif\"");
                     //e.Graphics.DrawImage(image, 0, 0, 50, 50);
 
                     Image Schild = new Image();
                     Schild.Source = new BitmapImage(new Uri("C:/Users/Samue/Documents/Schild.png"));
-                    
 
                     //Höhe Breite
-
-
                     _Spielfeld[rowNew, columnNew].Symbol = Schild;
-
-
-
-                    
-
                     //_Spielfeld[rowNew, columnNew].Symbol =
-
                 }
                 else 
                 {
-                    
-
                     //_Spielfeld[rowNew, columNew].Symbol = YSymbol
                 }
             }
-
-
-
-
-
-
         }
-
-
     }
 
     public class H_TicTacToeMove : I_H_TicTacToeMove
@@ -449,27 +384,15 @@ namespace OOPGames
         }
 
         public int Row { get { return _Row; } }
-
         public int Column { get { return _Column; } }
-
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
-
-
-
-
-
-
 
     public class H_TicTacToeHumanPlayer: I_H_HumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
-
         public string Name { get { return "H_TicTacToeHumanPlayer"; } }
-
         public int PlayerNumber { get { return _PlayerNumber; } }
-
-       
         public I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToeField field) 
         {
             int d = 150;                                                                            //Distanz zwischen den Linien
@@ -493,7 +416,6 @@ namespace OOPGames
                     }
                 }
             }
-
             return null;
         }
 
@@ -519,16 +441,12 @@ namespace OOPGames
             {
                 return null;
             }
-
-
         }
 
         public bool CanBeRuledBy(IGameRules rules)
         {
             return rules is I_H_TicTacToeRules;
         }
-
-
     }
 
 
@@ -536,9 +454,7 @@ namespace OOPGames
     public class H_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
-
         public override string Name { get { return "H_TicTacToeComputerPlayer"; } }
-
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
@@ -547,7 +463,6 @@ namespace OOPGames
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
-
         public override ITicTacToeMove GetMove(ITicTacToeField field)
         {
             int r = 0; //row
@@ -562,70 +477,35 @@ namespace OOPGames
                         int fieldi = field[r, c];
                     }
                 }
-            }
-
-            //Setzt Kreis immer links oben und danach immer eins nach rechts
+            }                           //Setzt Kreis immer links oben und danach immer eins nach rechts
             for (r = 0; r <= 2; r++)
             {
                 for (c = 0; c <= 2; c++)
                 {
-
                     if (field[r, c] <= 0)
                     {
                         return new TicTacToeMove(r, c, _PlayerNumber);
                     }
                 }
-            }
-
-            // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?
-            //--> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
-
-
-
-            //Computerspieler vom Griesbauer
-            /*Random rand = new Random();
-            int f = rand.Next(0, 8);
-            for (int i = 0; i < 9; i++)
-            {
-                int c = f % 3;
-                int r = ((f - c) / 3) % 3;
-                if (field[r, c] <= 0)
-                {
-                    return new TicTacToeMove(r, c, _PlayerNumber);
-                }
-                else
-                {
-                    f++;
-                }
-            }
-            */
-
+            }                       // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?       --> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
             return null;
         }
-
         public override void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
         }
-
     }
-
-
-
-
     public class HFeld : IHFeld
     {
         //(Objekte für Schnecke/X/O sollen existieren ung bei Abfrage zurückgegeben werden.-->Falsch?)
         //Hier wird festgelegt, was der Painter zeichnen soll, es wird weg gegengen werden von dem Field mit 0/1/2 als Auswahl???
         int _player;
         Image _symbol;
-
         public int Player   // Auswertung welcher Player gerade den Move macht
         {
             get
             {
                 return _player;
-
             }
             set
             {
@@ -643,18 +523,11 @@ namespace OOPGames
                 _symbol = value;
             }
         }
-
     }
-
-
-
-
 
     public class H_TicTacToeField : I_H_TicTacToeField
     {
         IHFeld[,] _Feld = new IHFeld[3, 3];      //Leitet von kommentar darüber ab erstellt ein 3x3 Feld, das in jedem Feld IHCaskethaben muss????
-
-
         public H_TicTacToeField()               //in jedes Feld des 3x3Spielfelds wird HCasket eingefügt, darin sind dann alle Symbole der Spieler enthalten.?
         {
             int r, c;
@@ -665,18 +538,12 @@ namespace OOPGames
                     _Feld[r, c] = new HFeld();
                 }
             }
-
-
         }
-
-
 
         public IHFeld this[int r, int c]
         {
-
             get
             {
-
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
                     return _Feld[r, c];
@@ -685,23 +552,17 @@ namespace OOPGames
                 {
                     return null;        //Hier sollte nichts passieren
                 }
-
             }
             set
             {
-                
                 if (r >= 0 && r < 3 && c >= 0 && c > 3)
                 {
                     _Feld[r, c] = value;
                 }
             }
-
-
         }
-
         int I_H_TicTacToeField.this[int r, int c]
         {
-            
             get
             {
                 if (r >= 0 && r < 3 && c >= 0 && c < 3)
@@ -721,26 +582,18 @@ namespace OOPGames
                 }
             }
         }
-
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is I_H_PaintTicTacToe;
         }
-
-        /*
-        public IHFeld GetFeldAt(int r, int c)
+        /* public IHFeld GetFeldAt(int r, int c)
         {
             return _Feld[r, c];     // ????
 
-        }
-        */
-
+        } */
         IHFeld I_H_TicTacToeField.GetFeldAt(int r, int c)
         {
             return _Feld[r, c];
-
         }
     }
-
-
 }

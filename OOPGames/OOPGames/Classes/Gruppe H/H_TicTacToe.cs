@@ -379,7 +379,7 @@ namespace OOPGames
                     
 
                     Image Player1 = new Image();
-                    Player1.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.jpg")); //C:/Users/Samue/Documents/Schild.png
+                    Player1.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.jpg")); 
                     Player1.Height = 150;
                     Player1.Width = 150;
 

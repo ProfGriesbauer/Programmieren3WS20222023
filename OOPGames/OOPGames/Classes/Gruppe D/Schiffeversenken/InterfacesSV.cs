@@ -11,7 +11,6 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     public interface IPaintSV : IPaintGame
     {
         void PaintShipField(Canvas canvas, IFieldSV currentField);
-        void PaintShip(Canvas canvas, int Ship, int x, int y, int HorVer, int des);
     }
     public interface IFieldSV : IGameField
     {
@@ -44,9 +43,6 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
     {
 
     }
-
-
-
 }
 
 

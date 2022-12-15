@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 using Color = System.Windows.Media.Color;
 using Image = System.Windows.Controls.Image;
 
@@ -24,9 +26,10 @@ namespace OOPGames.Classes.Gruppe_K
 {
     class K_PaintGameObject : IK_PaintGameObject
     {
+        K_Text fps = new K_Text();
         float dT = 0f;
         DateTime lastTime = DateTime.Now;
-        public string Name { get { return "K Painter tbd"; } }
+        public string Name { get { return "K Panzer Painter"; } }
 
 
 
@@ -65,8 +68,11 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                     else if (obj is K_Text)
                     {
-                        K_Text text = ((K_Text)obj);
-                        drawText(text.xPos, text.yPos, text.Text, text.FontSize, text.TextColor, text.BackgroundColor,canvas,text.drawIndex);
+                        drawText((K_Text)obj, canvas);
+                    }
+                    else if (obj is K_Progressbar)
+                    {
+                        drawProgressbar(((K_Progressbar)obj), canvas);
                     }
                     else
                     {
@@ -74,7 +80,16 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                 }
             }
-            drawText(canvas.ActualWidth - 100, 10, "FPS: " + (int)(1 / dT), 20, Colors.Black, Colors.White, canvas,200);
+
+
+            fps.xPos = (int)(canvas.ActualWidth - 100);
+            fps.yPos = 10;
+            fps.Text= "FPS: " + (int)(1 / dT);
+            fps.FontSize = 20;
+            fps.TextColor = Colors.Black;
+            fps.BackgroundColor = Colors.White;
+
+            drawText(fps, canvas);
         }
 
 
@@ -190,17 +205,68 @@ namespace OOPGames.Classes.Gruppe_K
                 Console.WriteLine(e.Message);
             }
         }
-        private void drawText(double x, double y, string text, int size, Color colorText, Color colorBackground, Canvas canvas, int drawIndex)
+
+        private void drawText(K_Text obj, Canvas canvas)
         {
+            Canvas container = new Canvas();
+            RotateTransform rot = new RotateTransform();
+            rot.Angle = obj.Rotation;
+            rot.CenterX = obj.xCenter;
+            rot.CenterY = obj.yCenter;
+            container.RenderTransform = rot;
+
             TextBlock textBlock = new TextBlock();
-            textBlock.Text = text;
-            textBlock.Foreground = new SolidColorBrush(colorText);
-            textBlock.Background = new SolidColorBrush(colorBackground);
-            textBlock.FontSize = size;
-            Canvas.SetZIndex(textBlock, drawIndex);
-            Canvas.SetLeft(textBlock, x);
-            Canvas.SetTop(textBlock, y);
-            canvas.Children.Add(textBlock);
+            textBlock.Text = obj.Text;
+            textBlock.Foreground = new SolidColorBrush(obj.TextColor);
+            textBlock.Background = new SolidColorBrush(obj.BackgroundColor);
+            textBlock.FontSize = obj.FontSize*obj.Scale;
+            container.Children.Add(textBlock);
+
+            Canvas.SetZIndex(container, obj.drawIndex);
+            Canvas.SetLeft(container, obj.xPos);
+            Canvas.SetTop(container, obj.yPos);
+            canvas.Children.Add(container);
+        }
+
+        private void drawProgressbar(K_Progressbar obj, Canvas canvas)
+        {
+            Canvas container = new Canvas();
+            RotateTransform rot = new RotateTransform();
+            rot.Angle = obj.Rotation;
+            rot.CenterX = obj.xCenter;
+            rot.CenterY = obj.yCenter;
+            container.RenderTransform = rot;
+
+            //draw outer line and fill with innerColor1
+            System.Windows.Shapes.Rectangle rect1;
+            rect1 = new System.Windows.Shapes.Rectangle();
+            rect1.StrokeThickness = obj.StrokeThickness;
+            rect1.Stroke = new SolidColorBrush(obj.OuterColor);
+            rect1.Fill = new SolidColorBrush(obj.InnerColor1);
+            rect1.Width = obj.Width*obj.Scale;
+            rect1.Height = obj.Height*obj.Scale;
+            Canvas.SetZIndex(rect1, 0);
+            container.Children.Add(rect1);
+
+            //draw inner rectangle with innerColor2 and 
+            System.Windows.Shapes.Rectangle rect2;
+            rect2 = new System.Windows.Shapes.Rectangle();
+            rect2.Fill = new SolidColorBrush(obj.InnerColor2);
+            double width = (obj.Width * (obj.Progress > 1 ? 1 : obj.Progress)) - 2 * obj.StrokeThickness;
+            rect2.Width = width >=0 ? width : 0*obj.Scale;
+            rect2.Height = obj.Height - (2 * obj.StrokeThickness)*obj.Scale;
+            Canvas.SetZIndex(rect2, 1);
+            Canvas.SetLeft(rect2, obj.StrokeThickness*obj.Scale);
+            Canvas.SetTop(rect2, obj.StrokeThickness*obj.Scale);
+            container.Children.Add(rect2);
+
+
+            Canvas.SetZIndex(container, obj.drawIndex);
+            Canvas.SetLeft(container, obj.xPos);
+            Canvas.SetTop(container, obj.yPos);
+            canvas.Children.Add(container);
+
+
         }
 
 

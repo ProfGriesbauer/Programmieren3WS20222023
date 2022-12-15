@@ -19,7 +19,8 @@ namespace OOPGames.Classes.Gruppe_K
         K_GameObjectManager _KgameManager=new K_GameObjectManager();
         List<K_Player> Panzerplayer = new List<K_Player>();
         K_Target randomeTarget = new K_Target();
-        
+        K_Text text = new K_Text();
+        K_Progressbar progressbar = new K_Progressbar();
 
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
@@ -224,16 +225,25 @@ namespace OOPGames.Classes.Gruppe_K
             
 
             // Text
-            K_Text text = new K_Text();
             text.xPos = 100;
             text.yPos = 100;
             text.Text = "Test";
             text.FontSize = 20;
             text.TextColor = Colors.Black;
             text.BackgroundColor = Colors.Transparent;
-            text.drawIndex = 200;
             _KgameManager.Objects.Add(text);
 
+            // ProgressBar
+            progressbar.xPos = 300;
+            progressbar.yPos = 100;
+            progressbar.Width = 60;
+            progressbar.Height = 10;
+            progressbar.StrokeThickness = 2;
+            progressbar.InnerColor1= Colors.White;
+            progressbar.InnerColor2 = Colors.Green;
+            progressbar.OuterColor= Colors.Black;
+            progressbar.Progress = 0.5f;
+            _KgameManager.Objects.Add(progressbar);
 
             
 
@@ -257,6 +267,10 @@ namespace OOPGames.Classes.Gruppe_K
 
         public void TickGameCall()
         {
+            progressbar.Progress += 0.01f;
+            progressbar.Progress = progressbar.Progress > 1 ? 0 : progressbar.Progress;
+            progressbar.Rotation += 2f;
+
             randomeSpielfeld.removeHoles();
 
             if(_gamestate == 0)
@@ -272,6 +286,8 @@ namespace OOPGames.Classes.Gruppe_K
                 {
                     stdSchuss.xSpeed = (float)(Math.Cos((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow);
                     stdSchuss.ySpeed = (float)(Math.Sin((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow);
+                    stdSchuss.xStart = Panzerplayer[0].xPos;
+                    stdSchuss.yStart = Panzerplayer[0].yPos;
 
                     Panzerplayer[0].Status.CanMove = false;
 
@@ -286,14 +302,14 @@ namespace OOPGames.Classes.Gruppe_K
             {
                 _t += 0.04;
 
-                double prodx = Panzerplayer[0].xPos;
-                double prody = Panzerplayer[0].yPos;
+                double prodx = stdSchuss.xStart;
+                double prody = stdSchuss.yStart;
                 int removestate = 0;
 
                 for(double _n = _lastt; _n < _t; _n += 0.002)               //20 mal pro Frame Koalisionsberechnung
                 {
-                    prodx = Panzerplayer[0].xPos + stdSchuss.xSpeed * _n;
-                    prody = Panzerplayer[0].yPos + stdSchuss.ySpeed * _n  + 0.5 * _gravitation * Math.Pow(_n, 2);
+                    prodx = stdSchuss.xStart + stdSchuss.xSpeed * _n;
+                    prody = stdSchuss.yStart + stdSchuss.ySpeed * _n  + 0.5 * _gravitation * Math.Pow(_n, 2);
 
                     double Abstand = Math.Sqrt(Math.Pow(prodx-randomeTarget.xPos, 2)+ Math.Pow(prody - randomeTarget.yPos, 2));
                     

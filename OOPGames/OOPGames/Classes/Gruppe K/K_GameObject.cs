@@ -1,6 +1,7 @@
 ﻿using OOPGames.Interfaces.Gruppe_K;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -259,6 +260,7 @@ namespace OOPGames.Classes.Gruppe_K
 
         public DrawSetting loadImage(String uri, Position pos)
         {
+            
             DrawSetting setting = new DrawSetting(_drawSetting);
             setting.xPos = 0;
             setting.yPos = 0;
@@ -666,12 +668,14 @@ namespace OOPGames.Classes.Gruppe_K
 
     class K_Projectile: K_DrawObject
     {
-        float _xSpeed;
-        float _ySpeed;
+        int _xStart;
+        int _yStart;
         float _Damage;
         float _DamageRadius;
         int _DamageType;
 
+        public int xStart { get { return _xStart; } set { _xStart = value; } }
+        public int yStart { get { return _yStart; } set { _yStart = value; } }
   
     }
 
@@ -747,8 +751,11 @@ namespace OOPGames.Classes.Gruppe_K
         private int _fontSize=12;
         private Color _textColor=Colors.Black;
         private Color _backgroundColor=Colors.Transparent;
-        
-        
+
+        public K_Text()
+        {
+            drawIndex = 300;
+        }
 
         public String Text { get { return _Text; } set { _Text = value; } }
         public int FontSize { get { return _fontSize; } set { _fontSize = value; } }
@@ -756,5 +763,31 @@ namespace OOPGames.Classes.Gruppe_K
         public Color TextColor { get { return _textColor; } set { _textColor = value; } }   
         public Color BackgroundColor { get { return _backgroundColor; } set { _backgroundColor = value; } }
 
+    }
+
+    class K_Progressbar : K_DrawObject
+    {
+        int _width=40;
+        int _height=5;
+        float _progress;
+        int _strokeThickness;
+        Color _outerColor;
+        Color _innerColor1;
+        Color _innerColor2;
+
+        public K_Progressbar()
+        {
+            drawIndex = 200;
+        }
+
+        public int Width { get { return _width; } set { _width = value; } }
+        public int Height { get { return _height; } set { _height = value; } }
+        public float Progress { get { return _progress; } set { _progress = value; } }
+        public int StrokeThickness { get { return _strokeThickness; } set { _strokeThickness = value; } }
+        public Color OuterColor { get { return _outerColor; } set { _outerColor = value; } }
+        public Color InnerColor1 { get { return _innerColor1; } set { _innerColor1 = value; } }
+
+        public Color InnerColor2 { get { return _innerColor2; } set { _innerColor2 = value; } }
+        
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    abstract class K_RulesPanzer
+    abstract class K_RulesPanzer:  IGameRules2
     {
         protected K_GameField randomeSpielfeld = new K_GameField();
 
@@ -15,7 +15,20 @@ namespace OOPGames.Classes.Gruppe_K
         protected int _gamestate = 0;
 
         protected bool _movePossible = true;
+
+        public abstract string Name { get; }
+        public abstract IGameField CurrentField { get; }
+        public abstract bool MovesPossible { get; }
+
+        public abstract int CheckIfPLayerWon();
+        public abstract void ClearField();
+        public abstract void DoMove(IPlayMove move);
+
         public void resetMovePossible() { _movePossible = false; }
+
+        public abstract void StartedGameCall();
+        public abstract void TickGameCall();
+
         protected void createhole(int mx, int my, int r)
         {
 

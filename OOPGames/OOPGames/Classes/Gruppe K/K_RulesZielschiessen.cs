@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    internal class K_RulesZielschiessen : K_RulesPanzer, IGameRules2
+    internal class K_RulesZielschiessen : K_RulesPanzer
     {
         OOPGamesManager _OOPmanager= OOPGamesManager.Singleton;
         K_GameObjectManager _KgameManager=new K_GameObjectManager();
@@ -26,24 +26,24 @@ namespace OOPGames.Classes.Gruppe_K
         double _t = 0;                                                               //Zeit für Schussberechnung
         double _lastt = 0;
 
-        public string Name { get { return "K Rules Zielschießen"; } }
+        public override string Name { get { return "K Rules Zielschießen"; } }
 
-        public bool MovesPossible { get { return _movePossible; } }
+        public override bool MovesPossible { get { return _movePossible; } }
 
 
-        IGameField IGameRules.CurrentField { get { return _KgameManager; } }
+        public override IGameField CurrentField { get { return _KgameManager; } }
 
-        public int CheckIfPLayerWon()
+        public override int CheckIfPLayerWon()
         {
             return 0;
         }
 
-        public void ClearField()
+        public override void ClearField()
         {
 
         }
 
-        public void DoMove(IPlayMove move)
+        public override void DoMove(IPlayMove move)
         {
             
         }
@@ -51,7 +51,7 @@ namespace OOPGames.Classes.Gruppe_K
 
        
 
-        public void StartedGameCall()
+        public override void StartedGameCall()
         {
             
             _KgameManager = new K_GameObjectManager();
@@ -265,7 +265,7 @@ namespace OOPGames.Classes.Gruppe_K
             Panzerplayer[0].Status.CanMove = true;
         }
 
-        public void TickGameCall()
+        public override void TickGameCall()
         {
             progressbar.Progress += 0.01f;
             progressbar.Progress = progressbar.Progress > 1 ? 0 : progressbar.Progress;

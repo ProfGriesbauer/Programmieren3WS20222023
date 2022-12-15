@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical" MembersFormat="FullSignature">
+  <Class Name="OOPGames.Classes.Gruppe_K.K_GameObjectManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="10.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AECAAAAEAQAAAAAAAAAAAAAAAAEAAAEAAAAAABAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Status" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAEAAABAAAABCAAQAAAAAgAAAAAABAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_GameField" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CACAAIAABAKAAAAAgAAgAGAEABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_DrawObject" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="OOPGames.Classes.Gruppe_K.K_DrawObject.Position" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\Gruppe K\K_GameObject.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="OOPGames.Classes.Gruppe_K.K_DrawObject.DrawSetting" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\Gruppe K\K_GameObject.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAAABAAIAAwAoAAAABAAABQpgAAAAAAQAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Player" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAEAEJAAAAAUAIBACAAQAAAEAACAAAUAAAAAAABA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Move" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAgABAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_HumanPlayer1" Collapsed="true">
+    <Position X="3.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAEAABAAAAQEAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_HumanPlayer2" Collapsed="true">
+    <Position X="5.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAEAABAAAAQEAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Projectile" Collapsed="true">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAhBAAAEgAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Target" Collapsed="true">
+    <Position X="8" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Object" Collapsed="true">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_MouseSelectionTick" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAADAAAAAAAAAAAAAAAAgAAAAAABAAAAABAEAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_KeySelectionTick" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAgCAAAAAAQwCAAAAAAQAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Text" Collapsed="true">
+    <Position X="11.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAAAAAIAAAAAgAACAAAAAAAABAACAQAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Progressbar" Collapsed="true">
+    <Position X="13.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAABCGAAgAAAAAAAVAAIBAAAAAAAAAAEACAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_PaintGameObject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAgAAUAAAAAAAAAAAAAgSAIAAAAAAAABEAAAKCAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_PaintGameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_Rules1v1" Collapsed="true">
+    <Position X="5.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABASABAAAABAAAEAAQAAAUAAgAIAAABQQAAAAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_Rules1v1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOPGames.Classes.Gruppe_K.K_RulesPanzer" Collapsed="true">
+    <Position X="6.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAABABACAEAAYAAAUAIAAoAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_RulesPanzer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.468" />
+  </Class>
+  <Interface Name="OOPGames.IGamePlayer" Collapsed="true">
+    <Position X="2" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAABAAAAQAAAAAAAAAAQAAAAAAABA=</HashCode>
+      <FileName>Interfaces\IGamePlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IHumanGamePlayer" Collapsed="true">
+    <Position X="3.25" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGamePlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IComputerGamePlayer" Collapsed="true">
+    <Position X="1.25" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGamePlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IGameField" Collapsed="true">
+    <Position X="3.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGameRules.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IPaintGame" Collapsed="true">
+    <Position X="1.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IPaintGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IPaintGame2" Collapsed="true">
+    <Position X="1.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Interfaces\IPaintGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IMoveSelection" Collapsed="true">
+    <Position X="10.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Interfaces\IPaintGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IClickSelection" Collapsed="true">
+    <Position X="9" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Interfaces\IPaintGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IKeySelection" Collapsed="true">
+    <Position X="11.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IPaintGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IPlayMove" Collapsed="true">
+    <Position X="13.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IPlayMoves.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.Classes.Gruppe_K.K_GameObject" Collapsed="true">
+    <Position X="10.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Gruppe K\K_GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.Interfaces.Gruppe_K.IK_GameField" Collapsed="true">
+    <Position X="3.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Gruppe K\IK_GameField.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.Interfaces.Gruppe_K.IK_HumanPlayer" Collapsed="true">
+    <Position X="3.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAABAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Gruppe K\IK_HumanPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.Interfaces.Gruppe_K.IK_PaintGameObject" Collapsed="true">
+    <Position X="1.25" Y="11" Width="2" />
+    <InheritanceLine Type="OOPGames.IPaintGame2" ManuallyRouted="true">
+      <Path>
+        <Point X="2.25" Y="10.191" />
+        <Point X="2.25" Y="10.876" />
+        <Point X="2.25" Y="10.876" />
+        <Point X="2.25" Y="11" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\Gruppe K\IK_PaintGameObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IGameRules2" Collapsed="true">
+    <Position X="6.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGameRules.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOPGames.IGameRules" Collapsed="true">
+    <Position X="6.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAABAAAEAAQAAAUAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGameRules.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

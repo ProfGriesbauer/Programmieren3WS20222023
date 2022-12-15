@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace OOPGames.Classes.Gruppe_K
 {
-    internal class K_Rules1v1 : K_RulesPanzer, IGameRules2
+    internal class K_Rules1v1 : K_RulesPanzer
     {
 
         OOPGamesManager _OOPmanager = OOPGamesManager.Singleton;
@@ -24,27 +24,27 @@ namespace OOPGames.Classes.Gruppe_K
         double _t = 0;                                                               //Zeit für Schussberechnung
         double _lastt = 0;
 
-        public string Name { get { return "K Rules 1v1"; } }
+        public override string Name { get { return "K Rules 1v1"; } }
 
-        public bool MovesPossible { get { return _movePossible; } }
+        public override bool MovesPossible { get { return _movePossible; } }
 
-        IGameField IGameRules.CurrentField { get { return _KgameManager; } }
-        public int CheckIfPLayerWon()
+        public override IGameField CurrentField { get { return _KgameManager; } }
+        public override int CheckIfPLayerWon()
         {
             return 0;
         }
 
-        public void ClearField()
+        public override void ClearField()
         {
             
         }
 
-        public void DoMove(IPlayMove move)
+        public override void DoMove(IPlayMove move)
         {
             
         }
 
-        public void StartedGameCall()
+        public override void StartedGameCall()
         {
             _KgameManager = new K_GameObjectManager();
             _KgameManager.Status = new K_Status();
@@ -172,7 +172,7 @@ namespace OOPGames.Classes.Gruppe_K
             Panzerplayer[1].updatePosition(randomeSpielfeld);
         }
 
-        public void TickGameCall()
+        public override void TickGameCall()
         
         {
             

@@ -248,7 +248,6 @@ namespace OOPGames.Classes.Gruppe_K
             LeftCenter,LeftTop,LeftBottom, RightCenter, RightTop,RightBottom, Center, CenterTop,CenterBottom
         }
 
-
         public DrawSetting loadImage(String uri)
         {
             DrawSetting setting = new DrawSetting(_drawSetting);
@@ -257,7 +256,6 @@ namespace OOPGames.Classes.Gruppe_K
             setting.Rotation = 0;
             return loadImage(uri, setting);
         }
-
         public DrawSetting loadImage(String uri, Position pos)
         {
             
@@ -300,7 +298,6 @@ namespace OOPGames.Classes.Gruppe_K
             }
             return imageSetting;
         }
-
         public DrawSetting PositionData
         {
             get { return _drawSetting; }
@@ -346,7 +343,6 @@ namespace OOPGames.Classes.Gruppe_K
             get{ return _drawSetting.yCenter; }
             set { _drawSetting.yCenter = value; }
         }
-
         public List<Tuple<BitmapImage, DrawSetting>> Image
         {
             get 

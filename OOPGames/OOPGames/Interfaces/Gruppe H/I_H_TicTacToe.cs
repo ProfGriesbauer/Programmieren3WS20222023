@@ -35,6 +35,11 @@ namespace OOPGames.Interfaces.Gruppe_H
     public interface I_H_PaintTicTacToe : IPaintGame
     {
         void PaintTicTacToeField(Canvas canvas, I_H_TicTacToe currentField);
+        //int D { set; }
+        //int X { set; }
+        //int Y { set; }
+        
+
     }
 
 
@@ -48,6 +53,10 @@ namespace OOPGames.Interfaces.Gruppe_H
         int ColumnAbweichung { get; }
         void firstMove(I_H_TicTacToeMove move);
         void secondMove(I_H_TicTacToeMove move);
+    
+        //int D { get; }
+        //int X { get; }
+        //int Y { get; }
     }
 
     public interface I_H_HumanTicTacToePlayer : IHumanGamePlayer
@@ -56,6 +65,11 @@ namespace OOPGames.Interfaces.Gruppe_H
 
         int RowAbweichung { set; }
         int ColumnAbweichung { set; }
+        
+        //int D { get; }
+        //int X { get; }
+        //int Y { get; }
+
 
     }
 
@@ -74,14 +88,3 @@ namespace OOPGames.Interfaces.Gruppe_H
 
 
 
-
-   
-
-  
-/*
-    public interface I_H_GameField
-    {
-        bool CanBePaintedBy(I_Painter painter);
-    }
-}
-    */

@@ -113,7 +113,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
-            //OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
             //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject()); 
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());

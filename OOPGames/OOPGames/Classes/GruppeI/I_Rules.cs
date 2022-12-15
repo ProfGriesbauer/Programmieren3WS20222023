@@ -12,7 +12,7 @@ public class I_TicTacToeRules : IGameRules
     public IGameField CurrentField { get { return _BigField; } }
 
 
-    public bool MovesPossible //Fehler/Ausbessern  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public bool MovesPossible //evtl noch anpassen -> läuft auch so
     {
         get
         {
@@ -37,7 +37,7 @@ public class I_TicTacToeRules : IGameRules
 
 
 
-    public int CheckIfPLayerWon() //für großes Feld -> brauchen wir auch noch f�r kleine Felder, aber als eigene Funktion
+    public int CheckIfPLayerWon() //für großes Feld
     {
         //waagrecht
         if (_BigField.SubFields[0].WonByPlayer == _BigField.SubFields[1].WonByPlayer && _BigField.SubFields[1].WonByPlayer == _BigField.SubFields[2].WonByPlayer)
@@ -115,7 +115,7 @@ public class I_TicTacToeRules : IGameRules
 
     //ab hier kommen nur noch Game-speziefische Rules
 
-    //aktionsradius auf ein Subfield begrenzen -> siehe ClickSelection (Player)
+    //Aktionsradius auf ein Subfield begrenzen -> siehe ClickSelection (Player) -> geht kaum anders
 
     //nach gewonnenem SubField alle anderen Felder wieder freischalten
     private void Freischalten()
@@ -125,7 +125,7 @@ public class I_TicTacToeRules : IGameRules
             _BigField.SubFields[i].Active = true;
         }
     }
-    //check if player won für subfield -> unentscheiden = zufallsentscheid -> win = playernumber + 2 -> nach Entscheidung Subfield wieder inactive setzen 
+    //check if player won für subfield -> unentscheiden = zufallsentscheid/ClearSubField -> win = playernumber + 2 -> nach Entscheidung Subfield wieder inactive setzen 
     public void CheckIfSmallField_IsWon()
     {
         for (int t = 0; t < 9; t++)

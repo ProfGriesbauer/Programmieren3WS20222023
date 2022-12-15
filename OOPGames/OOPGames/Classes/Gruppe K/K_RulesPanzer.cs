@@ -24,7 +24,7 @@ namespace OOPGames.Classes.Gruppe_K
         public abstract void ClearField();
         public abstract void DoMove(IPlayMove move);
 
-        public void resetMovePossible() { _movePossible = false; }
+        public  void resetMovePossible() { _movePossible = false; }
 
         public abstract void StartedGameCall();
         public abstract void TickGameCall();

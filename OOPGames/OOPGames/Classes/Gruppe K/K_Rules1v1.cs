@@ -11,6 +11,16 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Forms;
 
+/*
+TO-DO:
+-Leben hinzufügen
+-Fuel hinzufügen
+-Grafiken einfügen (Anzeigebalken)
+
+
+
+*/
+
 namespace OOPGames.Classes.Gruppe_K
 {
     internal class K_Rules1v1 : K_RulesPanzer
@@ -23,6 +33,7 @@ namespace OOPGames.Classes.Gruppe_K
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
         double _lastt = 0;
+        int _Playertomove ;  //0-> Spieler 1, 1-> Spieler 2
 
         public override string Name { get { return "K Rules 1v1"; } }
 
@@ -51,6 +62,7 @@ namespace OOPGames.Classes.Gruppe_K
             Panzerplayer = new List<K_Player>();
             randomeSpielfeld = new K_GameField();
             stdSchuss = new K_Projectile();
+            _Playertomove = 0;
 
             //Panzerspieler 1 erstellen
 
@@ -108,6 +120,7 @@ namespace OOPGames.Classes.Gruppe_K
 
                     Panzerplayer.Last<K_Player>().Status = new K_Status();
                     Panzerplayer.Last<K_Player>().Status.State = 0;
+                    Panzerplayer.Last<K_Player>().Schusspow = 650;
             }
             
             //Spielfeld erstellen
@@ -168,6 +181,7 @@ namespace OOPGames.Classes.Gruppe_K
             {
                 _KgameManager.Objects.Add(data);
             }
+            Panzerplayer[0].Status.CanMove = true;
             Panzerplayer[0].updatePosition(randomeSpielfeld);
             Panzerplayer[1].updatePosition(randomeSpielfeld);
         }
@@ -175,11 +189,18 @@ namespace OOPGames.Classes.Gruppe_K
         public override void TickGameCall()
         
         {
-            
-            
             randomeSpielfeld.removeHoles();
+            BerechnungSchuss();
+                
+            
 
-            if (_gamestate == 0)
+            /*if (_Playertomove == 1)
+            {
+                BerechnungSchuss();
+                resetMovePossible();
+            }*/
+
+            /*if (_gamestate == 0)
             {
                 stdSchuss.xPos = -20;
                 stdSchuss.yPos = 0;
@@ -231,7 +252,114 @@ namespace OOPGames.Classes.Gruppe_K
                 }
 
                 _lastt = _t;
+            }*/
+        }
+
+        
+
+        public void BerechnungSchuss()
+        {
+            if (_gamestate == 0)
+            {
+                Panzerplayer[_Playertomove].Status.CanMove = true;
+                stdSchuss.xPos = -20;
+                stdSchuss.yPos = 0;
+
+                Panzerplayer[_Playertomove].updatePosition(randomeSpielfeld);
+                //_movePossible = true;
+
+                if (Panzerplayer[_Playertomove].Status.State == 1)          //Wenn diese Eigenschaft = 1, wurde Schuss gedrückt
+                {
+                    stdSchuss.xSpeed = (float)(Math.Cos((Math.PI / (double)180) * (Panzerplayer[_Playertomove].Angle + Panzerplayer[_Playertomove].Rotation)) * (double)Panzerplayer[_Playertomove].Schusspow);
+                    stdSchuss.ySpeed = (float)(Math.Sin((Math.PI / (double)180) * (Panzerplayer[_Playertomove].Angle + Panzerplayer[_Playertomove].Rotation)) * (double)Panzerplayer[_Playertomove].Schusspow);
+                    stdSchuss.xStart = Panzerplayer[_Playertomove].xPos;
+                    stdSchuss.yStart = Panzerplayer[_Playertomove].yPos;
+
+                    Panzerplayer[_Playertomove].Status.CanMove = false;
+                    Panzerplayer[_Playertomove].Status.State = 0;
+                    _gamestate = 1;
+                    _t = 0;
+                    _lastt = 0;
+                }
+            }
+            if (_gamestate == 1)
+            {
+                _t += 0.04;
+                double prodx = stdSchuss.xStart;
+                double prody = stdSchuss.yStart;
+                int removestate = 0;
+
+                for (double _n = _lastt; _n < _t; _n += 0.002)               //20 mal pro Frame Koalisionsberechnung
+                {
+                    prodx = stdSchuss.xStart + stdSchuss.xSpeed * _n;
+                    prody = stdSchuss.yStart + stdSchuss.ySpeed * _n + 0.5 * _gravitation * Math.Pow(_n, 2);
+
+                    /*double Abstand = Math.Sqrt(Math.Pow(prodx - randomeTarget.xPos, 2) + Math.Pow(prody - randomeTarget.yPos, 2));
+
+                    if (Abstand < (10 * randomeTarget.Scale))                //wenn Target berührt
+                    {
+                        Random rando = new Random();
+                        _gamestate = 0;
+                        randomeTarget.xPos = rando.Next(50, randomeSpielfeld.Width - 50);
+
+                        int ymax = 0;
+                        while (randomeSpielfeld.getField(randomeTarget.xPos, ymax) == 0)
+                        {
+                            ymax++;
+                        }
+
+                        randomeTarget.yPos = rando.Next(50, ymax);
+                        Panzerplayer[0].Status.State = 0;
+
+                    }*/
+
+                    if (randomeSpielfeld.getField((int)prodx, (int)prody) == 2 && removestate == 0 && _t > 0.05)     //wenn Boden berührt
+                    {
+                        _gamestate = 0;
+                        createhole((int)prodx, (int)prody, 25);
+                        Panzerplayer[_Playertomove].Status.State = 0;
+                        removestate = 1;
+                        changePlayer();
+
+                    }
+
+                }
+                if (prodx < 0 || prodx > randomeSpielfeld.Width || prody >500)        //1 mal pro Frame: Prüfung ob außerhalb von Maprand   
+                {
+                    _gamestate = 0;
+                    Panzerplayer[0].Status.State = 0;
+                    Panzerplayer[1].Status.State = 0;
+                    changePlayer();
+                    return ;
+                }
+                else
+                {
+                    stdSchuss.xPos = (int)prodx;
+                    stdSchuss.yPos = (int)prody;
+                }
+                
+                
+
+
+                _lastt = _t;
+            }
+        }
+        public void changePlayer()
+        {
+            if (_Playertomove == 0)
+            {
+                _Playertomove = 1;
+            }
+
+            else
+            {
+                _Playertomove = 0;
             }
         }
     }
+    
 }
+
+
+
+

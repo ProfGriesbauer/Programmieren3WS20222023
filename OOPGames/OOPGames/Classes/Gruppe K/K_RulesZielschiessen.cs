@@ -10,6 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Forms;
+using System.Media;
 
 namespace OOPGames.Classes.Gruppe_K
 {
@@ -24,7 +25,7 @@ namespace OOPGames.Classes.Gruppe_K
         K_Text textscore = new K_Text();
         K_Text texttime = new K_Text();
         K_Progressbar progressbarpow = new K_Progressbar();
-        
+        SoundPlayer explosion = new SoundPlayer("Assets/K/short-explosion.wav");
 
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
@@ -278,7 +279,6 @@ namespace OOPGames.Classes.Gruppe_K
             texttime.BackgroundColor = Colors.Transparent;
             _KgameManager.Objects.Add(texttime);
 
-
             _KgameManager.GameField = randomeSpielfeld;
             
             _KgameManager.Objects.Add(randomeSpielfeld);
@@ -381,6 +381,7 @@ namespace OOPGames.Classes.Gruppe_K
                         createhole((int)prodx, (int)prody, 25);
                         Panzerplayer[0].Status.State = 0;
                         removestate = 1;
+                        explosion.Play();
                     }
 
                 }

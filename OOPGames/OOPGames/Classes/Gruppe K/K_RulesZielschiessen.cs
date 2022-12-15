@@ -19,12 +19,18 @@ namespace OOPGames.Classes.Gruppe_K
         K_GameObjectManager _KgameManager=new K_GameObjectManager();
         List<K_Player> Panzerplayer = new List<K_Player>();
         K_Target randomeTarget = new K_Target();
-        K_Text text = new K_Text();
-        K_Progressbar progressbar = new K_Progressbar();
+        K_Text textpow = new K_Text();
+        K_Text textwinkel = new K_Text();
+        K_Text textscore = new K_Text();
+        K_Text texttime = new K_Text();
+        K_Progressbar progressbarpow = new K_Progressbar();
+        
 
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
         double _lastt = 0;
+        int score = 0;
+        float spielzeit = 30;
 
         public override string Name { get { return "K Rules Zielschießen"; } }
 
@@ -89,7 +95,7 @@ namespace OOPGames.Classes.Gruppe_K
 
                 Panzerplayer.Last<K_Player>().Status=new K_Status();
                 Panzerplayer.Last<K_Player>().Status.State = 0;
-                Panzerplayer.Last<K_Player>().Schusspow = 650;
+                Panzerplayer.Last<K_Player>().Schusspow = 75;
             }
 
             /*
@@ -224,28 +230,54 @@ namespace OOPGames.Classes.Gruppe_K
             }
             
 
-            // Text
-            text.xPos = 100;
-            text.yPos = 100;
-            text.Text = "Test";
-            text.FontSize = 20;
-            text.TextColor = Colors.Black;
-            text.BackgroundColor = Colors.Transparent;
-            _KgameManager.Objects.Add(text);
+            // Text für Schussstärke
+            textpow.xPos = 00;
+            textpow.yPos = 420;
+            textpow.Text = "Schusskraft:      " + Panzerplayer[0].Schusspow.ToString();
+            textpow.FontSize = 20;
+            textpow.TextColor = Colors.Black;
+            textpow.BackgroundColor = Colors.Transparent;
+            _KgameManager.Objects.Add(textpow);
 
-            // ProgressBar
-            progressbar.xPos = 300;
-            progressbar.yPos = 100;
-            progressbar.Width = 60;
-            progressbar.Height = 10;
-            progressbar.StrokeThickness = 2;
-            progressbar.InnerColor1= Colors.White;
-            progressbar.InnerColor2 = Colors.Green;
-            progressbar.OuterColor= Colors.Black;
-            progressbar.Progress = 0.5f;
-            _KgameManager.Objects.Add(progressbar);
+            // ProgressBar für Schussstärke
+            progressbarpow.xPos = 115;
+            progressbarpow.yPos = 425;
+            progressbarpow.Width = 80;
+            progressbarpow.Height = 20;
+            progressbarpow.StrokeThickness = 2;
+            progressbarpow.InnerColor1= Colors.White;
+            progressbarpow.InnerColor2 = Colors.Green;
+            progressbarpow.OuterColor= Colors.Black;
+            progressbarpow.Progress = 0.5f;
+            _KgameManager.Objects.Add(progressbarpow);
 
+            // Text für Winkel
+            textwinkel.xPos = 300;
+            textwinkel.yPos = 420;
+            textwinkel.Text = "Winkel:  ";
+            textwinkel.FontSize = 20;
+            textwinkel.TextColor = Colors.Black;
+            textwinkel.BackgroundColor = Colors.Transparent;
+            _KgameManager.Objects.Add(textwinkel);
             
+            // Text für Score
+            textscore.xPos = 300;
+            textscore.yPos = 450;
+            textscore.Text = "Score:  0";
+            textscore.FontSize = 20;
+            textscore.TextColor = Colors.Black;
+            textscore.BackgroundColor = Colors.Transparent;
+            _KgameManager.Objects.Add(textscore);
+
+            // Text für Zeit
+            texttime.xPos = 0;
+            texttime.yPos = 450;
+            texttime.Text = "Verbleibende Zeit:  30";
+            texttime.FontSize = 20;
+            texttime.TextColor = Colors.Black;
+            texttime.BackgroundColor = Colors.Transparent;
+            _KgameManager.Objects.Add(texttime);
+
 
             _KgameManager.GameField = randomeSpielfeld;
             
@@ -263,17 +295,24 @@ namespace OOPGames.Classes.Gruppe_K
             }
 
             Panzerplayer[0].Status.CanMove = true;
+            score = 0;
+            spielzeit = 30;
         }
 
         public override void TickGameCall()
         {
-            progressbar.Progress += 0.01f;
-            progressbar.Progress = progressbar.Progress > 1 ? 0 : progressbar.Progress;
-            progressbar.Rotation += 2f;
-
+            
             randomeSpielfeld.removeHoles();
+            spielzeit -= 0.06f;
+            
+            if(spielzeit < 0){ 
+                _gamestate = 2;
+                spielzeit = -0.1f;
+            }
+            
+            texttime.Text = "Verbleibende Zeit:  " + Math.Round(spielzeit).ToString();
 
-            if(_gamestate == 0)
+            if (_gamestate == 0)
             {
                 Panzerplayer[0].Status.CanMove = true;
                 stdSchuss.xPos = -20;
@@ -281,11 +320,14 @@ namespace OOPGames.Classes.Gruppe_K
 
                 Panzerplayer[0].updatePosition(randomeSpielfeld);
                 
-
+                textpow.Text = "Schusskraft                  " + Panzerplayer[0].Schusspow.ToString();
+                progressbarpow.Progress = (float)Panzerplayer[0].Schusspow/100f;
+                textwinkel.Text = "Winkel:  " + Math.Floor(((Panzerplayer[0].Angle + Panzerplayer[0].Rotation))).ToString();
+                
                 if (Panzerplayer[0].Status.State == 1)          //Wenn diese Eigenschaft = 1, wurde Schuss gedrückt
                 {
-                    stdSchuss.xSpeed = (float)(Math.Cos((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow);
-                    stdSchuss.ySpeed = (float)(Math.Sin((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow);
+                    stdSchuss.xSpeed = (float)(Math.Cos((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow * (double)6.5);   //Faktor 6.5 um Power von 0-100 auf 0-650 zu bekommen
+                    stdSchuss.ySpeed = (float)(Math.Sin((Math.PI / (double)180) * (Panzerplayer[0].Angle + Panzerplayer[0].Rotation)) * (double)Panzerplayer[0].Schusspow * (double)6.5);
                     stdSchuss.xStart = Panzerplayer[0].xPos;
                     stdSchuss.yStart = Panzerplayer[0].yPos;
 
@@ -315,10 +357,13 @@ namespace OOPGames.Classes.Gruppe_K
                     
                     if(Abstand < (10 * randomeTarget.Scale))                //wenn Target berührt
                     {
+                        score++;
+                        textscore.Text = "Score:  " + score.ToString();
+
                         Random rando = new Random();
                         _gamestate = 0;
                         randomeTarget.xPos = rando.Next(50, randomeSpielfeld.Width-50);
-
+                        
                         int ymax= 0;
                         while (randomeSpielfeld.getField(randomeTarget.xPos, ymax) == 0)
                         {
@@ -327,7 +372,7 @@ namespace OOPGames.Classes.Gruppe_K
 
                         randomeTarget.yPos = rando.Next(50, ymax);
                         Panzerplayer[0].Status.State = 0;
-                        
+                        break;
                     }
 
                     if (randomeSpielfeld.getField((int)prodx, (int)prody) == 2 && removestate == 0 && _t > 0.05)     //wenn Boden berührt
@@ -340,8 +385,8 @@ namespace OOPGames.Classes.Gruppe_K
 
                 }
 
-                if (prodx < 0 || prodx > randomeSpielfeld.Width)        //1 mal pro Frame: Prüfung ob außerhalb von Maprand
-                {
+                if (prodx < 0 || prodx > randomeSpielfeld.Width || prody > (randomeSpielfeld.Height+2))        //1 mal pro Frame: Prüfung ob außerhalb von Maprand
+                    {
                     _gamestate = 0;
                     Panzerplayer[0].Status.State = 0;
                 }
@@ -352,6 +397,14 @@ namespace OOPGames.Classes.Gruppe_K
                 }
                 
                 _lastt = _t;
+            }
+
+            if (_gamestate == 2)
+            {
+                Panzerplayer[0].Status.CanMove = false;                                                        //nichts machen
+                stdSchuss.xPos = -20;
+                stdSchuss.yPos = 0;
+
             }
         }
     }

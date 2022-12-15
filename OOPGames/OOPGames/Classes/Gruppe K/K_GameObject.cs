@@ -546,17 +546,19 @@ namespace OOPGames.Classes.Gruppe_K
                         Angle -= 3;
                     }
 
+                    if (Angle > 180) { Angle -= 360; }
+                    if (Angle < -180) { Angle += 360; }
+
                     //Schussstärke
-                    if (inputData.Keys.Contains(Key.O))
+                    if (inputData.Keys.Contains(Key.O) && Schusspow < 100)
                     {
-                        Schusspow += 3;
+                        Schusspow++;
                     }
 
-                    if (inputData.Keys.Contains(Key.P))
+                    if (inputData.Keys.Contains(Key.P) && Schusspow  > 0)
                     {
-                        Schusspow -= 3;
+                        Schusspow--;
                     }
-
 
                     //Schuss
                     if (inputData.Keys.Contains(Key.E))
@@ -619,14 +621,14 @@ namespace OOPGames.Classes.Gruppe_K
                     }
 
                     //Schussstärke
-                    if (inputData.Keys.Contains(Key.Up))
+                    if (inputData.Keys.Contains(Key.Up) && Schusspow < 100)
                     {
-                        Schusspow += 3;
+                        Schusspow++;
                     }
 
-                    if (inputData.Keys.Contains(Key.Down))
+                    if (inputData.Keys.Contains(Key.Down) && Schusspow > 0)
                     {
-                        Schusspow -= 3;
+                        Schusspow--;
                     }
                 }
             }

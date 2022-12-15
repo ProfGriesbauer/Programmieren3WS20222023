@@ -41,8 +41,8 @@ namespace OOPGames.Classes.GruppeI
             Brush UStroke = new SolidColorBrush(UColor);
 
             //Liniendicken festlegen
-            int StrokeThickness_GrX = 12;
-            int StrokeThickness_GrO = 12;
+            int StrokeThickness_GrX = 60;
+            int StrokeThickness_GrO = 80;
             int StrokeThickness_GrFe = 6;
             int StrokeThickness_KlFe = 3;
             //int StrokeThickness_P1 = 3;
@@ -51,9 +51,9 @@ namespace OOPGames.Classes.GruppeI
             //int skalar=20;
 
 
-            void paintLine (int X1, int Y1, int X2, int Y2, float thickness) //Funktion vereinfacht das Zeichnen von Linien
+            void paintLine(int X1, int Y1, int X2, int Y2, float thickness) //Funktion vereinfacht das Zeichnen von Linien
             {
-                Line lx = new Line() { X1 = X1, Y1 = Y1, X2 = X2, Y2 = Y2, Stroke=lineStroke, StrokeThickness= thickness };
+                Line lx = new Line() { X1 = X1, Y1 = Y1, X2 = X2, Y2 = Y2, Stroke = lineStroke, StrokeThickness = thickness };
                 canvas.Children.Add(lx);
             }
 
@@ -70,15 +70,15 @@ namespace OOPGames.Classes.GruppeI
             }
 
             //Zeichne groﬂes TTT-Feld
-            paintLine(20,20,20,560,StrokeThickness_GrFe);
-            paintLine(200,20,200,560,StrokeThickness_GrFe);
-            paintLine(380,20,380,560,StrokeThickness_GrFe);
-            paintLine(560,20,560,560,StrokeThickness_GrFe);
+            paintLine(20, 20, 20, 560, StrokeThickness_GrFe);
+            paintLine(200, 20, 200, 560, StrokeThickness_GrFe);
+            paintLine(380, 20, 380, 560, StrokeThickness_GrFe);
+            paintLine(560, 20, 560, 560, StrokeThickness_GrFe);
 
-            paintLine(20,20,560,20, StrokeThickness_GrFe);
-            paintLine(20,200,560,200, StrokeThickness_GrFe);
-            paintLine(20,380,560,380, StrokeThickness_GrFe);
-            paintLine(20,560,560,560, StrokeThickness_GrFe);
+            paintLine(20, 20, 560, 20, StrokeThickness_GrFe);
+            paintLine(20, 200, 560, 200, StrokeThickness_GrFe);
+            paintLine(20, 380, 560, 380, StrokeThickness_GrFe);
+            paintLine(20, 560, 560, 560, StrokeThickness_GrFe);
 
             //Kreuze und Kreise zeichnen                    //vllt noch andere Formen?
             IBigTicTacToeField bigfield = null;
@@ -86,7 +86,7 @@ namespace OOPGames.Classes.GruppeI
             {
                 bigfield = (IBigTicTacToeField)currentField;
                 for (int t = 0; t < 9; t++)
-                { 
+                {
                     for (int i = 0; i < 3; i++)
                     {
                         for (int j = 0; j < 3; j++)
@@ -106,7 +106,7 @@ namespace OOPGames.Classes.GruppeI
                                 //           soundPlayer.Play(); // can also use soundPlayer.PlaySync()
                                 //       }
 
-                                Line X1 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + (60 * i) , X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + 60 + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
+                                Line X1 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + (60 * i), X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + 60 + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(X1);
                                 Line X2 = new Line() { X1 = bigfield.SubFields[t].X + (60 * j), Y1 = bigfield.SubFields[t].Y + 60 + (60 * i), X2 = bigfield.SubFields[t].X + 60 + (60 * j), Y2 = bigfield.SubFields[t].Y + (60 * i), Stroke = XStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(X2);
@@ -116,20 +116,20 @@ namespace OOPGames.Classes.GruppeI
                                 Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X + 5 + (60 * j), bigfield.SubFields[t].Y + 5 + (60 * i), 0, 0), Width = 50, Height = 50, Stroke = OStroke, StrokeThickness = StrokeThickness_KlFe };
                                 canvas.Children.Add(OE);
                             }
-                            
+
                         }
 
                     }
                     if (bigfield.SubFields[t].WonByPlayer == 1) //groﬂe Kreuze zeichnen
                     {
-                        Line X1 = new Line() { X1 = bigfield.SubFields[t].X, Y1 = bigfield.SubFields[t].Y, X2 = bigfield.SubFields[t].X+ bigfield.SubFields[t].SX, Y2 = bigfield.SubFields[t].Y + bigfield.SubFields[t].SY, Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                        Line X1 = new Line() { X1 = bigfield.SubFields[t].X + 20, Y1 = bigfield.SubFields[t].Y + 20, X2 = bigfield.SubFields[t].X + bigfield.SubFields[t].SX - 20, Y2 = bigfield.SubFields[t].Y + bigfield.SubFields[t].SY - 20, Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
                         canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = bigfield.SubFields[t].X, Y1 = bigfield.SubFields[t].Y+ bigfield.SubFields[t].SY, X2 = bigfield.SubFields[t].X+ bigfield.SubFields[t].SX, Y2 = bigfield.SubFields[t].Y, Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
+                        Line X2 = new Line() { X1 = bigfield.SubFields[t].X + 20, Y1 = bigfield.SubFields[t].Y + bigfield.SubFields[t].SY - 20, X2 = bigfield.SubFields[t].X + bigfield.SubFields[t].SX - 20, Y2 = bigfield.SubFields[t].Y + 20, Stroke = XStroke, StrokeThickness = StrokeThickness_GrX };
                         canvas.Children.Add(X2);
                     }
                     else if (bigfield.SubFields[t].WonByPlayer == 2) //groﬂe Rechtecke zeichnen 
                     {
-                        Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X, bigfield.SubFields[t].Y, 0, 0), Width = bigfield.SubFields[t].SX, Height = bigfield.SubFields[t].SY, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
+                        Rectangle OE = new Rectangle() { Margin = new Thickness(bigfield.SubFields[t].X + 10, bigfield.SubFields[t].Y + 10, 0, 0), Width = bigfield.SubFields[t].SX - 20, Height = bigfield.SubFields[t].SY - 20, Stroke = OStroke, StrokeThickness = StrokeThickness_GrO };
                         canvas.Children.Add(OE);
                     }
                     /*else if (bigfield.SubFields[t][i, j] == 5) //Unentschieden zeichnen 

@@ -31,10 +31,12 @@ namespace OOPGames
                 Width = source.Width,
                 Source = source,
             };
+
             posY = 365;
             Random rand = new Random();
             
             posX = 550 + rand.Next(0, 500);
+            Width = 25;
            
         }
         public int GetLeftPos {
@@ -52,8 +54,10 @@ namespace OOPGames
 
         }
     }
-
-   /* public class GJ_DinoPaintGame : GJ_IDinoPaintGame
+    /// <summary>
+    /// /////
+    /// </summary>
+    public class GJ_DinoPaintGame : GJ_IDinoPaintGame
     {
         GJ_DinoGameRules rules = new GJ_DinoGameRules();
 
@@ -70,13 +74,12 @@ namespace OOPGames
             Line l1 = new Line() { X1 = 0, Y1 = 417, X2 = 555, Y2 = 417, Stroke = lineStroke, StrokeThickness = 20.0 };
             canvas.Children.Add(l1);
             Image dinoPic = new Image();
-          
 
-            if (currentField.DinoHealth == "dead")
+            if (rules.DinoHealth == "dead")
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/dead.png"));
             }
-            else if(rules.dinoHealth == "alive")
+            else
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/running.gif"));
             }
@@ -118,7 +121,8 @@ namespace OOPGames
         public List<Obstacle> obstacles { get; set; }
         public int DinoYPos { get; set; }
         public int DinoXPos { get; set; }
-  
+        public string RestartGameText { get; set; }
+        public int Score { get; set; }
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
@@ -146,7 +150,7 @@ namespace OOPGames
 
         private const int dinoXPosition = 100;
         public int DinoXPosition => dinoXPosition;
-        
+        public string DinoHealth { get; set; }
 
         public override int scoreNumber { get; set; }
 
@@ -186,11 +190,11 @@ namespace OOPGames
 
         public override int CheckIfPLayerWon()
         {
-            if (_currentField.DinoHealth == "dead")
+            if (DinoHealth == "dead")
             {
-                return -1;
+                return 1;
             }
-            else { return 0; }
+            else { return -1; }
         }
 
         public void CheckHealth()
@@ -206,17 +210,19 @@ namespace OOPGames
                         // Temporär Canvasbreite Hardcoded
                         x.posX = 550 + rand.Next(200, 500) + (x.Width * 25);
                         gameScore++;
+                        _currentField.Score = gameScore;
                         scoreNumber++;
                     }
                     // DinoWidth = 40, DinoHeight = 43
                     if (dinoYPosition + 43 >= x.posY)
                     {
-                        if ((dinoXPosition >= x.posX && dinoXPosition <= x.posX+x.Width) || (dinoXPosition+40 >= x.posX && dinoXPosition + 40 <= x.posX + x.Width))
+                           if ((dinoXPosition >= x.posX && dinoXPosition <= x.posX+x.Width) || (dinoXPosition+40 >= x.posX && dinoXPosition + 40 <= x.posX + x.Width))
                         {
-                            _currentField.DinoHealth = "dead";
+                              DinoHealth = "dead";
                             _currentField.RestartGameText = "\nPress R to restart the game!";
                             _currentField.obstacles = obstacles;
                             ObstacleSpeed = 0;
+                            CheckIfPLayerWon();
                         }
                     }
 
@@ -251,7 +257,7 @@ namespace OOPGames
 
         public void Start()
         {
-            _currentField.DinoHealth = "alive";
+            DinoHealth = "alive";
             jumping = false;
             jumpSpeed = 0;
             force = 12;
@@ -286,7 +292,7 @@ namespace OOPGames
 
         public void KeyAction()
         {
-            if (Keyboard.IsKeyDown(Key.Space) && jumping == false && _currentField.DinoHealth == "alive")
+            if (Keyboard.IsKeyDown(Key.Space) && jumping == false && DinoHealth == "alive")
             {
                 jumping = true;
             }
@@ -329,6 +335,7 @@ namespace OOPGames
         {
             PlayerNumber = playerNumber;
         }
-    }*/
+    }
+    ////////////
 
 }

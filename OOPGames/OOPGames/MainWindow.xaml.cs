@@ -63,7 +63,7 @@ namespace OOPGames
             ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
-  //          OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
+            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
@@ -98,7 +98,7 @@ namespace OOPGames
 
 
             //Rules
-    //        OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
+            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
@@ -122,7 +122,7 @@ namespace OOPGames
 
 
             //Players
-   //         OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanTicTacToePlayer_G());
             OOPGamesManager.Singleton.RegisterPlayer(new ComputerTicTacToePlayer_G());
@@ -144,7 +144,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
-    //        OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer1());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer2());
             OOPGamesManager.Singleton.RegisterPlayer(new PlayerSV());
@@ -216,7 +216,12 @@ namespace OOPGames
             int winner = _CurrentRules.CheckIfPLayerWon();
 
 
-            if (winner == 0)
+            if (winner > 0)
+            {
+                Status.Text = "Player " + winner + " Won!";
+
+            }
+            else
             {
                 K_MouseSelectionTick mouse = new K_MouseSelectionTick((int)Mouse.GetPosition(PaintCanvas).X, (int)Mouse.GetPosition(PaintCanvas).Y);
                 K_KeySelectionTick key = new K_KeySelectionTick();
@@ -232,6 +237,7 @@ namespace OOPGames
                    ((IK_HumanPlayer)_CurrentPlayer2).GetMove(mouse, _CurrentRules.CurrentField);
                    pm=((IK_HumanPlayer)_CurrentPlayer2).GetMove(key, _CurrentRules.CurrentField);
                 }
+                
                 if (_CurrentRules.MovesPossible && _CurrentPlayer is IK_HumanPlayer)
                 {
                     /*if (_CurrentRules is K_RulesPanzer)
@@ -297,7 +303,15 @@ namespace OOPGames
                     ((J_IPaintTicTacToe)_CurrentPainter).O_Color = this.O_Color;
                 }
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                DoComputerMoves();
+                //if(_CurrentRules.CheckIfPLayerWon()>0)
+                //{
+
+                //}
+               // else
+                //{
+                    DoComputerMoves();
+               // }
+                
             }
         }
 
@@ -433,12 +447,13 @@ namespace OOPGames
         }
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) 
         {
+           
             K_KeySelectionTick.addKey(e.Key);
             if (_CurrentRules == null) return;
             int winner = _CurrentRules.CheckIfPLayerWon();
             if (winner > 0)
             {
-                Status.Text = "Player" + winner + " Won!";
+                Status.Text = "Player " + winner + " Won!";
             }
             else
             {

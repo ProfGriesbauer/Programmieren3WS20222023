@@ -466,6 +466,8 @@ namespace OOPGames.Classes.Gruppe_K
                 y++;
             }
 
+            yPos = y;
+
             y = 0;
             while (gameField.getField(xPos + 10, y) == 0 && y < gameField.Height)
             {
@@ -480,7 +482,6 @@ namespace OOPGames.Classes.Gruppe_K
             }
             ly = y;
 
-            yPos = y;
             rot = (float)(Math.Atan(((float)ry - (float)ly) / 20));
 
         

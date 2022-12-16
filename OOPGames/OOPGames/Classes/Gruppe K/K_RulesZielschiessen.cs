@@ -144,19 +144,12 @@ namespace OOPGames.Classes.Gruppe_K
 
             Random rand = new Random();
 
-
+            /*
             double f3 = rand.Next(7, 10) * 1e-7;
             double f2 = rand.Next(1, 2) * -1e-3;
             double f1 = rand.Next(1, 3) * 1e-1;
             double f0 = rand.Next(0, 50) + 280;
 
-            //Testwerte für steilen Hang
-            /*
-            double f3 = 1e-7;
-            double f2 = -1e-3;
-            double f1 = -20e-1;
-            double f0 = 280;
-            */
 
             for (int x = 0; x < randomeSpielfeld.Width; x++)
             {
@@ -173,6 +166,31 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                 }
             }
+            */
+            
+            double f3 = rand.Next(9, 20) * -1e-9;
+
+            double f2 = rand.Next(15, 28) * 1e-4;
+            
+            double f0 = 180;
+
+
+            for (int x = 0; x < randomeSpielfeld.Width; x++)
+            {
+                int yLimit = (int)(f3 * Math.Pow(x - 400, 4) + f2 * Math.Pow(x-400, 2) + f0);
+                for (int y = 0; y < randomeSpielfeld.Height; y++)
+                {
+                    if (yLimit <= y)
+                    {
+                        randomeSpielfeld.setField(x, y, 2);
+                    }
+                    else
+                    {
+                        randomeSpielfeld.setField(x, y, 0);
+                    }
+                }
+            }
+            
 
             //Target erstellen
 
@@ -405,7 +423,7 @@ namespace OOPGames.Classes.Gruppe_K
                 Panzerplayer[0].Status.CanMove = false;                                                        //nichts machen
                 stdSchuss.xPos = -20;
                 stdSchuss.yPos = 0;
-
+                
             }
         }
     }

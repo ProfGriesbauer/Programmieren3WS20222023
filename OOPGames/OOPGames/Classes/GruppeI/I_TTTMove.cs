@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace OOPGames.Classes.GruppeI
 {
 
-    public interface ITTTMove: ITicTacToeMove
+    public interface ITTTMove : ITicTacToeMove
     {
         int Feld { get; }
     }

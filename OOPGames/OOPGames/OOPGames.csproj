@@ -177,7 +177,7 @@
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongRulesB.cs" />
     <Compile Include="Interfaces\Gruppe B\PongInterfaces\IPongFieldB.cs" />
     <Compile Include="Interfaces\Gruppe E\I_E_4Gewinnt.cs" />
-    <Compile Include="Interfaces\Gruppe H\I_H_TicTacToeField.cs" />
+    <Compile Include="Interfaces\Gruppe H\I_H_TicTacToe.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_HumanPlayer.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_PaintGameObject.cs" />
     <Compile Include="Interfaces\Gruppe K\IK_GameField.cs" />

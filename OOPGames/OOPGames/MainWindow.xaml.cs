@@ -410,8 +410,9 @@ namespace OOPGames
                             ((I_H_HumanTicTacToePlayer)_CurrentPlayer2).ColumnAbweichung = ((I_H_TicTacToeRules)_CurrentRules).ColumnAbweichung;
                         }
 
-                        //((I_H_PaintTicTacToe)_CurrentPainter).D = ((I_H_TicTacToeRules)_CurrentRules).D;
-                        //((I_H_PaintTicTacToe)_CurrentPainter).D = ((I_H_HumanTicTacToePlayer)_CurrentPlayer).D;
+                        ((I_H_TicTacToeRules)_CurrentRules).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
+                        ((I_H_HumanTicTacToePlayer)_CurrentPlayer).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
+                 
                         
                         
 

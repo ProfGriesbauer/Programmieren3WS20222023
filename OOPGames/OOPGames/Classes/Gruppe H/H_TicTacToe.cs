@@ -33,23 +33,12 @@ namespace OOPGames
 
         bool ersterAufruf = false;                                                       //für die Farbmuster Auswahl, speichert ob schon einmal aufgerufen wurde
         int farbmuster;             //das zufällig ausgewählte Farbmuster wird gespeichert
+        int d;
+
+        public int D { get { return d; } }
 
 
-        /*
-        int _d;
-        int _x;
-        int _y;
 
-        public int D { set { _d = value; } }
-        public int X { set { _x = value; } }
-        public int Y { set { _y = value; } }
-
-        */
-        /*
-        public int d { get { return d; } }
-        public int x { get { return x; } }
-        public int y { get { return y; } }
-        */
 
         public void PaintGameField(Canvas canvas, IGameField currentField)               //PaintGameField wird aufgerufen wenn das Spielfeld (neu) gezeichent werden soll. Wenn es sich bei dem zu zeichneneden Feld um eine Datei handelt, die auch das TicTacToe interface enthält (also tatsächlich ein TicTacToe Spiel ist) wird "PaintTicTacToeField" aufgerufen.
         {
@@ -122,13 +111,13 @@ namespace OOPGames
             //Zeichnen der Linien 
             // Noch keine Anpassung auf Spielfeld
             // Spielfeldwerte (d = Abstand zwischen zwei Linien, X0 und Y0 ist der Eckpunkt oben links)
-            int d = 100;
+            //int d = 100;
             int X0 = 100;
-            int Y0 = 150;
+            int Y0 = 200;
 
 
 
-            double dblWidth;
+            double dblWidth = 0;
             UIElement ctl = (UIElement)canvas;
             DependencyObject parent = VisualTreeHelper.GetParent(ctl);
             while (canvas as Canvas == null)
@@ -140,18 +129,63 @@ namespace OOPGames
             {
                 dblWidth = ((Canvas)canvas).ActualWidth;
                 d = (int)(dblWidth - 200) / 3;
+
             }
 
+            //Console.WriteLine(d);
+
+            //Textbeschriftungen
+
+            //Headline
+            TextBlock Headline = new TextBlock();
+            Headline.Text = "TicTacToe";
+            Headline.FontSize = 80;    //d/3
+            Headline.FontWeight = FontWeights.Medium;
+            Canvas.SetTop(Headline, 5);
+            Canvas.SetLeft(Headline, (dblWidth / 2) - 200);
+            canvas.Children.Add(Headline);
+            
+
+
+            //Player1
+            TextBlock Player1 = new TextBlock();
+            Player1.Text = "Player 1:";
+            Player1.FontSize = 60;
+            Canvas.SetTop(Player1, 80);
+            Canvas.SetLeft(Player1, ((dblWidth/2) - 1.5*d));
+            canvas.Children.Add(Player1);
+
+            Image Player1Symbol = new Image();
+            Player1Symbol.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.png"));
+            Player1Symbol.Height = 60;
+            Player1Symbol.Width = 60;
+
+            Canvas.SetTop(Player1Symbol, 95);
+            Canvas.SetLeft(Player1Symbol, (dblWidth / 2) -1.5*d + 250);
+            canvas.Children.Add(Player1Symbol);
+
+
+
+            //Player2
+            TextBlock Player2 = new TextBlock();
+            Player2.Text = "Player 2:";
+            Player2.FontSize = 60;
+            Canvas.SetTop(Player2, 80);
+            Canvas.SetLeft(Player2, (dblWidth/2) + 0.3*d);
+            canvas.Children.Add(Player2);
+
+            Image Player2Symbol = new Image();
+            Player2Symbol.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player2.png"));
+            Player2Symbol.Height = 60;
+            Player2Symbol.Width = 60;
+
+            Canvas.SetTop(Player2Symbol, 90);
+            Canvas.SetLeft(Player2Symbol, (dblWidth / 2) + 0.3 * d + 250);
+            canvas.Children.Add(Player2Symbol);
 
 
 
 
-
-
-
-
-            //int X0 = (int) (HorizontalAlignment.Right - HorizontalAlignment.Left) /2;
-            //int Y0 = (int)(VerticalAlignment.Bottom - VerticalAlignment.Top) / 2;
             //Vertikal
             Line l1 = new Line() { X1 = X0+d, Y1 = Y0, X2 = X0+d, Y2 = Y0 + (3*d), Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l1);
@@ -197,9 +231,13 @@ namespace OOPGames
                             int X = X0 + (i * d);
                             int Y = Y0 + (j * d);
 
+                            current.Symbol.Height = d;
+                            current.Symbol.Width = d;
+
                             Canvas.SetTop(current.Symbol, Y);
                             Canvas.SetLeft(current.Symbol, X);
                             canvas.Children.Add(current.Symbol);
+                            
 
                         }
                         else if (currentField[i, j] == 2)
@@ -207,9 +245,13 @@ namespace OOPGames
                             int X = X0 + (i * d);
                             int Y = Y0 + (j * d);
 
+                            current.Symbol.Height = d;
+                            current.Symbol.Width = d;
+
                             Canvas.SetTop(current.Symbol, Y);
                             Canvas.SetLeft(current.Symbol, X);
                             canvas.Children.Add(current.Symbol);
+
 
                             Ellipse OE = new Ellipse() { Margin = new Thickness(X0 + (j * d), Y0 + (i * d), 0, 0), Width = d, Height = d, Stroke = OStroke, StrokeThickness = 3.0 };
                             //canvas.Children.Add(OE);
@@ -239,6 +281,13 @@ namespace OOPGames
                 }
             }
         }
+
+
+       
+
+
+
+
     }
 
 
@@ -258,15 +307,12 @@ namespace OOPGames
         public int ColumnAbweichung { get { return(columnAbweichung); } }
         public I_H_TicTacToe TicTacToeField { get { return _Spielfeld; } }      //gibt beim Aufruf das aktuelle (erstellte) Spielfeld zurück. Wurde im gegensatz zum Griesbauer Beispiel _Spielfeld statt _Field genannt.
 
-        /*
+        
         int d;
-        int x;
-        int y;
 
-        public int D { get { return d; } }
-        public int X { get { return x; } }
-        public int Y { get { return y; } }
-        */
+        public int D { set { d = value; } }
+
+        
 
 
 
@@ -379,9 +425,9 @@ namespace OOPGames
                     
 
                     Image Player1 = new Image();
-                    Player1.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.jpg")); 
-                    Player1.Height = 150;
-                    Player1.Width = 150;
+                    Player1.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.png"));
+                    Player1.Height = d; //150
+                    Player1.Width = d; // 150
 
                     _Spielfeld[rowRnd, columnRnd].Symbol = Player1;
                 }
@@ -389,9 +435,9 @@ namespace OOPGames
                 {
 
                     Image Player2 = new Image();
-                    Player2.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/dead.png")); //C:/Users/Samue/Documents/Schild.png
-                    Player2.Height = 150;
-                    Player2.Width = 150;
+                    Player2.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player2.png")); //C:/Users/Samue/Documents/Schild.png
+                    Player2.Height = d; //150
+                    Player2.Width = d;  //150
 
                     _Spielfeld[rowRnd, columnRnd].Symbol = Player2;
                 }
@@ -412,9 +458,9 @@ namespace OOPGames
                     
 
                     Image Player1 = new Image();
-                    Player1.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.jpg"));
-                    Player1.Height = 150;
-                    Player1.Width = 150;
+                    Player1.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.png"));
+                    Player1.Height = d; //150
+                    Player1.Width = d;  //150
                         
                     //Höhe Breite
                     _Spielfeld[rowNew, columnNew].Symbol = Player1;
@@ -422,9 +468,9 @@ namespace OOPGames
                 else 
                 {
                     Image Player2 = new Image();
-                    Player2.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/dead.png"));
-                    Player2.Height = 150;
-                    Player2.Width = 150;
+                    Player2.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player2.png"));
+                    Player2.Height = d; //150
+                    Player2.Width = d;  //150
 
 
                     _Spielfeld[rowNew, columnNew].Symbol = Player2;
@@ -471,16 +517,13 @@ namespace OOPGames
         public int RowAbweichung { set { _rowAbweichung = value; } }
         public int ColumnAbweichung { set { _columnAbweichung = value; } }
 
-        /*
+        
         int d;
-        int x;
-        int y;
+ 
 
-        public int D { get { return d; } }
-        public int X { get { return x; } }
-        public int Y { get { return y; } }
+        public int D { set { d = value; } }
 
-        */
+        
 
 
 
@@ -492,7 +535,7 @@ namespace OOPGames
 
 
             
-            int d = 150;                                                                            //Distanz zwischen den Linien
+            //int d = 150;                                                                            //Distanz zwischen den Linien
             
             int X0 = 100;                                                                           //x0;y0 Linke obere Ecke des Feldes
             int Y0 = 150;

@@ -288,7 +288,8 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
-    <Resource Include="Resources\Gruppe H\Player1.jpg" />
+    <Resource Include="Resources\Gruppe H\Player2.png" />
+    <Resource Include="Resources\Gruppe H\Player1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

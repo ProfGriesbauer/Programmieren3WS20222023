@@ -547,7 +547,7 @@ namespace OOPGames.Classes.Gruppe_K
                 textwhowon.FontSize = 80;
                 textwhowon.BackgroundColor = Colors.Transparent;
                 _KgameManager.Objects.Add(textwhowon);
-                if (Panzerplayer[0].Health == 0) {
+                if (Panzerplayer[1].Health == 0) {
                     textwhowon.Text = "Player 1 won";
                     textwhowon.TextColor = Colors.Red;
                 }

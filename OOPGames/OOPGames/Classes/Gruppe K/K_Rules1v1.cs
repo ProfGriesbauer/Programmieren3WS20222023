@@ -10,13 +10,10 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Forms;
+using System.Media;
 
-/*
-TO-DO:
--Leben hinzufügen
-
-
-
+/*TODO
+ -Maussteuerung für Player 2 funktioniert nicht
 */
 
 namespace OOPGames.Classes.Gruppe_K
@@ -43,6 +40,8 @@ namespace OOPGames.Classes.Gruppe_K
         K_Progressbar progressbarfuel2 = new K_Progressbar();
         K_Progressbar progressbarhealth1 = new K_Progressbar();
         K_Progressbar progressbarhealth2 = new K_Progressbar();
+        SoundPlayer explosion = new SoundPlayer("Assets/K/short-explosion.wav");
+        SoundPlayer winnotify = new SoundPlayer("Assets/K/winning-notification.wav");
 
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
@@ -158,15 +157,37 @@ namespace OOPGames.Classes.Gruppe_K
             Random rand = new Random();
 
 
-            double f3 = rand.Next(7, 10) * 1e-7;
-            double f2 = rand.Next(1, 2) * -1e-3;
-            double f1 = rand.Next(1, 3) * 1e-1;
-            double f0 = rand.Next(0, 50) + 280;
+            /* double f3 = rand.Next(7, 10) * 1e-7;
+             double f2 = rand.Next(1, 2) * -1e-3;
+             double f1 = rand.Next(1, 3) * 1e-1;
+             double f0 = rand.Next(0, 50) + 280;
+
+
+             for (int x = 0; x < randomeSpielfeld.Width; x++)
+             {
+                 int yLimit = (int)(f3 * Math.Pow(x, 3) + f2 * Math.Pow(x, 2) + f1 * x + f0);
+                 for (int y = 0; y < randomeSpielfeld.Height; y++)
+                 {
+                     if (yLimit <= y)
+                     {
+                         randomeSpielfeld.setField(x, y, 2);
+                     }
+                     else
+                     {
+                         randomeSpielfeld.setField(x, y, 0);
+                     }
+                 }
+             }*/
+            double f3 = rand.Next(9, 20) * -1e-9;
+
+            double f2 = rand.Next(15, 28) * 1e-4;
+
+            double f0 = 180;
 
 
             for (int x = 0; x < randomeSpielfeld.Width; x++)
             {
-                int yLimit = (int)(f3 * Math.Pow(x, 3) + f2 * Math.Pow(x, 2) + f1 * x + f0);
+                int yLimit = (int)(f3 * Math.Pow(x - 400, 4) + f2 * Math.Pow(x - 400, 2) + f0);
                 for (int y = 0; y < randomeSpielfeld.Height; y++)
                 {
                     if (yLimit <= y)
@@ -180,7 +201,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-            //Projectile erstellen
+          
 
             K_DrawObject.DrawSetting drawSettingProjectile = new K_DrawObject.DrawSetting();
             drawSettingProjectile.Scale = 1;
@@ -392,6 +413,8 @@ namespace OOPGames.Classes.Gruppe_K
             
             if (_gamestate == 0)
             {
+                Panzerplayer[0].updatePosition(randomeSpielfeld);
+                Panzerplayer[1].updatePosition(randomeSpielfeld);
                 Panzerplayer[_Playertomove].Status.CanMove = true;
                 stdSchuss.xPos = -20;
                 stdSchuss.yPos = 0;
@@ -452,12 +475,12 @@ namespace OOPGames.Classes.Gruppe_K
 
                     double Abstand = Math.Sqrt(Math.Pow(prodx - Panzerplayer[_lastPlayer].xPos, 2) + Math.Pow(prody - Panzerplayer[_lastPlayer].yPos, 2));
 
-                    if (Abstand < (10 * Panzerplayer[_lastPlayer].Scale))                //wenn Gegner berührt
+                    if (Abstand < (20 * Panzerplayer[_lastPlayer].Scale))                //wenn Gegner berührt
                     {
                         
                         _gamestate = 0;
-                        
 
+                        explosion.Play();
                         int ymax = 0;
                         while (randomeSpielfeld.getField(Panzerplayer[_lastPlayer].xPos, ymax) == 0)
                         {
@@ -471,7 +494,8 @@ namespace OOPGames.Classes.Gruppe_K
                         {
                             Panzerplayer[_lastPlayer].Health = 0;
                         }
-                        changePlayer();
+                        _gamestate = 0;
+                       changePlayer();
                     }
 
                     if (randomeSpielfeld.getField((int)prodx, (int)prody) == 2 && removestate == 0 && _t > 0.05)     //wenn Boden berührt
@@ -481,8 +505,11 @@ namespace OOPGames.Classes.Gruppe_K
                         Panzerplayer[_Playertomove].Status.State = 0;
                         removestate = 1;
                         changePlayer();
-
+                        explosion.Play();
+                        return;
                     }
+                    
+                    
                     Wincheck();
 
                 }
@@ -506,6 +533,7 @@ namespace OOPGames.Classes.Gruppe_K
                 texthealth2.Text = "Leben:                         " + Math.Floor(Panzerplayer[1].Health * 100f);
                 progressbarhealth2.Progress = (float)Panzerplayer[1].Health;
                 _lastt = _t;
+                //changePlayer();
             }
         }
         public void changePlayer()
@@ -540,6 +568,7 @@ namespace OOPGames.Classes.Gruppe_K
         {
             if (Panzerplayer[0].Health == 0 || Panzerplayer[1].Health ==0)
             {
+                winnotify.Play();
                 _KgameManager.Objects.Clear();
                 K_Text textwhowon = new K_Text();
                 textwhowon.xPos = 20;

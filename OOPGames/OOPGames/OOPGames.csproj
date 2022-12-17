@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Gruppe C\" />
+    <Folder Include="Resources\Gruppe H\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -288,8 +289,6 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
-    <Resource Include="Resources\Gruppe H\Player2.png" />
-    <Resource Include="Resources\Gruppe H\Player1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

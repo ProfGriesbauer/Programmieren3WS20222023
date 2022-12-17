@@ -54,12 +54,9 @@ namespace OOPGames
 
         }
     }
-    /// <summary>
-    /// /////
-    /// </summary>
+ 
     public class GJ_DinoPaintGame : GJ_IDinoPaintGame
     {
-        GJ_DinoGameRules rules = new GJ_DinoGameRules();
 
         public override string Name { get { return "GJ_DinoPainter"; } }
             
@@ -75,7 +72,7 @@ namespace OOPGames
             canvas.Children.Add(l1);
             Image dinoPic = new Image();
 
-            if (rules.DinoHealth == "dead")
+            if (currentField.DinoHealth == "dead")
             {
                 dinoPic.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/dead.png"));
             }
@@ -123,6 +120,7 @@ namespace OOPGames
         public int DinoXPos { get; set; }
         public string RestartGameText { get; set; }
         public int Score { get; set; }
+        public string DinoHealth { get; set; }
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
@@ -155,100 +153,13 @@ namespace OOPGames
         public override int scoreNumber { get; set; }
 
         public int startNumber = 0;
-
-        public override void Jump()
-        {
-            dinoYPosition += jumpSpeed;
-            if (jumping == true && force < 0)
-            {
-                jumping = false;
-
-            }
-            if (jumping == true)
-            {
-                jumpSpeed = -12;
-                force -= 1;
-            }
-            else
-            {
-                jumpSpeed = 12;
-            }
-                
-            if (dinoYPosition > 364 && jumping == false)
-            {
-                force = 12;
-                dinoYPosition = 365;
-                jumpSpeed = 0;
-            }
-            _currentField.DinoYPos = dinoYPosition;
-                          
-        }
-
         public int getDinoXPosition { get { return dinoXPosition; } }
 
         public List<Obstacle> obstacles;
 
-        public override int CheckIfPLayerWon()
-        {
-            if (DinoHealth == "dead")
-            {
-                return 1;
-            }
-            else { return -1; }
-        }
-
-        public void CheckHealth()
-        {
-            Random rand = new Random();
-            if (obstacles.Count() != 0)
-            {
-                foreach (Obstacle x in obstacles)
-                {
-                    x.posX -= ObstacleSpeed;
-                    if (x.GetLeftPos < 30)
-                    {
-                        // Temporär Canvasbreite Hardcoded
-                        x.posX = 550 + rand.Next(200, 500) + (x.Width * 25);
-                        gameScore++;
-                        _currentField.Score = gameScore;
-                        scoreNumber++;
-                    }
-                    // DinoWidth = 40, DinoHeight = 43
-                    if (dinoYPosition + 43 >= x.posY)
-                    {
-                           if ((dinoXPosition >= x.posX && dinoXPosition <= x.posX+x.Width) || (dinoXPosition+40 >= x.posX && dinoXPosition + 40 <= x.posX + x.Width))
-                        {
-                              DinoHealth = "dead";
-                            _currentField.RestartGameText = "\nPress R to restart the game!";
-                            _currentField.obstacles = obstacles;
-                            ObstacleSpeed = 0;
-                            CheckIfPLayerWon();
-                        }
-                    }
-
-                }
-
-            }
-            if (scoreNumber > 10)
-            {
-                ObstacleSpeed++;
-                scoreNumber = 0;
-            }
-            _currentField.obstacles = obstacles;
-        }
-        public override void ClearField()
-        {
-            
-        }
-
-        public override void DoMove(GJ_DinoPlayMove move)
-        {
-            
-        }
-
         public override void StartedGameCall()
         {
-            if(startNumber==0)
+            if (startNumber == 0)
             {
                 Start();
                 startNumber = 1;
@@ -257,7 +168,7 @@ namespace OOPGames
 
         public void Start()
         {
-            DinoHealth = "alive";
+            _currentField.DinoHealth = "alive";
             jumping = false;
             jumpSpeed = 0;
             force = 12;
@@ -292,7 +203,7 @@ namespace OOPGames
 
         public void KeyAction()
         {
-            if (Keyboard.IsKeyDown(Key.Space) && jumping == false && DinoHealth == "alive")
+            if (Keyboard.IsKeyDown(Key.Space) && jumping == false && _currentField.DinoHealth == "alive")
             {
                 jumping = true;
             }
@@ -301,10 +212,97 @@ namespace OOPGames
                 jumping = false;
 
             }
-            if(Keyboard.IsKeyDown(Key.R) && ObstacleSpeed == 0)
+            if (Keyboard.IsKeyDown(Key.R) && ObstacleSpeed == 0)
             {
                 Start();
             }
+        }
+
+        public override void Jump()
+        {
+            dinoYPosition += jumpSpeed;
+            if (jumping == true && force < 0)
+            {
+                jumping = false;
+
+            }
+            if (jumping == true)
+            {
+                jumpSpeed = -12;
+                force -= 1;
+            }
+            else
+            {
+                jumpSpeed = 12;
+            }
+                
+            if (dinoYPosition > 364 && jumping == false)
+            {
+                force = 12;
+                dinoYPosition = 365;
+                jumpSpeed = 0;
+            }
+            _currentField.DinoYPos = dinoYPosition;
+                          
+        }
+
+        public void CheckHealth()
+        {
+            Random rand = new Random();
+            if (obstacles.Count() != 0)
+            {
+                foreach (Obstacle x in obstacles)
+                {
+                    x.posX -= ObstacleSpeed;
+                    if (x.GetLeftPos < 30)
+                    {
+                        // Temporär Canvasbreite Hardcoded
+                        x.posX = 550 + rand.Next(200, 500) + (x.Width * 5);
+                        gameScore++;
+                        _currentField.Score = gameScore;
+                        scoreNumber++;
+                    }
+                    // DinoWidth = 40, DinoHeight = 43
+                    if (dinoYPosition + 43 >= x.posY)
+                    {
+                        if ((dinoXPosition >= x.posX && dinoXPosition <= x.posX + x.Width) || (dinoXPosition + 40 >= x.posX && dinoXPosition + 40 <= x.posX + x.Width))
+                        {
+                            _currentField.DinoHealth = "dead";
+                            _currentField.RestartGameText = "\nPress R to restart the game!";
+                            _currentField.obstacles = obstacles;
+                            ObstacleSpeed = 0;
+                            CheckIfPLayerWon();
+                        }
+                    }
+
+                }
+
+            }
+            if (scoreNumber > 10)
+            {
+                ObstacleSpeed++;
+                scoreNumber = 0;
+            }
+            _currentField.obstacles = obstacles;
+        }
+
+        public override int CheckIfPLayerWon()
+        {
+           if (_currentField.DinoHealth == "dead")
+            {
+                return 1;
+            }
+            else { return -1; }
+        }
+              
+        public override void ClearField()
+        {
+
+        }
+
+        public override void DoMove(GJ_DinoPlayMove move)
+        {
+
         }
     }
 

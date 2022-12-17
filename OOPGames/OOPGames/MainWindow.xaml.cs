@@ -23,7 +23,7 @@ using System.Drawing;
 using Color = System.Drawing.Color;
 using static OOPGames.PlayerD;
 using OOPGames.Classes.Gruppe_D;
-using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
+//using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
 //using OOPGames.Interfaces.Gruppe_E;
 using OOPGames.Classes.Gruppe_E;
 using OOPGames.Classes.Gruppe_D.Schiffeverseanken;
@@ -89,7 +89,7 @@ namespace OOPGames
             //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
 
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
-            OOPGamesManager.Singleton.RegisterPainter(new C_5x5TicTacToe());
+           // OOPGamesManager.Singleton.RegisterPainter(new C_5x5TicTacToe());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
@@ -105,7 +105,7 @@ namespace OOPGames
 
             //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
 
-            OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
+        //    OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
@@ -136,8 +136,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
+           // OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
+           // OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanPlayerF());

@@ -131,7 +131,6 @@
     <Compile Include="Classes\Gruppe B\B_Rules.cs" />
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
-    <Compile Include="Classes\Gruppe C\C_5x5TicTacToe.cs" />
     <Compile Include="Classes\Gruppe C\Minesweeper\C_IMinsweeper.cs" />
     <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />

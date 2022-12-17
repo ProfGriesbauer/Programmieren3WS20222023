@@ -545,7 +545,133 @@ namespace OOPGames
     }
 
 
+    //############## PLAYER ################//
 
+    //HUMAN PLAYER
+
+    public class H_TicTacToeHumanPlayer : I_H_HumanTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+        public string Name { get { return "H_TicTacToeHumanPlayer"; } }
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+        int _rowAbweichung;
+        int _columnAbweichung;
+        public int RowAbweichung { set { _rowAbweichung = value; } }
+        public int ColumnAbweichung { set { _columnAbweichung = value; } }
+
+        int d;
+        public int D { set { d = value; } }
+
+        public I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToe field)
+        {
+            int X0 = 100;                                                                           //X0;Y0 Linke obere Ecke des Feldes
+            int Y0 = 150;
+
+            if (selection is IClickSelection)
+            {
+                IClickSelection sel = (IClickSelection)selection;                                   //Abfrage aller Felder, ob der Klick innerhalb der Koordinaten des jeweiligen Feldes stattfand
+                for (int i = 0; i < 3; i++)                                                         //und ob das jeweilige Feld leer ist. Wenn Ja wird das jeweilige Feld auf die aktuelle Spielernummer gesetzt.
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (sel.XClickPos > X0 + (j * d) && sel.XClickPos < X0 + d + (j * d) &&
+                           sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d))
+                        {
+                            I_H_TicTacToeRules regel = new H_TicTacToeRules();
+                            int abwR = regel.abweichung(i, _rowAbweichung);
+                            int abwC = regel.abweichung(j, _columnAbweichung);
+
+                            if (field[abwR, abwC] <= 0)
+                            {
+                                return new H_TicTacToeMove(i, j, _PlayerNumber);
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public IGamePlayer Clone()
+        {
+            H_TicTacToeHumanPlayer ttthp = new H_TicTacToeHumanPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+
+        public IPlayMove GetMove(IMoveSelection selection, IGameField field)
+        {
+            if (field is I_H_TicTacToe)
+            {
+                return GetMove(selection, (I_H_TicTacToe)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is I_H_TicTacToeRules;
+        }
+    }
+
+
+    //COMPUTER PLAYER
+
+    public class H_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+        public override string Name { get { return "H_TicTacToeComputerPlayer"; } }
+        public override int PlayerNumber { get { return _PlayerNumber; } }
+
+        public override IGamePlayer Clone()
+        {
+            H_TicTacToeComputerPlayer ttthp = new H_TicTacToeComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            int r = 0; //row
+            int c = 0; //column
+
+            //Nummeriert die Felder von 1 bis 9
+            for (int i = 1; i <= 9; i++)
+            {
+                for (r = 0; r <= 2; r++)
+                {
+                    for (c = 0; c <= 2; c++)
+                    {
+                        int fieldi = field[r, c];
+                    }
+                }
+            }                           //Setzt Kreis immer links oben und danach immer eins nach rechts
+            for (r = 0; r <= 2; r++)
+            {
+                for (c = 0; c <= 2; c++)
+                {
+                    if (field[r, c] <= 0)
+                    {
+                        return new TicTacToeMove(r, c, _PlayerNumber);
+                    }
+                }
+            }                       // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?       --> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
+            return null;
+        }
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
 
 
 

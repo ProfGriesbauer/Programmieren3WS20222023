@@ -151,8 +151,8 @@ namespace OOPGames
 
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer_Pong());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer_Pong());
-            //OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
-            //OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new H_TicTacToeComputerPlayer());
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;

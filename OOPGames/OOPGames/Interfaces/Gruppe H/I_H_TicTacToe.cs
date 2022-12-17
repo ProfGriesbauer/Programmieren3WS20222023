@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Drawing;
 using System.Windows.Forms;
 using System.Windows;
 using System.Runtime.InteropServices;
@@ -12,31 +11,23 @@ using System.Windows.Controls;
 
 namespace OOPGames.Interfaces.Gruppe_H
 {
-
     public interface IHFeld
     {
-        //Soll vorgeben, dass es ein Schnecken, ein X und ein O Objekt (Symbol/Grafik/etc.) geben soll. (und get/set können?)
         int Player { get; set; }
         Image Symbol { get; set; }
-
     }
-
-
 
     public interface I_H_TicTacToe : IGameField
     {
-
-        IHFeld GetFeldAt(int r, int c);     //wenn davon abgeleitet wird, dann muss eine Funktion names GetCasketAt implementiert sein, die das Symbol von IHCasket an den entsprechen Koordinaten bekommt.
+        IHFeld GetFeldAt(int r, int c);                     //Gibt das Feld an der Stelle [r,c] zurück
         int this[int r, int c] { get; set; }
-
     }
-
 
     public interface I_H_PaintTicTacToe : IPaintGame
     {
         void PaintTicTacToeField(Canvas canvas, I_H_TicTacToe currentField);
+        int D { get; }
     }
-
 
     public interface I_H_TicTacToeRules : IGameRules
     { 
@@ -48,6 +39,8 @@ namespace OOPGames.Interfaces.Gruppe_H
         int ColumnAbweichung { get; }
         void firstMove(I_H_TicTacToeMove move);
         void secondMove(I_H_TicTacToeMove move);
+    
+        int D { set; }
     }
 
     public interface I_H_HumanTicTacToePlayer : IHumanGamePlayer
@@ -56,12 +49,20 @@ namespace OOPGames.Interfaces.Gruppe_H
 
         int RowAbweichung { set; }
         int ColumnAbweichung { set; }
-
+        
+        int D { set; }
     }
 
-    public interface I_H_TicTacToeMove : IRowMove, IColumnMove
-    { 
+    public interface I_H_ComputerTicTacToePlayer : I_H_ComputerGamePlayer
+    {
+        I_H_TicTacToeMove GetMove(I_H_TicTacToe field);
     }
+
+    public interface I_H_ComputerGamePlayer : IGamePlayer
+    {
+        //I_H_PlayMove GetMove(I_H_GameField field);
+    }
+
 
     public interface I_H_PlayMove
     {
@@ -69,19 +70,14 @@ namespace OOPGames.Interfaces.Gruppe_H
     }
 
 
-    
-}
+    public interface I_H_TicTacToeMove : IRowMove, IColumnMove { }
 
-
-
-
-   
-
-  
-/*
     public interface I_H_GameField
     {
-        bool CanBePaintedBy(I_Painter painter);
+        bool CanBePaintedBy(I_H_PaintTicTacToe painter);
     }
 }
-    */
+
+
+
+

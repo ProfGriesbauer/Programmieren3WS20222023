@@ -76,7 +76,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
-            OOPGamesManager.Singleton.RegisterPainter(new H_TicTacToePaint());
 
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
@@ -424,6 +423,13 @@ namespace OOPGames
                             ((I_H_HumanTicTacToePlayer)_CurrentPlayer2).RowAbweichung = ((I_H_TicTacToeRules)_CurrentRules).RowAbweichung;
                             ((I_H_HumanTicTacToePlayer)_CurrentPlayer2).ColumnAbweichung = ((I_H_TicTacToeRules)_CurrentRules).ColumnAbweichung;
                         }
+
+                        ((I_H_TicTacToeRules)_CurrentRules).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
+                        ((I_H_HumanTicTacToePlayer)_CurrentPlayer).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
+                 
+                        
+                        
+
                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }
                     else

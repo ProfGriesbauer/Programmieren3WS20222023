@@ -55,9 +55,10 @@ namespace OOPGames.Classes.Gruppe_K
         K_GameObject _ActivePlayer;
         int _state;
         bool _canmove ;
-
+        bool _canshootnomove;  // Spieler kann noch rohr drehen und schießen, aber nicht mehr Fahren
         public int State { get { return _state; } set { _state = value; } }
         public bool CanMove { get { return _canmove; } set { _canmove = value; } }
+        public bool CanShootnoMove { get { return _canshootnomove; } set { _canshootnomove = value; } }   
     }
 
     class K_GameField : K_GameObject
@@ -370,9 +371,9 @@ namespace OOPGames.Classes.Gruppe_K
     abstract class K_Player: K_DrawObject, IK_HumanPlayer
     {
         String _AngleID;
-        float _DriveRange;
+        //float _DriveRange;
         float _ShootForce;
-        float _Health;
+        //float _Health;
         K_Status _Status=new K_Status();
   
         public String AngleID
@@ -384,7 +385,8 @@ namespace OOPGames.Classes.Gruppe_K
         public float Angle { get => getAngle(); set => setAngle(value); }
 
         public float Schusspow { get; set; }
-
+        public float Health { get; set; }
+        public float Fuel { get; set; } 
         public abstract string Name { get; }
         public abstract int PlayerNumber { get; }
 
@@ -516,7 +518,7 @@ namespace OOPGames.Classes.Gruppe_K
             K_Move move = new K_Move();
             move.Position = PositionData;
             
-            if (selection is K_KeySelectionTick && field is K_GameObjectManager && Status.CanMove)
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager && (Status.CanMove || Status.CanShootnoMove))
             {
                 K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
                 K_GameField gameField = ((K_GameObjectManager)field).GameField;
@@ -525,12 +527,12 @@ namespace OOPGames.Classes.Gruppe_K
                     float rot=getAngleField(gameField);
                     
                     //Fahren
-                    if (inputData.Keys.Contains(Key.A) && xPos > 25 && rot < 1.04)
+                    if (inputData.Keys.Contains(Key.A) && xPos > 25 && rot < 1.04 && !Status.CanShootnoMove)
                     {
                         xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
-                    if (inputData.Keys.Contains(Key.D) && xPos < 775 && rot > -1.04)
+                    if (inputData.Keys.Contains(Key.D) && xPos < 775 && rot > -1.04 && !Status.CanShootnoMove)
                     {
                         xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
@@ -601,7 +603,7 @@ namespace OOPGames.Classes.Gruppe_K
             K_Move move = new K_Move();
             move.Position = PositionData;
 
-            if (selection is K_KeySelectionTick && field is K_GameObjectManager && Status.CanMove)
+            if (selection is K_KeySelectionTick && field is K_GameObjectManager && (Status.CanMove || Status.CanShootnoMove))
             {
                 K_KeySelectionTick inputData = (K_KeySelectionTick)selection;
                 K_GameField gameField = ((K_GameObjectManager)field).GameField;
@@ -610,14 +612,14 @@ namespace OOPGames.Classes.Gruppe_K
                     float rot = getAngleField(gameField);
 
                     //Fahren
-                    if (inputData.Keys.Contains(Key.Left) && xPos > 25 && rot < 1.04)
+                    if (inputData.Keys.Contains(Key.Left) && xPos > 25 && rot < 1.04 && !Status.CanShootnoMove)
                     {
                         xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
-                    if (inputData.Keys.Contains(Key.Right) && xPos < 775 && rot > -1.04)
+                    if (inputData.Keys.Contains(Key.Right) && xPos < 775 && rot > -1.04 && !Status.CanShootnoMove)
                     {
-                        xPos += (int)(((double)3 * Math.Cos(rot)) + 1);
+                        xPos += (int)(((double)3 * Math.Cos(rot)) + 1);  
                     }
 
                     //Schussstärke
@@ -633,7 +635,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-            if (selection is ClickSelection && Status.CanMove)
+            if (selection is ClickSelection && (Status.CanMove || Status.CanShootnoMove))
             {
                     //Schuss
                 if (Status.State == 0)
@@ -646,7 +648,7 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-            if(selection is K_MouseSelectionTick && Status.CanMove)
+            if(selection is K_MouseSelectionTick && (Status.CanMove || Status.CanShootnoMove))
             {
                 K_MouseSelectionTick inputData = (K_MouseSelectionTick)selection;
                 //Rohr drehen

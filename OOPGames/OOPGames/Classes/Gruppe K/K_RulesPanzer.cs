@@ -15,7 +15,6 @@ namespace OOPGames.Classes.Gruppe_K
         protected int _gamestate = 0;
 
         protected bool _movePossible = true;
-
         public abstract string Name { get; }
         public abstract IGameField CurrentField { get; }
         public abstract bool MovesPossible { get; }

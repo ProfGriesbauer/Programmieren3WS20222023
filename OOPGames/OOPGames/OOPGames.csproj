@@ -289,6 +289,9 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
+    <EmbeddedResource Include="Assets\K\short-explosion.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Resources\Gruppe H\Schildkröte.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -539,12 +539,12 @@ namespace OOPGames.Classes.Gruppe_K
                     }
 
                     //Rohr drehen
-                    if (inputData.Keys.Contains(Key.W))
+                    if (inputData.Keys.Contains(Key.E))
                     {
                         Angle += 3;
                     }
 
-                    if (inputData.Keys.Contains(Key.S))
+                    if (inputData.Keys.Contains(Key.Q))
                     {
                         Angle -= 3;
                     }
@@ -553,18 +553,18 @@ namespace OOPGames.Classes.Gruppe_K
                     if (Angle < -180) { Angle += 360; }
 
                     //Schussstärke
-                    if (inputData.Keys.Contains(Key.O) && Schusspow < 100)
+                    if (inputData.Keys.Contains(Key.W) && Schusspow < 100)
                     {
                         Schusspow++;
                     }
 
-                    if (inputData.Keys.Contains(Key.P) && Schusspow  > 0)
+                    if (inputData.Keys.Contains(Key.S) && Schusspow  > 0)
                     {
                         Schusspow--;
                     }
 
                     //Schuss
-                    if (inputData.Keys.Contains(Key.E))
+                    if (inputData.Keys.Contains(Key.F))
                     {
                         Status.State = 1;
                     }
@@ -613,23 +613,23 @@ namespace OOPGames.Classes.Gruppe_K
                     float rot = getAngleField(gameField);
 
                     //Fahren
-                    if (inputData.Keys.Contains(Key.Left) && xPos > 25 && rot < 1.04 && !Status.CanShootnoMove)
+                    if (inputData.Keys.Contains(Key.J) && xPos > 25 && rot < 1.04 && !Status.CanShootnoMove)
                     {
                         xPos -= (int)(((double)3 * Math.Cos(rot)) + 1);
                     }
 
-                    if (inputData.Keys.Contains(Key.Right) && xPos < 775 && rot > -1.04 && !Status.CanShootnoMove)
+                    if (inputData.Keys.Contains(Key.L) && xPos < 775 && rot > -1.04 && !Status.CanShootnoMove)
                     {
                         xPos += (int)(((double)3 * Math.Cos(rot)) + 1);  
                     }
 
                     //Schussstärke
-                    if (inputData.Keys.Contains(Key.Up) && Schusspow < 100)
+                    if (inputData.Keys.Contains(Key.I) && Schusspow < 100)
                     {
                         Schusspow++;
                     }
 
-                    if (inputData.Keys.Contains(Key.Down) && Schusspow > 0)
+                    if (inputData.Keys.Contains(Key.K) && Schusspow > 0)
                     {
                         Schusspow--;
                     }

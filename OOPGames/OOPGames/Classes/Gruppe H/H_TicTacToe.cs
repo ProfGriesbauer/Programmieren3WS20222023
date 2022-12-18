@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
+    //########### PAINT #############//
     public class H_TicTacToePaint : I_H_PaintTicTacToe
     {
         public string Name { get { return "H Painter TicTacToe"; } }                        //die öffentliche Variable Name beinhaltet den Name des Painters. Bei einer get-Anfrage wird der Name zurückgegeben.
@@ -185,11 +186,24 @@ namespace OOPGames
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    IHFeld current = null;
+                    I_H_Feld current = null;
                     if (currentField is I_H_TicTacToe)
                     {
                         current = ((I_H_TicTacToe)currentField).GetFeldAt(i, j);
-                        if (current.Player == 1)
+                        if (current.Player == 1 || current.Player == 2)
+                        {
+                            int X = X0 + (j * d);
+                            int Y = Y0 + (i * d);
+
+                            current.Symbol.Height = d;
+                            current.Symbol.Width = d;
+
+                            Canvas.SetTop(current.Symbol, Y);
+                            Canvas.SetLeft(current.Symbol, X);
+                            canvas.Children.Add(current.Symbol);
+                        }
+
+                        /*else if (currentField[i, j] == 2)
                         {
                             int X = X0 + (i * d);
                             int Y = Y0 + (j * d);
@@ -200,20 +214,7 @@ namespace OOPGames
                             Canvas.SetTop(current.Symbol, Y);
                             Canvas.SetLeft(current.Symbol, X);
                             canvas.Children.Add(current.Symbol);
-                        }
-
-                        else if (currentField[i, j] == 2)
-                        {
-                            int X = X0 + (i * d);
-                            int Y = Y0 + (j * d);
-
-                            current.Symbol.Height = d;
-                            current.Symbol.Width = d;
-
-                            Canvas.SetTop(current.Symbol, Y);
-                            Canvas.SetLeft(current.Symbol, X);
-                            canvas.Children.Add(current.Symbol);
-                        }
+                        }*/
 
 
                     }
@@ -257,7 +258,7 @@ namespace OOPGames
     }
 
     //############# FELD ##############//
-    public class HFeld : IHFeld
+    public class HFeld : I_H_Feld
     {
         //(Objekte für Schnecke/X/O sollen existieren ung bei Abfrage zurückgegeben werden.-->Falsch?)
         //Hier wird festgelegt, was der Painter zeichnen soll, es wird weg gegengen werden von dem Field mit 0/1/2 als Auswahl???
@@ -287,9 +288,10 @@ namespace OOPGames
         }
     }
 
+    //############# FIELD ##############//
     public class H_TicTacToeField : I_H_TicTacToe
     {
-        IHFeld[,] _Feld = new IHFeld[3, 3];                     //Leitet von kommentar darüber ab erstellt ein 3x3 Feld, das in jedem Feld IH Feld haben muss????
+        I_H_Feld[,] _Feld = new I_H_Feld[3, 3];                     //Leitet von kommentar darüber ab erstellt ein 3x3 Feld, das in jedem Feld IH Feld haben muss????
         public H_TicTacToeField()                               //in jedes Feld des 3x3Spielfelds wird HFeld eingefügt, darin sind dann alle Symbole der Spieler enthalten.?
         {
             int r, c;
@@ -302,7 +304,7 @@ namespace OOPGames
             }
         }
 
-        public IHFeld this[int r, int c]
+        public I_H_Feld this[int r, int c]
         {
             get
             {
@@ -351,18 +353,14 @@ namespace OOPGames
             return painter is I_H_PaintTicTacToe;
         }
 
-        IHFeld I_H_TicTacToe.GetFeldAt(int r, int c)
+        I_H_Feld I_H_TicTacToe.GetFeldAt(int r, int c)
         {
             return _Feld[r, c];
         }
     }
 
 
-
-
-
-
-
+    //############# RULES ##############//
     public class H_TicTacToeRules : I_H_TicTacToeRules
     {
 
@@ -372,13 +370,13 @@ namespace OOPGames
         * Spielfeld Aufbau: oben links ist 0,0; unten rechts 2,2; unten links ist 2,0; oben rechts ist 0,2
         */
 
-        //erstellt die öffentliche Variable Name, diese wird (mit etwas Glück) vom Programmfenster ausgelesen und angezeigt
+        //erstellt die öffentliche Variable Name, diese wird vom Programmfenster ausgelesen und angezeigt
         public string Name { get { return "H_TicTacToe_Rules"; } }
 
 
         //ein neues Spielfeld wird erstellt, bzw. eine Instanz der Spielfeldklasse erzeugt. Das neue Spielfeld nennt sich "_Spielfeld".
         H_TicTacToeField _Spielfeld = new H_TicTacToeField();
-        bool specialRuleMoveDone = false;                                       //Variable die erfasst ob der erste Zug bereits gemacht wurde.
+        bool firstMoveDone = false;                                       //Variable die erfasst ob der erste Zug bereits gemacht wurde.
         int rowAbweichung;                                                      //Variabeln die die Abweichung für die Spezialregeln erfassen.
         int columnAbweichung;
         public int RowAbweichung { get { return (rowAbweichung); } }
@@ -409,7 +407,7 @@ namespace OOPGames
                     _Spielfeld[row, column].Player = 0;
                     _Spielfeld[row, column].Symbol = null;
 
-                    specialRuleMoveDone = false;                                //Zähler für erste Bewegung wird auf null gesetzt
+                    firstMoveDone = false;                                //Zähler für erste Bewegung wird auf null gesetzt
                 }
             }
         }
@@ -457,12 +455,12 @@ namespace OOPGames
         {
             if (move is I_H_TicTacToeMove)                                                          //überprüft ob auch wirklich ein TicTacToe Move gemacht wurde und ITicTacToe Move implementiert (aus Griesbauer BaseTicTacToe)
             {
-                if (specialRuleMoveDone == false)
+                if (firstMoveDone == false)
                 {
-                    specialRuleMoveDone = true;                                                     //Erster Move wurde gemacht, Variable wird auf true gesetzt
+                    firstMoveDone = true;                                                           //Erster Move wurde gemacht, Variable wird auf true gesetzt
                     firstMove((I_H_TicTacToeMove)move);                                             //ruft Objekt first Move auf, Klammer Inhalt ven Griesbauer, was tut er genau??? --> scheint die Werte das aktuellen moves (angekliktes Feld?) zu übergeben??
                 }
-                else                                                                                //specialRuleMoveDone ist true, bedeutet das ist der zweite Move und die spezial regeln gelten.
+                else                                                                                //firstMoveDone ist true, bedeutet das ist der zweite Move und die spezial regeln gelten.
                 {
                     secondMove((I_H_TicTacToeMove)move);                                           //ruft Objekt newRuleMove auf
                 }
@@ -555,7 +553,7 @@ namespace OOPGames
         public string Name { get { return "H_TicTacToeHumanPlayer"; } }
         public int PlayerNumber { get { return _PlayerNumber; } }
 
-        int _rowAbweichung;
+        int _rowAbweichung;                                                                         //speichern die Abweichung, des aktuellen Spiels, diese bekommen sie über das MainWindow von den Rules
         int _columnAbweichung;
         public int RowAbweichung { set { _rowAbweichung = value; } }
         public int ColumnAbweichung { set { _columnAbweichung = value; } }
@@ -566,7 +564,7 @@ namespace OOPGames
         public I_H_TicTacToeMove GetMove(IMoveSelection selection, I_H_TicTacToe field)
         {
             int X0 = 100;                                                                           //X0;Y0 Linke obere Ecke des Feldes
-            int Y0 = 150;
+            int Y0 = 200;
 
             if (selection is IClickSelection)
             {
@@ -576,13 +574,14 @@ namespace OOPGames
                     for (int j = 0; j < 3; j++)
                     {
                         if (sel.XClickPos > X0 + (j * d) && sel.XClickPos < X0 + d + (j * d) &&
-                           sel.YClickPos > Y0 + (i * d) && sel.YClickPos < X0 + d + (i * d))
+                           sel.YClickPos > Y0 + (i * d) && sel.YClickPos < Y0 + d + (i * d))
                         {
-                            I_H_TicTacToeRules regel = new H_TicTacToeRules();
+                            I_H_TicTacToeRules regel = new H_TicTacToeRules();                      //Abweichung nach Spezialregeln gruppe H wird berechnet, hierfür wird die abweichungs Methode der H_Rules verwendet
                             int abwR = regel.abweichung(i, _rowAbweichung);
                             int abwC = regel.abweichung(j, _columnAbweichung);
 
-                            if (field[abwR, abwC] <= 0)
+                            I_H_Feld _spielfeld = field.GetFeldAt(abwR, abwC);                      //überprüfen ob an den Koordinaten bereits gesetzt wurde
+                            if (_spielfeld.Player <= 0)
                             {
                                 return new H_TicTacToeMove(i, j, _PlayerNumber);
                             }

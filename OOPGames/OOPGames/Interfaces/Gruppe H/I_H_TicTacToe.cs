@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace OOPGames.Interfaces.Gruppe_H
 {
-    public interface IHFeld
+    public interface I_H_Feld
     {
         int Player { get; set; }
         Image Symbol { get; set; }
@@ -19,7 +19,7 @@ namespace OOPGames.Interfaces.Gruppe_H
 
     public interface I_H_TicTacToe : IGameField
     {
-        IHFeld GetFeldAt(int r, int c);                     //Gibt das Feld an der Stelle [r,c] zurück
+        I_H_Feld GetFeldAt(int r, int c);                     //Gibt das Feld an der Stelle [r,c] zurück
         int this[int r, int c] { get; set; }
     }
 
@@ -64,9 +64,9 @@ namespace OOPGames.Interfaces.Gruppe_H
     }
 
 
-    public interface I_H_PlayMove
+    public interface I_H_PlayMove : IPlayMove
     {
-        int PlayerNumber { get; }
+        //int PlayerNumber { get; }
     }
 
 

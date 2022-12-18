@@ -376,11 +376,6 @@ namespace OOPGames
                     {
                         pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y), _CurrentRules.CurrentField);
                     }
-
-                    if (_CurrentPlayer1 != null && _CurrentPlayer1 is IK_HumanPlayer)
-                    {
-                        pm = ((IK_HumanPlayer)_CurrentPlayer1).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y, (int)e.ChangedButton), _CurrentRules.CurrentField);
-                    }
                     if (_CurrentPlayer2 != null && _CurrentPlayer2 is IK_HumanPlayer)
                     {
                         pm = ((IK_HumanPlayer)_CurrentPlayer2).GetMove(new C_ClickSelection((int)e.GetPosition(PaintCanvas).X, (int)e.GetPosition(PaintCanvas).Y, (int)e.ChangedButton), _CurrentRules.CurrentField); ;

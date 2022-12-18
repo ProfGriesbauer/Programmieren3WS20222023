@@ -65,12 +65,12 @@ namespace OOPGames
             ////////////////////////
             //REGISTER YOUR CLASSES HERE
             //Painters
-<<<<<<< HEAD
+//<<<<<<< HEAD
   //          OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
   
-=======
-            OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
->>>>>>> 9472fa8cdc0b2d8351154a20c3eaa82bc2626038
+//=======
+            //OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
+//>>>>>>> 9472fa8cdc0b2d8351154a20c3eaa82bc2626038
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
@@ -96,7 +96,7 @@ namespace OOPGames
 
 
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
-           // OOPGamesManager.Singleton.RegisterPainter(new C_5x5TicTacToe());
+            OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterSV());
 
             OOPGamesManager.Singleton.RegisterPainter(new GJ_TicTacToePaint());
@@ -119,12 +119,12 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
-<<<<<<< HEAD
+//<<<<<<< HEAD
             OOPGamesManager.Singleton.RegisterRules(new SpaceRaceRulesF());
             //OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
-=======
+//=======
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
->>>>>>> 9472fa8cdc0b2d8351154a20c3eaa82bc2626038
+//>>>>>>> 9472fa8cdc0b2d8351154a20c3eaa82bc2626038
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
             //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject()); 
             OOPGamesManager.Singleton.RegisterRules(new GJ_TicTacToeRules());

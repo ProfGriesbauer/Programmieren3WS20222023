@@ -146,7 +146,7 @@ namespace OOPGames.Classes.Gruppe_K
 
             Random rand = new Random();
 
-            /*
+            
             double f3 = rand.Next(7, 10) * 1e-7;
             double f2 = rand.Next(1, 2) * -1e-3;
             double f1 = rand.Next(1, 3) * 1e-1;
@@ -168,8 +168,8 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                 }
             }
-            */
             
+            /*
             double f3 = rand.Next(9, 20) * -1e-9;
 
             double f2 = rand.Next(15, 28) * 1e-4;
@@ -192,6 +192,7 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                 }
             }
+            */
 
             // Background
             K_Object.DrawSetting drawSettingBackground = new K_Object.DrawSetting();

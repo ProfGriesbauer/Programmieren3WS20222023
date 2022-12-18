@@ -26,6 +26,8 @@ namespace OOPGames.Classes.Gruppe_K
         K_Text texttime = new K_Text();
         K_Progressbar progressbarpow = new K_Progressbar();
         SoundPlayer explosion = new SoundPlayer("Assets/K/short-explosion.wav");
+        K_Object background = new K_Object();
+        K_Object controls = new K_Object();
 
         int _gravitation = 500;                                                      //Gravitation in Pixel/(s^2)
         double _t = 0;                                                               //Zeit für Schussberechnung
@@ -190,10 +192,18 @@ namespace OOPGames.Classes.Gruppe_K
                     }
                 }
             }
-            
 
-            //Target erstellen
+            // Background
+            K_Object.DrawSetting drawSettingBackground = new K_Object.DrawSetting();
+            drawSettingBackground.Scale = 1;
+            drawSettingBackground.xPos = 0;
+            drawSettingBackground.yPos = 0;
+            drawSettingBackground.Rotation = 0;
+            drawSettingBackground.DrawIndex = 0;
+            background.PositionData = drawSettingBackground;
+            background.loadImage("Assets/K/Mountains.png", K_DrawObject.Position.LeftTop);
 
+            // Target erstellen
             K_DrawObject.DrawSetting drawSettingTarget = new K_DrawObject.DrawSetting();
             drawSettingTarget.Scale = 3;
             drawSettingTarget.xPos = rand.Next(50,750);
@@ -203,8 +213,7 @@ namespace OOPGames.Classes.Gruppe_K
             randomeTarget.PositionData = drawSettingTarget;
             randomeTarget.loadImage("Assets/K/Target.png", K_DrawObject.Position.Center);
 
-            //Projectile erstellen
-
+            // Projectile erstellen
             K_DrawObject.DrawSetting drawSettingProjectile = new K_DrawObject.DrawSetting();
             drawSettingProjectile.Scale = 1;
             drawSettingProjectile.xPos = -20;                                                                   
@@ -213,41 +222,6 @@ namespace OOPGames.Classes.Gruppe_K
             drawSettingProjectile.DrawIndex = 7;
             stdSchuss.PositionData = drawSettingProjectile;
             stdSchuss.loadImage("Assets/K/Normaler_Schuss.png", K_DrawObject.Position.Center);
-
-            
-
-            // testField K_GameField object
-            K_GameField testField2 = new K_GameField();         //Hintergrund
-
-
-            testField2.Palette = new BitmapPalette(colorList);
-
-            // Set drawIndex
-            testField2.drawIndex = 0;
-
-
-            Random random = new Random();
-            int resPos = random.Next(200) + 100;
-
-            for (int x = 0; x < testField2.Width; x++)
-            {
-                for (int y = 0; y < testField2.Height; y++)
-                {
-                    if (x % resPos < (y - 100))
-                    {
-                        testField2.setField(x, y, 3);
-                    }
-                    else
-                    {
-                        testField2.setField(x, y, 1);
-                    }
-                }
-                if (x % 300 >= 299)
-                {
-                    resPos = random.Next(200) + 100;
-                }
-            }
-            
 
             // Text für Schussstärke
             textpow.xPos = 00;
@@ -295,13 +269,26 @@ namespace OOPGames.Classes.Gruppe_K
             texttime.FontSize = 20;
             texttime.TextColor = Colors.Black;
             texttime.BackgroundColor = Colors.Transparent;
+
+            // Steuerungsinfo
+            K_Object.DrawSetting drawSettingControls = new K_Object.DrawSetting();
+            drawSettingControls.Scale = (float)1.8;
+            drawSettingControls.xPos = 0;
+            drawSettingControls.yPos = 500;
+            drawSettingControls.Rotation = 0;
+            drawSettingControls.DrawIndex = 10;
+            controls.PositionData = drawSettingControls;
+            controls.loadImage("Assets/K/Steuerung.png", K_DrawObject.Position.LeftTop);
+
             _KgameManager.Objects.Add(texttime);
 
             _KgameManager.GameField = randomeSpielfeld;
             
             _KgameManager.Objects.Add(randomeSpielfeld);
-            
-            _KgameManager.Objects.Add(testField2);
+
+            _KgameManager.Objects.Add(background);
+
+            _KgameManager.Objects.Add(controls);
 
             _KgameManager.Objects.Add(randomeTarget);
 
@@ -311,7 +298,7 @@ namespace OOPGames.Classes.Gruppe_K
             {
                 _KgameManager.Objects.Add(data);
             }
-
+            
             Panzerplayer[0].Status.CanMove = true;
             score = 0;
             spielzeit = 30;

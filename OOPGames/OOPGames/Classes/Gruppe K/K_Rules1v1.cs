@@ -40,6 +40,8 @@ namespace OOPGames.Classes.Gruppe_K
         K_Progressbar progressbarfuel2 = new K_Progressbar();
         K_Progressbar progressbarhealth1 = new K_Progressbar();
         K_Progressbar progressbarhealth2 = new K_Progressbar();
+        K_Object background = new K_Object();
+        K_Object controls = new K_Object();
         SoundPlayer explosion = new SoundPlayer("Assets/K/short-explosion.wav");
         SoundPlayer winnotify = new SoundPlayer("Assets/K/winning-notification.wav");
 
@@ -201,8 +203,27 @@ namespace OOPGames.Classes.Gruppe_K
                 }
             }
 
-          
+            // Hintergrund
+            K_Object.DrawSetting drawSettingBackground = new K_Object.DrawSetting();
+            drawSettingBackground.Scale = 1;
+            drawSettingBackground.xPos = 0;
+            drawSettingBackground.yPos = 0;
+            drawSettingBackground.Rotation = 0;
+            drawSettingBackground.DrawIndex = 0;
+            background.PositionData = drawSettingBackground;
+            background.loadImage("Assets/K/Fabrik.png", K_DrawObject.Position.LeftTop);
 
+            // Steuerungsinfo
+            K_Object.DrawSetting drawSettingControls = new K_Object.DrawSetting();
+            drawSettingControls.Scale = (float)1.3;
+            drawSettingControls.xPos = 0;
+            drawSettingControls.yPos = 600;
+            drawSettingControls.Rotation = 0;
+            drawSettingControls.DrawIndex = 10;
+            controls.PositionData = drawSettingControls;
+            controls.loadImage("Assets/K/Steuerung.png", K_DrawObject.Position.LeftTop);
+
+            // Projektil
             K_DrawObject.DrawSetting drawSettingProjectile = new K_DrawObject.DrawSetting();
             drawSettingProjectile.Scale = 1;
             drawSettingProjectile.xPos = -20;
@@ -216,7 +237,7 @@ namespace OOPGames.Classes.Gruppe_K
             textplayeranzeige1.xPos = 0;
             textplayeranzeige1.yPos = 550;
             textplayeranzeige1.Text = "   Player 1";
-            textplayeranzeige1.FontSize = 45;
+            textplayeranzeige1.FontSize = 30;
             textplayeranzeige1.TextColor = Colors.Red;
             textplayeranzeige1.BackgroundColor = Colors.Transparent;
             _KgameManager.Objects.Add(textplayeranzeige1);
@@ -225,7 +246,7 @@ namespace OOPGames.Classes.Gruppe_K
             textplayeranzeige2.xPos = 500;
             textplayeranzeige2.yPos = 550;
             textplayeranzeige2.Text = "   Player 2";
-            textplayeranzeige2.FontSize = 45;
+            textplayeranzeige2.FontSize = 30;
             textplayeranzeige2.TextColor = Colors.Transparent;
             textplayeranzeige2.BackgroundColor = Colors.Transparent;
             _KgameManager.Objects.Add(textplayeranzeige2);
@@ -383,6 +404,10 @@ namespace OOPGames.Classes.Gruppe_K
             _KgameManager.GameField = randomeSpielfeld;
 
             _KgameManager.Objects.Add(randomeSpielfeld);
+
+            _KgameManager.Objects.Add(background);
+
+            _KgameManager.Objects.Add(controls);
 
             _KgameManager.Objects.Add(stdSchuss);
             xPosold = new int[] {Panzerplayer[0].xPos, Panzerplayer[1].xPos};

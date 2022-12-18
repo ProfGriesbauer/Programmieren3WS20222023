@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\GruppeJ\Dino_Form.cs">
       <SubType>Form</SubType>
     </Compile>

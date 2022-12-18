@@ -105,14 +105,14 @@ namespace OOPGames
 
 
             //Rules
-            OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
+          //  OOPGamesManager.Singleton.RegisterRules(new GJ_DinoGameRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_VierGewinntRules());
 
             //OOPGamesManager.Singleton.RegisterRules(new G_I_TiTacToeRules());
 
-        //    OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new GC_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules_G());
             OOPGamesManager.Singleton.RegisterRules(new RulesD());
             OOPGamesManager.Singleton.RegisterRules(new BestOfFiveRulesD());
@@ -134,7 +134,7 @@ namespace OOPGames
 
 
             //Players
-            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+         //   OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanTicTacToePlayer_G());
             OOPGamesManager.Singleton.RegisterPlayer(new ComputerTicTacToePlayer_G());
@@ -148,8 +148,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayerD());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GJ_TicTacToeComputerPlayer());
-           // OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
-           // OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_ComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanPlayerF());
@@ -157,7 +157,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new SpaceRaceHumanPlayerF());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
-            OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
+           //OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer1());
             OOPGamesManager.Singleton.RegisterPlayer(new K_HumanPlayer2());
             OOPGamesManager.Singleton.RegisterPlayer(new PlayerSV());
@@ -503,8 +503,8 @@ namespace OOPGames
                             ((I_H_HumanTicTacToePlayer)_CurrentPlayer2).ColumnAbweichung = ((I_H_TicTacToeRules)_CurrentRules).ColumnAbweichung;
                         }
 
-                        ((I_H_TicTacToeRules)_CurrentRules).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
-                        ((I_H_HumanTicTacToePlayer)_CurrentPlayer).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
+                       // ((I_H_TicTacToeRules)_CurrentRules).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
+                       // ((I_H_HumanTicTacToePlayer)_CurrentPlayer).D = ((I_H_PaintTicTacToe)_CurrentPainter).D;
                  
                         
                         

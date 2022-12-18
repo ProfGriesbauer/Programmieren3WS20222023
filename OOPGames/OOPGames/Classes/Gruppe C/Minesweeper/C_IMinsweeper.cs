@@ -26,7 +26,7 @@ namespace OOPGames.Classes.Gruppe_C.Minesweeper
     }
     public interface C_IMinesweeperMove: IRowMove, IColumnMove
     {
-
+        int state { get; }
     }
     public interface C_IHumanMinesweeperPlayer : IHumanGamePlayer 
     {

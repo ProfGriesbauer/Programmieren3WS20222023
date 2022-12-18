@@ -220,24 +220,25 @@ namespace OOPGames.Classes.Gruppe_C
 
 
         }
+    }
         public class C_TicTacToeComputerPlayer : C_IComputerTicTacToePlayer
         {
             int _PlayerNumber = 0;
-            public  string Name { get { return "C_TicTacToeComputerPlayer"; } }
-            public  int PlayerNumber { get { return _PlayerNumber; } }
+            public string Name { get { return "C_TicTacToeComputerPlayer"; } }
+            public int PlayerNumber { get { return _PlayerNumber; } }
 
             public bool CanBeRuledBy(IGameRules rules)
             {
                 throw new NotImplementedException();
             }
 
-            public  IGamePlayer Clone()
+            public IGamePlayer Clone()
             {
                 C_TicTacToeComputerPlayer ttthp = new C_TicTacToeComputerPlayer();
                 ttthp.SetPlayerNumber(_PlayerNumber);
                 return ttthp;
             }
-            public  ITicTacToeMove GetMove(C_ITicTacToeField field)
+            public ITicTacToeMove GetMove(C_ITicTacToeField field)
             {
                 Random rand = new Random();
                 int f = rand.Next(0, 25);
@@ -269,13 +270,13 @@ namespace OOPGames.Classes.Gruppe_C
                 }
             }
 
-            public  void SetPlayerNumber(int playerNumber)
+            public void SetPlayerNumber(int playerNumber)
             {
                 _PlayerNumber = playerNumber;
             }
 
         }
-
+    
 
         public class GC_TicTacToeRules : C_ITicTacToeRules
         {
@@ -485,4 +486,3 @@ namespace OOPGames.Classes.Gruppe_C
             }
         }
     }
-}

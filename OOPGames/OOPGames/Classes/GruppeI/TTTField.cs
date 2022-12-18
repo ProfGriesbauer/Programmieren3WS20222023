@@ -15,7 +15,7 @@ namespace OOPGames.Classes.GruppeI
         int SX { get; }
         int SY { get; }
         bool Active { get; set; }
-        int WonByPlayer { get; set; }
+        int WonByPlayer { get; set;}
     }
 
     public class ISubField : I_ISubField
@@ -37,19 +37,17 @@ namespace OOPGames.Classes.GruppeI
         }
 
         public int Nummer { get { return nummer; } }
-        public int X { get { return x; } }
-        public int Y { get { return y; } }
-        public int SX { get { return sx; } }
-        public int SY { get { return sy; } }
-        public bool Active
-        {
-            get { return active; }
-            set { active = value; }
+        public int X  {get { return x; } }
+        public int Y {get { return y; } }
+        public int SX {get { return sx; } }
+        public int SY {get { return sy; } }
+        public bool Active {
+            get { return active;} 
+            set {active = value;}
         }
-        public int WonByPlayer
-        {
-            get { return wonByPlayer; }
-            set { wonByPlayer = value; }
+        public int WonByPlayer { 
+            get { return wonByPlayer;}
+            set {wonByPlayer = value;}
         }
 
         public int this[int r, int c]
@@ -110,15 +108,15 @@ namespace OOPGames.Classes.GruppeI
 
         public IBigTicTacToeField()
         {
-            SubFields.Add(new ISubField(0, 20, 20, 180, 180, true));
-            SubFields.Add(new ISubField(1, 200, 20, 180, 180, true));
-            SubFields.Add(new ISubField(2, 380, 20, 180, 180, true));
-            SubFields.Add(new ISubField(3, 20, 200, 180, 180, true));
-            SubFields.Add(new ISubField(4, 200, 200, 180, 180, true));
-            SubFields.Add(new ISubField(5, 380, 200, 180, 180, true));
-            SubFields.Add(new ISubField(6, 20, 380, 180, 180, true));
-            SubFields.Add(new ISubField(7, 200, 380, 180, 180, true));
-            SubFields.Add(new ISubField(8, 380, 380, 180, 180, true));
+            SubFields.Add(new ISubField(0, 20, 20, 180, 180, false));
+            SubFields.Add(new ISubField(1, 200, 20, 180, 180, false));
+            SubFields.Add(new ISubField(2, 380, 20, 180, 180, false));
+            SubFields.Add(new ISubField(3, 20, 200, 180, 180, false));
+            SubFields.Add(new ISubField(4, 200, 200, 180, 180, false));
+            SubFields.Add(new ISubField(5, 380, 200, 180, 180, false));
+            SubFields.Add(new ISubField(6, 20, 380, 180, 180, false));
+            SubFields.Add(new ISubField(7, 200, 380, 180, 180, false));
+            SubFields.Add(new ISubField(8, 380, 380, 180, 180, false));
             //SubFields.Add(new ISubField(9, 20, 20, 540, 540, false));  //subfield, das quasi unser Bigfield darstellt
         }
 

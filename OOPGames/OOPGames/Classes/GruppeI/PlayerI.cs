@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -9,7 +8,7 @@ using System.Xaml;
 
 namespace OOPGames.Classes.GruppeI
 {
-    public class Human_PlayerI : IHumanTicTacToePlayer
+    public class Human_PlayerI: IHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
@@ -56,15 +55,8 @@ namespace OOPGames.Classes.GruppeI
                         {
                             if (sel.XClickPos > 20 + px + (j * 60) && sel.XClickPos < 80 + px + (j * 60) &&
                                 sel.YClickPos > 20 + py + (i * 60) && sel.YClickPos < 80 + py + (i * 60) &&
-                                bigfield.SubFields[f][i, j] <= 0 &&
-                                bigfield.SubFields[f].WonByPlayer == 0 && bigfield.SubFields[f].Active == true)
+                                bigfield.SubFields[f][i, j] <= 0)
                             {
-                                for (int a = 0; a < 9; a++)
-                                {
-                                    bigfield.SubFields[a].Active = false;
-                                }
-                                bigfield.SubFields[f].Active = true;
-
                                 return new TicTacToeMove_I(f, i, j, _PlayerNumber);
                             }
                         }
@@ -72,11 +64,11 @@ namespace OOPGames.Classes.GruppeI
                 }
 
 
-
+                
             }
 
             return null;
-
+            
 
 
 

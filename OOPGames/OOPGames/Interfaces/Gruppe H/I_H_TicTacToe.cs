@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Drawing;
 using System.Windows.Forms;
 using System.Windows;
 using System.Runtime.InteropServices;
@@ -11,23 +12,31 @@ using System.Windows.Controls;
 
 namespace OOPGames.Interfaces.Gruppe_H
 {
-    public interface I_H_Feld
+
+    public interface IHFeld
     {
+        //Soll vorgeben, dass es ein Schnecken, ein X und ein O Objekt (Symbol/Grafik/etc.) geben soll. (und get/set können?)
         int Player { get; set; }
         Image Symbol { get; set; }
+
     }
+
+
 
     public interface I_H_TicTacToe : IGameField
     {
-        I_H_Feld GetFeldAt(int r, int c);                     //Gibt das Feld an der Stelle [r,c] zurück
+
+        IHFeld GetFeldAt(int r, int c);     //wenn davon abgeleitet wird, dann muss eine Funktion names GetCasketAt implementiert sein, die das Symbol von IHCasket an den entsprechen Koordinaten bekommt.
         int this[int r, int c] { get; set; }
+
     }
+
 
     public interface I_H_PaintTicTacToe : IPaintGame
     {
         void PaintTicTacToeField(Canvas canvas, I_H_TicTacToe currentField);
-        int D { get; }
     }
+
 
     public interface I_H_TicTacToeRules : IGameRules
     { 
@@ -39,8 +48,6 @@ namespace OOPGames.Interfaces.Gruppe_H
         int ColumnAbweichung { get; }
         void firstMove(I_H_TicTacToeMove move);
         void secondMove(I_H_TicTacToeMove move);
-    
-        int D { set; }
     }
 
     public interface I_H_HumanTicTacToePlayer : IHumanGamePlayer
@@ -49,8 +56,7 @@ namespace OOPGames.Interfaces.Gruppe_H
 
         int RowAbweichung { set; }
         int ColumnAbweichung { set; }
-        
-        int D { set; }
+
     }
 
     public interface I_H_ComputerTicTacToePlayer : I_H_ComputerGamePlayer
@@ -60,24 +66,24 @@ namespace OOPGames.Interfaces.Gruppe_H
 
     public interface I_H_ComputerGamePlayer : IComputerGamePlayer               //muss von IComputerGamePalyer ableiten, wenn nur von IGamePlayer abgeleitet wird erkennt das Main Window den Computer Spieler nicht als solches wenn es ihn aufrufen will.
     {
-        //I_H_PlayMove GetMove(I_H_GameField field);
-    }
-
-
-    public interface I_H_PlayMove : IPlayMove
-    {
         //int PlayerNumber { get; }
     }
 
 
-    public interface I_H_TicTacToeMove : ITicTacToeMove { }  //IRowMove, IColumnMove { }
-
-    public interface I_H_GameField
-    {
-        bool CanBePaintedBy(I_H_PaintTicTacToe painter);
-    }
+    
 }
 
 
+    public interface I_H_TicTacToeMove : ITicTacToeMove { }  //IRowMove, IColumnMove { }
 
 
+   
+
+  
+/*
+    public interface I_H_GameField
+    {
+        bool CanBePaintedBy(I_Painter painter);
+    }
+}
+    */

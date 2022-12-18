@@ -9,7 +9,7 @@ namespace OOPGames
 
     public interface IFieldSum
     {
-        int? CheckFieldSum { get;  }
+        int? CheckFieldSum();
     }
     public interface IFTicTacToeField : ITicTacToeField
     {
@@ -20,9 +20,12 @@ namespace OOPGames
     
     public interface IGameRulesF : IGameRules2
     {
-        void TickGameCall(IGamePlayer currentPlayer);
+       void TickGameCall(IGamePlayer currentPlayer);
        int Thickness { get; set; }
     }
-    
-  
+
+    public interface IComputerPlayerTTTF
+    {
+
+    }
 }

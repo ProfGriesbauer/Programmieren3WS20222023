@@ -72,9 +72,6 @@ namespace OOPGames.Interfaces.Gruppe_J
 
         int DinoYPos { get; set; }
         int DinoXPos { get; set; }
-        string RestartGameText { get; set; }
-        int Score { get; set; }
-        string DinoHealth { get; set; } 
     }
 
     public abstract class GJ_IDinoPaintGame : IPaintGame2

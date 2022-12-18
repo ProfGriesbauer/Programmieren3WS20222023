@@ -1,8 +1,8 @@
 ﻿using OOPGames;
 using OOPGames.Classes.GruppeI;
-using System;
 using System.ComponentModel;
 using System.Windows.Navigation;
+
 public class I_TicTacToeRules : IGameRules
 {
     public string Name { get { return "I_Rules"; } }
@@ -12,7 +12,7 @@ public class I_TicTacToeRules : IGameRules
     public IGameField CurrentField { get { return _BigField; } }
 
 
-    public bool MovesPossible //evtl noch anpassen -> läuft auch so
+    public bool MovesPossible //Fehler/Ausbessern  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         get
         {
@@ -37,8 +37,9 @@ public class I_TicTacToeRules : IGameRules
 
 
 
-    public int CheckIfPLayerWon() //für großes Feld
+    public int CheckIfPLayerWon() //für großes Feld -> brauchen wir auch noch f�r kleine Felder, aber als eigene Funktion
     {
+        CheckIfSmallField_IsWon();
         //waagrecht
         if (_BigField.SubFields[0].WonByPlayer == _BigField.SubFields[1].WonByPlayer && _BigField.SubFields[1].WonByPlayer == _BigField.SubFields[2].WonByPlayer)
         {
@@ -90,9 +91,7 @@ public class I_TicTacToeRules : IGameRules
                     _BigField.SubFields[t][i, j] = 0;
                 }
             }
-            _BigField.SubFields[t].WonByPlayer = 0;
         }
-
     }
 
     public void DoTTTMove(ITTTMove move)
@@ -102,7 +101,6 @@ public class I_TicTacToeRules : IGameRules
         {
             _BigField.SubFields[move.Feld][move.Row, move.Column] = move.PlayerNumber;
         }
-        CheckIfSmallField_IsWon();
     }
 
     public void DoMove(IPlayMove move)
@@ -115,17 +113,8 @@ public class I_TicTacToeRules : IGameRules
 
     //ab hier kommen nur noch Game-speziefische Rules
 
-    //Aktionsradius auf ein Subfield begrenzen -> siehe ClickSelection (Player) -> geht kaum anders
-
-    //nach gewonnenem SubField alle anderen Felder wieder freischalten
-    private void Freischalten()
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            _BigField.SubFields[i].Active = true;
-        }
-    }
-    //check if player won für subfield -> unentscheiden = zufallsentscheid/ClearSubField -> win = playernumber + 2 -> nach Entscheidung Subfield wieder inactive setzen 
+    //aktionsradius auf ein Subfield begrenzen
+    //check if player won für subfield -> unentscheiden = zufallsentscheid -> win = playernumber + 2 -> nach Entscheidung Subfield wieder inactive setzen 
     public void CheckIfSmallField_IsWon()
     {
         for (int t = 0; t < 9; t++)
@@ -133,92 +122,31 @@ public class I_TicTacToeRules : IGameRules
 
             for (int i = 0; i < 3; i++)
             {
-                if (_BigField.SubFields[t].WonByPlayer == 0 && _BigField.SubFields[t][i, 0] > 0 && _BigField.SubFields[t][i, 0] == _BigField.SubFields[t][i, 1] && _BigField.SubFields[t][i, 1] == _BigField.SubFields[t][i, 2])
+                if (_BigField.SubFields[t][i, 0] >= 0 && _BigField.SubFields[t][i, 0] == _BigField.SubFields[t][i, 1] && _BigField.SubFields[t][i, 1] == _BigField.SubFields[t][i, 2])
                 {
-                    _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][i, 0];
-                    ClearSubField(t);
+                    _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][i,0];
+                    break;
                 }
-                else if (_BigField.SubFields[t].WonByPlayer == 0 && _BigField.SubFields[t][0, i] > 0 && _BigField.SubFields[t][0, i] == _BigField.SubFields[t][1, i] && _BigField.SubFields[t][1, i] == _BigField.SubFields[t][2, i])
+                else if (_BigField.SubFields[t][0, i] >= 0 && _BigField.SubFields[t][0, i] == _BigField.SubFields[t][1, i] && _BigField.SubFields[t][1, i] == _BigField.SubFields[t][2, i])
                 {
                     _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][0, i];
-                    ClearSubField(t);
+                    break;
                 }
             }
 
-            if (_BigField.SubFields[t].WonByPlayer == 0 && _BigField.SubFields[t][0, 0] > 0 && _BigField.SubFields[t][0, 0] == _BigField.SubFields[t][1, 1] && _BigField.SubFields[t][1, 1] == _BigField.SubFields[t][2, 2])
+            if (_BigField.SubFields[t][0, 0] > 0 && _BigField.SubFields[t][0, 0] == _BigField.SubFields[t][1, 1] && _BigField.SubFields[t][1, 1] == _BigField.SubFields[t][2, 2])
             {
                 _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][0, 0];
-                ClearSubField(t);
+                break;
             }
-            else if (_BigField.SubFields[t].WonByPlayer == 0 && _BigField.SubFields[t][0, 2] > 0 && _BigField.SubFields[t][0, 2] == _BigField.SubFields[t][1, 1] && _BigField.SubFields[t][1, 1] == _BigField.SubFields[t][2, 0])
+            else if (_BigField.SubFields[t][0, 2] > 0 && _BigField.SubFields[t][0, 2] == _BigField.SubFields[t][1, 1] && _BigField.SubFields[t][1, 1] == _BigField.SubFields[t][2, 0])
             {
                 _BigField.SubFields[t].WonByPlayer = _BigField.SubFields[t][0, 2];
-                ClearSubField(t);
+                break;
             }
-            //unentschieden Abfrage
-            else if (_BigField.SubFields[t].WonByPlayer == 0)
-            {
-                //ClearSubField_wennUnentschieden(t);
-                PickRandomWinner(t);
-            }
-
 
         }
     }
-
-    private void ClearSubField(int SubFeld)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                _BigField.SubFields[SubFeld][i, j] = 0;
-                Freischalten();
-            }
-        }
-    }
-    private void ClearSubField_wennUnentschieden(int SubFeld)
-    {
-        int sum = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if (_BigField.SubFields[SubFeld][i, j] != 0)
-                {
-                    sum++;
-                }
-            }
-        }
-        if (sum == 9)
-        {
-            Console.WriteLine("Unentschieden: Spiele ein beliebiges Feld");
-            ClearSubField(SubFeld);
-        }
-
-    }
-    private void PickRandomWinner(int SubFeld)
-    {
-        int sum = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if (_BigField.SubFields[SubFeld][i, j] != 0)
-                {
-                    sum++;
-                }
-            }
-        }
-        if (sum == 9)
-        {
-            Random rnd = new Random();
-            _BigField.SubFields[SubFeld].WonByPlayer = rnd.Next(1, 3);
-            ClearSubField(SubFeld);
-            Freischalten();
-        }
-    }
-
-
+    
 }
 

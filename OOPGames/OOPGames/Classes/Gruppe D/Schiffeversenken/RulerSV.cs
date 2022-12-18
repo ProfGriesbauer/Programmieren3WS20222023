@@ -154,13 +154,13 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
-        void ChangePhase()
+        public void ChangePhase()
         {
             GamePhase++;
             _Shipfield.Phase = GamePhase;
         }
 
-        int CheckHit(int r, int c, int Playernumber)//Schussfunktion
+        public int CheckHit(int r, int c, int Playernumber)//Schussfunktion
         {
             if (Playernumber == 2)
             {
@@ -363,7 +363,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
-       int SetShip(int r, int c, int Playernumber)
+        public int SetShip(int r, int c, int Playernumber)
         {
             if (_Shipfield[r, c, Playernumber] == 0)
             {

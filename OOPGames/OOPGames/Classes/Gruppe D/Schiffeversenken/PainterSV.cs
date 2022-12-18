@@ -139,7 +139,7 @@ namespace OOPGames.Classes.Gruppe_D.Schiffeverseanken
             }
         }
 
-        void PaintShip(Canvas canvas, int Ship, int x, int y, int _HorVer, int destroyed)
+        public void PaintShip(Canvas canvas, int Ship, int x, int y, int _HorVer, int destroyed)
         {
             Color lineColor = Color.FromRgb(0, 0, 255);
             if (destroyed == 1)

@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\GruppeJ\Dino_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +92,11 @@
     <Compile Include="Classes\GruppeJ\GJ_DinoGame.cs" />
     <Compile Include="Classes\GruppeJ\G[J]_TicTacToe.cs" />
     <Compile Include="Classes\Gruppe_F\HumanPlayer.cs" />
+    <Compile Include="Classes\Gruppe_F\PainterF.cs" />
+    <Compile Include="Classes\Gruppe_F\Space_Race\SpaceRaceHumanPlayerF.cs" />
+    <Compile Include="Classes\Gruppe_F\Space_Race\SpaceRaceRulesF.cs" />
+    <Compile Include="Classes\Gruppe_F\Space_Race\InterfacesSpaceRaceF.cs" />
+    <Compile Include="Classes\Gruppe_F\Space_Race\SpaceRacePainterF.cs" />
     <Compile Include="Interfaces\Gruppe J\GJ_IDino.cs" />
     <Compile Include="System\Windows\Forms\PictureBox1.cs" />
     <Page Include="Classes\Gruppe K\Form\K_InformationWindow.xaml">
@@ -161,7 +167,6 @@
     <Compile Include="Classes\GruppeI\TTTField.cs" />
     <Compile Include="Classes\GruppeI\I_Painter.cs" />
     <Compile Include="Classes\Gruppe_F\InterfacesGruppeF.cs" />
-    <Compile Include="Classes\Gruppe_F\PainterF.cs" />
     <Compile Include="Classes\Gruppe_F\RulesF.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF_v1_2.cs" />
     <Compile Include="Classes\Gruppe_F\TTTComputerPlayerF.cs" />
@@ -233,6 +238,7 @@
     <Folder Include="bin\" />
     <Folder Include="Interfaces\Gruppe C\" />
     <Folder Include="obj\Debug\" />
+    <Folder Include="Resources\Gruppe H\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -289,8 +295,6 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
-    <Resource Include="Resources\Gruppe H\Player2.png" />
-    <Resource Include="Resources\Gruppe H\Player1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

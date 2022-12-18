@@ -74,7 +74,7 @@ namespace OOPGames
             return painter is TTTPaint;
         }
     }
-    public class TTTRulesF : BaseTicTacToeRules, IGameRulesF//,IFieldSum
+    public class TTTRulesF : BaseTicTacToeRules, IGameRulesF, IFieldSum
     {
         int timerCounter;
         int FieldSumOld;
@@ -104,28 +104,28 @@ namespace OOPGames
 
         public override string Name { get { return "GruppeFTTTRules"; } }
 
-        public int? checkFieldSum { get
-            {
-               
-                for (int r=0; r>=2; r++)
-                {
-                    for (int c=0; c>=2; c++)
-                    {
-                        FieldSum += _Field[r, c];
-                    }
-
-                }
-
-                if (FieldSum != FieldSumOld)
-                {
-                    timerCounter = 0;
-                    return 1;
-                }
-                FieldSumOld = FieldSum;
-                return 0;
-            }
-        }
         public int Thickness { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public int? CheckFieldSum()
+        {
+            for (int r = 0; r >= 2; r++)
+            {
+                for (int c = 0; c >= 2; c++)
+                {
+                    FieldSum += _Field[r, c];
+                }
+
+            }
+
+            if (FieldSum != FieldSumOld)
+            {
+                timerCounter = 0;
+                return 1;
+            }
+            FieldSumOld = FieldSum;
+            return 0;
+        }
+
         public override int CheckIfPLayerWon()
         {
             if (_Field.CurrentWinner > 0)
@@ -158,7 +158,7 @@ namespace OOPGames
         }
         public void CheckIfPlayerWonTime()
         {
-            if (timerCounter > 2000 && checkFieldSum  == 0)
+            if (timerCounter > 2000 && CheckFieldSum()  == 0)
             {
                 if(CurrentPlayer==1)
                 {
@@ -202,7 +202,7 @@ namespace OOPGames
 
         public void TickGameCall()
         {
-            
+
             timerCounter+=40;
             CheckIfPlayerWonTime();
           

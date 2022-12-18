@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
-//using static OOPGames.Classes.Gruppe_C.C_TicTacToeHumanPlayer;
+
 
 namespace OOPGames
 {

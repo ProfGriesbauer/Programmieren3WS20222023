@@ -406,10 +406,9 @@ namespace OOPGames
                 {
                     _Spielfeld[row, column].Player = 0;
                     _Spielfeld[row, column].Symbol = null;
-
-                    firstMoveDone = false;                                //Zähler für erste Bewegung wird auf null gesetzt
                 }
             }
+            firstMoveDone = false;                                              //Zähler für erste Bewegung wird auf null gesetzt
         }
 
 
@@ -625,53 +624,111 @@ namespace OOPGames
 
     //COMPUTER PLAYER
 
-    public class H_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    /*public class H_TicTacToeComputerPlayer : I_H_ComputerTicTacToePlayer
+{
+    int _PlayerNumber = 0;
+    public string Name { get { return "H_TicTacToeComputerPlayer"; } }
+    public int PlayerNumber { get { return _PlayerNumber; } }
+
+    public IGamePlayer Clone()
+    {
+        H_TicTacToeComputerPlayer ttthp = new H_TicTacToeComputerPlayer();
+        ttthp.SetPlayerNumber(_PlayerNumber);
+        return ttthp;
+    }
+
+    public I_H_TicTacToeMove GetMove(IGameField field)                         //muss IGameField nutzen, wird von IComputerGamePlayer vorgeschieben
+    {
+        int r = 0; //row
+        int c = 0; //column
+
+        //Nummeriert die Felder von 1 bis 9   --> wozu? ich habs mal auskommentiert um nur das mötigste betrachten zu müssen, gruß Moritz
+        /*for (int i = 1; i <= 9; i++)
+        {
+            for (r = 0; r <= 2; r++)
+            {
+                for (c = 0; c <= 2; c++)
+                {
+                    int fieldi = field[r, c];
+                }
+            }
+        }*/
+
+    /*
+    for (r = 0; r <= 2; r++)                //Setzt Kreis immer links oben und danach immer eins nach rechts
+    {
+        for (c = 0; c <= 2; c++)
+        {
+            //I_H_Feld _spielfeld = field.GetFeldAt(r, c);
+            if (field[r, c] <= 0)
+            {
+                return new H_TicTacToeMove(r, c, _PlayerNumber);
+            }
+        }
+    }                       // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?       --> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
+    return null;
+}
+public void SetPlayerNumber(int playerNumber)
+{
+    _PlayerNumber = playerNumber;
+}
+public bool CanBeRuledBy(IGameRules rules)
+{
+    return rules is I_H_TicTacToeRules;
+}
+
+}*/
+
+    public class H_TicTacToeComputerPlayer : I_H_ComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
-        public override string Name { get { return "H_TicTacToeComputerPlayer"; } }
-        public override int PlayerNumber { get { return _PlayerNumber; } }
+        public string Name { get { return "H_TicTacToeComputerPlayer"; } }
+        public int PlayerNumber { get { return _PlayerNumber; } }
 
-        public override IGamePlayer Clone()
+        public IGamePlayer Clone()
         {
             H_TicTacToeComputerPlayer ttthp = new H_TicTacToeComputerPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
 
-        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is I_H_TicTacToe)
+            {
+                return GetMoveH((I_H_TicTacToe)field);
+            }// Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?       --> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
+            else
+            {
+                return null;
+            }
+        }
+        public I_H_TicTacToeMove GetMoveH(I_H_TicTacToe field)
         {
             int r = 0; //row
             int c = 0; //column
 
-            //Nummeriert die Felder von 1 bis 9
-            for (int i = 1; i <= 9; i++)
-            {
-                for (r = 0; r <= 2; r++)
-                {
-                    for (c = 0; c <= 2; c++)
-                    {
-                        int fieldi = field[r, c];
-                    }
-                }
-            }                           //Setzt Kreis immer links oben und danach immer eins nach rechts
-            for (r = 0; r <= 2; r++)
+            for (r = 0; r <= 2; r++)                //Setzt Kreis immer links oben und danach immer eins nach rechts
             {
                 for (c = 0; c <= 2; c++)
-                {
+                {                                   //I_H_Feld _spielfeld = field.GetFeldAt(r, c);
                     if (field[r, c] <= 0)
                     {
-                        return new TicTacToeMove(r, c, _PlayerNumber);
+                        return new H_TicTacToeMove(r, c, _PlayerNumber);
                     }
                 }
             }                       // Woher weiß ich von wem das Kästchen besetzt ist? Beide haben die Zahl 0?       --> Field[r,c] =0-->Feld leer; =1-->Spieler 1; =2-->Spieler 2      :D
             return null;
         }
-        public override void SetPlayerNumber(int playerNumber)
+
+        public void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
         }
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is ITicTacToeRules;
+        }
     }
-
-
 
 }

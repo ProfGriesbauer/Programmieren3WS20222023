@@ -37,6 +37,8 @@ using OOPGames.Classes.Gruppe_D.Schiffeversenken;
 using Application = System.Windows.Forms.Application;
 using OOPGames.Classes.Gruppe_C.Minesweeper;
 using OOPGames.Interfaces.Gruppe_H;
+using OOPGames.Classes.Gruppe_F.Space_Race;
+
 
 namespace OOPGames
 {
@@ -48,11 +50,10 @@ namespace OOPGames
         IGamePlayer _CurrentPlayer = null;
         IPaintGame _CurrentPainter = null;
         IGameRules _CurrentRules = null;
-        IGamePlayer _CurrentPlayer1 = null;
+        public IGamePlayer _CurrentPlayer1 = null;
         IGamePlayer _CurrentPlayer2 = null;
         System.Windows.Media.Color X_Color;
         System.Windows.Media.Color O_Color;
-
 
 
         System.Windows.Threading.DispatcherTimer _PaintTimer = null;
@@ -65,6 +66,7 @@ namespace OOPGames
             //REGISTER YOUR CLASSES HERE
             //Painters
   //          OOPGamesManager.Singleton.RegisterPainter(new GJ_DinoPaintGame());
+  
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint_G());
             OOPGamesManager.Singleton.RegisterPainter(new K_Painter_Rotating());
@@ -82,12 +84,13 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
             OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new SpaceRacePainterF());
 
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+
             OOPGamesManager.Singleton.RegisterPainter(new E_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new E_VierGewinnt_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new PainterD());
-            //OOPGamesManager.Singleton.RegisterPainter(new TTTPaint());
+
 
             OOPGamesManager.Singleton.RegisterPainter(new PainterI());
             OOPGamesManager.Singleton.RegisterPainter(new C_Painter());
@@ -113,6 +116,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new B_Rules());
             OOPGamesManager.Singleton.RegisterRules(new K_RulesZielschiessen());
             OOPGamesManager.Singleton.RegisterRules(new TTTRulesF());
+            OOPGamesManager.Singleton.RegisterRules(new SpaceRaceRulesF());
             //OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new RulerSV());
             //OOPGamesManager.Singleton.RegisterRules(new K_RulesGameObject()); 
@@ -143,6 +147,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new B_HumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new HumanPlayerF());
             OOPGamesManager.Singleton.RegisterPlayer(new TTTAIGruppeF_v1_2());
+            OOPGamesManager.Singleton.RegisterPlayer(new SpaceRaceHumanPlayerF());
             OOPGamesManager.Singleton.RegisterPlayer(new K_Computerplayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Human_PlayerI());
     //        OOPGamesManager.Singleton.RegisterPlayer(new GJ_DinoGamePlayer());
@@ -189,6 +194,10 @@ namespace OOPGames
                     _CurrentRules.CurrentField != null &&
                     _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
                 {
+                    if (_CurrentPainter is ISpaceRacePainterF) // Gruppe F
+                    {
+                        PaintCanvas_GameTickF();
+                    }
                     //Flüssigerer Spielverlauf durch kürzere Intervallschritte
                     if (_CurrentPainter is GJ_IDinoPaintGame)
                     {
@@ -198,7 +207,7 @@ namespace OOPGames
                 }
 
                 if (_CurrentRules is IGameRules2)
-                {
+                {                
                     ((IGameRules2)_CurrentRules).TickGameCall();
                 }
 
@@ -254,7 +263,7 @@ namespace OOPGames
 
             }
         }
-
+        
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
             List<IGamePlayer> activePlayers=new List<IGamePlayer>();
@@ -289,7 +298,14 @@ namespace OOPGames
             {
                 _CurrentPlayer = _CurrentPlayer1;
                 Status.Text = "Game startet!";
-                Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                if (_CurrentRules is ISpaceRaceRulesF)
+                {
+                    Status.Text = "Good Luck out there Pilot!";
+                }
+                else
+                {
+                    Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                }
                 _CurrentRules.ClearField();
                 //Hinzufügen der Gewählten Farben
                 if( _CurrentPainter is J_IPaintTicTacToe) 
@@ -299,6 +315,11 @@ namespace OOPGames
                 }
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
+            }
+
+            if (_CurrentRules is ISpaceRaceRulesF)
+            {
+                changeIntervallTime();
             }
         }
 
@@ -338,10 +359,60 @@ namespace OOPGames
             }
         }
 
-        private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void PaintCanvas_GameTickF() //Gruppe F
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
-           
+
+            if(winner>0)
+            {
+                Status.Text = "Times is Up!!! Score: " + ((ISpaceRaceHumanPlayerF)_CurrentPlayer).PlayerScore;
+            }
+            else
+            {
+                ((SpaceRacePainterF)_CurrentPainter).clearCanvas(PaintCanvas);
+                // Raumschiff
+                ((SpaceRacePainterF)_CurrentPainter).paintShip(PaintCanvas, ((SpaceRaceHumanPlayerF)_CurrentPlayer).xPos, ((SpaceRaceHumanPlayerF)_CurrentPlayer).yPos, ((SpaceRaceHumanPlayerF)_CurrentPlayer).width, ((SpaceRaceHumanPlayerF)_CurrentPlayer).height, ((SpaceRaceHumanPlayerF)_CurrentPlayer).hasShield);
+                ((SpaceRaceHumanPlayerF)_CurrentPlayer).move();
+                ((SpaceRaceHumanPlayerF)_CurrentPlayer).update();
+                // Schild
+                ((SpaceRaceRulesF)_CurrentRules).Shield.move();
+                ((SpaceRaceRulesF)_CurrentRules).Shield.update();
+                if (((SpaceRaceRulesF)_CurrentRules).Shield.checkCollision(((SpaceRaceHumanPlayerF)_CurrentPlayer).xPos, ((SpaceRaceHumanPlayerF)_CurrentPlayer).yPos, ((SpaceRaceHumanPlayerF)_CurrentPlayer).width, ((SpaceRaceHumanPlayerF)_CurrentPlayer).height)) {
+                    ((SpaceRaceHumanPlayerF)_CurrentPlayer).hasShield= true;
+                }
+                ((SpaceRacePainterF)_CurrentPainter).paintShield(PaintCanvas, ((SpaceRaceRulesF)_CurrentRules).Shield.xPos, ((SpaceRaceRulesF)_CurrentRules).Shield.yPos, ((SpaceRaceRulesF)_CurrentRules).Shield.rad);
+                // Meteore
+                for (int i = 0; i <= 19; i++)
+                {
+                    ((SpaceRaceRulesF)_CurrentRules).Meteors[i].move();
+                    ((SpaceRaceRulesF)_CurrentRules).Meteors[i].update();
+                    if (((SpaceRaceHumanPlayerF)_CurrentPlayer).checkCollision(((ISpaceRaceRulesF)_CurrentRules).getArrayValueX(i), ((ISpaceRaceRulesF)_CurrentRules).getArrayValueY(i), ((ISpaceRaceRulesF)_CurrentRules).getArrayValueRAD(i)))
+                    {
+                        ((SpaceRaceRulesF)_CurrentRules).Meteors[i].respawn();
+                    }
+                    ((SpaceRacePainterF)_CurrentPainter).paintMeteor(PaintCanvas, ((ISpaceRaceRulesF)_CurrentRules).getArrayValueX(i), ((ISpaceRaceRulesF)_CurrentRules).getArrayValueY(i), ((ISpaceRaceRulesF)_CurrentRules).getArrayValueRAD(i));
+                }
+                // Zeitbalken
+                ((SpaceRacePainterF)_CurrentPainter).paintTimeBar(PaintCanvas, ((SpaceRaceRulesF)_CurrentRules).gametimer, ((SpaceRaceRulesF)_CurrentRules).TimeBar.barheight);
+                // Hintergrund
+                ((SpaceRacePainterF)_CurrentPainter).TickPaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+
+            }
+        }
+
+        private void changeIntervallTime() //Gruppe F
+        {
+            _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
+        }
+
+        private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_CurrentRules is ISpaceRaceRulesF) { //Gruppe F
+                return;
+            }
+
+            int winner = _CurrentRules.CheckIfPLayerWon();
+            
             if (winner > 0)
             {
                 if (_CurrentRules is IGameRulesF)

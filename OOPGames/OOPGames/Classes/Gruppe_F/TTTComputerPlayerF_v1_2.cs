@@ -7,7 +7,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OOPGames
 {
-    public class TTTAIGruppeF_v1_2 : BaseComputerTicTacToePlayer
+    public class TTTAIGruppeF_v1_2 : BaseComputerTicTacToePlayer, IComputerPlayerTTTF
     {
         int _PlayerNumber = 0;
 

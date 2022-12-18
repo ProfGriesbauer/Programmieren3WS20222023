@@ -112,46 +112,46 @@ namespace OOPGames
             //Headline
             TextBlock Headline = new TextBlock();
             Headline.Text = "TicTacToe";
-            Headline.FontSize = 80;    //d/3
+            Headline.FontSize = d/3;    //80
             Headline.FontWeight = FontWeights.Medium;
             Canvas.SetTop(Headline, 5);
-            Canvas.SetLeft(Headline, (dblWidth / 2) - 200);
+            Canvas.SetLeft(Headline, X0 + 0.8*d) ;      //(dblWidth / 2) - 250)
             canvas.Children.Add(Headline);
 
 
             //Player1
             TextBlock Player1 = new TextBlock();
             Player1.Text = "Player 1:";
-            Player1.FontSize = 60;
+            Player1.FontSize = d/4;     //60
             Canvas.SetTop(Player1, 80);
-            Canvas.SetLeft(Player1, ((dblWidth / 2) - 1.5 * d));
+            Canvas.SetLeft(Player1, X0);          //((dblWidth / 2) - 1.5 * d)
             canvas.Children.Add(Player1);
 
             Image Player1Symbol = new Image();
             Player1Symbol.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player1.png"));
-            Player1Symbol.Height = 60;
-            Player1Symbol.Width = 60;
+            Player1Symbol.Height = d / 3;      //60
+            Player1Symbol.Width = d / 3;        //60
 
-            Canvas.SetTop(Player1Symbol, 95);
-            Canvas.SetLeft(Player1Symbol, (dblWidth / 2) - 1.5 * d + 250);
+            Canvas.SetTop(Player1Symbol, 85);
+            Canvas.SetLeft(Player1Symbol, X0 + d);            //(dblWidth / 2) - 1.5 * d + 250
             canvas.Children.Add(Player1Symbol);
 
 
             //Player2
             TextBlock Player2 = new TextBlock();
             Player2.Text = "Player 2:";
-            Player2.FontSize = 60;
+            Player2.FontSize = d/4;     //60
             Canvas.SetTop(Player2, 80);
-            Canvas.SetLeft(Player2, (dblWidth / 2) + 0.3 * d);
+            Canvas.SetLeft(Player2, X0 + 1.7*d);              //(dblWidth / 2) + 0.3 * d
             canvas.Children.Add(Player2);
 
             Image Player2Symbol = new Image();
             Player2Symbol.Source = new BitmapImage(new Uri("pack://application:,,,/OOPGames;component/Resources/Gruppe H/Player2.png"));
-            Player2Symbol.Height = 60;
-            Player2Symbol.Width = 60;
+            Player2Symbol.Height = d / 3;      //60
+            Player2Symbol.Width = d / 3;    //60
 
             Canvas.SetTop(Player2Symbol, 90);
-            Canvas.SetLeft(Player2Symbol, (dblWidth / 2) + 0.3 * d + 250);
+            Canvas.SetLeft(Player2Symbol, X0 + 2.7*d);            //(dblWidth / 2) + 0.3 * d + 200
             canvas.Children.Add(Player2Symbol);
 
             //Spielfeldlinien

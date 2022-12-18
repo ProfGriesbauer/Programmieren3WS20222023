@@ -136,7 +136,6 @@
     <Compile Include="Classes\Gruppe B\B_Rules.cs" />
     <Compile Include="Classes\Gruppe B\B_ComputerPlayer.cs" />
     <Compile Include="Classes\Gruppe B\B_HumanPlayer.cs" />
-    <Compile Include="Classes\Gruppe C\C_Painter.cs" />
     <Compile Include="Classes\Gruppe C\Minesweeper\C_IMinsweeper.cs" />
     <Compile Include="Classes\Gruppe C\Minesweeper\C_Minesweeper.cs" />
     <Compile Include="Classes\Gruppe D\IBestOfFive.cs" />
@@ -235,8 +234,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="Interfaces\Gruppe C\" />
-    <Folder Include="Resources\Gruppe H\" />
+    <Folder Include="obj\Debug\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -293,6 +293,8 @@
   <ItemGroup>
     <Content Include="Assets\I\click-47609.wav" />
     <Content Include="Assets\I\interface-1-126517.wav" />
+    <Resource Include="Resources\Gruppe H\Player2.png" />
+    <Resource Include="Resources\Gruppe H\Player1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

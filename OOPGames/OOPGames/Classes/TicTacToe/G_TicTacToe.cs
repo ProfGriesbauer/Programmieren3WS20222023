@@ -30,6 +30,7 @@ using System.Windows.Media.Animation;
 
 namespace OOPGames
 {
+       //Interface ICasket für Classe Casket (Speilfeldeinheiten)
     public interface ICasket
     {
         int x { get; set; }
@@ -37,7 +38,7 @@ namespace OOPGames
         int size { get; set; }
         bool flag { get; set; }
         bool keyFlag { get; set; }
-        int player { get; set; } // evtl IGamePlayer anstelle von int
+        int player { get; set; }
         void paintFrame(Canvas canvas);
         void paintFill(Canvas canvas);
         Casket isMySpace(int x, int y);
@@ -52,8 +53,11 @@ namespace OOPGames
 
     }
 
+    //Klasse Casket (Spielfeldeinheit)
+    //jedes Feld (ursprünglich Array) besteht aus einem Objekt
     public class Casket : ICasket
     {
+        //Klassenmethode
         public Casket(Casket c)
         {
             this.x = c.x;
@@ -106,6 +110,8 @@ namespace OOPGames
 
             set { _player = value; }
         }
+
+        //Zeichnet die Außenlinien des Felds
         public void paintFrame(Canvas canvas)
         {
             Color lineColor = Color.FromRgb(0, 0, 0);
@@ -164,13 +170,16 @@ namespace OOPGames
             };
             canvas.Children.Add(Right);
         }
+
+        //Zeichnet X oder O im jeweiligen Feld
         public void paintFill(Canvas canvas)
         {
             /*
-            Color XColor = X_Color ?? Color.FromRgb(0, 255, 0);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = O_Color ?? Color.FromRgb(0, 0, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
+             * falls Color Chooser verwendet werden wollte muss vom (funtionierenden?? Interface Gruppe J geerbt werden)
+             * Color XColor = X_Color ?? Color.FromRgb(0, 255, 0);
+             * Brush XStroke = new SolidColorBrush(XColor);
+             * Color OColor = O_Color ?? Color.FromRgb(0, 0, 255);
+             * Brush OStroke = new SolidColorBrush(OColor);
             */
 
             Color XColor;
@@ -224,6 +233,8 @@ namespace OOPGames
             }
         }
 
+        //Gibt 0 zurück, fallls die Koordinaten nicht in dem Feld liegen
+        //Gibt 1 zurück, fallls die Koordinaten in dem Feld liegen
         public Casket isMySpace(int x, int y)
         {
             if ((_x * _size) <= x && (_x + 1) * _size >= x)
@@ -248,8 +259,11 @@ namespace OOPGames
         static int _CurrentPlayer;
         static int _MaxSize = 20;
         static bool _notcalled = true;
+
+        //Übergabe des Namens an das Framework
         public override string Name { get { return "GruppeGTicTacToePaint"; } }
 
+        //Erstellen des Painters
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
             if (currentField is ITicTacToeField_G)
@@ -257,36 +271,43 @@ namespace OOPGames
                 PaintTicTacToeField_G(canvas, (ITicTacToeField_G)currentField);
             }
         }
+
+        //Score Player 1 variable
         public static int Score1
         {
             get { return _Score1; }
             set { _Score1 = value; }
         }
+
+        //Score Player 2 variable
         public static int Score2
         {
             get { return _Score2; }
             set { _Score2 = value; }
         }
 
+        //Hilfsvariable: Gibt den aktuellen Spieler zurück
         public static int CurrentPlayer
         {
             get { return _CurrentPlayer; }
             set { _CurrentPlayer = value; }
         }
 
+        //Spiellänge (wird am anfang jedes Spieles durch das Eingabefenster gesetzt)
         public static int MaxSize
         {
             get { return _MaxSize; }
             set { _MaxSize = value; }
         }
 
+        //Hilfsvariable beinhaltet Wert, ob Eingabe erfolgt ist
         public static bool Notcalled
         {
             get { return _notcalled; }
             set { _notcalled = value; }
         }
 
-        // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
+        //Überschreibt abstrakte Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             if (currentField is ITicTacToeField_G)
@@ -301,19 +322,24 @@ namespace OOPGames
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
+
+            //Zeichnen der Umrandung
             foreach (Casket C in currentField.Field)
             {
                 C.paintFrame(canvas);
                 C.paintFill(canvas);
             }
+
+            //Zeichnen der Felder mit Flag
             foreach (Casket C in currentField.Field)
             {
                 if (C.keyFlag) C.paintFrame(canvas);
             }
 
+            //Zeichnen des rechten Fortschrittsbalkens
+            //Balken zeigt Verhältnis der belegten Felder im Vergleich zu allen Feldern
             ProgressBar Progress = new ProgressBar();
             Progress.Foreground = new SolidColorBrush(Color.FromRgb(250, 0, 125));
-            //Progress.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
             Canvas.SetTop(Progress, 0);
             Canvas.SetLeft(Progress, 420);
             Progress.Width = 20;
@@ -329,8 +355,10 @@ namespace OOPGames
             Progress.Orientation = Orientation.Vertical;
             canvas.Children.Add(Progress);
 
+            //zeichnet Scores
             PaintScore(canvas);
 
+            //Öffnet Eingabefenster beim ersten Start
             if (_notcalled)
             {
                 InputSize();
@@ -338,6 +366,7 @@ namespace OOPGames
             }
         }
 
+        //Zeichnet Score 1 und Score 2 mit Fortschrittsbalken
         void PaintScore(Canvas canvas)
         {
             SolidColorBrush ColorPlayer1 = new SolidColorBrush(Color.FromRgb(0, 255, 0));
@@ -400,6 +429,7 @@ namespace OOPGames
             canvas.Children.Add(Progress2);
         }
 
+        //Öffnet Eingabefenster
         void InputSize()
         {
             MaxSizeWindow Fenster = new MaxSizeWindow();
@@ -408,73 +438,16 @@ namespace OOPGames
 
     }
 
-    /*
-    public class TicTacToePaint_G : J_BaseTicTacToePaint
-    {
-        public override string Name { get { return "GruppeGTicTacToePaint"; } }
-
-        public override Color X_Color
-        {
-            get
-            {
-                return X_Color;
-            }
-
-            set
-            {
-                X_Color = value;
-            }
-        }
-        public override Color O_Color
-        {
-            get
-            {
-                return O_Color;
-            }
-
-            set
-            {
-                O_Color = value;
-            }
-        }
-
-
-        // Überschreibt abstract Methode aus BaseTicTacToePaint, prüft ob ein Spielfeld Gruppe G vorhanden ist und konvertiert dann das Spielfeld
-        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
-        {
-            if (currentField is ITicTacToeField_G)
-            {
-                PaintTicTacToeField_G(canvas, (ITicTacToeField_G)currentField);
-            }
-        }
-
-        public void PaintTicTacToeField_G(Canvas canvas, ITicTacToeField_G currentField)
-        {
-            ITicTacToeField_G field_G = currentField;
-            canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
-            canvas.Background = new SolidColorBrush(bgColor);
-            foreach (Casket C in currentField.Field)
-            {
-                C.paintFrame(canvas);
-            }
-
-
-        }
-    }
-
-    */
     public class TicTacToeRules_G : BaseTicTacToeRules, IGameRules2
     {
         public TicTacToeRules_G()
         {
             _Rules = this;
         }
-
-
-
-
+        
+        //Erzeugt ein Spielfeld der Gruppe G
         TicTacToeField_G _Field = new TicTacToeField_G();
+
         static TicTacToeRules_G _Rules;
 
 
@@ -487,6 +460,8 @@ namespace OOPGames
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
+        //gibt 0 zurück, wenn Spielzüge nicht möglich sind
+        //gibt 1 zurück, wenn Spielzüge möglich sind
         public override bool MovesPossible
         {
             get
@@ -503,8 +478,10 @@ namespace OOPGames
             }
         }
 
+        //Übergibt Rules an das Framework
         public override string Name { get { return "GruppeGTicTacToeRules"; } }
 
+        //Gibt Spielernummer des Gewonnenen Spielers zurück
         public override int CheckIfPLayerWon() //wird ein default wert benötigt?
         {
             int whohasthree = threeinarow(_Field.Field);
@@ -559,6 +536,7 @@ namespace OOPGames
             return -1;
         }
 
+        //setzt das Spielfeld auf Spielstart zurück zurück
         public override void ClearField()
         {
 
@@ -580,7 +558,10 @@ namespace OOPGames
             Score2 = 0;
         }
 
-
+        //Prüft auf 3 gesetzte Felder in einer Reihe
+        //0 falls keine 3 in einer Reihe
+        //1 falls Spieler 1 3 in einer Reihe
+        //2 falls Spieler 2 3 in einer Reihe
         public int threeinarow(List<Casket> Field) //überprüft, ob sich drei in einer Reihe befinden
         {
             foreach (Casket C in Field) //für jedes kästchen um die mitte herum wird der spielerwert gesucht, dieser wird dann verglichen
@@ -718,6 +699,7 @@ namespace OOPGames
 
         }
 
+        //führt einen Spielzug aus
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
 
@@ -745,6 +727,7 @@ namespace OOPGames
 
     public class TicTacToeField_G : ITicTacToeField_G
     {
+        //Größe des gesamten Spielfeldes in px
         int _Fieldsize = 400;
         List<Casket> _Field = new List<Casket>();
 
@@ -776,7 +759,7 @@ namespace OOPGames
             }
         }
 
-
+        //Feld zum erstellen aus Frameworkaufruf (aus Vorlage übernommen und angepasst)
         int ITicTacToeField.this[int r, int c]
         {
             get
@@ -804,6 +787,7 @@ namespace OOPGames
 
         }
 
+        //Vergrößert das Spielfeld um eine Reihe und eine Zeile
         public void increaseField()
         {
             //berechnet die Länge der Liste in x - Richtung
@@ -836,6 +820,7 @@ namespace OOPGames
             }
         }
 
+        //Feld zum erstellen aus Frameworkaufruf (aus Vorlage übernommen und angepasst)
         public int this[int r, int c]
         {
             get
@@ -862,6 +847,8 @@ namespace OOPGames
             }
         }
 
+        //0 falls das Feld und der Painter nicht kompartibel sind
+        //1 falls das Feld und der Painter kompartibel sind
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return painter is IPaintTicTacToe;
@@ -874,10 +861,12 @@ namespace OOPGames
         int _xPosKeys = 0;
         int _yPosKeys = 0;
 
+        //Übergabe Namen an ddas Framework
         public override string Name { get { return "GruppeGHumanTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
+        //Klont das Spielfeld
         public override IGamePlayer Clone()
         {
             HumanTicTacToePlayer_G ttthp = new HumanTicTacToePlayer_G();
@@ -885,6 +874,7 @@ namespace OOPGames
             return ttthp;
         }
 
+        //Greift den Move ab
         public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
             if (field is ITicTacToeField_G && selection is IClickSelection)
@@ -899,6 +889,7 @@ namespace OOPGames
             return null;
         }
 
+        //GetMoveSelection(...) für Gruppe G Feld
         public ITicTacToeMove GetMove_GClick(IClickSelection sel, ITicTacToeField_G field_G)
         {
 
@@ -918,6 +909,7 @@ namespace OOPGames
             return null;
         }
 
+        //Tastatursteuerung WASD & E = Setzen
         public ITicTacToeMove GetMove_GKeys(IKeySelection sel, ITicTacToeField_G field_G)
         {
 
@@ -979,6 +971,7 @@ namespace OOPGames
             return null;
         }
 
+        //Setzt Spielernummer
         public override void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
@@ -988,11 +981,12 @@ namespace OOPGames
 
     }
 
-
+    //Computerplayer
     public class ComputerTicTacToePlayer_G : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
+        //Registriert Namen im Framework
         public override string Name { get { return "GruppeGComputerTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
@@ -1004,7 +998,7 @@ namespace OOPGames
             return ttthp;
         }
 
-
+        //nimmt Move an
         public override ITicTacToeMove GetMove(ITicTacToeField field)
         {
 
@@ -1016,6 +1010,7 @@ namespace OOPGames
             return null;
         }
 
+        //GetMove(...) Gruppe G angepasst
         public ITicTacToeMove GetMove_G(ITicTacToeField_G field)
         {
             int opponent;
@@ -1089,6 +1084,7 @@ namespace OOPGames
             }
         }
 
+        //Setzt Spielernummer
         public override void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
